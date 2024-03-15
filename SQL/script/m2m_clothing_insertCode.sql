@@ -9,6 +9,7 @@ VALUES ('john.doe', 'john.doe@example.com', 'your_hashed_password1', 0),
        ('jane.smith', 'jane.smith@example.com', 'your_hashed_password2', 0),
        ('admin', 'admin@m2m_clothing.com', 'your_hashed_password3', 1);
 
+
 go
 delete from Category
 go
@@ -21,24 +22,7 @@ VALUES ('Outerwear', 'outerwear_logo.avif', 'Jackets, coats and vests'),
        ('Headwear', 'headwear_logo.webp', 'Hats, caps, beanies'),
        ('Footwear', 'footwear_logo.jpg', 'Shoes, boots, sandals');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+go 
 
 
 
