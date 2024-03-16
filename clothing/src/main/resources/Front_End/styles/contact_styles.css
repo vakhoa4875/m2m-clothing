@@ -1061,6 +1061,25 @@ section
 	height: 46px;
 	cursor: pointer;
 }
+
+
+.message_submit_btnn
+{
+	background: #1e1e27;
+	color: #FFFFFF;
+	text-transform: uppercase;
+	width: 165px;
+	border: none;
+	height: 46px;
+	cursor: pointer;
+}
+
+.message_submit_btnn:hover
+{
+	background: #bebec0 !important;
+	transition: all 0.2s ease;
+}
+
 .message_submit_btn:hover
 {
 	background: #2b2b34 !important;
