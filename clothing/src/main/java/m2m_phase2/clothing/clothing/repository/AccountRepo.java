@@ -9,5 +9,7 @@ import m2m_phase2.clothing.clothing.entity.Account;
 public interface AccountRepo extends JpaRepository<Account, Integer> {
 
 	 Account save(Account account);
+	 
+	 Account findByEmail(String email);
 	
 }

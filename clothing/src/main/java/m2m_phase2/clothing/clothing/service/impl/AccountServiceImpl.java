@@ -25,6 +25,12 @@ public class AccountServiceImpl implements AccountService {
 		// TODO Auto-generated method stub
 		return repo.save(account);
 	}
+
+	@Override
+	public Account findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return repo.findByEmail(email);
+	}
 	
 	
 	
