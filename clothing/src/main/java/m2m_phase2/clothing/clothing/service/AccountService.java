@@ -6,4 +6,5 @@ public interface AccountService {
 
 	Account saveAccount(Account account);
 	
+	Account findByEmail(String email);
 }

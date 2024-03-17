@@ -80,17 +80,17 @@
                 </div>
               </div>
               <div class="card-body">
-                <form role="form" class="text-start">
+                <form role="form" class="text-start"  method="POST" th:action="@{/submitLogin}" th:object="${accountlog}">
                   <div class="text-center" style="display: none;">
                     <span class="text-danger" style="font-weight: bolder;">Tài khoản hoặc mật khẩu đã sai</span>
                   </div>
                   <div class="input-group input-group-outline my-3">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control">
+                    <input type="email" class="form-control"  th-field="*{email}">
                   </div>
                   <div class="input-group input-group-outline mb-3">
                     <label class="form-label">Mật khẩu</label>
-                    <input type="password" class="form-control">
+                    <input type="password" class="form-control" th-field="*{hashedPassword}"> 
                   </div>
                   <div class="form-check form-switch d-flex align-items-center mb-3">
                     <input class="form-check-input" type="checkbox" id="rememberMe" checked>
