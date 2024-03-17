@@ -9,12 +9,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.entity.Account;
 import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
-import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Controller
 public class HomeController {
@@ -89,8 +87,19 @@ public class HomeController {
 //		System.out.println(accountRequest.getEmail());
 //		System.out.println(accountRequest.getUsername());
 		
-		accountRequest.setHashedPassword(PasswordEncoderUtil.encodePassword(accountRequest.getHashedPassword()));
-		accountServiceImpl.saveAccount(accountRequest);
+//		accountRequest.setHashedPassword(PasswordEncoderUtil.encodePassword(accountRequest.getHashedPassword()));
+//		accountServiceImpl.saveAccount(accountRequest);
+		
+	       // Tạo mã OTP ngẫu nhiên gồm 6 chữ số
+        String otp = accountServiceImpl.generateOTP();
+        
+        // Gửi mã OTP qua email
+        accountServiceImpl.sendOTPEmail(accountRequest.getEmail(), otp);
+
+        // Lưu mã OTP vào session để kiểm tra xác thực sau này
+        session.setAttribute("otp", otp);
+        session.setAttribute("email", accountRequest.getEmail());
+		
 		
 
 		return "Front_End/pages/sign-in";
