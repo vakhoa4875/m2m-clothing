@@ -1,6 +1,7 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import m2m_phase2.clothing.clothing.entity.Account;
@@ -18,5 +19,8 @@ public class AccountServiceImpl implements AccountService {
 		// TODO Auto-generated method stub
 		return repo.save(account);
 	}
+	
+	
+
 
 }
