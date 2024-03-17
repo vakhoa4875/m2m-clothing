@@ -50,6 +50,14 @@ public class Product implements Serializable {
 	@JoinColumn(name = "category_id")
 	private Category category;
 
+	@Override
+	public String toString() {
+	    return "Product{" +
+	            "productId=" + productId +
+	            ", productName='" + productName + '\'' +
+	            '}';
+	}
+	
 	public int getProductId() {
 		return productId;
 	}
