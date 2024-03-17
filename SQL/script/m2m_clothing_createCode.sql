@@ -28,10 +28,10 @@ CREATE TABLE Category (
 
 CREATE TABLE Userinfo (
   user_id int PRIMARY KEY,
-  fullname nvarchar(127),
-  gender nvarchar(20),
-  avatar nvarchar(255),
-  dob date,
+  fullname nvarchar(127) default 'your fullname here',
+  gender nvarchar(20) default 'Male',
+  avatar nvarchar(255) default 'user.jpg',
+  dob date default getdate(),
   description nvarchar(300),
   job_title nvarchar(63),
   FOREIGN KEY (user_id) REFERENCES Account(user_id)
@@ -52,7 +52,18 @@ CREATE TABLE Product (
   category_id int FOREIGN KEY REFERENCES Category(category_id)
 );
 
+go
+CREATE OR ALTER TRIGGER gen_user_info 
+ON Account
+AFTER INSERT
+AS
+BEGIN
+    INSERT INTO Userinfo (user_id)
+    SELECT user_id
+    FROM inserted;
+END;
 
+go
 
 
 
