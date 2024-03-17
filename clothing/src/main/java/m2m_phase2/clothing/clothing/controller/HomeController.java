@@ -23,7 +23,7 @@ public class HomeController {
 	@Autowired
 	private HttpSession session;
 
-	@GetMapping("/register")
+	@GetMapping("/register") // hàm phatteacher
 	public String getHome(Model model) {
 
 		Account account = new Account();
@@ -32,14 +32,18 @@ public class HomeController {
 
 	}
 
-	@PostMapping("/submitRegister")
+	@PostMapping("/submitRegister")// hàm phatteacher
 	public String submitRegister(@ModelAttribute("account") Account accountRequest, Model model) {
-		System.out.println(PasswordEncoderUtil.encodePassword("12345678"));
-		System.out.println(accountRequest.getHashedPassword());
-		System.out.println(accountRequest.getEmail());
-		System.out.println(accountRequest.getUsername());
-//		String a = PasswordEncoderUtil.encodePassword(accountRequest.getHashedPassword());
-//		System.out.println(a);
+		
+//		System.out.println(PasswordEncoderUtil.encodePassword("12345678"));
+//		System.out.println(PasswordEncoderUtil.verifyPassword("12345678",PasswordEncoderUtil.encodePassword("12345678")));
+//		System.out.println(accountRequest.getHashedPassword());
+//		System.out.println(accountRequest.getEmail());
+//		System.out.println(accountRequest.getUsername());
+		
+		accountRequest.setHashedPassword(PasswordEncoderUtil.encodePassword(accountRequest.getHashedPassword()));
+		accountServiceImpl.saveAccount(accountRequest);
+		
 
 		return "Front_End/pages/sign-in";
 
