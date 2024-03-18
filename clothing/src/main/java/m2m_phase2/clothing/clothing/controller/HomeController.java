@@ -38,14 +38,15 @@ public class HomeController {
 
 		// Tạo mã OTP ngẫu nhiên gồm 6 chữ số
 		String otp = accountServiceImpl.generateOTP();
-//        
+       
 		// Gửi mã OTP qua email
 		accountServiceImpl.sendOTPEmail(accountRequest.getEmail(), otp);
-//
+
 		// Lưu mã OTP vào session để kiểm tra xác thực sau này
 		session.setAttribute("otp", otp);
 		session.setAttribute("email", accountRequest.getEmail());
-//        
+
+		//tạo entity otp
 		Otp otpNhap = new Otp();
 		model.addAttribute("otpNhap", otpNhap);
 
@@ -56,14 +57,16 @@ public class HomeController {
 	@PostMapping("/otp") // hàm phatteacher
 	public String otp(@ModelAttribute("otp") Otp otp, Model model) {
 		
+		//lấy account người dùng nhập ở trang đăng kí 
 		Account accountSession =  (Account) session.getAttribute("acc");
 
-		System.out.println(accountSession.getEmail());
-
+		//lấy otp người dùng nhập vào
 		String enteredOTP = otp.getOtp1() + otp.getOtp2() + otp.getOtp3() + otp.getOtp4() + otp.getOtp5()
 				+ otp.getOtp6();
+		//lấy otp ở trong session
 		String sessionOTP = (String) session.getAttribute("otp");
 
+		//so sánh hai otp nếu giống thì return về trang sign in khác thì return về trang sign up
 		if (enteredOTP.equals(sessionOTP)) {
 			// Mã OTP hợp lệ, thực hiện các hành động tiếp theo
 			String hashCode = accountSession.getHashedPassword();
@@ -73,7 +76,6 @@ public class HomeController {
 			return "Front_End/pages/sign-in";
 
 		} else {
-			// Mã OTP không hợp lệ, thông báo cho người dùng
 			return "Front_End/pages/sign-up";
 		}
 
