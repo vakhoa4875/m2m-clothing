@@ -6,10 +6,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.entity.Account;
+import m2m_phase2.clothing.clothing.entity.Otp;
 import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
+import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Controller
 public class HomeController {
@@ -28,31 +31,51 @@ public class HomeController {
 
 	}
 
-	@PostMapping("/submitRegister")// hàm phatteacher
+	@PostMapping("/submitRegister") // hàm phatteacher
 	public String submitRegister(@ModelAttribute("account") Account accountRequest, Model model) {
-		
-//		System.out.println(PasswordEncoderUtil.encodePassword("12345678"));
-//		System.out.println(PasswordEncoderUtil.verifyPassword("12345678",PasswordEncoderUtil.encodePassword("12345678")));
-//		System.out.println(accountRequest.getHashedPassword());
-//		System.out.println(accountRequest.getEmail());
-//		System.out.println(accountRequest.getUsername());
-		
-//		accountRequest.setHashedPassword(PasswordEncoderUtil.encodePassword(accountRequest.getHashedPassword()));
-//		accountServiceImpl.saveAccount(accountRequest);
-		
-	       // Tạo mã OTP ngẫu nhiên gồm 6 chữ số
-        String otp = accountServiceImpl.generateOTP();
-        
-        // Gửi mã OTP qua email
-        accountServiceImpl.sendOTPEmail(accountRequest.getEmail(), otp);
 
-        // Lưu mã OTP vào session để kiểm tra xác thực sau này
-        session.setAttribute("otp", otp);
-        session.setAttribute("email", accountRequest.getEmail());
-		
-		
+		session.setAttribute("acc", accountRequest);
 
-		return "Front_End/pages/sign-in";
+		// Tạo mã OTP ngẫu nhiên gồm 6 chữ số
+		String otp = accountServiceImpl.generateOTP();
+//        
+		// Gửi mã OTP qua email
+		accountServiceImpl.sendOTPEmail(accountRequest.getEmail(), otp);
+//
+		// Lưu mã OTP vào session để kiểm tra xác thực sau này
+		session.setAttribute("otp", otp);
+		session.setAttribute("email", accountRequest.getEmail());
+//        
+		Otp otpNhap = new Otp();
+		model.addAttribute("otpNhap", otpNhap);
+
+		return "Front_End/pages/ConfirmPassword-signup";
+
+	}
+
+	@PostMapping("/otp") // hàm phatteacher
+	public String otp(@ModelAttribute("otp") Otp otp, Model model) {
+		
+		Account accountSession =  (Account) session.getAttribute("acc");
+
+		System.out.println(accountSession.getEmail());
+
+		String enteredOTP = otp.getOtp1() + otp.getOtp2() + otp.getOtp3() + otp.getOtp4() + otp.getOtp5()
+				+ otp.getOtp6();
+		String sessionOTP = (String) session.getAttribute("otp");
+
+		if (enteredOTP.equals(sessionOTP)) {
+			// Mã OTP hợp lệ, thực hiện các hành động tiếp theo
+			String hashCode = accountSession.getHashedPassword();
+			accountSession.setHashedPassword(PasswordEncoderUtil.encodePassword(hashCode));
+			accountServiceImpl.saveAccount(accountSession);
+			
+			return "Front_End/pages/sign-in";
+
+		} else {
+			// Mã OTP không hợp lệ, thông báo cho người dùng
+			return "Front_End/pages/sign-up";
+		}
 
 	}
 
