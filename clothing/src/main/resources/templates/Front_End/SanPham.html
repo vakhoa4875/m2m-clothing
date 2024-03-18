@@ -245,24 +245,28 @@
 								<div class="product-grid">
 
 									<!-- Product 1 -->
-
-									<div class="product-item accessories" th:each=" product: ${products}" >
+									<div class="product-item accessories"  th:each="product: ${products}" >
 										<div class="product product_filter">
-											<div class="product_image">
-												<img th:src="@{'../Front_End/media/product/'+ ${#strings.substring(product.pictures, 0, #strings.indexOf(product.pictures, ','))}}" alt="">	
+											<div class="img-thumbnail" style="overflow: hidden" height="235px" width="235px">
+												<img th:src="@{'../Front_End/media/product/'+ ${#strings.substring(product.pictures, 0, #strings.indexOf(product.pictures, ','))}}" width="auto" style="display: block; height: 235px"  alt="">
 											</div>
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Giảm</span></div>
 											<div class="favorite favorite_left"></div>
 											<div class="product_info">
-												<h6 class="product_name"><a href="single.html" th:text="${product.productName}" ></a></h6>
-												<div class="product_price" >520.000Đ<span>590.000Đ</span></div>
+												<h6 class="product_name"><a href="single.html" th:text="${product.getProductName()}"></a></h6>
+												<div class="product_price">520.000Đ<span>590.000Đ</span></div>
 											</div>
 										</div>
 										<div class="red_button add_to_cart_button"><a href="#">Thêm vào giỏ</a></div>
 									</div>
 
-									
 								</div>
+
+
+
+<!--&lt;!&ndash;									-->
+
+
 
 								<!-- Product Sorting -->
 								<!-- <div class="product_sorting_container product_sorting_container_bottom clearfix">
