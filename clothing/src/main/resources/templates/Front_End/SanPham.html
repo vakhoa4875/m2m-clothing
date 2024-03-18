@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Colo Shop Categories</title>
 <meta charset="utf-8">
@@ -249,7 +249,7 @@
 									<div class="product-item accessories" >
 										<div class="product product_filter">
 											<div class="product_image">
-												<img src="/media/product/1-1.jpg" alt="">
+												<img th:src="@{../Front_End/images/banner_1.jpg}" alt="" >
 											</div>
 											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Giảm</span></div>
 											<div class="favorite favorite_left"></div>
