@@ -72,18 +72,15 @@
                   <form role="form" method="POST" th:action="@{/submitRegister}" th:object="${account}">
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Tên người dùng</label>
-                      <input type="text" class="form-control" name="username" th-field="*{username}"
-                        value="chauphat2111">
+                      <input type="text" class="form-control" name="username" th-field="*{username}">
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Email</label>
-                      <input type="email" class="form-control" name="email" th-field="*{email}"
-                        value="hieuphung2111@gmail.com">
+                      <input type="email" class="form-control" name="email" th-field="*{email}">
                     </div>
                     <div class="input-group input-group-outline mb-3">
                       <label class="form-label">Mật khẩu</label>
-                      <input type="password" class="form-control" name="hashedPassword" th-field="*{hashedPassword}"
-                        value="12345678">
+                      <input type="password" class="form-control" name="hashedPassword" th-field="*{hashedPassword}">
                     </div>
                     <!-- <div class="form-check form-check-info text-start ps-0">
                       <input class="form-check-input" type="checkbox" name="isAdmin" id="flexCheckDefault" th-field="*{isAdmin}">
