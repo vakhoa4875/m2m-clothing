@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Single Product</title>
 <meta charset="utf-8">
@@ -112,16 +112,19 @@
 						<div class="col-lg-3 thumbnails_col order-lg-1 order-2">
 							<div class="single_product_thumbnails">
 								<ul>
-									<li><img src="https://placehold.co/136x136/" alt=""></li>
-									<li class="active"><img src="https://placehold.co/136x136/" alt="" ></li>
-									<li><img src="https://placehold.co/136x136/" alt="" ></li>
+									<li><img th:src="@{'../media/'+ ${arraypictures[0]}}"  alt=""></li>
+									<li class="active"><img th:src="@{'../media/'+ ${arraypictures[1]}}"</li>
+									<li><img th:src="@{'../media/'+ ${arraypictures[2]}}"</li>
 								</ul>
 							</div>
 						</div>
 						<div class="col-lg-9 image_col order-lg-2 order-1">
 							<div class="single_product_image">
-								<div class="single_product_image_background" style="background-image:url(https://placehold.co/444x526/)"></div>
-							</div>
+								<div 	class="single_product_image_background" 
+										th:style="'background-image: url(\'../media/' + ${arraypictures[1]} + '\')'"></div>
+										<!-- Nếu ${arraypictures[1]} là "example.jpg", thì đoạn mã sẽ tạo ra một chuỗi CSS như sau:
+										 'background-image: url('../media/example.jpg')'.-->
+								</div>
 						</div>
 					</div>
 				</div>
@@ -129,14 +132,20 @@
 			<div class="col-lg-5">
 				<div class="product_details">
 					<div class="product_details_title">
-						<h2>Tên của sản phẩm</h2>
-						<p>Mổ tả ít ít về sản phẩm vì ở dưới có mô tả rồi </p>
+						<h2 th:text="${product.getProductName()}">Tên của sản phẩm</h2>
+						<p>
+							<ul>
+								<li th:each="description : ${descriptions}" th:text="${description}"></li>
+								
+							</ul>
+							 <!--Mổ tả ít ít về sản phẩm vì ở dưới có mô tả rồi-->
+						</p>
 					</div>
 					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
 						<span class="ti-truck"></span><span>Có miễn phí ship không </span>
 					</div>
-					<div class="original_price">600.000Đ</div>
-					<div class="product_price">495.000Đ</div>
+					<div class="original_price" th:text="${product.getPrice()+'$'}">600.000Đ</div>
+					<div class="product_price"th:text="${product.getPrice()+'$'}">495.000Đ</div>
 					<!-- số sao đánh giá có thể có hay không -->
 					<ul class="star_rating">
 						<li><i class="fa fa-star" aria-hidden="true"></i></li>

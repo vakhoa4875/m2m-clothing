@@ -20,4 +20,9 @@ public class ProductServiceImpl implements ProductService {
 		return repo.findAll();
 	}
 
+	@Override
+	public Product findByproductId(Integer id) {
+		return repo.findByproductId(id);
+	}
+
 }
