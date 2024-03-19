@@ -34,24 +34,21 @@ public class TestFuntionProduct {
 		
 		Product product = productServiceImpl.findByproductId(id);
 		model.addAttribute("product",product);
-
-// 		List<String> firstPictures = new ArrayList<>();
-//		 
-//		 
-// 		for (Product product : list) {
-// 			String pathPictures = product.getPictures();
-//			String[] arrayPictures = pathPictures.split(",");
-//			if(arrayPictures.length > 0) {
-//				firstPictures.add(arrayPictures[0]);
-//			}
-// 		}
-// 		model.addAttribute("firstimg",firstPictures); 
 		
 		String pathPitures = product.getPictures();
 		
 		String[] arrayPictures = pathPitures.split(",");
 		model.addAttribute("arraypictures",arrayPictures);
 		
+		String description = product.getDescription();
+		String[] arrayDescription = description.split("\\.");
+//		System.out.println(description);
+//		System.out.println("------------");
+		for(int i = 0 ; i < arrayDescription.length;i++) {
+			arrayDescription[i] = arrayDescription[i].replace("\"", "");
+		}
+		model.addAttribute("descriptions",arrayDescription);
+	
 		return "Front_End/ChiTietSanPham";
 	}
 	

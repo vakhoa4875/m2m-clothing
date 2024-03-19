@@ -122,6 +122,8 @@
 							<div class="single_product_image">
 								<div 	class="single_product_image_background" 
 										th:style="'background-image: url(\'../media/' + ${arraypictures[1]} + '\')'"></div>
+										<!-- Nếu ${arraypictures[1]} là "example.jpg", thì đoạn mã sẽ tạo ra một chuỗi CSS như sau:
+										 'background-image: url('../media/example.jpg')'.-->
 								</div>
 						</div>
 					</div>
@@ -131,13 +133,19 @@
 				<div class="product_details">
 					<div class="product_details_title">
 						<h2 th:text="${product.getProductName()}">Tên của sản phẩm</h2>
-						<p>Mổ tả ít ít về sản phẩm vì ở dưới có mô tả rồi </p>
+						<p>
+							<ul>
+								<li th:each="description : ${descriptions}" th:text="${description}"></li>
+								
+							</ul>
+							 <!--Mổ tả ít ít về sản phẩm vì ở dưới có mô tả rồi-->
+						</p>
 					</div>
 					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
 						<span class="ti-truck"></span><span>Có miễn phí ship không </span>
 					</div>
-					<div class="original_price">600.000Đ</div>
-					<div class="product_price">495.000Đ</div>
+					<div class="original_price" th:text="${product.getPrice()+'$'}">600.000Đ</div>
+					<div class="product_price"th:text="${product.getPrice()+'$'}">495.000Đ</div>
 					<!-- số sao đánh giá có thể có hay không -->
 					<ul class="star_rating">
 						<li><i class="fa fa-star" aria-hidden="true"></i></li>
