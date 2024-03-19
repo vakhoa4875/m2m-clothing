@@ -25,6 +25,16 @@ public class TestFuntionProduct {
 	public String testfuntionproduct(Model model) {
 			 
 		List<Product> list =   productServiceImpl.findAll();
+ 		model.addAttribute("products", list) ;
+		return "Front_End/SanPham";
+	}
+	
+	@GetMapping("/product/{id}")
+	public String getDetail(@PathVariable Integer id, Model model ) {
+		
+		Product product = productServiceImpl.findByproductId(id);
+		model.addAttribute("product",product);
+
 // 		List<String> firstPictures = new ArrayList<>();
 //		 
 //		 
@@ -36,19 +46,12 @@ public class TestFuntionProduct {
 //			}
 // 		}
 // 		model.addAttribute("firstimg",firstPictures); 
- 		
- 		model.addAttribute("products", list) ;
 		
- 		
-		return "Front_End/SanPham";
-	}
-	
-	@GetMapping("/product/{id}")
-	public String getDetail(@PathVariable Integer id, Model model ) {
+		String pathPitures = product.getPictures();
 		
-		Product product = productServiceImpl.findByproductId(id);
-		model.addAttribute("product",product);
-
+		String[] arrayPictures = pathPitures.split(",");
+		model.addAttribute("arraypictures",arrayPictures);
+		
 		return "Front_End/ChiTietSanPham";
 	}
 	
