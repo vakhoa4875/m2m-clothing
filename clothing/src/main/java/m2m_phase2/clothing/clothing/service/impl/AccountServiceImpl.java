@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.entity.Account;
+import m2m_phase2.clothing.clothing.entity.Password;
 import m2m_phase2.clothing.clothing.repository.AccountRepo;
 import m2m_phase2.clothing.clothing.service.AccountService;
 
@@ -62,6 +63,20 @@ public class AccountServiceImpl implements AccountService {
         int otpValue = 100000 + random.nextInt(900000);
         return String.valueOf(otpValue);
     }
+
+	@Override
+	public Account findByemail(String email) {
+		// TODO Auto-generated method stub
+		return repo.findByemail(email);
+	}
+
+	@Override
+	public Account findByusername(String username) {
+		// TODO Auto-generated method stub
+		return repo.findByusername(username);
+	}
+
+	
     
     
 
