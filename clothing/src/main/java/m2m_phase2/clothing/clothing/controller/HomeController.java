@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.entity.Account;
 import m2m_phase2.clothing.clothing.entity.Otp;
 import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
+import m2m_phase2.clothing.clothing.service.impl.UserServiceImpl;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Controller
@@ -21,6 +22,8 @@ public class HomeController {
 	private AccountServiceImpl accountServiceImpl;
 	@Autowired
 	private HttpSession session;
+	@Autowired
+	private UserServiceImpl userService;
 
 	@GetMapping("/register") // hàm phatteacher
 	public String getHome(Model model) {
@@ -79,6 +82,14 @@ public class HomeController {
 			return "Front_End/pages/sign-up";
 		}
 
+	}
+	
+	@GetMapping("/admin/user-management")
+	public String toUserManagement() {
+		
+		userService.isAdminAuth();
+		
+		return "Front_End/pages/User(Management)";
 	}
 
 }
