@@ -52,10 +52,7 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-	    return "Product{" +
-	            "productId=" + productId +
-	            ", productName='" + productName + '\'' +
-	            '}';
+	    return productName;
 	}
 	
 	public int getProductId() {
