@@ -3,6 +3,7 @@ package m2m_phase2.clothing.clothing.controller;
 import java.io.Console;
 import java.security.SecureRandom;
 
+import m2m_phase2.clothing.clothing.entity.Password;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import m2m_phase2.clothing.clothing.entity.Account;
 import m2m_phase2.clothing.clothing.entity.Otp;
 import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
+import m2m_phase2.clothing.clothing.service.impl.UserServiceImpl;
 
 @Controller
 public class HomeController {
@@ -24,6 +26,8 @@ public class HomeController {
 	private AccountServiceImpl accountServiceImpl;
 	@Autowired
 	private HttpSession session;
+	@Autowired
+	private UserServiceImpl userService;
 
 	@GetMapping("/login")
 	public String getLog(Model model) {
@@ -141,6 +145,106 @@ public class HomeController {
 
 		} else {
 			return "Front_End/pages/sign-up";
+		}
+
+	}
+
+
+	@GetMapping("/admin/login")
+	public String adminLogin(Model model) {
+		Account account = new Account();
+		model.addAttribute("account", account);
+		return "Front_End/pages/sign-in";
+	}
+
+	@GetMapping("/admin/user-management")
+	public String toUserManagement() {
+
+		if (!userService.isAdminAuth())
+			return "Front_End/pages/sign-in";
+
+		return "Front_End/pages/User(Management)";
+	}
+
+	// function of Tài
+	@GetMapping("/change-password")
+	public String changePassword() {
+
+		return "Front_End/pages/changePassword";
+	}
+
+	@GetMapping("/forgot-password")
+	public String forgotPassword(Model model) {
+		Account account = new Account();
+		model.addAttribute("accountForgot", account);
+		return "Front_End/pages/Forgotpassword";
+	}
+
+	@PostMapping("/submit-forgot-password")
+	public String ForgotPassword(@ModelAttribute("accountForgot") Account accountRequest, Model model) {
+
+		System.out.println(accountRequest.getUsername());
+		System.out.println(accountRequest.getEmail());
+		Otp otpForgot = new Otp();
+		model.addAttribute("otpForgot", otpForgot);
+		// Tạo email đưa vào session
+
+		if ((accountServiceImpl.findByemail(accountRequest.getEmail())) != null
+				&& accountServiceImpl.findByusername(accountRequest.getUsername()) != null) {
+
+			// Lưu email vào session
+			session.setAttribute("email", accountRequest.getEmail());
+			// tạo otp
+			String otp = accountServiceImpl.generateOTP();
+			// gửi otp đến email
+			accountServiceImpl.sendOTPEmail(accountRequest.getEmail(), otp);
+
+			session.setAttribute("otp", otp);
+
+			return "Front_End/pages/ConfirmPassword-Forgot";
+
+		} else {
+
+			return "Front_End/pages/Forgotpassword";
+
+		}
+	}
+
+	@PostMapping("/submit-forgot-password-otp")
+	public String ForgotPasswordOtp(Otp otp, Model model) {
+		Password password = new Password();
+		model.addAttribute("password", password);
+		String otpOne = otp.getOtp1() + otp.getOtp2() + otp.getOtp3() + otp.getOtp4() + otp.getOtp5() + otp.getOtp6();
+		String otpTwo = (String) session.getAttribute("otp");
+
+		if (otpOne.equals(otpTwo)) {
+			return "Front_End/pages/ConfirmPassword-Forgot-mk";
+		} else {
+			return "Front_End/pages/Forgotpassword";
+		}
+
+	}
+
+	@PostMapping("/submit-forgot-password-change")
+	public String ForgotPasswordCheck(@ModelAttribute("password") Password password, Model model) {
+
+		String passwordOne = password.getPasswordOne();
+		String passwordTwo = password.getPasswordTwo();
+
+		// Lấy email từ session
+		String email = (String) session.getAttribute("email");
+		Account account = accountServiceImpl.findByemail(email);
+
+		if (passwordOne.equalsIgnoreCase(passwordTwo) && account != null) {
+
+			String hashedPassword = PasswordEncoderUtil.encodePassword(passwordTwo);
+			account.setHashedPassword(hashedPassword);
+			accountServiceImpl.saveAccount(account);
+			System.out.println(hashedPassword);
+
+			return "Front_End/pages/sign-in";
+		} else {
+			return "Front_End/pages/ConfirmPassword-Forgot-mk";
 		}
 
 	}
