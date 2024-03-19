@@ -7,4 +7,6 @@ public interface AccountService {
 	Account saveAccount(Account account);
 	
 	Account findByEmail(String email);
+	
+	boolean isAdmin(Account account);
 }

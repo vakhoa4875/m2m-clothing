@@ -35,7 +35,11 @@ public class AccountServiceImpl implements AccountService {
 		return repo.findByEmail(email);
 	}
 	
-	
+    @Override
+	public boolean isAdmin(Account account) {
+		// TODO Auto-generated method stub
+    	return account != null && account.isAdmin();
+	}
 	
 //	public void sendOTPEmail(String toEmail, String otp) {
 //	    try {
@@ -56,7 +60,9 @@ public class AccountServiceImpl implements AccountService {
 	
 	
 
-    public void sendOTPEmail(String toEmail, String otp) {
+
+
+	public void sendOTPEmail(String toEmail, String otp) {
         try {
         	MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -83,7 +89,9 @@ public class AccountServiceImpl implements AccountService {
         return sessionOtp != null && sessionOtp.equals(otp);
     }
     
-    // Phương thức để tạo mã OTP ngẫu nhiên gồm 6 chữ số
+
+
+	// Phương thức để tạo mã OTP ngẫu nhiên gồm 6 chữ số
     public String generateOTP() {
         SecureRandom random = new SecureRandom();
         int otpValue = 100000 + random.nextInt(900000);

@@ -11,5 +11,7 @@ public interface AccountRepo extends JpaRepository<Account, Integer> {
 	 Account save(Account account);
 	 
 	 Account findByEmail(String email);
+	 
+	 boolean isAdmin(Account account);
 	
 }

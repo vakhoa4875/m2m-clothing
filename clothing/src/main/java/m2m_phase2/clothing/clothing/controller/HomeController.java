@@ -39,7 +39,8 @@ public class HomeController {
 	    // Lấy email và mật khẩu từ đối tượng accountRequest
 	    String email = accountRequest.getEmail();
 	    String password = accountRequest.getHashedPassword();
-	       
+	    
+	    
 	    // Kiểm tra xem tài khoản có tồn tại trong cơ sở dữ liệu không
 	    Account existingAccount = accountServiceImpl.findByEmail(email);
 	    
@@ -64,12 +65,26 @@ public class HomeController {
 	    session.setAttribute("loggedInUser", accountRequest.getEmail());
 	    System.out.println(session.getAttribute("loggedInUser"));
 	    // Chuyển hướng đến trang chính sau khi đăng nhập thành công
-	    return "Front_End/TrangChu";
-	    
-	    
-	    
+	    // Kiểm tra và xử lý vai trò admin
+	    if(accountServiceImpl.isAdmin(existingAccount)) {
+	        // Nếu là admin, chuyển hướng đến trang quản trị
+	        return "Front_End/pages/User(Management)"; // Điều hướng đến trang quản trị
+	    } else {
+	        // Nếu không phải admin, chuyển hướng đến trang chính
+	        return "Front_End/TrangChu"; // Điều hướng đến trang người dùng
+	    }
 	}
 	
+	
+	@GetMapping("/admin")
+	public String logAdmin(Model model) {
+
+		Account accountlog = new Account();
+		model.addAttribute("accountlog", accountlog);
+		System.out.println(session.getAttribute("loggedInUser"));
+		return "Front_End/pages/sign-in";
+
+	}
 	
 	
 	@GetMapping("/register") // hàm phatteacher
