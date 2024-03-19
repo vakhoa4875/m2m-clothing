@@ -33,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public Account findByEmail(String email) {
 		// TODO Auto-generated method stub
-		return repo.findByEmail(email);
+		return repo.findByemail(email);
 	}
 	
     @Override
