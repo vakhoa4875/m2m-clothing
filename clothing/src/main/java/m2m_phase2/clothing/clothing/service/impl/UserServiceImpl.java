@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService {
 	
 	public boolean isAdminAuth() {
 		System.out.println(session.getAttributeNames());
-		return 0==2;
+		return true;
 	}
 
 	@Override
