@@ -8,4 +8,7 @@ public interface AccountService {
 	Account findByemail(String email);
 	Account findByusername(String username);
 	
+	Account findByEmail(String email);
+	
+	boolean isAdmin(Account account);
 }
