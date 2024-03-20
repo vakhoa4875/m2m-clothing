@@ -3,6 +3,7 @@ package m2m_phase2.clothing.clothing.entity;
 public class Password {
 	private String passwordOne;
     private String passwordTwo;
+    private String passwordThree;
 	public String getPasswordOne() {
 		return passwordOne;
 	}
@@ -15,5 +16,15 @@ public class Password {
 	public void setPasswordTwo(String passwordTwo) {
 		this.passwordTwo = passwordTwo;
 	}
+	public String getPasswordThree() {
+		return passwordThree;
+	}
+	public void setPasswordThree(String passwordThree) {
+		this.passwordThree = passwordThree;
+	}
+
+	
+	
+	
     
 }
