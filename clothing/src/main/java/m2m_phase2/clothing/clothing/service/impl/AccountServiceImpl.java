@@ -24,13 +24,46 @@ public class AccountServiceImpl implements AccountService {
     @Autowired
     private HttpSession session;
 
-    @Override
-    public Account saveAccount(Account account) {
-        // TODO Auto-generated method stub
-        return repo.save(account);
-    }
+	@Override
+	public Account saveAccount(Account account) {
+		// TODO Auto-generated method stub
+		return repo.save(account);
+	}
 
-    public void sendOTPEmail(String toEmail, String otp) {
+	@Override
+	public Account findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return repo.findByemail(email);
+	}
+	
+    @Override
+	public boolean isAdmin(Account account) {
+		// TODO Auto-generated method stub
+    	return account != null && account.isAdmin();
+	}
+	
+//	public void sendOTPEmail(String toEmail, String otp) {
+//	    try {
+//	        MimeMessage message = emailSender.createMimeMessage();
+//	        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+//
+//	        helper.setFrom("your_email_address@gmail.com");
+//	        helper.setTo(toEmail);
+//	        helper.setSubject("Mã OTP cho đăng ký tài khoản");
+//	        helper.setText("Mã OTP của bạn là: " + otp);
+//
+//	        emailSender.send(message);
+//	    } catch (Exception e) {
+//	        e.printStackTrace();
+//	        // Xử lý lỗi khi gửi email
+//	    }
+//	}
+	
+	
+
+
+
+	public void sendOTPEmail(String toEmail, String otp) {
         try {
         	MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -57,7 +90,9 @@ public class AccountServiceImpl implements AccountService {
         return sessionOtp != null && sessionOtp.equals(otp);
     }
     
-    // Phương thức để tạo mã OTP ngẫu nhiên gồm 6 chữ số
+
+
+	// Phương thức để tạo mã OTP ngẫu nhiên gồm 6 chữ số
     public String generateOTP() {
         SecureRandom random = new SecureRandom();
         int otpValue = 100000 + random.nextInt(900000);
