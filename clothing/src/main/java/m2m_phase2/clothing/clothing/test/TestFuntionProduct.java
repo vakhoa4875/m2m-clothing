@@ -36,14 +36,11 @@ public class TestFuntionProduct {
 		model.addAttribute("product",product);
 		
 		String pathPitures = product.getPictures();
-		
 		String[] arrayPictures = pathPitures.split(",");
 		model.addAttribute("arraypictures",arrayPictures);
 		
 		String description = product.getDescription();
 		String[] arrayDescription = description.split("\\.");
-//		System.out.println(description);
-//		System.out.println("------------");
 		for(int i = 0 ; i < arrayDescription.length;i++) {
 			arrayDescription[i] = arrayDescription[i].replace("\"", "");
 		}
