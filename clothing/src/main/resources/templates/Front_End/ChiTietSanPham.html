@@ -148,6 +148,12 @@
 					<div class="product_price"th:text="${product.getPrice()+'$'}">495.000Đ</div>
 					<!-- số sao đánh giá có thể có hay không -->
 					<ul class="star_rating">
+					    <li th:each="i : ${#numbers.sequence(1, 5)}">
+					        <i th:class="${i &lt;= stars} ? 'fa fa-star' : 'fa fa-star-o'" aria-hidden="true"></i>
+					    </li>
+					</ul>
+					
+					<ul class="star_rating">
 						<li><i class="fa fa-star" aria-hidden="true"></i></li>
 						<li><i class="fa fa-star" aria-hidden="true"></i></li>
 						<li><i class="fa fa-star" aria-hidden="true"></i></li>
