@@ -10,5 +10,5 @@ public interface AccountService {
 	
 	Account findByEmail(String email);
 	
-	boolean isAdmin(Account account);
+	boolean isDisable(Account account);
 }
