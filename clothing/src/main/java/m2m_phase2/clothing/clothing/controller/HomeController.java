@@ -155,39 +155,7 @@ public class HomeController {
 
 	}
 
-	@GetMapping("/admin/login")
-	public String adminLogin(Model model) {
 
-		Account account = new Account();
-		model.addAttribute("accadmin", account);
-
-		return "Front_End/pages/sign-in-admin";
-	}
-
-	@PostMapping("/admin/loginPost")
-	public String adminLoginPost(@ModelAttribute("accadmin") Account account){
-
-
-//		Account account = accountServiceImpl.findByEmail((email));
-//		System.out.println(account.getUsername());
-//		if (account.isAdmin() == true){
-//			return "Front_End/pages/User(Management)";
-//		}else {
-//			model.addAttribute("thongbao", "Tài khoản của bạn không đủ quyền để truy cập vào trang này");
-//			model.addAttribute("authorities",true);
-//
-//		}
-		return "Front_End/pages/User(Management)";
-	}
-
-	@GetMapping("/admin/user-management")
-	public String toUserManagement() {
-
-		if (!userService.isAdminAuth())
-			return "Front_End/pages/sign-in";
-
-		return "Front_End/pages/User(Management)";
-	}
 
 	// function of Tài
 	@GetMapping("/change-password")
@@ -195,7 +163,7 @@ public class HomeController {
 		Password password = new Password();
 		model.addAttribute("passwordChange", password);
 
-		return "Front_End/pages/changePassword";
+		return "Front_End/pages/change	Password";
 	}
 
 	@PostMapping("/submit-change-password")
