@@ -12,8 +12,9 @@ import m2m_phase2.clothing.clothing.entity.Userinfo;
 public interface UserService {
 
 	void deleteById(Integer id);
-	
+
 	Map<Account, Userinfo> getAll();
 
-	Userinfo save(Userinfo entity);
+	void save(Account acc, Userinfo info);
+
 }
