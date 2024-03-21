@@ -8,7 +8,7 @@ go
 INSERT INTO Account (username, email, hashed_password, is_admin)
 VALUES ('john.doe', 'john.doe@example.com', 'your_hashed_password1', 0),
        ('jane.smith', 'jane.smith@example.com', 'your_hashed_password2', 0),
-       ('admin', 'admin@m2m_clothing.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 1),
+       ('admin', 'admin@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 1),
 	   ('site_user', 'abc@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 0);
 
 
