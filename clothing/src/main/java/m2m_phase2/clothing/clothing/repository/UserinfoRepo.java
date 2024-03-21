@@ -10,10 +10,6 @@ import m2m_phase2.clothing.clothing.entity.Userinfo;
 @Repository
 public interface UserinfoRepo extends JpaRepository<Userinfo, Integer> {
 
-	void delete(Userinfo entity);
-	
-	void deleteById(Integer id);
-
 	List<Userinfo> findAll();
 
 	@SuppressWarnings("unchecked")
