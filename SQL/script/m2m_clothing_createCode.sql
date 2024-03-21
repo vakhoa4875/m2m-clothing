@@ -16,15 +16,10 @@ CREATE TABLE Account (
   username nvarchar(63) NOT NULL unique,
   email varchar(255) NOT NULL unique,
   hashed_password varchar(255) NOT NULL,
+  is_disable bit default 0,
   is_admin bit
 );
 
-CREATE TABLE Category (
-  category_id int IDENTITY(1,1) PRIMARY KEY,
-  category_name nvarchar(63) NOT NULL unique,
-  logo varchar(255),
-  description nvarchar(300)
-);
 
 CREATE TABLE Userinfo (
   user_id int PRIMARY KEY,
@@ -35,6 +30,13 @@ CREATE TABLE Userinfo (
   description nvarchar(300),
   job_title nvarchar(63),
   FOREIGN KEY (user_id) REFERENCES Account(user_id)
+);
+
+CREATE TABLE Category (
+  category_id int IDENTITY(1,1) PRIMARY KEY,
+  category_name nvarchar(63) NOT NULL unique,
+  logo varchar(255),
+  description nvarchar(300)
 );
 
 

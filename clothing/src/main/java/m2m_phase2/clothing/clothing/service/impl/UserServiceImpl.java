@@ -33,13 +33,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteById(Integer id) {
-		in4Repo.deleteById(id);
-		accRepo.deleteById(id);
+		Account acc = accRepo.findByuserId(id);
+		acc.setDisable(true);
+		accRepo.save(acc);
 	}
 
 	@Override
-	public Userinfo save(Userinfo entity) {
-		return in4Repo.save(entity);
+	public void save(Account acc, Userinfo info) {
+		accRepo.save(acc);
+		in4Repo.save(info);
 	}
 
 	@Override

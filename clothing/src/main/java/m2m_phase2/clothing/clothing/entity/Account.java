@@ -39,8 +39,19 @@ public class Account implements Serializable {
 	@Column(name = "is_admin")
 	private boolean isAdmin;
 
+	@Column(name = "is_disable")
+	private boolean isDisable;
+
 	@OneToOne(mappedBy = "account")
 	private Userinfo userinfo;
+
+	public boolean isDisable() {
+		return isDisable;
+	}
+
+	public void setDisable(boolean isDisable) {
+		this.isDisable = isDisable;
+	}
 
 	public int getUserId() {
 		return userId;
@@ -94,5 +105,4 @@ public class Account implements Serializable {
 		return serialVersionUID;
 	}
 
-	
 }
