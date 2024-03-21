@@ -16,7 +16,7 @@ import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Controller
 public class RegisterController {
-	
+
 	@Autowired
 	private AccountServiceImpl accountServiceImpl;
 	@Autowired
@@ -35,31 +35,48 @@ public class RegisterController {
 
 	@PostMapping("/submitRegister") // hàm phatteacher
 	public String submitRegister(@ModelAttribute("account") Account accountRequest, Model model) {
+		String username = accountRequest.getUsername();
+		String email = accountRequest.getEmail();
+		String password = accountRequest.getHashedPassword();
 
-		session.setAttribute("acc", accountRequest);
-		
-		
+		if (username.equals("") || email.equals("") || password.equals("")) {
+			String messError = "Please fill in complete information";
+			model.addAttribute("messError", messError);
+			return "Front_End/pages/sign-up";
+		} else {
 
-		// Tạo mã OTP ngẫu nhiên gồm 6 chữ số
-		String otp = accountServiceImpl.generateOTP();
+			session.setAttribute("acc", accountRequest);
 
-		// Gửi mã OTP qua email
-		accountServiceImpl.sendOTPEmail(accountRequest.getEmail(), otp);
+			// Tạo mã OTP ngẫu nhiên gồm 6 chữ số
+			String otp = accountServiceImpl.generateOTP();
 
-		// Lưu mã OTP vào session để kiểm tra xác thực sau này
-		session.setAttribute("otp", otp);
-		session.setAttribute("email", accountRequest.getEmail());
+			// Gửi mã OTP qua email
+			accountServiceImpl.sendOTPEmail(accountRequest.getEmail(), otp);
 
-		// tạo entity otp
-		Otp otpNhap = new Otp();
-		model.addAttribute("otpNhap", otpNhap);
+			// Lưu mã OTP vào session để kiểm tra xác thực sau này
+			session.setAttribute("otp", otp);
+			session.setAttribute("email", accountRequest.getEmail());
 
-		return "Front_End/pages/ConfirmPassword-signup";
+			// tạo entity otp
+			Otp otpNhap = new Otp();
+			model.addAttribute("otpNhap", otpNhap);
+
+			return "Front_End/pages/ConfirmPassword-signup";
+		}
 
 	}
 
 	@PostMapping("/otp") // hàm phatteacher
 	public String otp(@ModelAttribute("otp") Otp otp, Model model) {
+
+		if (otp.getOtp1().equals("") || otp.getOtp2().equals("") || otp.getOtp3().equals("") || otp.getOtp4().equals("")
+				|| otp.getOtp5().equals("") || otp.getOtp6().equals("")) {
+			
+			String messError = "Please fill in complete otp";
+			model.addAttribute("messError", messError);
+			return "Front_End/pages/ConfirmPassword-signup";
+
+		}
 
 		// lấy account người dùng nhập ở trang đăng kí
 		Account accountSession = (Account) session.getAttribute("acc");
@@ -67,6 +84,7 @@ public class RegisterController {
 		// lấy otp người dùng nhập vào
 		String enteredOTP = otp.getOtp1() + otp.getOtp2() + otp.getOtp3() + otp.getOtp4() + otp.getOtp5()
 				+ otp.getOtp6();
+
 		// lấy otp ở trong session
 		String sessionOTP = (String) session.getAttribute("otp");
 
@@ -81,9 +99,9 @@ public class RegisterController {
 			return "Front_End/pages/sign-in";
 
 		} else {
-			return "Front_End/pages/sign-up";
+			return "Front_End/pages/ConfirmPassword-signup";
 		}
 
 	}
-	
+
 }
