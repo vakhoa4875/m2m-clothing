@@ -40,7 +40,6 @@ public class HomeController {
 
 		Account accountlog = new Account();
 		model.addAttribute("accountlog", accountlog);
-		System.out.println(session.getAttribute("loggedInUser"));
 		return "Front_End/pages/sign-in";
 	}
 
@@ -70,18 +69,22 @@ public class HomeController {
 			return "Front_End/pages/sign-in";
 		}
 
+		// Chuyển hướng đến trang chính sau khi đăng nhập thành công
+		// Kiểm tra và xử lý vai trò admin
+	    // Kiểm tra xem tài khoản có bị vô hiệu hóa không
+	    if (accountServiceImpl.isDisable(existingAccount)) {
+	        // Nếu tài khoản bị vô hiệu hóa, chuyển hướng đến trang thông báo
+	        model.addAttribute("error", "Tài khoản của bạn tạm thời bị vô hiệu hóa");
+	        return "Front_End/pages/sign-in";
+	    }
+	    
+	    
 		// Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
 		session.setAttribute("loggedInUser", accountRequest.getEmail());
 		System.out.println(session.getAttribute("loggedInUser"));
-		// Chuyển hướng đến trang chính sau khi đăng nhập thành công
-		// Kiểm tra và xử lý vai trò admin
-		if (accountServiceImpl.isAdmin(existingAccount)) {
-			// Nếu là admin, chuyển hướng đến trang quản trị
-			return "Front_End/pages/User(Management)"; // Điều hướng đến trang quản trị
-		} else {
-			// Nếu không phải admin, chuyển hướng đến trang chính
-			return "Front_End/TrangChu"; // Điều hướng đến trang người dùng
-		}
+			return "Front_End/TrangChu";
+		
+		
 	}
 
 	@GetMapping("/admin")
