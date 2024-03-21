@@ -24,7 +24,6 @@ public class ForgotPass {
 	@Autowired
 	private UserServiceImpl userService;
 
-	
 	@GetMapping("/forgot-password")
 	public String forgotPassword(Model model) {
 		Account account = new Account();
@@ -52,34 +51,42 @@ public class ForgotPass {
 			accountServiceImpl.sendOTPEmail(accountRequest.getEmail(), otp);
 
 			session.setAttribute("otp", otp);
-			
+
 			return "Front_End/pages/ConfirmPassword-Forgot";
 
 		} else {
 //			Thông báo ra lỗi
-			String errorChangePass = "Email này không tồn tại !";
-			System.out.println("Email này không tồn tại !");
+			String errorChangePass = "Email hoặc tên người dùng này không tồn tại !";
+			System.out.println("Email hoặc tên người dùng này không tồn tại !");
 			model.addAttribute("errorChangePass", errorChangePass);
 
-			
 			return "Front_End/pages/Forgotpassword";
 
 		}
 	}
 
 	@PostMapping("/submit-forgot-password-otp")
-	public String ForgotPasswordOtp(@ModelAttribute("otpForgot")Otp otp, Model model) {
+	public String ForgotPasswordOtp(@ModelAttribute("otpForgot") Otp otp, Model model) {
 		Password password = new Password();
 		model.addAttribute("password", password);
 		String otpOne = otp.getOtp1() + otp.getOtp2() + otp.getOtp3() + otp.getOtp4() + otp.getOtp5() + otp.getOtp6();
 		String otpTwo = (String) session.getAttribute("otp");
 
-		if (otpOne.equals(otpTwo)) {
-			return "Front_End/pages/ConfirmPassword-Forgot-mk";
+		if (!(otp.getOtp1().equals("") || otp.getOtp2().equals("") || otp.getOtp3().equals("") || otp.getOtp4().equals("")
+				|| otp.getOtp5().equals("") || otp.getOtp5().equals(""))) {
+			if (otpOne.equals(otpTwo)) {
+				return "Front_End/pages/ConfirmPassword-Forgot-mk";
+			} else {
+//				Thông báo ra lỗi
+				String errorChangePass = "OTP này không  đúng !";
+				System.out.println("OTP này không  đúng !");
+				model.addAttribute("errorChangePass", errorChangePass);
+				return "Front_End/pages/ConfirmPassword-Forgot";
+			}
 		} else {
 //			Thông báo ra lỗi
-			String errorChangePass = "OTP này không  đúng !";
-			System.out.println("OTP này không  đúng !");
+			String errorChangePass = "Không được để trống !";
+			System.out.println("Không được để trống !");
 			model.addAttribute("errorChangePass", errorChangePass);
 			return "Front_End/pages/ConfirmPassword-Forgot";
 		}
@@ -105,7 +112,7 @@ public class ForgotPass {
 
 			return "Front_End/pages/sign-in";
 		} else {
-			
+
 //			Thông báo ra lỗi
 			String errorChangePass = " Pass không hợp lệ   ";
 			System.out.println("Pass không hợp lệ");
