@@ -108,6 +108,8 @@ public class HomeController {
 	public String submitRegister(@ModelAttribute("account") Account accountRequest, Model model) {
 
 		session.setAttribute("acc", accountRequest);
+		
+		
 
 		// Tạo mã OTP ngẫu nhiên gồm 6 chữ số
 		String otp = accountServiceImpl.generateOTP();
