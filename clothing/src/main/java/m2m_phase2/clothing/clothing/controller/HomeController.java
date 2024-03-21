@@ -155,21 +155,7 @@ public class HomeController {
 
 	}
 
-	@GetMapping("/admin/login")
-	public String adminLogin(Model model) {
-		Account account = new Account();
-		model.addAttribute("account", account);
-		return "Front_End/pages/sign-in-admin";
-	}
 
-	@GetMapping("/admin/user-management")
-	public String toUserManagement() {
-
-		if (!userService.isAdminAuth())
-			return "Front_End/pages/sign-in";
-
-		return "Front_End/pages/User(Management)";
-	}
 
 	// function of Tài
 	@GetMapping("/change-password")
@@ -177,7 +163,7 @@ public class HomeController {
 		Password password = new Password();
 		model.addAttribute("passwordChange", password);
 
-		return "Front_End/pages/changePassword";
+		return "Front_End/pages/change	Password";
 	}
 
 	@PostMapping("/submit-change-password")
