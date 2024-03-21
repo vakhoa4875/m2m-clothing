@@ -46,9 +46,9 @@ public class ProductServiceImpl implements ProductService {
 		}else if(sold < 1000000) {
 			return String.format("%.1fK", sold/1000.0);
 		}else if(sold < 1000000000) {
-			return String.format("%1.fM", sold/1000000.0);
+			return String.format("%.1fM", sold/1000000.0);
 		}else {
-			return String.format("%1.fB", sold/1000000000.0);			
+			return String.format("%.1fB", sold/1000000000.0);			
 		}
 	}
 	
