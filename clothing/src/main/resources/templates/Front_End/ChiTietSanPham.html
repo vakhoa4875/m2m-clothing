@@ -115,6 +115,12 @@
 									<li th:each=" pictures , index : ${arraypictures}" style="overflow: hidden" height="auto" width="136px">
 										<img th:src="@{'../media/'+ ${arraypictures[__${index.index}__]}}" width="auto" style="display: block; height: auto"  alt="">
 									</li>
+									<li th:if="${checkemply}">
+										<video controls>
+										  <source th:src="'../media/'+ ${product.getVideos()}" type="video/mp4">
+										  Your browser does not support the video tag.
+										</video>
+									</li>
 									<!--
 										<li><img th:src="@{'../media/'+ ${arraypictures[0]}}"  alt=""></li>
 										<li class="active"><img th:src="@{'../media/'+ ${arraypictures[1]}}"</li>
@@ -161,11 +167,7 @@
 					
 					<ul class="star_rating">
 						<div th:utext="${average_rate}">
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+						
 					</ul>
 					<div class="product_color">
 						<span>Select Color:</span>

@@ -67,5 +67,16 @@ public class ProductServiceImpl implements ProductService {
 		
 		return htmlStar.toString();
 	}
+	
+	public boolean checkEmply (Product product) {
+		if(product.getVideos() != null) {
+			if(product.getVideos().length()<0) {
+				return false;
+			}else {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }
