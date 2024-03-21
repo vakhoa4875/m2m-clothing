@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Single Product</title>
+<title>Sản phẩm chi tiết</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Colo Shop Template">
@@ -112,16 +112,21 @@
 						<div class="col-lg-3 thumbnails_col order-lg-1 order-2">
 							<div class="single_product_thumbnails">
 								<ul>
-									<li><img th:src="@{'../media/'+ ${arraypictures[0]}}"  alt=""></li>
-									<li class="active"><img th:src="@{'../media/'+ ${arraypictures[1]}}"</li>
-									<li><img th:src="@{'../media/'+ ${arraypictures[2]}}"</li>
+									<li th:each=" pictures , index : ${arraypictures}" style="overflow: hidden" height="auto" width="136px">
+										<img th:src="@{'../media/'+ ${arraypictures[__${index.index}__]}}" width="auto" style="display: block; height: auto"  alt="">
+									</li>
+									<!--
+										<li><img th:src="@{'../media/'+ ${arraypictures[0]}}"  alt=""></li>
+										<li class="active"><img th:src="@{'../media/'+ ${arraypictures[1]}}"</li>
+										<li><img th:src="@{'../media/'+ ${arraypictures[2]}}"</li>
+									-->
 								</ul>
 							</div>
 						</div>
 						<div class="col-lg-9 image_col order-lg-2 order-1">
 							<div class="single_product_image">
-								<div 	class="single_product_image_background" 
-										th:style="'background-image: url(\'../media/' + ${arraypictures[1]} + '\')'"></div>
+								<div 	class="single_product_image_background"
+										th:style="'background-image: url(\'../media/' + ${arraypictures[1]} + '\')'" ></div>
 										<!-- Nếu ${arraypictures[1]} là "example.jpg", thì đoạn mã sẽ tạo ra một chuỗi CSS như sau:
 										 'background-image: url('../media/example.jpg')'.-->
 								</div>
@@ -147,6 +152,14 @@
 					<div class="original_price" th:text="${product.getPrice()+'$'}">600.000Đ</div>
 					<div class="product_price"th:text="${product.getPrice()+'$'}">495.000Đ</div>
 					<!-- số sao đánh giá có thể có hay không -->
+					<!--
+						<ul class="star_rating">
+						    <li th:each="i : ${#numbers.sequence(1, 5)}">
+						        <i th:class="${i &lt;= stars} ? 'fa fa-star' : 'fa fa-star-o'" aria-hidden="true"></i>
+						    </li>
+						</ul>
+					-->
+					
 					<ul class="star_rating">
 						<li><i class="fa fa-star" aria-hidden="true"></i></li>
 						<li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -211,26 +224,35 @@
 								</div>
 								<div class="tab_text_block">
 									<h2>Tiêu đề mô ta</h2>
+									<ul>
+										<li th:each="description : ${descriptions}" th:text="${description}"></li>
+									</ul>
 									<p>Mô tả nhỏ nhỏ như bên trên bê xuống đây</p>
 								</div>
 								<div class="tab_image">
-									<img src="https://placehold.co/444x626/" alt="">
+									<img th:src="@{'../media/'+ ${arraypictures[0]}}"  alt="">
 								</div>
 								<div class="tab_text_block">
 									<h2>Tiêu đề mô tả</h2>
+									<ul>
+										<li th:each="description : ${descriptions}" th:text="${description}"></li>
+									</ul>
 									<p>Mô tả nhỏ nhỏ</p>
 								</div>
 							</div>
 							<div class="col-lg-5 offset-lg-2 desc_col">
 								<div class="tab_image">
-									<img src="https://placehold.co/444x626/" alt="">
+									<img th:src="@{'../media/'+ ${arraypictures[1]}}"  alt="">
 								</div>
 								<div class="tab_text_block">
 									<h2>Tiêu đề mô tả</h2>
+									<ul>
+										<li th:each="description : ${descriptions}" th:text="${description}"></li>
+									</ul>
 									<p>Mô tả nhỏ nhỏ</p>
 								</div>
 								<div class="tab_image desc_last">
-									<img src="https://placehold.co/444x626/" alt="">
+									<img th:src="@{'../media/'+ ${arraypictures[2]}}"  alt="">
 								</div>
 							</div>
 						</div>

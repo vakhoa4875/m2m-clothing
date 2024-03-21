@@ -6,17 +6,17 @@ import org.springframework.stereotype.Repository;
 import m2m_phase2.clothing.clothing.entity.Account;
 import java.util.List;
 
-
 @Repository
 public interface AccountRepo extends JpaRepository<Account, Integer> {
 
-	 Account save(Account account);
-	 
+	Account save(Account account);
 
-	 
-	 boolean isAdmin(Account account);
-	 Account findByemail(String email);
-	 Account findByusername(String username);
+	boolean isAdmin(Account account);
 
-	
+	Account findByemail(String email);
+
+	Account findByusername(String username);
+
+	Account findByuserId(Integer id);
+
 }
