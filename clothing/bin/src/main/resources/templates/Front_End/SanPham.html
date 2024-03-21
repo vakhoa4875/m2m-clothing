@@ -1,19 +1,19 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Colo Shop Categories</title>
+<title>Sản phẩm</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Colo Shop Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-<link rel="stylesheet" type="text/css" href="plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="styles/categories_styles.css">
-<link rel="stylesheet" type="text/css" href="styles/categories_responsive.css">
+<link rel="stylesheet" type="text/css" href="/styles/bootstrap4/bootstrap.min.css">
+<link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" type="text/css" href="/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="/styles/categories_styles.css">
+<link rel="stylesheet" type="text/css" href="/styles/categories_responsive.css">
 </head>
 
 <body>
@@ -243,26 +243,32 @@
 								<!-- Product Grid -->
 
 								<div class="product-grid">
-
 									<!-- Product 1 -->
+									<a th:each="product: ${products}" th:href="@{'/product/'+${product.getProductId}}">
+										<div class="product-item accessories"   >
+											<div class="product product_filter">
+												<div class="img-thumbnail" style="overflow: hidden" height="235px" width="235px">
+													<img loading="lazy" th:src="@{'../media/'+ ${#strings.substring(product.pictures, 0, #strings.indexOf(product.pictures, ','))}}" width="auto" style="display: block; height: 235px"  alt="">
+												</div>
+												<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Giảm</span></div>
+												<div class="favorite favorite_left"></div>
+												<div class="product_info">
+													<h6 class="product_name"><a href="single.html" th:text="${product.getProductName()}"></a></h6>
+													<div class="product_price" th:text="${product.getPrice() + '$'}"><span>590.000Đ</span></div>
+												</div>
 
-									<div class="product-item accessories">
-										<div class="product product_filter">
-											<div class="product_image">
-												<img src="https://placehold.co/235x235/" alt="">
 											</div>
-											<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Giảm</span></div>
-											<div class="favorite favorite_left"></div>
-											<div class="product_info">
-												<h6 class="product_name"><a href="single.html">Thông tin sản phẩm</a></h6>
-												<div class="product_price">520.000Đ<span>590.000Đ</span></div>
-											</div>
+											<div class="red_button add_to_cart_button"><a href="#">Thêm vào giỏ</a></div>
 										</div>
-										<div class="red_button add_to_cart_button"><a href="#">Thêm vào giỏ</a></div>
-									</div>
-
-									
+										
+									</a>
 								</div>
+
+
+
+<!--&lt;!&ndash;									-->
+
+
 
 								<!-- Product Sorting -->
 								<!-- <div class="product_sorting_container product_sorting_container_bottom clearfix">
@@ -431,14 +437,14 @@
 
 </div>
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-<script src="js/categories_custom.js"></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/styles/bootstrap4/popper.js"></script>
+<script src="/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="/plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="/plugins/easing/easing.js"></script>
+<script src="/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="/js/categories_custom.js"></script>
 </body>
 
 </html>

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-<title>Single Product</title>
+<title>Sản phẩm chi tiết</title>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="description" content="Colo Shop Template">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" type="text/css" href="styles/bootstrap4/bootstrap.min.css">
-<link href="plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-<link rel="stylesheet" type="text/css" href="plugins/OwlCarousel2-2.2.1/animate.css">
-<link rel="stylesheet" href="plugins/themify-icons/themify-icons.css">
-<link rel="stylesheet" type="text/css" href="plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="styles/single_styles.css">
-<link rel="stylesheet" type="text/css" href="styles/single_responsive.css">
+<link rel="stylesheet" type="text/css" href="/styles/bootstrap4/bootstrap.min.css">
+<link href="/plugins/font-awesome-4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+<link rel="stylesheet" type="text/css" href="/plugins/OwlCarousel2-2.2.1/animate.css">
+<link rel="stylesheet" href="/plugins/themify-icons/themify-icons.css">
+<link rel="stylesheet" type="text/css" href="/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="/styles/single_styles.css">
+<link rel="stylesheet" type="text/css" href="/styles/single_responsive.css">
 </head>
 
 <body>
@@ -112,16 +112,24 @@
 						<div class="col-lg-3 thumbnails_col order-lg-1 order-2">
 							<div class="single_product_thumbnails">
 								<ul>
-									<li><img src="https://placehold.co/136x136/" alt=""></li>
-									<li class="active"><img src="https://placehold.co/136x136/" alt="" ></li>
-									<li><img src="https://placehold.co/136x136/" alt="" ></li>
+									<li th:each=" pictures , index : ${arraypictures}" style="overflow: hidden" height="auto" width="136px">
+										<img th:src="@{'../media/'+ ${arraypictures[__${index.index}__]}}" width="auto" style="display: block; height: auto"  alt="">
+									</li>
+									<!--
+										<li><img th:src="@{'../media/'+ ${arraypictures[0]}}"  alt=""></li>
+										<li class="active"><img th:src="@{'../media/'+ ${arraypictures[1]}}"</li>
+										<li><img th:src="@{'../media/'+ ${arraypictures[2]}}"</li>
+									-->
 								</ul>
 							</div>
 						</div>
 						<div class="col-lg-9 image_col order-lg-2 order-1">
 							<div class="single_product_image">
-								<div class="single_product_image_background" style="background-image:url(https://placehold.co/444x526/)"></div>
-							</div>
+								<div 	class="single_product_image_background"
+										th:style="'background-image: url(\'../media/' + ${arraypictures[1]} + '\')'" ></div>
+										<!-- Nếu ${arraypictures[1]} là "example.jpg", thì đoạn mã sẽ tạo ra một chuỗi CSS như sau:
+										 'background-image: url('../media/example.jpg')'.-->
+								</div>
 						</div>
 					</div>
 				</div>
@@ -129,15 +137,29 @@
 			<div class="col-lg-5">
 				<div class="product_details">
 					<div class="product_details_title">
-						<h2>Tên của sản phẩm</h2>
-						<p>Mổ tả ít ít về sản phẩm vì ở dưới có mô tả rồi </p>
+						<h2 th:text="${product.getProductName()}">Tên của sản phẩm</h2>
+						<p>
+							<ul>
+								<li th:each="description : ${descriptions}" th:text="${description}"></li>
+								
+							</ul>
+							 <!--Mổ tả ít ít về sản phẩm vì ở dưới có mô tả rồi-->
+						</p>
 					</div>
 					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
 						<span class="ti-truck"></span><span>Có miễn phí ship không </span>
 					</div>
-					<div class="original_price">600.000Đ</div>
-					<div class="product_price">495.000Đ</div>
+					<div class="original_price" th:text="${product.getPrice()+'$'}">600.000Đ</div>
+					<div class="product_price"th:text="${product.getPrice()+'$'}">495.000Đ</div>
 					<!-- số sao đánh giá có thể có hay không -->
+					<!--
+						<ul class="star_rating">
+						    <li th:each="i : ${#numbers.sequence(1, 5)}">
+						        <i th:class="${i &lt;= stars} ? 'fa fa-star' : 'fa fa-star-o'" aria-hidden="true"></i>
+						    </li>
+						</ul>
+					-->
+					
 					<ul class="star_rating">
 						<li><i class="fa fa-star" aria-hidden="true"></i></li>
 						<li><i class="fa fa-star" aria-hidden="true"></i></li>
@@ -202,26 +224,35 @@
 								</div>
 								<div class="tab_text_block">
 									<h2>Tiêu đề mô ta</h2>
+									<ul>
+										<li th:each="description : ${descriptions}" th:text="${description}"></li>
+									</ul>
 									<p>Mô tả nhỏ nhỏ như bên trên bê xuống đây</p>
 								</div>
 								<div class="tab_image">
-									<img src="https://placehold.co/444x626/" alt="">
+									<img th:src="@{'../media/'+ ${arraypictures[0]}}"  alt="">
 								</div>
 								<div class="tab_text_block">
 									<h2>Tiêu đề mô tả</h2>
+									<ul>
+										<li th:each="description : ${descriptions}" th:text="${description}"></li>
+									</ul>
 									<p>Mô tả nhỏ nhỏ</p>
 								</div>
 							</div>
 							<div class="col-lg-5 offset-lg-2 desc_col">
 								<div class="tab_image">
-									<img src="https://placehold.co/444x626/" alt="">
+									<img th:src="@{'../media/'+ ${arraypictures[1]}}"  alt="">
 								</div>
 								<div class="tab_text_block">
 									<h2>Tiêu đề mô tả</h2>
+									<ul>
+										<li th:each="description : ${descriptions}" th:text="${description}"></li>
+									</ul>
 									<p>Mô tả nhỏ nhỏ</p>
 								</div>
 								<div class="tab_image desc_last">
-									<img src="https://placehold.co/444x626/" alt="">
+									<img th:src="@{'../media/'+ ${arraypictures[2]}}"  alt="">
 								</div>
 							</div>
 						</div>
@@ -503,15 +534,15 @@
 
 </div>
 
-<script src="js/jquery-3.2.1.min.js"></script>
-<script src="styles/bootstrap4/popper.js"></script>
-<script src="styles/bootstrap4/bootstrap.min.js"></script>
-<script src="plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="plugins/easing/easing.js"></script>
-<script src="plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<script src="/styles/bootstrap4/popper.js"></script>
+<script src="/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="/plugins/Isotope/isotope.pkgd.min.js"></script>
+<script src="/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="/plugins/easing/easing.js"></script>
+<script src="/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="https://kit.fontawesome.com/fe7d543762.js" crossorigin="anonymous"></script>
-<script src="js/single_custom.js"></script>
+<script src="/js/single_custom.js"></script>
 </body>
 
 </html>

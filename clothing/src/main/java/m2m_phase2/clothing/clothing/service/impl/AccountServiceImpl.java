@@ -36,11 +36,7 @@ public class AccountServiceImpl implements AccountService {
 		return repo.findByemail(email);
 	}
 	
-    @Override
-	public boolean isAdmin(Account account) {
-		// TODO Auto-generated method stub
-    	return account != null && account.isAdmin();
-	}
+
 	
 //	public void sendOTPEmail(String toEmail, String otp) {
 //	    try {
@@ -62,6 +58,12 @@ public class AccountServiceImpl implements AccountService {
 	
 
 
+
+	@Override
+	public boolean isDisable(Account account) {
+		// TODO Auto-generated method stub
+    	return account != null && account.isDisable();
+	}
 
 	public void sendOTPEmail(String toEmail, String otp) {
         try {
@@ -111,8 +113,8 @@ public class AccountServiceImpl implements AccountService {
 		return repo.findByusername(username);
 	}
 
-	
-    
-    
-
+    @Override
+    public Account findByuserId(Integer id) {
+        return repo.findByuserId(id);
+    }
 }

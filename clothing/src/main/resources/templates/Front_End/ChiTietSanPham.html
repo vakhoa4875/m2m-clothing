@@ -115,6 +115,12 @@
 									<li th:each=" pictures , index : ${arraypictures}" style="overflow: hidden" height="auto" width="136px">
 										<img th:src="@{'../media/'+ ${arraypictures[__${index.index}__]}}" width="auto" style="display: block; height: auto"  alt="">
 									</li>
+									<li th:if="${checkemply}">
+										<video controls>
+										  <source th:src="'../media/'+ ${product.getVideos()}" type="video/mp4">
+										  Your browser does not support the video tag.
+										</video>
+									</li>
 									<!--
 										<li><img th:src="@{'../media/'+ ${arraypictures[0]}}"  alt=""></li>
 										<li class="active"><img th:src="@{'../media/'+ ${arraypictures[1]}}"</li>
@@ -138,13 +144,12 @@
 				<div class="product_details">
 					<div class="product_details_title">
 						<h2 th:text="${product.getProductName()}">Tên của sản phẩm</h2>
-						<p>
-							<ul>
-								<li th:each="description : ${descriptions}" th:text="${description}"></li>
-								
-							</ul>
+						
+						<ul>
+							<li th:each="description : ${descriptions}" th:text="${description}"></li>
+						</ul>
 							 <!--Mổ tả ít ít về sản phẩm vì ở dưới có mô tả rồi-->
-						</p>
+						<p th:text="'Sold: ' + ${sold}"></p>
 					</div>
 					<div class="free_delivery d-flex flex-row align-items-center justify-content-center">
 						<span class="ti-truck"></span><span>Có miễn phí ship không </span>
@@ -161,11 +166,8 @@
 					-->
 					
 					<ul class="star_rating">
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star" aria-hidden="true"></i></li>
-						<li><i class="fa fa-star-o" aria-hidden="true"></i></li>
+						<div th:utext="${average_rate}">
+						
 					</ul>
 					<div class="product_color">
 						<span>Select Color:</span>
@@ -223,21 +225,17 @@
 									<h4>Mổ tả sản phẩm</h4>
 								</div>
 								<div class="tab_text_block">
-									<h2>Tiêu đề mô ta</h2>
 									<ul>
 										<li th:each="description : ${descriptions}" th:text="${description}"></li>
 									</ul>
-									<p>Mô tả nhỏ nhỏ như bên trên bê xuống đây</p>
 								</div>
 								<div class="tab_image">
 									<img th:src="@{'../media/'+ ${arraypictures[0]}}"  alt="">
 								</div>
 								<div class="tab_text_block">
-									<h2>Tiêu đề mô tả</h2>
 									<ul>
 										<li th:each="description : ${descriptions}" th:text="${description}"></li>
 									</ul>
-									<p>Mô tả nhỏ nhỏ</p>
 								</div>
 							</div>
 							<div class="col-lg-5 offset-lg-2 desc_col">
@@ -245,11 +243,9 @@
 									<img th:src="@{'../media/'+ ${arraypictures[1]}}"  alt="">
 								</div>
 								<div class="tab_text_block">
-									<h2>Tiêu đề mô tả</h2>
 									<ul>
 										<li th:each="description : ${descriptions}" th:text="${description}"></li>
 									</ul>
-									<p>Mô tả nhỏ nhỏ</p>
 								</div>
 								<div class="tab_image desc_last">
 									<img th:src="@{'../media/'+ ${arraypictures[2]}}"  alt="">

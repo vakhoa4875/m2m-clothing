@@ -15,7 +15,7 @@ public class ProductController {
 	@Autowired
 	private ProductServiceImpl productServiceImpl;
 	
-	@GetMapping("/testfuntionproduct")
+	@GetMapping("/allproduct")
 	public String testfuntionproduct(Model model) {
 			 
 		List<Product> list =   productServiceImpl.findAll();
@@ -28,18 +28,11 @@ public class ProductController {
 		
 		Product product = productServiceImpl.findByproductId(id);
 		model.addAttribute("product",product);
-		
-		String pathPitures = product.getPictures();
-		String[] arrayPictures = pathPitures.split(",");
-		model.addAttribute("arraypictures",arrayPictures);
-		
-		String description = product.getDescription();
-		String[] arrayDescription = description.split("\\.");
-		for(int i = 0 ; i < arrayDescription.length;i++) {
-			arrayDescription[i] = arrayDescription[i].replace("\"", "");
-		}
-		model.addAttribute("descriptions",arrayDescription);
-	
+		model.addAttribute("arraypictures",productServiceImpl.getProductPictures(product));
+		model.addAttribute("descriptions",productServiceImpl.getProductDescriptions(product));
+		model.addAttribute("sold",productServiceImpl.getProductSold(product.getSold()));
+		model.addAttribute("average_rate",productServiceImpl.getProductAverage_rate(product.getAverageRate()));
+		model.addAttribute("checkemply",productServiceImpl.checkEmply(product));
 		return "Front_End/ChiTietSanPham";
 	}
 }
