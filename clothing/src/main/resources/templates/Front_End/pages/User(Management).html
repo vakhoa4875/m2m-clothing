@@ -13,7 +13,7 @@
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 -->
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 	<meta charset="utf-8" />
@@ -98,10 +98,7 @@
           </a>
         </li> -->
 
-				<ul th:each="acc : ${listUser.entrySet()}">
-					<li th:text="${acc.key.getUsername}"></li>
-					<li th:text="${acc.value.getFullname}"></li>
-				</ul>
+
 
 				<li class="nav-item">
 					<a class="nav-link text-white " href="../pages/notifications.html">
@@ -322,9 +319,6 @@
 												Email</th>
 											<th
 												class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-												Số điện thoại</th>
-											<th
-												class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
 												Mật khẩu</th>
 											<th
 												class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
@@ -338,7 +332,12 @@
 										</tr>
 									</thead>
 									<tbody>
-										<tr>
+
+<!--									<ul th:each="acc : ${listUser.entrySet()}">-->
+<!--										<li th:text="${acc.key.getUsername}"></li>-->
+<!--										<li th:text="${acc.value.getFullname}"></li>-->
+<!--									</ul>-->
+										<tr th:each="acc : ${listUser.entrySet()}">
 											<td>
 												<div class="d-flex px-2 py-1">
 
@@ -347,29 +346,26 @@
 															class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
 													</div>
 													<div class="d-flex flex-column justify-content-center">
-														<h6 class="mb-0 text-sm">John Michael</h6>
+														<h6 class="mb-0 text-sm" th:text="${acc.key.getUsername}"></h6>
 													</div>
 												</div>
 											</td>
 											<td>
-												<p class="text-xs text-secondary mb-0">Hophat321@gmail.com</p>
+												<p class="text-xs text-secondary mb-0" th:text="${acc.key.getEmail}"></p>
 											</td>
 											<td>
-												<p class="text-xs text-secondary mb-0">0971527645</p>
-											</td>
-											<td>
-												<p class="text-xs text-secondary mb-0">*************</p>
+												<p class="text-xs text-secondary mb-0" th:text="${acc.key.getHashedPassword}"></p>
 											</td>
 											<td class="align-middle text-center">
-												<span class="text-secondary text-xs font-weight-bold">01/01/2024</span>
+												<span class="text-secondary text-xs font-weight-bold" th:text="${acc.value.getDob}"></span>
 											</td>
 											<td class="align-middle text-center text-sm">
-												<span class="badge badge-sm bg-gradient-success">Nam</span>
+												<span class="badge badge-sm bg-gradient-success" th:text="${acc.value.getGender}"></span>
 											</td>
 											<td class="align-middle text-center text-sm">
-												<input class="form-check-input" style="border: 2px solid #ccc;"
-													type="checkbox" id="inlineCheckbox1" value="option1">
-												<!-- <label class="form-check-label" for="inlineCheckbox1">1</label> -->
+												<input class="form-check-input " style="border: 2px solid #ccc;"
+													type="checkbox" id="inlineCheckbox1" value="option1"  th:checked="${acc.key.isAdmin}" >
+<!--												 <label class="form-check-label" for="inlineCheckbox1">1</label> -->
 											</td>
 
 											<td class="align-middle text-center">
@@ -384,52 +380,52 @@
 												</a>
 											</td>
 										</tr>
-										<tr>
-											<td>
-												<div class="d-flex px-2 py-1">
+<!--										<tr>-->
+<!--											<td>-->
+<!--												<div class="d-flex px-2 py-1">-->
 
-													<div>
-														<img src="https://placehold.co/36x36/"
-															class="avatar avatar-sm me-3 border-radius-lg" alt="user1">
-													</div>
-													<div class="d-flex flex-column justify-content-center">
-														<h6 class="mb-0 text-sm">John Michael</h6>
-													</div>
-												</div>
-											</td>
-											<td>
-												<p class="text-xs text-secondary mb-0">Hophat321@gmail.com</p>
-											</td>
-											<td>
-												<p class="text-xs text-secondary mb-0">0971527645</p>
-											</td>
-											<td>
-												<p class="text-xs text-secondary mb-0">*************</p>
-											</td>
-											<td class="align-middle text-center">
-												<span class="text-secondary text-xs font-weight-bold">01/01/2024</span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<span class="badge badge-sm bg-secondary">Nữ</span>
-											</td>
-											<td class="align-middle text-center text-sm">
-												<input class="form-check-input" style="border: 2px solid #ccc;"
-													type="checkbox" id="inlineCheckbox1" value="option1">
-												<!-- <label class="form-check-label" for="inlineCheckbox1">1</label> -->
-											</td>
+<!--													<div>-->
+<!--														<img src="https://placehold.co/36x36/"-->
+<!--															class="avatar avatar-sm me-3 border-radius-lg" alt="user1">-->
+<!--													</div>-->
+<!--													<div class="d-flex flex-column justify-content-center">-->
+<!--														<h6 class="mb-0 text-sm">John Michael</h6>-->
+<!--													</div>-->
+<!--												</div>-->
+<!--											</td>-->
+<!--											<td>-->
+<!--												<p class="text-xs text-secondary mb-0">Hophat321@gmail.com</p>-->
+<!--											</td>-->
+<!--											<td>-->
+<!--												<p class="text-xs text-secondary mb-0">0971527645</p>-->
+<!--											</td>-->
+<!--											<td>-->
+<!--												<p class="text-xs text-secondary mb-0">*************</p>-->
+<!--											</td>-->
+<!--											<td class="align-middle text-center">-->
+<!--												<span class="text-secondary text-xs font-weight-bold">01/01/2024</span>-->
+<!--											</td>-->
+<!--											<td class="align-middle text-center text-sm">-->
+<!--												<span class="badge badge-sm bg-secondary">Nữ</span>-->
+<!--											</td>-->
+<!--											<td class="align-middle text-center text-sm">-->
+<!--												<input class="form-check-input" style="border: 2px solid #ccc;"-->
+<!--													type="checkbox" id="inlineCheckbox1" value="option1">-->
+<!--												&lt;!&ndash; <label class="form-check-label" for="inlineCheckbox1">1</label> &ndash;&gt;-->
+<!--											</td>-->
 
-											<td class="align-middle text-center">
-												<a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-													data-bs-toggle="modal" data-bs-target="#exampleModal">
-													Sửa
-												</a>
-												<a href="javascript:;"
-													class="text-secondary font-weight-bold text-xs ms-4 text-danger"
-													data-bs-toggle="modal" data-bs-target="#exampleModalXoa">
-													Xóa
-												</a>
-											</td>
-										</tr>
+<!--											<td class="align-middle text-center">-->
+<!--												<a href="javascript:;" class="text-secondary font-weight-bold text-xs"-->
+<!--													data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+<!--													Sửa-->
+<!--												</a>-->
+<!--												<a href="javascript:;"-->
+<!--													class="text-secondary font-weight-bold text-xs ms-4 text-danger"-->
+<!--													data-bs-toggle="modal" data-bs-target="#exampleModalXoa">-->
+<!--													Xóa-->
+<!--												</a>-->
+<!--											</td>-->
+<!--										</tr>-->
 									</tbody>
 								</table>
 							</div>
