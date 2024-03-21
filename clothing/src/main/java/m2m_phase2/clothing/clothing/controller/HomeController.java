@@ -157,9 +157,27 @@ public class HomeController {
 
 	@GetMapping("/admin/login")
 	public String adminLogin(Model model) {
+
 		Account account = new Account();
-		model.addAttribute("account", account);
+		model.addAttribute("accadmin", account);
+
 		return "Front_End/pages/sign-in-admin";
+	}
+
+	@PostMapping("/admin/loginPost")
+	public String adminLoginPost(@ModelAttribute("accadmin") Account account){
+
+
+//		Account account = accountServiceImpl.findByEmail((email));
+//		System.out.println(account.getUsername());
+//		if (account.isAdmin() == true){
+//			return "Front_End/pages/User(Management)";
+//		}else {
+//			model.addAttribute("thongbao", "Tài khoản của bạn không đủ quyền để truy cập vào trang này");
+//			model.addAttribute("authorities",true);
+//
+//		}
+		return "Front_End/pages/User(Management)";
 	}
 
 	@GetMapping("/admin/user-management")

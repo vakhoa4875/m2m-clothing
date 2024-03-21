@@ -28,8 +28,7 @@ public class UserServiceImpl implements UserService {
 	private HttpSession session;
 	
 	public boolean isAdminAuth() {
-		System.out.println(session.getAttributeNames());
-		return true;
+		return false;
 	}
 
 	@Override
