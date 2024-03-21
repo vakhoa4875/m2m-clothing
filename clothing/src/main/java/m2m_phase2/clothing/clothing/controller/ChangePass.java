@@ -30,7 +30,7 @@ public class ChangePass {
 		Password password = new Password();
 		model.addAttribute("passwordChange", password);
 
-		return "Front_End/pages/change	Password";
+		return "Front_End/pages/changePassword";
 	}
 
 	@PostMapping("/submit-change-password")
@@ -45,38 +45,47 @@ public class ChangePass {
 
 			try {
 				if (PasswordEncoderUtil.verifyPassword(passUser, passOld)) {
-					if ((!passNewTwo.equalsIgnoreCase(pass.getPasswordThree()))){
+					if(!(passNewOne.equals("")|| passNewTwo.equals(""))) {
+						if (!(passNewOne.equalsIgnoreCase(passNewTwo))){
+							
+							
+							String errorChangePass = "Mật khẩu một phải giống  mật khẩu hai ";
+							System.out.println("Mật khẩu một phải giống  mật khẩu hai");
+							model.addAttribute("errorChangePass", errorChangePass);
+							
+							
+							
+							return "Front_End/pages/changePassword";
+						} else if ((passNewOne.equalsIgnoreCase(pass.getPasswordOne()))
+								|| (pass.getPasswordOne().equalsIgnoreCase(passNewTwo))){
+//							Thông báo ra lỗi
+							String errorChangePass = "Mật khẩu này đang được sử dụng ";
+							System.out.println("Mật khẩu này đang được sử dụng");
+							model.addAttribute("errorChangePass", errorChangePass);
+							return "Front_End/pages/changePassword";
+						}
 						
-						
-						String errorChangePass = "Mật khẩu một phải giống  mật khẩu hai ";
-						System.out.println("Mật khẩu một phải giống  mật khẩu hai");
-						model.addAttribute("errorChangePass", errorChangePass);
-						
-						
-						
-						return "Front_End/pages/changePassword";
-					} else if ((passNewOne.equalsIgnoreCase(pass.getPasswordOne()))
-							|| (pass.getPasswordOne().equalsIgnoreCase(passNewTwo))){
+						else {
+							account.setHashedPassword(PasswordEncoderUtil.encodePassword(pass.getPasswordThree()));
+							accountServiceImpl.saveAccount(account);
+							return "Front_End/TrangChu";
+						}
+					} else {
 //						Thông báo ra lỗi
-						String errorChangePass = "Mật khẩu này đang được sử dụng ";
-						System.out.println("Mật khẩu này đang được sử dụng");
+						String errorChangePass = "Mật khẩu không chính xác";
+						System.out.println("Mật khẩu không chính xác");
 						model.addAttribute("errorChangePass", errorChangePass);
+						
 						return "Front_End/pages/changePassword";
 					}
-					
-					else {
-						account.setHashedPassword(PasswordEncoderUtil.encodePassword(pass.getPasswordThree()));
-						accountServiceImpl.saveAccount(account);
-						return "Front_End/TrangChu";
+					}else {
+//						Thông báo ra lỗi
+						String errorChangePass = "Vui lòng nhập đầy đủ thông tin";
+						System.out.println("Vui lòng nhập đầy đủ thông tin");
+						model.addAttribute("errorChangePass", errorChangePass);
+						
+						return "Front_End/pages/changePassword";
 					}
-				} else {
-//					Thông báo ra lỗi
-					String errorChangePass = "Mật khẩu không chính xác";
-					System.out.println("Mật khẩu không chính xác");
-					model.addAttribute("errorChangePass", errorChangePass);
-					
-					return "Front_End/pages/changePassword";
-				}
 			} catch (Exception e) {
 //				Thông báo ra lỗi
 				String errorChangePass = "Mật khẩu hiện tại không chính xác";
