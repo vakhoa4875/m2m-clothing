@@ -6,9 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -54,7 +52,8 @@ public class AdminController {
 			if (accLogin.isAdmin() == true) {
 				session.setAttribute("admin", accLogin);
 				Map<Account, Userinfo> map = userService.getAll();
-				model.addAttribute("listUser", map);				
+				model.addAttribute("listUser", map);
+				model.addAttribute("turnOffUser",true);
 				return "Front_End/pages/User(Management)";
 			} else {
 				model.addAttribute("authorities", true);
@@ -63,6 +62,34 @@ public class AdminController {
 			return "Front_End/pages/sign-in-admin";
 	}
 
+
+	@GetMapping("/admin/UserID")
+	public String getUserID(@RequestParam Integer id,@ModelAttribute("accadmin") Account account, Model model) {
+		System.out.println(accountServiceImpl.findByuserId(id).isDisable());
+		session.setAttribute("permission", accountServiceImpl.findByuserId(id).isDisable());
+		session.setAttribute("iduser",accountServiceImpl.findByuserId(id).getUserId());
+
+		Map<Account, Userinfo> map = userService.getAll();
+		model.addAttribute("listUser", map);
+		model.addAttribute("turnOffUser",true);
+		return "Front_End/pages/sign-in-admin"; // Hoặc bạn có thể trả về một giá trị khác tùy thuộc vào logic của bạn
+	}
+
+	@GetMapping("/admin/admin-UserID-Success")
+	public String Success_UserID(@RequestParam Integer id, Model model){
+		System.out.println(session.getAttribute("iduser"));
+		System.out.println(id);
+		if(session.getAttribute("permission").equals(false) && id.equals(200)){
+			Account acc = accountServiceImpl.findByuserId((Integer) session.getAttribute("iduser"));
+			acc.setDisable(true);
+			accountServiceImpl.saveAccount(acc);
+		}
+
+		Map<Account, Userinfo> map = userService.getAll();
+		model.addAttribute("listUser", map);
+
+		return "redirect:/admin/loginPost";
+	}
 //	@GetMapping("/admin/user-management")
 //	public String toUserManagement(Model model) {
 //

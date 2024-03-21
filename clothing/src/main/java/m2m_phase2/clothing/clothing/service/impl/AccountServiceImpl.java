@@ -111,8 +111,8 @@ public class AccountServiceImpl implements AccountService {
 		return repo.findByusername(username);
 	}
 
-	
-    
-    
-
+    @Override
+    public Account findByuserId(Integer id) {
+        return repo.findByuserId(id);
+    }
 }
