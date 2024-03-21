@@ -333,10 +333,10 @@
 									</thead>
 									<tbody>
 
-<!--									<ul th:each="acc : ${listUser.entrySet()}">-->
-<!--										<li th:text="${acc.key.getUsername}"></li>-->
-<!--										<li th:text="${acc.value.getFullname}"></li>-->
-<!--									</ul>-->
+										<!--									<ul th:each="acc : ${listUser.entrySet()}">-->
+										<!--										<li th:text="${acc.key.getUsername}"></li>-->
+										<!--										<li th:text="${acc.value.getFullname}"></li>-->
+										<!--									</ul>-->
 										<tr th:each="acc : ${listUser.entrySet()}">
 											<td>
 												<div class="d-flex px-2 py-1">
@@ -351,25 +351,31 @@
 												</div>
 											</td>
 											<td>
-												<p class="text-xs text-secondary mb-0" th:text="${acc.key.getEmail}"></p>
+												<p class="text-xs text-secondary mb-0" th:text="${acc.key.getEmail}">
+												</p>
 											</td>
 											<td>
-												<p class="text-xs text-secondary mb-0" th:text="${acc.key.getHashedPassword}"></p>
+												<p class="text-xs text-secondary mb-0"
+													th:text="${acc.key.getHashedPassword}"></p>
 											</td>
 											<td class="align-middle text-center">
-												<span class="text-secondary text-xs font-weight-bold" th:text="${acc.value.getDob}"></span>
+												<span class="text-secondary text-xs font-weight-bold"
+													th:text="${acc.value.getDob}"></span>
 											</td>
 											<td class="align-middle text-center text-sm">
-												<span class="badge badge-sm bg-gradient-success" th:text="${acc.value.getGender}"></span>
+												<span class="badge badge-sm bg-gradient-success"
+													th:text="${acc.value.getGender}"></span>
 											</td>
 											<td class="align-middle text-center text-sm">
 												<input class="form-check-input " style="border: 2px solid #ccc;"
-													type="checkbox" id="inlineCheckbox1" value="option1"  th:checked="${acc.key.isAdmin}" >
-<!--												 <label class="form-check-label" for="inlineCheckbox1">1</label> -->
+													type="checkbox" id="inlineCheckbox1" value="option1"
+													th:checked="${acc.key.isAdmin}">
+												<!--												 <label class="form-check-label" for="inlineCheckbox1">1</label> -->
 											</td>
 
 											<td class="align-middle text-center">
-												<a href="javascript:;" class="text-secondary font-weight-bold text-xs"
+												<a href="javascript:;" onclick="populateEditModal(${acc.key.getUserId})"
+													class="text-secondary font-weight-bold text-xs"
 													data-bs-toggle="modal" data-bs-target="#exampleModal">
 													Sửa
 												</a>
@@ -380,52 +386,52 @@
 												</a>
 											</td>
 										</tr>
-<!--										<tr>-->
-<!--											<td>-->
-<!--												<div class="d-flex px-2 py-1">-->
+										<!--										<tr>-->
+										<!--											<td>-->
+										<!--												<div class="d-flex px-2 py-1">-->
 
-<!--													<div>-->
-<!--														<img src="https://placehold.co/36x36/"-->
-<!--															class="avatar avatar-sm me-3 border-radius-lg" alt="user1">-->
-<!--													</div>-->
-<!--													<div class="d-flex flex-column justify-content-center">-->
-<!--														<h6 class="mb-0 text-sm">John Michael</h6>-->
-<!--													</div>-->
-<!--												</div>-->
-<!--											</td>-->
-<!--											<td>-->
-<!--												<p class="text-xs text-secondary mb-0">Hophat321@gmail.com</p>-->
-<!--											</td>-->
-<!--											<td>-->
-<!--												<p class="text-xs text-secondary mb-0">0971527645</p>-->
-<!--											</td>-->
-<!--											<td>-->
-<!--												<p class="text-xs text-secondary mb-0">*************</p>-->
-<!--											</td>-->
-<!--											<td class="align-middle text-center">-->
-<!--												<span class="text-secondary text-xs font-weight-bold">01/01/2024</span>-->
-<!--											</td>-->
-<!--											<td class="align-middle text-center text-sm">-->
-<!--												<span class="badge badge-sm bg-secondary">Nữ</span>-->
-<!--											</td>-->
-<!--											<td class="align-middle text-center text-sm">-->
-<!--												<input class="form-check-input" style="border: 2px solid #ccc;"-->
-<!--													type="checkbox" id="inlineCheckbox1" value="option1">-->
-<!--												&lt;!&ndash; <label class="form-check-label" for="inlineCheckbox1">1</label> &ndash;&gt;-->
-<!--											</td>-->
+										<!--													<div>-->
+										<!--														<img src="https://placehold.co/36x36/"-->
+										<!--															class="avatar avatar-sm me-3 border-radius-lg" alt="user1">-->
+										<!--													</div>-->
+										<!--													<div class="d-flex flex-column justify-content-center">-->
+										<!--														<h6 class="mb-0 text-sm">John Michael</h6>-->
+										<!--													</div>-->
+										<!--												</div>-->
+										<!--											</td>-->
+										<!--											<td>-->
+										<!--												<p class="text-xs text-secondary mb-0">Hophat321@gmail.com</p>-->
+										<!--											</td>-->
+										<!--											<td>-->
+										<!--												<p class="text-xs text-secondary mb-0">0971527645</p>-->
+										<!--											</td>-->
+										<!--											<td>-->
+										<!--												<p class="text-xs text-secondary mb-0">*************</p>-->
+										<!--											</td>-->
+										<!--											<td class="align-middle text-center">-->
+										<!--												<span class="text-secondary text-xs font-weight-bold">01/01/2024</span>-->
+										<!--											</td>-->
+										<!--											<td class="align-middle text-center text-sm">-->
+										<!--												<span class="badge badge-sm bg-secondary">Nữ</span>-->
+										<!--											</td>-->
+										<!--											<td class="align-middle text-center text-sm">-->
+										<!--												<input class="form-check-input" style="border: 2px solid #ccc;"-->
+										<!--													type="checkbox" id="inlineCheckbox1" value="option1">-->
+										<!--												&lt;!&ndash; <label class="form-check-label" for="inlineCheckbox1">1</label> &ndash;&gt;-->
+										<!--											</td>-->
 
-<!--											<td class="align-middle text-center">-->
-<!--												<a href="javascript:;" class="text-secondary font-weight-bold text-xs"-->
-<!--													data-bs-toggle="modal" data-bs-target="#exampleModal">-->
-<!--													Sửa-->
-<!--												</a>-->
-<!--												<a href="javascript:;"-->
-<!--													class="text-secondary font-weight-bold text-xs ms-4 text-danger"-->
-<!--													data-bs-toggle="modal" data-bs-target="#exampleModalXoa">-->
-<!--													Xóa-->
-<!--												</a>-->
-<!--											</td>-->
-<!--										</tr>-->
+										<!--											<td class="align-middle text-center">-->
+										<!--												<a href="javascript:;" class="text-secondary font-weight-bold text-xs"-->
+										<!--													data-bs-toggle="modal" data-bs-target="#exampleModal">-->
+										<!--													Sửa-->
+										<!--												</a>-->
+										<!--												<a href="javascript:;"-->
+										<!--													class="text-secondary font-weight-bold text-xs ms-4 text-danger"-->
+										<!--													data-bs-toggle="modal" data-bs-target="#exampleModalXoa">-->
+										<!--													Xóa-->
+										<!--												</a>-->
+										<!--											</td>-->
+										<!--										</tr>-->
 									</tbody>
 								</table>
 							</div>
@@ -781,7 +787,7 @@
 					<div class="mb-2">
 						<label for="basic-url" class="form-label">Ảnh</label>
 						<input type="file" class="form-controll" id="inputGroupFile04"
-							aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+							aria-describedby="inputGroupFileAddon04" aria-label="Upload" value="${userId}">
 					</div>
 
 					<div class="mb-2 ">
@@ -796,11 +802,11 @@
 							aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
 					</div>
 
-					<div class="mb-2 ">
+				<!--	<div class="mb-2 ">
 						<label for="basic-url" class="form-label">Số điện thoại</label>
 						<input type="text" class="form-control ps-3" id="basic-url"
 							aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-					</div>
+					</div> -->
 
 					<div class="mb-2 ">
 						<label for="basic-url" class="form-label">Mật khẩu</label>
@@ -883,6 +889,31 @@
 	<script async defer src="https://buttons.github.io/buttons.js"></script>
 	<!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
 	<script src="../assets/js/material-dashboard.min.js?v=3.1.0"></script>
+	<script th:inline="javascript">
+		const populateEditModal = (acc) => {
+			var userData = {
+				username : acc.key.getUsername(),
+				email: acc.key.getEmail()
+			};
+			
+			
+			console.log(userData.username + "  |  " + userData.email);
+		}
+		
+		
+		function openModal(account, info) {
+			var modal = document.getElementById('exampleModal');
+			modal.setAttribute('data-user-id', account.getUserId);
+		}
+
+		document.addEventListener('DOMContentLoaded', function () {
+			var modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+			modal.addEventListener('show.bs.modal', function (event) {
+				var userId = event.relatedTarget.getAttribute('data-user-id');
+				// Use the userId variable as needed
+			});
+		});
+	</script>
 </body>
 
 </html>
