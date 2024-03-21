@@ -57,9 +57,9 @@ public class AdminController {
     @GetMapping("/admin/user-management")
     public String toUserManagement() {
 
-        if (!userService.isAdminAuth())
-            return "Front_End/pages/sign-in";
+        if (session.getAttribute("admin") != null)
+            return "Front_End/pages/User(Management)";
 
-        return "Front_End/pages/User(Management)";
+        return "Front_End/pages/sign-in";
     }
 }
