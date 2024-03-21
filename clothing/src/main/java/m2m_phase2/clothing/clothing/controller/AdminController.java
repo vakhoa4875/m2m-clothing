@@ -41,7 +41,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/admin/loginPost")
-	public String adminLoginPost(@ModelAttribute("accadmin") Account account, Model model, HttpServletRequest request) {
+	public String adminLoginPost(@ModelAttribute("accadmin") Account account, Model model) {
 
 		Account accLogin = accountServiceImpl.findByemail(account.getEmail());
 
@@ -60,19 +60,19 @@ public class AdminController {
 				model.addAttribute("authorities", true);
 			}
 		}
-		return "Front_End/pages/sign-in-admin";
+			return "Front_End/pages/sign-in-admin";
 	}
 
-	@GetMapping("/admin/user-management")
-	public String toUserManagement(Model model) {
-
-		if (session.getAttribute("admin") == null)
-			return "Front_End/pages/sign-in";
-		Map<Account, Userinfo> map = userService.getAll();
-		Set<Account> set = map.keySet();
-		
-		model.addAttribute("listAccount", set);
-
-		return "Front_End/pages/User(Management)";
-	}
+//	@GetMapping("/admin/user-management")
+//	public String toUserManagement(Model model) {
+//
+//		if (session.getAttribute("admin") == null)
+//			return "Front_End/pages/sign-in";
+//		Map<Account, Userinfo> map = userService.getAll();
+//		Set<Account> set = map.keySet();
+//
+//		model.addAttribute("listAccount", set);
+//
+//		return "Front_End/pages/User(Management)";
+//	}
 }
