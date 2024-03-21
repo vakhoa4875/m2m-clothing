@@ -48,6 +48,15 @@ public class Userinfo implements Serializable {
 	@PrimaryKeyJoinColumn
 	private Account account;
 
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (((Integer) userId == null) ? 0 : ((Integer) userId).hashCode());
+		result = prime * result + ((fullname == null) ? 0 : fullname.hashCode());
+		return result;
+	}
+
 	public int getUserId() {
 		return userId;
 	}
