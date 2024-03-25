@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>Trang chủ</title>
 <meta charset="utf-8">
@@ -111,21 +111,21 @@
 				<div class="col-md-4">
 					<div class="banner_item align-items-center" style="background-image:url(../Front_End/images/slider_1.jpg)">
 						<div class="banner_category">
-							<a href="categories.html">Nữ</a>
+							<a href="/allproduct">Nữ</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="banner_item align-items-center" style="background-image:url(../Front_End/images/banner_2.jpg)">
 						<div class="banner_category">
-							<a href="categories.html">Phụ kiện</a>
+							<a href="/allproduct">Phụ kiện</a>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-4">
 					<div class="banner_item align-items-center" style="background-image:url(../Front_End/images/banner_3.jpg)">
 						<div class="banner_category">
-							<a href="categories.html">Nam</a>
+							<a href="/allproduct">Nam</a>
 						</div>
 					</div>
 				</div>
@@ -167,99 +167,26 @@
 					<!-- <div class=""> -->
 
 						<!-- Product 1 -->
-
-						<div class="product-item men">
-							<div class="product discount product_filter">
-								<a href="./ChiTietSanPham.html">
-									<div class="product_image">
-										<img src="https://placehold.co/235x235/" alt="">
+						<div th:each="item, iterStat : ${products}" th:limit="5" >
+							<div class="product-item men w-100" >
+								<th:block th:if="${iterStat.index} &lt; 5">
+									<div class="product discount product_filter">
+										<a th:href="@{'/product/'+${item.getProductId}}">
+											<div class="product_image" style="overflow: hidden" height="235px" width="235px">
+												<img th:src="@{'../media/'+ ${#strings.substring(item.pictures, 0, #strings.indexOf(item.pictures, ','))}}" width="auto" style="display: block; height: 250px" alt="">
+											</div>
+											<div class="favorite favorite_left"></div>
+											<!--									<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span></span></div>-->
+											<div class="product_info">
+												<h6 class="product_name"><a href="/lienhe" class="d-inline-block text-truncate" style="max-width: 200px;" th:text="${item.getProductName()}"></a></h6>
+												<div class="product_price" th:text="${item.getPrice() + '$'}"></div>
+											</div>
+										</a>
 									</div>
-									<div class="favorite favorite_left"></div>
-									<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>-70.000</span></div>
-									<div class="product_info">
-										<h6 class="product_name"><a href="/lienhe">Thông tin sản phẩm</a></h6>
-										<div class="product_price">520.000Đ<span>590.000Đ</span></div>
-									</div>
-								</a>
+									<div class="red_button add_to_cart_button"><a href="#">Thêm vào giỏ</a></div>
+								</th:block>
 							</div>
-							<div class="red_button add_to_cart_button"><a href="#">Thêm vào giỏ</a></div>
 						</div>
-
-						<!-- Product 2 -->
-
-						<div class="product-item women">
-							<div class="product product_filter">
-								<a href="./ChiTietSanPham.html">
-									
-									<div class="product_image">
-										<img src="https://placehold.co/235x235/" alt="">
-									</div>
-									<div class="favorite"></div>
-									<div class="product_bubble product_bubble_left product_bubble_green d-flex flex-column align-items-center"><span>Mới</span></div>
-									<div class="product_info">
-										<h6 class="product_name"><a href="single.html">Thông tin sản phẩm</a></h6>
-										<div class="product_price">520.000Đ<span>590.000Đ</span></div>
-									</div>
-								</a>
-							</div>
-							<div class="red_button add_to_cart_button"><a href="#">Thêm vào giỏ</a></div>
-						</div>
-
-						<!-- Product 4 -->
-
-						<div class="product-item accessories">
-							<div class="product product_filter">
-								<a href="./ChiTietSanPham.html">
-									<div class="product_image">
-										<img src="https://placehold.co/235x235/" alt="">
-									</div>
-									<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Giảm</span></div>
-									<div class="favorite favorite_left"></div>
-									<div class="product_info">
-										<h6 class="product_name"><a href="single.html">Thông tin sản phẩm</a></h6>
-										<div class="product_price">520.000Đ<span>590.000Đ</span></div>
-									</div>
-
-								</a>
-							</div>
-							<div class="red_button add_to_cart_button"><a href="#">Thêm vào giỏ</a></div>
-						</div>
-
-
-						<div class="product-item accessories">
-							<div class="product product_filter">
-								<a href="./ChiTietSanPham.html">
-
-									<div class="product_image">
-										<img src="https://placehold.co/235x235/" alt="">
-									</div>
-									<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Giảm</span></div>
-									<div class="favorite favorite_left"></div>
-									<div class="product_info">
-										<h6 class="product_name"><a href="single.html">Thông tin sản phẩm</a></h6>
-										<div class="product_price">520.000Đ<span>590.000Đ</span></div>
-									</div>
-								</a>
-							</div>
-							<div class="red_button add_to_cart_button"><a href="#">Thêm vào giỏ</a></div>
-						</div>
-
-
-						<div class="product-item accessories">
-							<div class="product product_filter">
-								<div class="product_image">
-									<img src="https://placehold.co/235x235/" alt="">
-								</div>
-								<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span>Giảm</span></div>
-								<div class="favorite favorite_left"></div>
-								<div class="product_info">
-									<h6 class="product_name"><a href="single.html">Thông tin sản phẩm</a></h6>
-									<div class="product_price">520.000Đ<span>590.000Đ</span></div>
-								</div>
-							</div>
-							<div class="red_button add_to_cart_button"><a href="#">Thêm vào giỏ</a></div>
-						</div>
-
 					</div>
 				</div>
 			</div>
