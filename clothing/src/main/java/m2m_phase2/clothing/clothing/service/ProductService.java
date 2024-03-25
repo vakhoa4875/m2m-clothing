@@ -8,4 +8,5 @@ public interface ProductService {
 	
 	List<Product> findAll();
 	Product findByproductId(Integer id);
+	String findCategoryNameByProductId (Integer productId);
 }
