@@ -23,7 +23,6 @@ VALUES ('Outerwear', 'outerwear_logo.avif', 'Jackets, coats and vests'),
        ('Jewels & Accessories', 'Jewels_logo.webp', 'Jewelry, handbags, belts'),
        ('Headwear', 'headwear_logo.webp', 'Hats, caps, beanies'),
        ('Footwear', 'footwear_logo.jpg', 'Shoes, boots, sandals');
-
 go 
 delete from Product
 go
@@ -163,65 +162,65 @@ DURABLE QUALITY: Triple needle stitching dual layer shirt"',4.5,14,28,'29-1.jpg,
 THE FEEL - Comfortable, 5.5 oz. ring-spun cotton or cotton blend that feels great on the skin.
 THE LOOK - Classic long-sleeve t-shirt with a ribbed crewneck collar and sturdy stitchwork.
 SPOT THE C - This long-sleeve tee has an embroidered C patch on the chest and a C logo patch on the sleeve.
-EASY CARE - Machine wash this long-sleeve men`s t-shirt on cold with like colors to reduce energy."',4.6,18222,36444,'30-1.jpg,30-2.jpg,30-3.jpg','30.mp4',2),(31,'Wrangler Women`s Retro High Rise Trumpet Flare Jean',50,NULL,'"TRUMPET FLARE. Bell bottoms are making a comeback. Combining classic retro details with the dramatic silhouette of decades past, we created an extreme flare jean fit for the contemporary cowgirl.
+EASY CARE - Machine wash this long-sleeve men`s t-shirt on cold with like colors to reduce energy."',4.6,18222,36444,'30-1.jpg,30-2.jpg,30-3.jpg','30.mp4',2),(31,'Wrangler Women`s Retro High Rise Trumpet Flare Jean',50,3462,'"TRUMPET FLARE. Bell bottoms are making a comeback. Combining classic retro details with the dramatic silhouette of decades past, we created an extreme flare jean fit for the contemporary cowgirl.
 CLASSIC RETRO STYLE. You can`t beat the original, unless you are the original. With the new Wrangler Retro jeans, we enhanced our 1947 innovations with today`s premium standards of engineering and design.
 GREEN MATERIALS. Every piece of clothing we make starts with respect for the planet we love. From recycled labels and patches to organic buttons and pocketing, our Green Jeans are 100% polyester free and made from a variety of natural fibers.
 SUSTAINABLE DESIGN. Thoughtfully grown, responsibly made and respectfully engaged. Our Green Jeans are produced in factories that meet worker health and safety standards, using sustainable wash and finishing techniques.
-ICONIC FINISHES. This high-waisted jean is finished with our iconic Wrangler ""W"" stitching, leather Wrangler patch on the back pocket, and 1947 rivet on the front pocket. Maintain that effortless classic style with a touch of Retro."',4.2,577,NULL,'31-1.jpg,31-2.jpg,31-3.jpg',NULL,3),(32,'Hanes ComfortSoft EcoSmart Men`s Fleece Sweatpants',15,NULL,'"FLEECE FOR THE FUTURE - EcoSmart mid-weight, year-round cotton/poly fleece with up to 5% of the poly fibers.
+ICONIC FINISHES. This high-waisted jean is finished with our iconic Wrangler ""W"" stitching, leather Wrangler patch on the back pocket, and 1947 rivet on the front pocket. Maintain that effortless classic style with a touch of Retro."',4.2,577,1154,'31-1.jpg,31-2.jpg,31-3.jpg',NULL,3),(32,'Hanes ComfortSoft EcoSmart Men`s Fleece Sweatpants',15,315150,'"FLEECE FOR THE FUTURE - EcoSmart mid-weight, year-round cotton/poly fleece with up to 5% of the poly fibers.
 RELAXED SILHOUETTE - For warming up, cooling down, or kicking back, these sweats have a relaxed fit with a straight leg and an open hem.
 SOFT, PLUSH, AND MADE TO STAY THAT WAY - Pill-resistant durable fleece stays warm and cozy.
 HANDY POCKETS - Side-seam pockets hold essentials.
 EASE AT THE WAIST - An inside drawstring assures the fit you want at the waist.
-TAG-FREE AND ITCH-FREE - Tagless design means no annoying tag to itch or bunch up."',4.4,52525,NULL,'32-1.jpg,32-2.jpg,32-3.jpg',NULL,3),(33,'Hanes Essentials Sweatpants, Men’s Cotton Jersey Pants with Pockets, 33”',15,NULL,'"OPEN BOTTOM STYLING – Men’s activewear features a 33” inseam and classic open bottom hem.
+TAG-FREE AND ITCH-FREE - Tagless design means no annoying tag to itch or bunch up."',4.4,52525,105050,'32-1.jpg,32-2.jpg,32-3.jpg',NULL,3),(33,'Hanes Essentials Sweatpants, Men’s Cotton Jersey Pants with Pockets, 33”',15,159174,'"OPEN BOTTOM STYLING – Men’s activewear features a 33” inseam and classic open bottom hem.
 HANES QUALITY – These comfortable sweatpants for men are bolstered by sturdy details such as double-needle stitching at leg openings.
 POCKET IT – Store the essentials in handy side-seam pockets.
 THE DETAILS – Men’s lounge pants feature a covered elastic waistband with interior quick-drawcord loop.
 COTTON GOODNESS – Made from 100% ring-spun cotton, Hanes jersey pants are soft and cozy. (Light Steel and Charcoal Heather are cotton/polyester blend.)
-HOME GROWN – Cotton used in this product is sustainably grown on U.S. farms."',4.3,26529,NULL,'33-1.jpg,33-2.jpg,33-3.jpg',NULL,3),(34,'Fruit of the Loom mens Yarn-dye Woven Flannel Pajama Pant',19.99,NULL,'"Two deep side seam pockets
+HOME GROWN – Cotton used in this product is sustainably grown on U.S. farms."',4.3,26529,53058,'33-1.jpg,33-2.jpg,33-3.jpg',NULL,3),(34,'Fruit of the Loom mens Yarn-dye Woven Flannel Pajama Pant',19.99,32574,'"Two deep side seam pockets
 Button-thru fly
-Elastic waistband and a twill draw cord for a personalized fit"',4.2,5429,NULL,'34-1.jpg,34-2.jpg,34-3.jpg',NULL,3),(35,'Gildan Adult Fleece Open Bottom Sweatpants with Pockets, Style G18300',11.43,NULL,'"Classic fit with seamless sides for easier printability
+Elastic waistband and a twill draw cord for a personalized fit"',4.2,5429,10858,'34-1.jpg,34-2.jpg,34-3.jpg',NULL,3),(35,'Gildan Adult Fleece Open Bottom Sweatpants with Pockets, Style G18300',11.43,158148,'"Classic fit with seamless sides for easier printability
 Brushed interior provides superior cozy softness
 Jersey-lined pockets
 Differential rise for better fit
 Slightly tapered leg with open bottom
-Tear away label for customizable comfort"',4.3,26358,NULL,'35-1.jpg,35-2.jpg,35-3.jpg',NULL,3),(36,'Amazon Essentials Men`s Fleece Sweatpant (Available in Big & Tall)',17,NULL,'"56% Cotton, 44% Polyester
+Tear away label for customizable comfort"',4.3,26358,52716,'35-1.jpg,35-2.jpg,35-3.jpg',NULL,3),(36,'Amazon Essentials Men`s Fleece Sweatpant (Available in Big & Tall)',17,286122,'"56% Cotton, 44% Polyester
 Imported
 Drawstring closure
-Machine Wash"',4.5,47687,NULL,'36-1.jpg,36-2.jpg,36-3.jpg',NULL,3),(37,'Fruit of the Loom Eversoft Fleece Elastic Bottom Sweatpants with Pockets, Relaxed Fit, Moisture Wicking, Breathable',13.99,NULL,'"Male Model is 6’0” wearing a Size Medium. Female Model is 5’9” wearing size Small.
+Machine Wash"',4.5,47687,95374,'36-1.jpg,36-2.jpg,36-3.jpg',NULL,3),(37,'Fruit of the Loom Eversoft Fleece Elastic Bottom Sweatpants with Pockets, Relaxed Fit, Moisture Wicking, Breathable',13.99,288396,'"Male Model is 6’0” wearing a Size Medium. Female Model is 5’9” wearing size Small.
 Eversoft fabric provides premium softness wash after wash
 Comfort waistband with inner exposed quick cord for adjustable waist
 Double-needle stitching on the hems for added durability
-Relaxed banded bottom with Deep Pockets to keep Items secure"',4.4,48066,NULL,'37-1.jpg,37-2.jpg,37-3.jpg',NULL,3),(38,'Russell Athletic Dri-Power Fleece Sweatpants & Joggers, Moisture Wicking, With or Without Pockets, Sizes S-4X',13.49,NULL,'"Medium-weight 9 oz fleece keeps in body heat so you can stay warm
+Relaxed banded bottom with Deep Pockets to keep Items secure"',4.4,48066,96132,'37-1.jpg,37-2.jpg,37-3.jpg',NULL,3),(38,'Russell Athletic Dri-Power Fleece Sweatpants & Joggers, Moisture Wicking, With or Without Pockets, Sizes S-4X',13.49,225450,'"Medium-weight 9 oz fleece keeps in body heat so you can stay warm
 Dri-Power moisture wicking technology keeps you warm and dry
 Elastic waistband with inside quick cord, for an adjustable fit
 Hemmed elastic bottom that stays securely in place
-No pockets for a clean sleek look"',4.3,37575,NULL,'38-1.jpg,38-2.jpg,38-3.jpg',NULL,3),(39,'Amazon Essentials Men`s Straight-Fit Woven Pajama Pant',19.9,NULL,'"REGULAR FIT: Comfortable, easy fit through the hip and thigh with a straight leg. Sits below the waist.
+No pockets for a clean sleek look"',4.3,37575,75150,'38-1.jpg,38-2.jpg,38-3.jpg',NULL,3),(39,'Amazon Essentials Men`s Straight-Fit Woven Pajama Pant',19.9,147186,'"REGULAR FIT: Comfortable, easy fit through the hip and thigh with a straight leg. Sits below the waist.
 COTTON POPLIN: Lightweight, crisp and cool cotton poplin provides ultimate comfort and breathability while sleeping.
 COTTON POPLIN PAJAMA PANT: Our pajama pant provides a comfortable and cool night`s sleep.
-DETAILS: Featuring an elasticated waistband with an adjustable drawcord for ease and comfort, button fly closure, and side pockets to hold your small essentials."',4.4,24531,NULL,'39-1.jpg,39-2.jpg,39-3.jpg',NULL,3),(40,'Champion mens Pants, Everyday Cotton, Lightweight Open-hem Lounge Pants for Men (Reg. Or Big & Tall)Track Pants',24.95,NULL,'"THE FIT - Standard-fit men`s pants with a 32.5"" inseam.
+DETAILS: Featuring an elasticated waistband with an adjustable drawcord for ease and comfort, button fly closure, and side pockets to hold your small essentials."',4.4,24531,49062,'39-1.jpg,39-2.jpg,39-3.jpg',NULL,3),(40,'Champion mens Pants, Everyday Cotton, Lightweight Open-hem Lounge Pants for Men (Reg. Or Big & Tall)Track Pants',24.95,235572,'"THE FIT - Standard-fit men`s pants with a 32.5"" inseam.
 THE FEEL -These pants are made from soft 6.1 oz. cotton or a cotton blend that is perfect for everyday wear.
 THE LOOK - Open-bottom hem creates a laid-back, roomy fit you`ll love.
 ADDED COMFORT - Pants with internal drawcord for adjustability and comfort.
-POCKETS - Two deep side pockets hold lightweight tech."',4.3,39262,NULL,'40-1.jpg,40-2.jpg,40-3.jpg',NULL,3),(41,'Jerzees Men`s NuBlend Fleece Joggers & Sweatpants, Cotton Blend, Sizes S-3X',11,NULL,'"Mid-weight fleece sweatpant featuring elasticized waist and cuffs
+POCKETS - Two deep side pockets hold lightweight tech."',4.3,39262,78524,'40-1.jpg,40-2.jpg,40-3.jpg',NULL,3),(41,'Jerzees Men`s NuBlend Fleece Joggers & Sweatpants, Cotton Blend, Sizes S-3X',11,69090,'"Mid-weight fleece sweatpant featuring elasticized waist and cuffs
 Closure_type: Pull On
 Care_instructions: Machine Wash
-Style: Fleece Sweatpants"',4.3,11515,NULL,'41-1.jpg,42-2.jpg,43-3.jpg',NULL,3),(42,'Amazon Essentials Women`s Flannel Sleep Pant (Available in Plus Size)',10,NULL,'"RELAXED FIT: Relaxed, comfortable fit through hip, thigh and leg. Mid rise, sits below the natural waist.
+Style: Fleece Sweatpants"',4.3,11515,23030,'41-1.jpg,42-2.jpg,43-3.jpg',NULL,3),(42,'Amazon Essentials Women`s Flannel Sleep Pant (Available in Plus Size)',10,34584,'"RELAXED FIT: Relaxed, comfortable fit through hip, thigh and leg. Mid rise, sits below the natural waist.
 SOFTLY BRUSHED FLANNEL: Soft, breathable, and tightly woven, this flannel is comfy and durable. Made with 100% brushed cotton.
 ESSENTIAL SLEEP PANT: The perfect sleep pant for snuggling up and relaxing whether you are sleeping or lounging around the house. Style back to Amazon Essentials Women`s Slippers to keep your feet cozy and warm.
 DETAILS: Featuring an elasticated waistband with an adjustable drawcord for ease and comfort.
-INSEAM: 30 1/2"" on US size S."',4.2,5764,NULL,'42-1.jpg,42-2.jpg,42-3.jpg',NULL,3),(43,'Champion Women`s Sports Bra, Absolute, Moderate Support, Medium-impact Sports Bra for Women',24.95,NULL,'"THE FIT – Standard-fit men`s open-bottom sweatpants with an elastic waistband, adjustable drawcord, and 32"" inseam.
+INSEAM: 30 1/2"" on US size S."',4.2,5764,11528,'42-1.jpg,42-2.jpg,42-3.jpg',NULL,3),(43,'Champion Women`s Sports Bra, Absolute, Moderate Support, Medium-impact Sports Bra for Women',24.95,106008,'"THE FIT – Standard-fit men`s open-bottom sweatpants with an elastic waistband, adjustable drawcord, and 32"" inseam.
 THE FEEL – Midweight, 9 oz. warm and durable fleece that’s been brushed for softness.
 THE LOOK – classic men`s sweatpants with two side pockets and sturdy stitch details.
 LOW PILL, LOW SHRINK – High-quality fleece fabrication designed to reduce pilling and shrinkage.
 SPOT THE C – Iconic C logo hits at the hip of these men`s sweatpants.
-THE POWERBLEND COLLECTION – A powerhouse fabric blend that’s made for the daily with a stay-true fit and comfort that never quits."',4.5,17668,NULL,'43-1.jpg,43-2.jpg,43-3.jpg',NULL,3),(44,'Champion Sweatpants, Powerblend, Relaxed Bottom Pants for Men (Reg. Or Big & Tall)',21.18,NULL,'"MID RISE. Show the world a thing or two about being the fashionable legend you already know you are with these mid rise flares. Hitting comfortably at the waist that gives way to a flare leg, these jeans are flattering and on-trend.
+THE POWERBLEND COLLECTION – A powerhouse fabric blend that’s made for the daily with a stay-true fit and comfort that never quits."',4.5,17668,35336,'43-1.jpg,43-2.jpg,43-3.jpg',NULL,3),(44,'Champion Sweatpants, Powerblend, Relaxed Bottom Pants for Men (Reg. Or Big & Tall)',21.18,3972,'"MID RISE. Show the world a thing or two about being the fashionable legend you already know you are with these mid rise flares. Hitting comfortably at the waist that gives way to a flare leg, these jeans are flattering and on-trend.
 LEGENDARY DETAILS. These flare jeans are finished with our iconic logo patch, spade pockets and hardware that make Lee jeans unique.
 STRETCH DENIM. Strut with confidence in these flattering flare jeans. Made from authentic stretch denim, they move with you for all-day comfort.
 A LIFETIME OF QUALITY. For over 100 years, Lee has produced quality apparel with durability and long-lasting construction in mind. Lee is committed to designing clothing that conforms to your body, allowing you to move through life freely.
-SPECIFICATIONS. 5 pockets. Zipper fly with button closure. Inseam: 31"" short, 33"" medium, 35"" long. Rise: 9.5"". Bottom Leg Opening: 23"". Destruction details may vary by colorway."',4.1,662,NULL,'44-1.jpg,44-2.jpg,44-3.jpg',NULL,3),(45,'CHAMPRO Boys Open-Bottom Loose-Fit Baseball Pant with Adjustable Inseam and Reinforced Sliding Area',20.46,NULL,'"COMFORTABLE: These loose-fit, straight-leg pants have open bottoms to circulate air and provide a free, relaxed, and comfortable feel
+SPECIFICATIONS. 5 pockets. Zipper fly with button closure. Inseam: 31"" short, 33"" medium, 35"" long. Rise: 9.5"". Bottom Leg Opening: 23"". Destruction details may vary by colorway."',4.1,662,1324,'44-1.jpg,44-2.jpg,44-3.jpg',NULL,3),(45,'CHAMPRO Boys Open-Bottom Loose-Fit Baseball Pant with Adjustable Inseam and Reinforced Sliding Area',20.46,10692,'"COMFORTABLE: These loose-fit, straight-leg pants have open bottoms to circulate air and provide a free, relaxed, and comfortable feel
 NON-ABRASIVE STRETCH FABRIC: Made with 100% highly abrasion-resistant TEK-KNIT polyester, the 14 oz. pro-weight fabric allows four-way stretch and adapts to the wearer’s movements
 ADJUSTABLE INSEAM: Adjust the inseam length up to 4 inches shorter with hook-and-loop straps to get the perfect fit for each athlete. Customize for comfort and freedom of movement on the field
-DURABLE: A sliding seat and knees reinforced with double-ply fabric create a more durable pant that withstands sliding action and lasts longer through the season"',4.5,1782,NULL,'45-1.jpg,45-2.jpg,45-3.jpg',NULL,3),(46,'Lucky Brand Womens Pearl Delicate Necklace',22.8,3840,'Double-layered necklace featuring faux-pearl halo pedant and Y-shaped strand with faceted-bead finish',4.2,640,1280,'46-1.jpg,46-2.jpg,46-3.jpg','46.mp4',4),(47,'Lucky Brand Silver-Tone Statement Link Bracelet',25.29,5454,'"Lucky Brand Silver Link Bracelet
+DURABLE: A sliding seat and knees reinforced with double-ply fabric create a more durable pant that withstands sliding action and lasts longer through the season"',4.5,1782,3564,'45-1.jpg,45-2.jpg,45-3.jpg',NULL,3),(46,'Lucky Brand Womens Pearl Delicate Necklace',22.8,3840,'Double-layered necklace featuring faux-pearl halo pedant and Y-shaped strand with faceted-bead finish',4.2,640,1280,'46-1.jpg,46-2.jpg,46-3.jpg','46.mp4',4),(47,'Lucky Brand Silver-Tone Statement Link Bracelet',25.29,5454,'"Lucky Brand Silver Link Bracelet
 Set in silver-tone mixed metal
 Approx. length: 7-1/4"" + 1/2"" extender"',4.5,909,1818,'47-1.jpg,47-2.jpg,47-3.jpg','47.mp4',4),(48,'Betsey Johnson Womens Butterfly Charms Layered Necklace',48,30192,'"TRENDY NECKLACES: Delicate layered chain necklace features mixed faceted beads, delicate stone accents, lovely flowers and heart embellished with woven mixed multi-colored charms. Hand crafted from polished gold-tone metal, glass and plastic
 LIGHTWEIGHT NECKLACES : Effortless and lightweight necklaces easy to put on and take off. Necklace has an adjustable lobster clasp closure
@@ -362,7 +361,7 @@ Guess detailing on straps"',4.6,1995,3990,'83-1.jpg,83-2.jpg,83-3.jpg',NULL,6),(
 Lightweight And Fun: The Crocs For Men And Women Feature Lightweight Iconic Crocs Comfort. Ventilation Ports Add Breathability And Help Shed Water And Debris Quickly.
 What Size Should I Buy?: These Men`S And Women`S Crocs Offer A Roomy Fit And We Recommend Ordering A Size Down To The Next Largest Whole Size.
 Designed To Fit: These Slip-On Clogs Are Easy To Take On And Off, While Being Extremely Durable. These Crocs Even Offer Pivoting Heel Straps For A More Secure Fit.
-Shop with Confidence: Crocs products are backed by our 90-day manufacturer`s warranty for high quality and authenticity. Terms and conditions apply"',4.8,568427,1136854,'84-1.jpg,84-2.jpg','84.mp4',6),(85,'OshKosh Unisex-Child Hilda Sneaker',40,12,'"Toddler`s fashion eyelet sneakers in an easy slip-on style
+Shop with Confidence: Crocs products are backed by our 90-day manufacturer`s warranty for high quality and authenticity. Terms and conditions apply"',4.8,568427,1136854,'84-1.jpg','84.mp4',6),(85,'OshKosh Unisex-Child Hilda Sneaker',40,12,'"Toddler`s fashion eyelet sneakers in an easy slip-on style
 Machine washable (yes, way!)
 Speedy slip-on design
 Eyelet material upper
@@ -391,7 +390,9 @@ Light toe box, Lower vamp and sides and a Firm heel counter
 Begin with street shoe size"',4.7,13311,26622,'90-1.jpg,90-2.jpg,90-3.jpg',NULL,6)
 
 
-SET IDENTITY_INSERT product OFF;
+
+
+
 
 
 
