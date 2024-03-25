@@ -172,8 +172,8 @@
 								<th:block th:if="${iterStat.index} &lt; 5">
 									<div class="product discount product_filter">
 										<a th:href="@{'/product/'+${item.getProductId}}">
-											<div class="product_image" style="overflow: hidden" height="235px" width="235px">
-												<img th:src="@{'../media/'+ ${#strings.substring(item.pictures, 0, #strings.indexOf(item.pictures, ','))}}" width="auto" style="display: block; height: 250px" alt="">
+											<div class="product_image" style="overflow: hidden" height="280px" width="250px">
+												<img th:src="@{'../media/'+ ${#strings.substring(item.pictures, 0, #strings.indexOf(item.pictures, ','))}}" width="auto" style="height: 290px;" alt="">
 											</div>
 											<div class="favorite favorite_left"></div>
 											<!--									<div class="product_bubble product_bubble_right product_bubble_red d-flex flex-column align-items-center"><span></span></div>-->

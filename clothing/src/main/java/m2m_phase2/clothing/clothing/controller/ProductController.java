@@ -17,12 +17,17 @@ import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
 public class ProductController {
 	@Autowired
 	private ProductServiceImpl productServiceImpl;
+	@Autowired
+	private CategoryImpl category;
+
 	
 	@GetMapping("/allproduct")
 	public String testfuntionproduct(Model model) {
 			 
 		List<Product> list =   productServiceImpl.findAll();
- 		model.addAttribute("products", list) ;
+		List<Category> listCategory = category.findAll();
+ 		model.addAttribute("products", list);
+		 model.addAttribute("category", listCategory);
 		return "Front_End/SanPham";
 	}
 	@Autowired
