@@ -33,21 +33,23 @@ public class HomeController {
 	private HttpSession session;
 	@Autowired
 	private UserServiceImpl userService;
+	@Autowired
+	private ProductServiceImpl productServiceImpl;
 
 	@GetMapping("/")
-	public String defaultPage(){
+	public String defaultPage(Model model){
+		List<Product> list =   productServiceImpl.findAll();
+		model.addAttribute("products", list) ;
 		return "Front_End/TrangChu";
 	}
 
 	@GetMapping("/trangchu")
-	public String getTrangchu(){
+	public String getTrangchu(Model model){
+		List<Product> list =   productServiceImpl.findAll();
+		model.addAttribute("products", list) ;
 		return "Front_End/TrangChu";
 	}
 
-	@GetMapping("/sanpham")
-	public String getSanPham(){
-		return "Front_End/SanPham";
-	}
 
 	@GetMapping("/lienhe")
 	public String getLienHe(){
@@ -126,14 +128,5 @@ public class HomeController {
 
 	}
 
-	
-
-
-
-
-
-	
-
-	
 	
 }
