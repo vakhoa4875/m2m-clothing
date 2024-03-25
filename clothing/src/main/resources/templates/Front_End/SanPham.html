@@ -91,8 +91,8 @@
 
 				<div class="breadcrumbs d-flex flex-row align-items-center">
 					<ul>
-						<li><a href="index.html">Trang chủ</a></li>
-						<li class="active"><a href="index.html"><i class="fa fa-angle-right" aria-hidden="true"></i>Nam</a></li>
+						<li><a href="/trangchu">Trang chủ</a></li>
+						<li class="active"><a href="/allproduct"><i class="fa fa-angle-right" aria-hidden="true"></i>All</a></li>
 					</ul>
 				</div>
 
@@ -103,14 +103,14 @@
 						<div class="sidebar_title">
 							<h5>Danh mục sản phẩm</h5>
 						</div>
-						<ul class="sidebar_categories">
-							<li><a href="#">Trang sức</a></li>
-							<li class="active"><a href="#">Giày, Dép</a></li>
-							<li ><a href="#">Vớ</a></li>
-							<li><a href="#">Quần</a></li>
-							<li><a href="#">Áo</a></li>
-							<li><a href="#">Nón</a></li>
-							<li><a href="#">Phụ kiện</a></li>
+						<ul class="sidebar_categories" th:each="item, iterStat : ${category}">
+							<li><a href="#" th:text="${item.getCategory_name()}"></a></li>
+<!--							<li class="active"><a href="#">Giày, Dép</a></li>-->
+<!--							<li ><a href="#">Vớ</a></li>-->
+<!--							<li><a href="#">Quần</a></li>-->
+<!--							<li><a href="#">Áo</a></li>-->
+<!--							<li><a href="#">Nón</a></li>-->
+<!--							<li><a href="#">Phụ kiện</a></li>-->
 						</ul>
 					</div>
 
@@ -439,5 +439,4 @@
 <script src="/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="/js/categories_custom.js"></script>
 </body>
-
 </html>
