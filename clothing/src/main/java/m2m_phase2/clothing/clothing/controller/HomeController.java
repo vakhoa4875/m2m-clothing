@@ -34,7 +34,36 @@ public class HomeController {
 	@Autowired
 	private UserServiceImpl userService;
 
-	
+	@GetMapping("/")
+	public String defaultPage(){
+		return "Front_End/TrangChu";
+	}
+
+	@GetMapping("/trangchu")
+	public String getTrangchu(){
+		return "Front_End/TrangChu";
+	}
+
+	@GetMapping("/sanpham")
+	public String getSanPham(){
+		return "Front_End/SanPham";
+	}
+
+	@GetMapping("/lienhe")
+	public String getLienHe(){
+		return "Front_End/LienHe";
+	}
+
+	@GetMapping("/Setting")
+	public String getSetting(){
+		return "Front_End/Seting(User)";
+	}
+
+	@GetMapping("/giohang")
+	public String getGioHang(){
+		return "Front_End/Giohang";
+	}
+
 	@GetMapping("/login")
 	public String getLog(Model model) {
 
@@ -50,7 +79,7 @@ public class HomeController {
 		String password = accountRequest.getHashedPassword();
 
 		// Kiểm tra xem tài khoản có tồn tại trong cơ sở dữ liệu không
-		Account existingAccount = accountServiceImpl.findByEmail(email);
+		Account existingAccount = accountServiceImpl.findByemail(email);
 
 		// Nếu không tìm thấy tài khoản
 		if (existingAccount == null) {

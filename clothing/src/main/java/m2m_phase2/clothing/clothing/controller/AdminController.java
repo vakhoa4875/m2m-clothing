@@ -88,8 +88,9 @@ public class AdminController {
 		Map<Account, Userinfo> map = userService.getAll();
 		model.addAttribute("listUser", map);
 
-		return "redirect:/admin/loginPost";
+		return "/admin/user-management";
 	}
+
 //	@GetMapping("/admin/user-management")
 //	public String toUserManagement(Model model) {
 //

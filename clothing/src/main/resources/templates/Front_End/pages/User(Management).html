@@ -914,7 +914,7 @@
             type: 'GET', // Phương thức HTTP được sử dụng
             // data: {id: index}, // Dữ liệu gửi đi (ID của người dùng)
             success: function (data) {
-                location.reload();
+                window.location.href = window.location.href;
             },
             error: function (xhr, status, error) {
                 // Xử lý lỗi khi gửi yêu cầu đến máy chủ

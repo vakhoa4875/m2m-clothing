@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.entity.Account;
 import m2m_phase2.clothing.clothing.entity.Otp;
@@ -21,8 +22,6 @@ public class RegisterController {
 	private AccountServiceImpl accountServiceImpl;
 	@Autowired
 	private HttpSession session;
-	@Autowired
-	private UserServiceImpl userService;
 
 	@GetMapping("/register") // hàm phatteacher
 	public String getHome(Model model) {
@@ -38,66 +37,45 @@ public class RegisterController {
 		String username = accountRequest.getUsername();
 		String email = accountRequest.getEmail();
 		String password = accountRequest.getHashedPassword();
+		
+		model.addAttribute("usernameCurrent", username);
+		model.addAttribute("emailCurrent", email);
+		model.addAttribute("passwordCurrent", password);
 
-		if (username.equals("") || email.equals("") || password.equals("")) {
-			String messError = "Please fill in complete information";
-			model.addAttribute("messError", messError);
+		Boolean checkFillRegister = accountServiceImpl.checkFillRegister(model, username, email, password);
+		Boolean checkUsername = accountServiceImpl.checkUsername(accountRequest, model);
+		Boolean checkEmail = accountServiceImpl.checkEmail(accountRequest, model);
+		if (checkFillRegister == false || checkUsername == false || checkEmail == false) {
 			return "Front_End/pages/sign-up";
-		} else {
-
-			session.setAttribute("acc", accountRequest);
-
-			// Tạo mã OTP ngẫu nhiên gồm 6 chữ số
-			String otp = accountServiceImpl.generateOTP();
-
-			// Gửi mã OTP qua email
-			accountServiceImpl.sendOTPEmail(accountRequest.getEmail(), otp);
-
-			// Lưu mã OTP vào session để kiểm tra xác thực sau này
-			session.setAttribute("otp", otp);
-			session.setAttribute("email", accountRequest.getEmail());
-
-			// tạo entity otp
-			Otp otpNhap = new Otp();
-			model.addAttribute("otpNhap", otpNhap);
-
-			return "Front_End/pages/ConfirmPassword-signup";
 		}
-
+		session.setAttribute("accountRegister", accountRequest);
+		String otp = accountServiceImpl.generateOTP();
+		accountServiceImpl.sendOTPEmail(accountRequest.getEmail(), otp);
+		session.setAttribute("otp", otp);
+		return "Front_End/pages/ConfirmPassword-signup";
 	}
 
 	@PostMapping("/otp") // hàm phatteacher
-	public String otp(@ModelAttribute("otp") Otp otp, Model model) {
-
-		if (otp.getOtp1().equals("") || otp.getOtp2().equals("") || otp.getOtp3().equals("") || otp.getOtp4().equals("")
-				|| otp.getOtp5().equals("") || otp.getOtp6().equals("")) {
-			
-			String messError = "Please fill in complete otp";
-			model.addAttribute("messError", messError);
+	public String otp(@ModelAttribute("otp") Otp otp, Model model, HttpServletRequest request) {
+		String otp1 = request.getParameter("otp1");
+		String otp2 = request.getParameter("otp2");
+		String otp3 = request.getParameter("otp3");
+		String otp4 = request.getParameter("otp4");
+		String otp5 = request.getParameter("otp5");
+		String otp6 = request.getParameter("otp6");
+		String otpSuccess = accountServiceImpl.concatOtp(otp1, otp2, otp3, otp4, otp5, otp6);
+		System.out.println(otpSuccess);
+		boolean checkOtp = accountServiceImpl.checkFillOtp(model, otp1, otp2, otp3, otp4, otp5, otp6);
+		if (checkOtp == false) {
 			return "Front_End/pages/ConfirmPassword-signup";
-
 		}
-
-		// lấy account người dùng nhập ở trang đăng kí
-		Account accountSession = (Account) session.getAttribute("acc");
-
-		// lấy otp người dùng nhập vào
-		String enteredOTP = otp.getOtp1() + otp.getOtp2() + otp.getOtp3() + otp.getOtp4() + otp.getOtp5()
-				+ otp.getOtp6();
-
-		// lấy otp ở trong session
+		Account accountSession = (Account) session.getAttribute("accountRegister");
 		String sessionOTP = (String) session.getAttribute("otp");
-
-		// so sánh hai otp nếu giống thì return về trang sign in khác thì return về
-		// trang sign up
-		if (enteredOTP.equals(sessionOTP)) {
-			// Mã OTP hợp lệ, thực hiện các hành động tiếp theo
+		if (otpSuccess.equals(sessionOTP)) {
 			String hashCode = accountSession.getHashedPassword();
 			accountSession.setHashedPassword(PasswordEncoderUtil.encodePassword(hashCode));
 			accountServiceImpl.saveAccount(accountSession);
-
 			return "Front_End/pages/sign-in";
-
 		} else {
 			return "Front_End/pages/ConfirmPassword-signup";
 		}

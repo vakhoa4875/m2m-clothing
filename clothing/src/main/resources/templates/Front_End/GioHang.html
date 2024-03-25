@@ -45,7 +45,7 @@
 								<li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
 								<li><a href="/Setting"><i class="fa fa-user" aria-hidden="true"></i></a></li>
 								<li class="checkout">
-									<a href="/giohang">
+									<a href="#">
 										<i class="fa fa-shopping-cart" aria-hidden="true"></i>
 										<span id="checkout_items" class="checkout_items">2</span>
 									</a>
@@ -107,54 +107,161 @@
 
 		<div class="text-center">
 			<div class="d-flex justify-content-center align-items-center">
-				<img src="https://placehold.co/120x120" alt="">
-				<h2 class="ml-3">Thông tin người dùng</h2>
+				<h2 class="ml-3">Giỏ hàng</h2>
 			</div>
 		</div>
 		
 		<div class="row">
-			
-			<div class="col-lg-6 contact_col">
-				<div class="get_in_touch_contents">
-					<div>
-							<div>
-								<p class="mt-3 d-flex justify-content-center">Tên tài khoản</p>
-								<input id="input_name" class="form_input input_name input_ph mt-0" type="text" value="Nguyen Ho Phat" disabled>
-								
-								<p class="mt-3 d-flex justify-content-center">Email</p>
-								<input id="input_name" class="form_input input_name input_ph mt-0" type="text" value="Hophat321@gmail.com" disabled>
-								
-								<p class="mt-3 d-flex justify-content-center">Ngày sinh nhật</p>
-								<input id="input_date" class="form_input input_name input_ph mt-0 pr-3" type="date" disabled>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-6 contact_col">
-					<div class="get_in_touch_contents">
-						<div>
-							<div>
-								<p class="mt-3 d-flex justify-content-center">Mật khẩu</p>
-								<input id="input_name" class="form_input input_name input_ph mt-0" type="password" value="mật khẩu này là của ai" disabled>
-								
-								<p class="mt-3 d-flex justify-content-center">Số điện thoại</p>
-								<input id="input_name" class="form_input input_name input_ph mt-0" type="text" value="0971527JQK" disabled>
+			<div class="container">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<h4>Thông tin chi tiết trong đơn hàng</h4>
+					</li>
+					<li class="list-group-item p-0">
+						<table class="table mb-0">
+							<thead>
+							  <tr>
+								<th scope="col">
+									<div class="ms-4">
+										<input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+										Sản phẩm
+									</div>
+									
+								</th>
+								<th scope="col">Thành tiền</th>
+								<th scope="col">Số lượng</th>
+								<th scope="col">Tổng tiền</th>
+								<th scope="col"></th>
+							  </tr>
+							</thead>
+							<tbody>
+							  <tr>
+								<th scope="row">
+									<li style="overflow: hidden" height="auto" width="136px" class="d-flex align-items-center ms-4">
+										<input class="form-check-input " type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+										<img src="https://placehold.co/150x150" alt="" width="auto" style="display: block; height: auto">
+										<span class="ms-3">Áo đen </span>
+									</li>
+								</th>
+								<td class="align-middle">13$</td>
+								<td class="align-middle">
+									<div>
+										<nav aria-label="Page navigation example">
+											<ul class="pagination">
+												<li class="page-item">
+													<a class="page-link" href="#">
+														<i class="fa-solid fa-minus"></i>
+													</a>
+												</li>
+												<li class="page-item disabled">
+													<a class="page-link text-danger" href="#">2</a>
+												</li>
+												<li class="page-item">
+													<a class="page-link text-dark" href="#">
+														<i class="fa-solid fa-plus"></i>
+													</a>
+												</li>
+											</ul>
+										  </nav>
+									</div>
+								</td>
+								<td class="align-middle fw-bold">13$</td>
+								<td class="align-middle">
+									<button class="btn btn-close"></button>
+								</td>
+							  </tr>
+							  
+							  <tr>
+								<th scope="row">
+									<li style="overflow: hidden" height="auto" width="136px" class="d-flex align-items-center ms-4">
+										<input class="form-check-input " type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+										<img src="https://placehold.co/150x150" alt="" width="auto" style="display: block; height: auto">
+										<span class="ms-3">Áo đen </span>
+									</li>
+								</th>
+								<td class="align-middle">13$</td>
+								<td class="align-middle">
+									<div>
+										<nav aria-label="Page navigation example">
+											<ul class="pagination">
+												<li class="page-item">
+													<a class="page-link" href="#">
+														<i class="fa-solid fa-minus"></i>
+													</a>
+												</li>
+												<li class="page-item disabled">
+													<a class="page-link text-danger" href="#">2</a>
+												</li>
+												<li class="page-item">
+													<a class="page-link text-dark" href="#">
+														<i class="fa-solid fa-plus"></i>
+													</a>
+												</li>
+											</ul>
+										  </nav>
+									</div>
+								</td>
+								<td class="align-middle fw-bold">13$</td>
+								<td class="align-middle">
+									<button class="btn btn-close"></button>
+								</td>
+							  </tr>
 
-								<p class="mt-3 d-flex justify-content-center">Giới tính</p>
-								<div class="d-flex align-items-center justify-content-center mb-5" >
-									<input disabled id="input_name" name="gender" checked class="p-0 mr-3" type="radio" style="width: 20px; height: 20px; "> <span>Nam</span>
-									<input disabled id="input_name" name="gender" class="p-0 mr-3 ml-5" type="radio" style="width: 20px; height: 20px;"> <span>Nữ</span>
+							</tbody>
+						  </table>
+					</li>
+					<li class="list-group-item">
+						<div>
+							<div class="row">
+								<div class="col-md-7 col-sm-12">
+								</div>
+								<div class="col-md-5 col-sm-12">
+									<span class="" style="padding-left: 65px;">Tổng số tiền cần thanh toán : <span class="fw-bolder" style="color: rgb(251, 67, 67);">13$</span></span>
 								</div>
 							</div>
-							
 						</div>
+					</li>
+				  </ul>
+			</div>
+		</div>
+		<div class="mt-2">
+			<div class="row">
+				<div class="col-md-7">
+					<div class="input-group mb-3 w-50">
+						<span class="input-group-text" id="basic-addon1">Mã giảm giá</span>
+						<input type="text" class="form-control" placeholder="Mã giảm giá" aria-label="Username" aria-describedby="basic-addon1">
 					</div>
 				</div>
-		</div>
-		<div class="text-center">
-			<div>
-				<button id="review_submit" type="button" class="red_button message_submit_btnn trans_300" style="background-color: #fe4c50;" value="Submit">Chỉnh sửa thông</button>
-				<button id="review_submit" type="button" class="red_button message_submit_btn trans_300" value="Submit" data-bs-toggle="modal" data-bs-target="#exampleModalXoa">Lưu thông tin</button>
+				<div class="col-md-5">
+					<ul class="list-group ">
+						<li class="list-group-item">
+							<div class="text-center fw-bold">
+								Thông tin giỏ hàng
+							</div>
+						</li>
+						<li class="list-group-item">
+							<div class="row">
+								<div class="col-md-6">
+									<span>Số tiền cần trả : </span> <br>
+									<span>Số tiền đã áp dụng mã giảm giá : </span> <br>
+									<span>Tổng số tiền cần thành toán là : </span>
+								</div>
+								<div class="col-md-6 d-flex flex-column">
+									<span class="ms-5">13$</span>
+									<span class="ms-5">1$</span>
+									<span class="ms-5 fw-bold" style="color: rgb(251, 67, 67);">12$</span>
+								</div>
+								
+							</div>
+						</li>
+						<li class="list-group-item">
+							<div class="float-right">
+								<a href="#" class="btn btn-outline-primary">Hủy đơn hàng</a>
+								<a href="#" class="btn btn-outline-danger">Thành toán hóa đơn</a>
+							</div>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -238,6 +345,7 @@
     </div>
 </div>
 
+<script src="https://kit.fontawesome.com/fe7d543762.js" crossorigin="anonymous"></script>
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script src="/styles/bootstrap4/popper.js"></script>
 <script src="/styles/bootstrap4/bootstrap.min.js"></script>
