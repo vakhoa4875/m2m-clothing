@@ -9,5 +9,9 @@ public interface AccountService {
 	
 	Account findByemail(String email);
 	
-	boolean isAdmin(Account account);
+
+	Account findByuserId(Integer id);
+
+	boolean isDisable(Account account);
+
 }

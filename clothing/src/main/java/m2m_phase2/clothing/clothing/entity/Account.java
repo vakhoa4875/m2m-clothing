@@ -49,6 +49,14 @@ public class Account implements Serializable {
 		return isDisable;
 	}
 
+	@Override
+	public String toString() {
+		return "Account{" +
+				"userId=" + userId +
+				", username='" + username + '\'' +
+				", email='" + email + '\'';
+	}
+
 	public void setDisable(boolean isDisable) {
 		this.isDisable = isDisable;
 	}
