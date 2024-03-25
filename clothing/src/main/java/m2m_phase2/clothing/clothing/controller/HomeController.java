@@ -50,7 +50,7 @@ public class HomeController {
 		String password = accountRequest.getHashedPassword();
 
 		// Kiểm tra xem tài khoản có tồn tại trong cơ sở dữ liệu không
-		Account existingAccount = accountServiceImpl.findByEmail(email);
+		Account existingAccount = accountServiceImpl.findByemail(email);
 
 		// Nếu không tìm thấy tài khoản
 		if (existingAccount == null) {
