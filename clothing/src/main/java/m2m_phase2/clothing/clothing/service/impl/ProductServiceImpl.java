@@ -25,6 +25,11 @@ public class ProductServiceImpl implements ProductService {
 		return repo.findByproductId(id);
 	}
 	
+	@Override
+	public String findCategoryNameByProductId(Integer productId) {
+		return repo.findCategoryNameByProductId(productId);
+	}
+	
 	public String[] getProductPictures(Product product) {
 		String pathPictures = product.getPictures();
 		return pathPictures.split(",");
@@ -78,5 +83,7 @@ public class ProductServiceImpl implements ProductService {
 		}
 		return false;
 	}
+
+
 
 }

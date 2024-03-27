@@ -803,11 +803,11 @@
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
 
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Số điện thoại</label>
-                    <input type="text" class="form-control ps-3" id="basic-url"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
+				<!--	<div class="mb-2 ">
+						<label for="basic-url" class="form-label">Số điện thoại</label>
+						<input type="text" class="form-control ps-3" id="basic-url"
+							aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+					</div> -->
 
                 <div class="mb-2 ">
                     <label for="basic-url" class="form-label">Mật khẩu</label>
@@ -914,7 +914,7 @@
             type: 'GET', // Phương thức HTTP được sử dụng
             // data: {id: index}, // Dữ liệu gửi đi (ID của người dùng)
             success: function (data) {
-                location.reload();
+                window.location.href = window.location.href;
             },
             error: function (xhr, status, error) {
                 // Xử lý lỗi khi gửi yêu cầu đến máy chủ

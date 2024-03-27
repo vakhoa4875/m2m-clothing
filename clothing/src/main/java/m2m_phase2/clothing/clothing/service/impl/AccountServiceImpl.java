@@ -14,6 +14,7 @@ import m2m_phase2.clothing.clothing.entity.Account;
 import m2m_phase2.clothing.clothing.entity.Password;
 import m2m_phase2.clothing.clothing.repository.AccountRepo;
 import m2m_phase2.clothing.clothing.service.AccountService;
+import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -131,6 +132,7 @@ public class AccountServiceImpl implements AccountService {
 		return account != null && account.isDisable();
 	}
 
+
 	public void sendLinkEmail(String toEmail, String resetPasswordUrl) {
 		try {
 			MimeMessage message = emailSender.createMimeMessage();
@@ -153,5 +155,31 @@ public class AccountServiceImpl implements AccountService {
 		String resetPasswordUrl = "http://localhost:8083/ConfirmPassword-Forgot-mk";
 		return resetPasswordUrl;
 	}
+
+
+	
+    public String submitLogin(Account accountRequest, Model model, HttpSession session) {
+        String email = accountRequest.getEmail();
+        String password = accountRequest.getHashedPassword();
+        Account existingAccount = findByemail(email);
+        if (existingAccount == null) {
+            model.addAttribute("error", "Tài khoản không tồn tại");
+            return "Front_End/pages/sign-in";
+        }
+        boolean passwordMatch = PasswordEncoderUtil.verifyPassword(password, existingAccount.getHashedPassword());
+        if (!passwordMatch) {
+            model.addAttribute("error", "Mật khẩu không đúng");
+            return "Front_End/pages/sign-in";
+        }
+        // Kiểm tra xem tài khoản có bị vô hiệu hóa không
+        if (isDisable(existingAccount)) {
+            model.addAttribute("error", "Tài khoản của bạn tạm thời bị vô hiệu hóa");
+            return "Front_End/pages/sign-in";
+        }
+        // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
+        session.setAttribute("loggedInUser", accountRequest.getEmail());
+        System.out.println(session.getAttribute("loggedInUser"));
+        return "Front_End/TrangChu";
+    }
 
 }
