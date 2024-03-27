@@ -13,10 +13,8 @@ import m2m_phase2.clothing.clothing.entity.Password;
 import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
 import m2m_phase2.clothing.clothing.service.impl.UserServiceImpl;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
-
 @Controller
-public class ChangePass {
-
+public class ChangePasswordController {
 	@Autowired
 	private AccountServiceImpl accountServiceImpl;
 	@Autowired
@@ -99,5 +97,4 @@ public class ChangePass {
 		}
 
 	}
-	
 }
