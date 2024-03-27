@@ -54,7 +54,12 @@ public class Account implements Serializable {
 		return "Account{" +
 				"userId=" + userId +
 				", username='" + username + '\'' +
-				", email='" + email + '\'';
+				", email='" + email + '\'' +
+				", hashedPassword='" + hashedPassword + '\'' +
+				", isAdmin=" + isAdmin +
+				", isDisable=" + isDisable +
+				", userinfo=" + userinfo +
+				'}';
 	}
 
 	public void setDisable(boolean isDisable) {
