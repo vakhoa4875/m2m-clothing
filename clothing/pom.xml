@@ -54,7 +54,6 @@
 			bản Spring Boot của bạn -->
 		</dependency>
 
-		
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
