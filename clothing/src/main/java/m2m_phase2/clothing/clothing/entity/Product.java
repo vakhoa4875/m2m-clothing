@@ -19,13 +19,13 @@ public class Product implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int productId;
-	
+
 	@Column(name = "product_name" , nullable = false)
 	private String productName ;
-	
+
 	@Column(name = "price")
 	private float price;
-	
+
 	@Column(name = "quantity")
     private int quantity;
 	
