@@ -368,15 +368,15 @@
                                         <span class="badge badge-sm bg-gradient-success"
                                               th:text="${acc.value.getGender}"></span>
                                     </td>
-                                    <td class="align-middle text-center text-sm">
+                                    <td class="align-middle text-center text-sm" disabled="">
                                         <input class="form-check-input " style="border: 2px solid #ccc;"
                                                type="checkbox" id="inlineCheckbox1" value="option1"
-                                               th:checked="${acc.key.isAdmin}">
+                                               th:checked="${acc.key.isAdmin}" disabled>
                                         <!--												 <label class="form-check-label" for="inlineCheckbox1">1</label> -->
                                     </td>
 
                                     <td class="align-middle text-center">
-                                        <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
+                                        <a th:onclick="'edit('+${acc.key.getUserId}+')'"class="text-secondary font-weight-bold text-xs"
                                            data-bs-toggle="modal" data-bs-target="#exampleModal">
                                             Sửa
                                         </a>
@@ -780,26 +780,30 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Thông tin cần sửa</h1>
+                <h1 class="modal-title fs-5" >Thông tin cần sửa</h1>
                 <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
                         class="fa-solid fa-xmark fa-xl"></i></button>
             </div>
             <div class="modal-body">
-                <div class="mb-2">
-                    <label for="basic-url" class="form-label">Ảnh</label>
-                    <input type="file" class="form-controll" id="inputGroupFile04"
-                           aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+<!--                <div class="mb-2">-->
+<!--                    <label for="basic-url" class="form-label">Ảnh</label>-->
+<!--                    <input type="file" class="form-controll" id="inputGroupFile04"-->
+<!--                           aria-describedby="inputGroupFileAddon04" aria-label="Upload">-->
+<!--                </div>-->
+                <div class="mb-2 ">
+                    <label  class="form-label">Thứ tự người dùng</label>
+                    <input  th:text="${iduser}" type="text" class="form-control ps-3" aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
 
                 <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Tên người dùng</label>
-                    <input type="text" class="form-control ps-3" id="basic-url"
+                    <label  class="form-label">Tên người dùng</label>
+                    <input th:text="${username}" type="text" class="form-control ps-3"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
 
                 <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Email</label>
-                    <input type="text" class="form-control ps-3" id="basic-url"
+                    <label  class="form-label">Email</label>
+                    <input th:text="${email}" type="text" class="form-control ps-3"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
 
@@ -810,33 +814,33 @@
 					</div> -->
 
                 <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Mật khẩu</label>
-                    <input type="text" class="form-control ps-3" id="basic-url"
+                    <label  class="form-label">Mật khẩu</label>
+                    <input th:text="${pass}" type="text" class="form-control ps-3"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
 
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Ngày sinh</label>
-                    <input id="startDate" class="form-control ps-3 pe-3" type="date"
-                           style="border: 1px solid #d2d6da;"/>
-                    <!-- <span id="startDateSelected"></span> -->
-                </div>
+<!--                <div class="mb-2 ">-->
+<!--                    <label for="basic-url" class="form-label">Ngày sinh</label>-->
+<!--                    <input id="input_date" class="form-control ps-3 pe-3" type="date"-->
+<!--                           style="border: 1px solid #d2d6da;"/>-->
+<!--                    &lt;!&ndash; <span id="startDateSelected"></span> &ndash;&gt;-->
+<!--                </div>-->
 
                 <div class="mt-3 ">
-                    <label for="basic-url" class="form-label me-3 m-0">Giới tính</label>
-                    <input id="startDate" class="" type="radio" name="gender" style="border: 1px solid #d2d6da;"/>
+                    <label  class="form-label me-3 m-0">Giới tính</label>
+                    <input  class="" type="radio" name="gender" style="border: 1px solid #d2d6da;" th:checked="${is_disable} == true ? 'checked' : ''"/>
                     Nam
-                    <input id="startDate" class="ms-1" type="radio" name="gender"
+                    <input  class="ms-1" type="radio" name="gender"  th:checked="${is_disable} == false ? '' : 'checked'"
                            style="border: 1px solid #d2d6da;"/> Nữ
                     <!-- <span id="startDateSelected"></span> -->
                 </div>
 
                 <div class="mt-3 ">
-                    <label for="basic-url" class="form-label me-3 m-0">Vai trò</label>
-                    <input id="startDate" class="" type="radio" name="role" style="border: 1px solid #d2d6da;"/>
+                    <label  class="form-label me-3 m-0">Vai trò</label>
+                    <input  class="" type="radio" name="role" style="border: 1px solid #d2d6da;" th:checked="${role} == true ? 'checked' : ''"/>
                     Admin
-                    <input id="startDate" class="ms-1" type="radio" name="role"
-                           style="border: 1px solid #d2d6da;"/> Khách
+                    <input class="ms-1" type="radio" name="role" th:checked="${role} == false ? 'checked' : ''"
+                           style="border: 1px solid #d2d6da;" checked/> Khách
                     <!-- <span id="startDateSelected"></span> -->
                 </div>
 
@@ -844,7 +848,7 @@
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Lưu Thay Đổi</button>
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" th:onclick="'editconform('+${200}+')'">Lưu Thay Đổi</button>
             </div>
         </div>
     </div>
@@ -878,7 +882,7 @@
 <script src="../assets/js/plugins/perfect-scrollbar.min.js"></script>
 <script src="../assets/js/plugins/smooth-scrollbar.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
+<script type="text/javascript">
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
         var options = {
@@ -887,6 +891,8 @@
         Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
     }
 
+
+    //xóa
     const abc = (index) =>{
         $.ajax({
             url: '/admin/UserID?id=' + index,
@@ -905,9 +911,6 @@
             }
         })
     }
-
-
-
     const xya = (index) =>{
         $.ajax({
             url: '/admin/admin-UserID-Success?id=' + index,
@@ -924,6 +927,49 @@
             }
         })
     }
+
+    //sửa
+    const edit = (index) =>{
+        $.ajax({
+            url: '/admin/UserIDProfile?id=' + index,
+            type: 'GET', // Phương thức HTTP được sử dụng
+            // data: {id: index}, // Dữ liệu gửi đi (ID của người dùng)
+            success: function (data) {
+                // Xử lý dữ liệu thành công từ máy chủ
+                console.log(index)
+                // Thực hiện các thao tác khác nếu cần
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi khi gửi yêu cầu đến máy chủ
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        })
+    }
+    const editconform = (index) =>{
+        $.ajax({
+            url: '/admin/admin-UserIDProFile-Success?id=' + index,
+            type: 'GET', // Phương thức HTTP được sử dụng
+            // data: {id: index}, // Dữ liệu gửi đi (ID của người dùng)
+            success: function (data) {
+
+            },
+            error: function (xhr, status, error) {
+                // Xử lý lỗi khi gửi yêu cầu đến máy chủ
+                console.log(xhr);
+                console.log(status);
+                console.log(error);
+            }
+        })
+    }
+
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     var inputValue = [[${date}]];
+    //     document.getElementById("input_date").value = inputValue;
+    // });
+
+
 </script>
 <!-- Github buttons -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>

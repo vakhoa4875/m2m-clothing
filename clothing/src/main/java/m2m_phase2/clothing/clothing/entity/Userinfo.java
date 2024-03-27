@@ -57,6 +57,19 @@ public class Userinfo implements Serializable {
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return "Userinfo{" +
+				"userId=" + userId +
+				", fullname='" + fullname + '\'' +
+				", gender='" + gender + '\'' +
+				", avatar='" + avatar + '\'' +
+				", dob=" + dob +
+				", description='" + description + '\'' +
+				", jobTitle='" + jobTitle + '\'' +
+				'}';
+	}
+
 	public int getUserId() {
 		return userId;
 	}

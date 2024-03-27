@@ -10,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.ToString;
 
 @Entity
 @Table(name = "Product")
@@ -18,13 +19,13 @@ public class Product implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int productId;
-	
+
 	@Column(name = "product_name" , nullable = false)
 	private String productName ;
-	
+
 	@Column(name = "price")
 	private float price;
-	
+
 	@Column(name = "quantity")
     private int quantity;
 	
@@ -143,5 +144,6 @@ public class Product implements Serializable {
 		this.category = category;
 	}
 	
+
 	
 }
