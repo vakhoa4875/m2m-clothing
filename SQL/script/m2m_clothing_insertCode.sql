@@ -361,7 +361,7 @@ Guess detailing on straps"',4.6,1995,3990,'83-1.jpg,83-2.jpg,83-3.jpg',NULL,6),(
 Lightweight And Fun: The Crocs For Men And Women Feature Lightweight Iconic Crocs Comfort. Ventilation Ports Add Breathability And Help Shed Water And Debris Quickly.
 What Size Should I Buy?: These Men`S And Women`S Crocs Offer A Roomy Fit And We Recommend Ordering A Size Down To The Next Largest Whole Size.
 Designed To Fit: These Slip-On Clogs Are Easy To Take On And Off, While Being Extremely Durable. These Crocs Even Offer Pivoting Heel Straps For A More Secure Fit.
-Shop with Confidence: Crocs products are backed by our 90-day manufacturer`s warranty for high quality and authenticity. Terms and conditions apply"',4.8,568427,1136854,'84-1.jpg','84.mp4',6),(85,'OshKosh Unisex-Child Hilda Sneaker',40,12,'"Toddler`s fashion eyelet sneakers in an easy slip-on style
+Shop with Confidence: Crocs products are backed by our 90-day manufacturer`s warranty for high quality and authenticity. Terms and conditions apply"',4.8,568427,1136854,'84-1.jpg, 84-2.jpg','84.mp4',6),(85,'OshKosh Unisex-Child Hilda Sneaker',40,12,'"Toddler`s fashion eyelet sneakers in an easy slip-on style
 Machine washable (yes, way!)
 Speedy slip-on design
 Eyelet material upper
