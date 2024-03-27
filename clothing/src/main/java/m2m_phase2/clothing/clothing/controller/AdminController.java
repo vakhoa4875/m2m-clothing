@@ -88,19 +88,34 @@ public class AdminController {
 		Map<Account, Userinfo> map = userService.getAll();
 		model.addAttribute("listUser", map);
 
-		return "/admin/user-management";
+		return "Front_End/pages/sign-in-admin";
 	}
 
-//	@GetMapping("/admin/user-management")
-//	public String toUserManagement(Model model) {
-//
-//		if (session.getAttribute("admin") == null)
-//			return "Front_End/pages/sign-in";
-//		Map<Account, Userinfo> map = userService.getAll();
-//		Set<Account> set = map.keySet();
-//
-//		model.addAttribute("listAccount", set);
-//
-//		return "Front_End/pages/User(Management)";
-//	}
+
+
+	@GetMapping("/admin/UserIDProfile")
+	public String getUserIDPrfile(@RequestParam Integer id,@ModelAttribute("accadmin") Account account, Model model) {
+//		System.out.println(accountServiceImpl.findByuserId(id).isDisable());
+		session.setAttribute("idprofile", accountServiceImpl.findByuserId(id).getUserId());
+
+
+
+		Map<Account, Userinfo> map = userService.getAll();
+		model.addAttribute("listUser", map);
+		model.addAttribute("turnOffUser",true);
+		return "Front_End/pages/sign-in-admin"; // Hoặc bạn có thể trả về một giá trị khác tùy thuộc vào logic của bạn
+	}
+
+	@GetMapping("/admin/admin-UserIDProFile-Success")
+	public String Edit_UserID(@RequestParam Integer id, Model model){
+		System.out.println(session.getAttribute("idprofile"));
+		System.out.println(id);
+
+
+		Map<Account, Userinfo> map = userService.getAll();
+		model.addAttribute("listUser", map);
+
+		return "Front_End/pages/sign-in-admin";
+	}
+
 }

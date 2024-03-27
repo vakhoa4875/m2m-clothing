@@ -1,30 +1,32 @@
-package m2m_phase2.clothing.clothing.entity;
-
-import java.io.Serializable;
-import java.util.List;
+package m2m_phase2.clothing.clothing.entity.DTO;
 
 import jakarta.persistence.*;
+import m2m_phase2.clothing.clothing.entity.Product;
 
-@Entity
-@Table(name = "Category")
-public class Category implements Serializable {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "category_id")
+import java.util.List;
+
+public class CategoryDTO {
+
 	private int category_id ;
-	
-	@Column(name = " category_name" ,  nullable =  false, unique = true)
+
 	private String category_name;
-	
-	@Column(name = "logo")
+
 	private String logo;
-	
-	@Column(name = "description")
+
 	private String description;
-	
-	@OneToMany(mappedBy = "category")
+
 	private List<Product> produts;
+
+	public CategoryDTO(int category_id, String category_name, String logo, String description, List<Product> produts) {
+		this.category_id = category_id;
+		this.category_name = category_name;
+		this.logo = logo;
+		this.description = description;
+		this.produts = produts;
+	}
+
+	public CategoryDTO() {
+	}
 
 	public int getCategory_id() {
 		return category_id;
@@ -65,9 +67,4 @@ public class Category implements Serializable {
 	public void setProduts(List<Product> produts) {
 		this.produts = produts;
 	}
-	
-	
-	
-	
-	
 }
