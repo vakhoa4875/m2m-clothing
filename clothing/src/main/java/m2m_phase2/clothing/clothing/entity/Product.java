@@ -2,8 +2,11 @@ package m2m_phase2.clothing.clothing.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -47,8 +50,9 @@ public class Product implements Serializable {
 	@Column(name = "videos")
     private String videos;
 	
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "category_id")
+	@JsonBackReference
 	private Category category;
 
 	@Override
