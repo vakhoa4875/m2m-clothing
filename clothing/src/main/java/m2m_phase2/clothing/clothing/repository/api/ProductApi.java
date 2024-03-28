@@ -34,7 +34,7 @@ public class ProductApi {
 	}
 	
 	@GetMapping("/findcategorynamebyproductidapi")
-	public String getfindcategorynamebyproductid(@RequestParam Integer product_id) {
+	public Category getfindcategorynamebyproductid(@RequestParam Integer product_id) {
 		return productserviceimpl.findCategoryNameByProductId(product_id);
 	}
 	

@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import m2m_phase2.clothing.clothing.entity.Category;
 import m2m_phase2.clothing.clothing.entity.Product;
 
 @Repository
@@ -14,8 +15,8 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 	
 	Product findByproductId(Integer id);
 	
-    @Query("SELECT p.category.category_name FROM Product p WHERE p.productId = :productId")
-    String findCategoryNameByProductId(Integer productId);
+    @Query("SELECT c  FROM Product p JOIN p.category c WHERE p.productId = :productId")
+    Category findCategoryNameByProductId(Integer productId);
 
 	
 }	
