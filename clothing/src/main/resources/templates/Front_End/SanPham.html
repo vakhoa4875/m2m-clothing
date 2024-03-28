@@ -426,7 +426,17 @@
 				</div>
 			</div>
 		</div>
+
 	</footer>
+
+	<div id="list" >
+
+	</div>
+	<button type="button" class="btn btn-success" onclick="callAPi()">lấy list danh sách người dùng </button>
+
+
+
+
 
 </div>
 
@@ -439,4 +449,18 @@
 <script src="/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
 <script src="/js/categories_custom.js"></script>
 </body>
+<script type="text/javascript">
+	function callAPi(){
+		$.ajax({
+			url: '/allproductapi',
+			type: 'GET',
+			success: function (data){
+				console.log(data);
+			},
+			error: function (res){
+				console.log(res);
+			}
+		})
+	}
+</script>
 </html>
