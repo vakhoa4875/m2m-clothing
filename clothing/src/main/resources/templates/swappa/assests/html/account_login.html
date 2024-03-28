@@ -1,0 +1,109 @@
+<div style="background-image: url('assests/images/1323882.png');background-attachment: fixed;" class="">
+    <!-- body -->
+    <main class="container my-5">
+        <!-- Section: Design Block -->
+        <div class="row">
+
+            <section class="text-center d-flex justify-content-center">
+
+                <div class="card shadow-5-strong w-50" style="
+          background: hsla(0, 0%, 0%, 0.5);
+          backdrop-filter: blur(15px);
+          ">
+                    <div class="card-body py-5 px-md-5 pb-2">
+
+                        <div class="justify-content-center">
+                            <div class="">
+                                <h2 class="fw-bold mb-5 text-white">LOGIN</h2>
+                                <form name="formLogIn" ng-submit="login()" class="text-white">
+                                    <div ng-hide="status == null" class="alert text-bg-dark"
+                                        ng-class="{'text-danger invalid-input':(status !== 1), 'text-success valid-input': (status === 1)}">
+                                        {{textStatus}}</div>
+                                    <!-- Email input -->
+                                    <div class="form-outline mb-4">
+                                        <input autofocus type="email" id="email" name="email"
+                                            class="text-bg-dark form-control" placeholder="Email address"
+                                            ng-blur="emailBlurred = true" required
+                                            ng-class="{'invalid-input border-0':isInvalidEmail()}" ng-model="email" />
+                                        <div class="mt-1 text-danger fs-14 text-start" ng-show="isInvalidEmail()">
+                                            <i class="fa-solid fa-circle-info"></i> Invalid email. Example:
+                                            example@gmail.com
+                                        </div>
+                                    </div>
+
+                                    <!-- Password input -->
+                                    <div class="form-outline mb-4">
+                                        <div class="input-group">
+                                            <input type="{{(showPass)?'text':'password'}}" id="password" name="password"
+                                                class="text-bg-dark form-control" placeholder="Password"
+                                                ng-blur="passwordBlurred = true" required
+                                                ng-class="{'invalid-input border-0':isInvalidPassword()}"
+                                                ng-model="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,30}$" />
+                                            <span class="input-group-text"><button type="button"
+                                                    class="btn border-0 m-0 p-0" ng-mousedown="showPass = true" ng-mouseup="showPass = false"><i
+                                                        class="fa-solid {{(showPass)?'fa-eye':'fa-eye-slash'}}"></i></button></span>
+                                        </div>
+
+                                        <div class="mt-1 text-danger fs-14 text-start" ng-show="isInvalidPassword()">
+                                            <i class="fa-solid fa-circle-info"></i> Invalid password. Make
+                                            sure it's containing at least 6 characters (max:30) a uppercase
+                                            letter, lowercase letter and number.
+                                        </div>
+                                    </div>
+
+                                    <!-- Checkbox -->
+                                    <div class="form-check d-flex justify-content-between mb-4">
+                                        <div>
+                                            <input class="form-check-input text-bg-success me-2" type="checkbox" value=""
+                                            id="remmemberme" checked />
+                                            <label class="form-check-label" for="remmemberme">
+                                                Remember me?
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="text-white">Quên mật khẩu</a>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <!-- Submit button -->
+                                    <button type="submit" class="btn btn-outline-success btn-block px-5 mb-4 rounded-5">
+                                        Login
+                                    </button>
+
+                                    <!-- Sumit register -->
+                                    <a href="#!/account/register" class="btn btn-outline-success btn-block px-5 mb-4 rounded-5 ms-3">
+                                        Register
+                                    </a>
+
+                                    <!-- Register buttons -->
+                                    <div class="text-center">
+                                        <p>or sign in with:</p>
+                                        <button type="button" class="btn text-success btn-floating mx-1">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </button>
+
+                                        <button type="button" class="btn text-success btn-floating mx-1">
+                                            <i class="fab fa-google"></i>
+                                        </button>
+
+                                        <button type="button" class="btn text-success btn-floating mx-1">
+                                            <i class="fab fa-twitter"></i>
+                                        </button>
+
+                                        <button type="button" class="btn text-success btn-floating mx-1">
+                                            <i class="fab fa-github"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <hr class="d-lg-none mb-4 d-sm-block">
+        </div>
+        <!-- Section: Design Block -->
+    </main>
+
+</div>
