@@ -1,7 +1,7 @@
 <div class="container-fluid bg-semiBlack">
 
     <main class="flex-shrink-0">
-        <div class="container text-bg-light p-4 pb-2" style="background-color: white !important;">
+        <div class="container-fluid text-bg-light p-4 pb-2 mb-2" style="background-color: white !important;">
             <div id="tooltip-bar" class="row row-cols-2 row-cols-md-4 text-center mt-2">
                 <div class="col">
                     <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='                    
@@ -79,136 +79,155 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12 col-lg-9">
-                    <div class="text-center" ng-if="cartLen==0">
-                        <img src="assests/srcPic/empty-cart.png" alt="" class="">
-                    </div>
-                    <div class="table-responsive mt-4" ng-if="cartLen >= 1">
-                        <table class="table align-middle text-center">
-                            <tr class="border shadow-sm">
-                                <td>
-                                    <!-- <h1 ng-bind="isTickAll"></h1> -->
-                                    <input class="form-check-input" type="checkbox" ng-model="isTickAll"
-                                        ng-change="tickAll(isTickAll)" />
-                                </td>
-                                <td colspan="2">Product</td>
-                                <td>Code</td>
-                                <td class="text-end">Price</td>
-                                <td><button ng-click="clearCart()" class="btn btn-outline-danger"><i
-                                            class="fa-solid fa-trash-can"></i></button></td>
-                            </tr>
-                            <div id="seller-items" class="">
-                                <tr>
-                                    <td class="border-0"></td>
-                                </tr>
-                                <!-- <div id="seller">
-                                <tr class="border table-success">
-                                    <td><input class="form-check-input" type="checkbox" value="" id="select-all" />
+            
+                <div class="container">
+                    <ul class="list-group">
+                        <li class="list-group-item p-0">
+                            <table class="table mb-0">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">
+                                        <div class="ms-4">
+                                            <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                                            Sản phẩm
+                                        </div>
+                                        
+                                    </th>
+                                    <th scope="col">Thành tiền</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Tổng tiền</th>
+                                    <th scope="col"></th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">
+                                        <li style="overflow: hidden" height="auto" width="136px" class="d-flex align-items-center ms-4">
+                                            <input class="form-check-input me-2" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                                            <img src="https://placehold.co/150x150" alt="" width="auto" style="display: block; height: auto">
+                                            <span class="ms-3 text-truncate" style="max-width: 15vw;">Áo đenzxczxc </span>
+                                        </li>
+                                    </th>
+                                    <td class="align-middle">13$</td>
+                                    <td class="align-middle">
+                                        <div>
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="#">
+                                                            <i class="fa-solid fa-minus"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link text-danger" href="#">2</a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link text-dark" href="#">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                              </nav>
+                                        </div>
                                     </td>
-                                    <td colspan="6" class="text-start ps-3"><a href="">The Cellular Resource</a>
-                                        <span class="badge rounded-pill text-black"
-                                            style="background-color: rgb(255, 229, 215);"><i class="fa-solid fa-award"
-                                                style="color: #dd2727;"></i> Trusted
-                                            Seller</span> <span class="badge rounded-pill text-black"
-                                            style="background-color: rgb(225, 255, 215);"><i
-                                                class="fa-solid fa-location-dot" style="color: #00bd16;"></i>
-                                            Raleigh, NC</span>
+                                    <td class="align-middle fw-bold">13$</td>
+                                    <td class="align-middle">
+                                        <button class="btn btn-close"></button>
                                     </td>
-                                </tr>
-                            </div> -->
-
-                                <tr ng-repeat="sp in cart">
-                                    <td><input class="form-check-input" type="checkbox" ng-model="sp.buy"
-                                            ng-change="countSelected()" />
+                                  </tr>
+                                  
+                                  <tr>
+                                    <th scope="row">
+                                        <li style="overflow: hidden" height="auto" width="136px" class="d-flex align-items-center ms-4">
+                                            <input class="form-check-input me-2" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
+                                            <img src="https://placehold.co/150x150" alt="" width="auto" style="display: block; height: auto">
+                                            <span class="ms-3">Áo đen </span>
+                                        </li>
+                                    </th>
+                                    <td class="align-middle">13$</td>
+                                    <td class="align-middle">
+                                        <div>
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination">
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="#">
+                                                            <i class="fa-solid fa-minus"></i>
+                                                        </a>
+                                                    </li>
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link text-danger" href="#">2</a>
+                                                    </li>
+                                                    <li class="page-item">
+                                                        <a class="page-link text-dark" href="#">
+                                                            <i class="fa-solid fa-plus"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                              </nav>
+                                        </div>
                                     </td>
-                                    <td>
-                                        <a href="#!/category/{{sp.name1}}/{{sp.name2}}/{{sp.name3}}/{{sp.name4}}">
-                                            <img src="assests/srcPic/{{sp.thumbnail}}" class="img-fluid"
-                                                style="max-height: 6vh; max-width: 4vw; margin: auto;" alt="">
-                                        </a>
+                                    <td class="align-middle fw-bold">13$</td>
+                                    <td class="align-middle">
+                                        <button class="btn btn-close"></button>
                                     </td>
-                                    <td> <span ng-bind="sp.name3"></span>
-                                        <span ng-bind="sp.color" class="badge rounded-pill text-bg-warning">Black</span>
-                                        <span ng-bind="sp.storage" class="badge rounded-pill text-bg-dark">64GB</span>
-                                    </td>
-                                    <td><a href="#!/category/{{sp.name1}}/{{sp.name2}}/{{sp.name3}}/{{sp.name4}}"
-                                            ng-bind="sp.code" class="text-success">LXNM56688</a></td>
-                                    <td class="text-end" ng-bind="sp.price | currency:'$':0">$377</td>
-                                    <td><button ng-click="delFromCart(sp.id)" class="btn btn-outline-danger"><i
-                                                class="fa-solid fa-trash-can"></i></button>
-                                    </td>
-                                </tr>
+                                  </tr>
+    
+                                </tbody>
+                              </table>
+                        </li>
+                        <li class="list-group-item">
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-7 col-sm-12">
+                                    </div>
+                                    <div class="col-md-5 col-sm-12">
+                                        <span class="" style="padding-left: 65px;">Tổng số tiền cần thanh toán : <span class="fw-bolder" style="color: rgb(251, 67, 67);">13$</span></span>
+                                    </div>
+                                </div>
                             </div>
-                        </table>
-                    </div>
+                        </li>
+                      </ul>
                 </div>
-                <div class="col-12 col-lg-3">
-                    <div class="card mt-4 h5 fw-normal text-center border-0" ng-if="cartLen>=1">
-                        <div class="card-body text-bg-danger m-0 p-0 py-3 rounded">
-                            <div class="d-flex flex-row gap-2 align-items-center justify-content-center">
-                                <span id="item-count" ng-bind="itemsCount">6</span>items selected,<span id="total"
-                                    ng-bind="total | currency:'$':0">$377*6</span>
-                            </div>
-                        </div>
-                        <div class="card-footer border-0" style="background-color: white;">
-                            <a href=""
-                                class="btn {{itemsCount == 0?'disabled btn-outline-secondary':' btn-outline-success'}}"
-                                ng-click="buySelected()">Buy now</a>
+            </div>
+            <div class="mt-2">
+                <div class="row">
+                    <div class="col-md-7">
+                        <div class="input-group mb-3 w-50">
+                            <span class="input-group-text" id="basic-addon1">Mã giảm giá</span>
+                            <input type="text" class="form-control" placeholder="Mã giảm giá" aria-label="Username" aria-describedby="basic-addon1">
                         </div>
                     </div>
-                    <div class="card fs-14 p-3 pb-0 text-bg-secondary mt-4 border-0">
-                        <p>Use the Cart to keep track of listings you want to buy.</p>
-
-                        <p>Remember, items in your cart can still be bought by other users.</p>
-
-                        <p>To buy a listing in your cart click on its Buy Now button.</p>
+                    <div class="col-md-5">
+                        <ul class="list-group ">
+                            <li class="list-group-item">
+                                <div class="text-center fw-bold">
+                                    Thông tin giỏ hàng
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <span>Số tiền cần trả : </span> <br>
+                                        <span>Số tiền đã áp dụng mã giảm giá : </span> <br>
+                                        <span>Tổng số tiền cần thành toán là : </span>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 d-flex flex-column">
+                                        <span class="ms-5 w-25">13$</span>
+                                        <span class="ms-5 w-25">1$</span>
+                                        <span class="ms-5 w-25 fw-bold" style="color: rgb(251, 67, 67);">12$</span>
+                                    </div>
+                                    
+                                </div>
+                            </li>
+                            <li class="list-group-item">
+                                <div class="float-right">
+                                    <a href="#" class="btn btn-outline-primary">Hủy đơn hàng</a>
+                                    <a href="#" class="btn btn-outline-danger">Thành toán hóa đơn</a>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
-
-            <!-- product-list -->
-            <div class="mt-4">
-                <div class="d-flex align-items-baseline my-4">
-                    <div class="flex-fill hori-stripe-pattern-warm"></div>
-                    <div class="mx-4 mb-0 text-center h2">Recently Viewed</div>
-                    <div class="flex-fill hori-stripe-pattern-warm"></div>
-                </div>
-                <div div class="row row-cols-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 justify-content-around">
-                    <div class="col mb-3" ng-repeat="item in allItems | limitTo:5:0">
-                        <!-- <h1>{{item.name1}}</h1>
-                    <h1>{{item.name2}}</h1>
-                    <h1>{{item.name3}}</h1> -->
-                        <div class="card text-center d-product justify-content-center p-2 pb-2">
-                            <a href="#!category/{{item.name1}}/{{item.name2}}/{{item.name3}}"
-                                class="stretched-link"><img src="assests/srcPic/{{item.thumbnail}}"
-                                    class="img-fluid mt-2 mb-3" alt=""></a>
-                            <span> {{item.name}} </span>
-                            <div class="d-flex flex-row mt-2 justify-content-center" ng-hide="(item.star==null)">
-                                <i ng-repeat="s in star"
-                                    class="{{(s <= item.star) ? 'fa-solid fa-star' : (s - item.star > 0 && s - item.star < 1) ? 'fa-solid fa-star-half-stroke' : 'fa-regular fa-star'}}"
-                                    style="color: #ff7b00;"></i>
-                            </div>
-                            <div class="row row-cols-2 justify-content-between mt-3 price">
-                                <div class="col text-center d-flex flex-row gap-1">
-                                    <span style="color: green;">${{item.curPrice}} </span>
-                                    <span ng-hide="item.oriPrice == null"
-                                        style="text-decoration: line-through;">${{item.oriPrice}}</span>
-                                </div>
-                                <div class="col text-end">
-                                    <i ng-hide="categories[0].logo==null" class="{{categories[0].logo}}"></i>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <a href="#!category/{{item.name1}}/{{item.name2}}/{{item.name3}}"
-                                class="text-success">Guides</a> ·
-                            <a href="#!category/{{item.name1}}/{{item.name2}}/{{item.name3}}"
-                                class="text-success">Compare</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </main>
 </div>

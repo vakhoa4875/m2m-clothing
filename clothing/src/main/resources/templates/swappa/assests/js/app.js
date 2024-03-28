@@ -48,12 +48,20 @@ angular.module("myApp", ["ngRoute"])
                 controller: 'cartCtrl'
             })
             .when('/account', {
-                templateUrl: 'assests/html/account.html',
+                templateUrl: 'assests/html/account_login.html',
                 controller: 'accountCtrl'
+            })
+            .when('/account/register',{
+                templateUrl: 'assests/html/account_register.html',
+                controller : 'accountregister_Ctrl'
             })
             .when('/account/changePass', {
                 templateUrl: 'assests/html/changePass.html',
                 controller: 'changePassCtrl'
+            })
+            .when('/account/admin', {
+                templateUrl: 'assests/html/account_admin_login.html',
+                controller: 'account_admin_loginCtrl'
             })
             .otherwise({
                 template: '<img src="assests/srcPic/404.gif">',
@@ -70,6 +78,39 @@ angular.module("myApp", ["ngRoute"])
                 return '';
             }
         };
+    })
+    .service('SharedDataService', function() {
+    
+        var user = {
+            flag : true
+        };
+
+        var admin = {
+            flag : false
+        }; 
+
+        //user
+        // Phương thức để lấy dữ liệu
+        this.getDataUser = function() {
+            return user;
+        };
+    
+        // Phương thức để thiết lập dữ liệu
+        this.setDataUser = function(newData) {
+            user = newData;
+        };
+
+        //admin
+        this.getDataAdmin = function() {
+            return admin;
+        };
+    
+        // Phương thức để thiết lập dữ liệu
+        this.setDataAdmin = function(newData) {
+            admin = newData;
+        };
+
+
     })
     .filter('timeAgo', function () {
         return function (input) {
@@ -120,6 +161,9 @@ angular.module("myApp", ["ngRoute"])
         $rootScope.allItems = [];
         $rootScope.searchRes = null;
         $scope.keyword = '';
+        $rootScope.user = true;
+        $rootScope.admin = false;
+
 
         // $scope.redirectOnInputChange = function () {
         //     // Your logic to check if keyword is not empty and then redirect
@@ -335,6 +379,7 @@ angular.module("myApp", ["ngRoute"])
         $scope.email2Blurred = false;
         $scope.password21Blurred = false;
         $scope.password22Blurred = false;
+        // $rootScope.user = true;
         //firstname sign up
         $scope.isInvalidFirstName = function () {
             // console.log($scope.firstName);
@@ -409,6 +454,11 @@ angular.module("myApp", ["ngRoute"])
             }, 2250);
         }
 
+        
+
+    })
+    .controller("accountregister_Ctrl", function ($scope, $rootScope, $location, $timeout) {
+    
         $scope.textStatus2 = '';
         $scope.showPass = false;
 
@@ -431,24 +481,105 @@ angular.module("myApp", ["ngRoute"])
                 }
             }
 
-            $rootScope.createAccount();
+            $scope.thoiGian = 5;
+            $rootScope.user = null;
+            // $rootScope.createAccount();
+            if($rootScope.createAccount() == true){
+                
+                var demThoiGian = function() {
+                    if ($scope.thoiGian > 0) {
+                        // Nếu thời gian lớn hơn 0 giây, giảm thời gian đi 1 giây
+                        $scope.textStatus2 = 'Account Registration Successfully!! Please wait for '+$scope.thoiGian+' seconds to login!';
+                        $scope.thoiGian--;
+                        // Gọi lại hàm sau 1 giây
+                        $timeout(demThoiGian, 1300); // 1000 milliseconds = 1 giây
+                    } else {
+                        // Sau khi thời gian đạt đến 0 giây, chuyển hướng đến trang khác
+                        $location.path("/account");
+                    }
+                }
+                demThoiGian();
+            }else{
+                console.log("sai");
+            }
 
-            $scope.textStatus2 = 'Account Registration Successfully!! You can LOGIN now!';
+            
             console.log($scope.textStatus2);
 
         }
 
         $rootScope.createAccount = () => {
-            $rootScope.accounts.push({
+            if($rootScope.accounts.push({
                 firstName: $scope.firstName,
                 lastName: $scope.lastName,
                 email: $scope.email2,
                 password: $scope.password21
-            });
-            console.log($rootScope.accounts);
+            })){
+                return true;
+            }else{
+                return false;
+            };
         }
 
     })
+
+
+    .controller("account_admin_loginCtrl",function ($scope, $timeout, $rootScope, $location, $routeParams){
+        $scope.firstNameBlurred = false;
+        $scope.lastNameBlurred = false;
+        $scope.email2Blurred = false;
+        $scope.password21Blurred = false;
+        $scope.password22Blurred = false;
+        $scope.user = false;
+        $scope.admin = true;
+
+        // Gửi sự kiện từ controller con với dữ liệu
+        $rootScope.$broadcast('user', $scope.user);
+        $rootScope.$broadcast('admin', $scope.admin);
+
+
+         //firstname sign up
+         $scope.isInvalidFirstName = function () {
+            // console.log($scope.firstName);
+            return $scope.formSignUp.firstName.$invalid && $scope.firstNameBlurred;
+        };
+        //lastname sign up
+        $scope.isInvalidLastName = function () {
+            // console.log($scope.password21 + " | " + $scope.password22);
+            return $scope.formSignUp.lastName.$invalid && $scope.lastNameBlurred;
+        };
+        //email2 sign up
+        $scope.isInvalidEmail2 = function () {
+            // console.log($scope.password21 + " | " + $scope.password22);
+            return $scope.formSignUp.email2.$invalid && $scope.email2Blurred;
+        };
+        //password21 sign up
+        $scope.isInvalidPassword21 = function () {
+            // console.log($scope.password21 + " | " + $scope.password22);
+            return $scope.formSignUp.password21.$invalid && $scope.password21Blurred;
+        };
+        //email21 sign up
+        $scope.isInvalidPassword22 = function () {
+            console.log($scope.password21 + " | " + $scope.password22);
+            return $scope.formSignUp.password22.$invalid && $scope.password22Blurred;
+        };
+        /*
+        LOG IN
+        */
+        $scope.emailBlurred = false;
+        $scope.passwordBlurred = false;
+        //email
+        $scope.isInvalidEmail = function () {
+            return $scope.formLogIn.email.$invalid && $scope.emailBlurred;
+        };
+        //email
+        $scope.isInvalidPassword = function () {
+            return $scope.formLogIn.password.$invalid && $scope.passwordBlurred;
+        };
+
+        $rootScope.listItemHeader = false;
+    })
+
     .controller("cartCtrl", function ($scope, $timeout, $rootScope, $location) {
 
         $scope.itemsCount = 0;
@@ -828,6 +959,8 @@ angular.module("myApp", ["ngRoute"])
 
 
     })
+
+    
 
 
 

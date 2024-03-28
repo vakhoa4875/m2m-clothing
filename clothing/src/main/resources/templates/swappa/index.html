@@ -13,6 +13,7 @@
 
 <body ng-app="myApp" ng-Controller="myCtrl">
     <header ng-include="'assests/html/header.html'" class=""></header>
+    <!-- <header ng-if="{{admin}}" ng-include="'assests/html/header_admin.html'" class=""></header> -->
 
     <div
         class="text-bg-dark position-fixed {{ (loading)?'active':'' }} top-0 start-0 end-0 bottom-0 d-flex align-items-center justify-content-center loading-screen">
@@ -20,6 +21,8 @@
             <span class="visually-hidden">Loading...</span>
         </div>
     </div>
+
+
     <!-- body -->
     <main class="flex-shrink-0">
         <ng-view class="d-flex flex-column"></ng-view>
