@@ -3,6 +3,7 @@ package m2m_phase2.clothing.clothing.entity;
 import java.io.Serializable;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -32,7 +33,8 @@ public class Category implements Serializable {
 	@Column(name = "description")
 	private String description;
 	
-	@OneToMany(mappedBy = "category",  cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JsonIgnore
 	private List<Product> produts;
 
 	public int getCategory_id() {
