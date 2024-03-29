@@ -8,7 +8,7 @@ ng-view {
 }
 
 body {
-    font-family: "Garamond";
+    font-family: "Roboto";
     /* Use Playfair Display if available, otherwise fall back to a serif font */
 }
 

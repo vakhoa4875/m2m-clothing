@@ -110,7 +110,6 @@ public class AccountServiceImpl implements AccountService {
 				return false;
 			}
 		}
-	}
     	return true;
     }
     
