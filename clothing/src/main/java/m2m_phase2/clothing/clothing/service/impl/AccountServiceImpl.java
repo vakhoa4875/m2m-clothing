@@ -111,7 +111,7 @@ public class AccountServiceImpl implements AccountService {
 			model.addAttribute("messError", messError);
 			return false;	
 		}
-		}
+	}
     	return true;
     }
     

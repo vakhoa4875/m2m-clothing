@@ -311,3 +311,15 @@ footer i {
     height: 25px;
     margin: auto;
 }
+
+/* admin */
+
+#v-pills-tab .active{
+    background-color: #707474;
+    color: aliceblue;
+
+}
+.nav-link:hover{
+    background-color: #707474;
+    color: aliceblue;
+}
