@@ -19,12 +19,12 @@ import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 @Service
 public class AccountServiceImpl implements AccountService {
 
-    @Autowired
-    private AccountRepo repo;
-    @Autowired
-    private JavaMailSender emailSender;
-    @Autowired
-    private HttpSession session;
+	@Autowired
+	private AccountRepo repo;
+	@Autowired
+	private JavaMailSender emailSender;
+	@Autowired
+	private HttpSession session;
 
 	@Override
 	public Account saveAccount(Account account) {
@@ -43,73 +43,72 @@ public class AccountServiceImpl implements AccountService {
 		// TODO Auto-generated method stub
 		return repo.findByusername(username);
 	}
-	
-	
+
 	public void sendOTPEmail(String toEmail, String otp) {
-        try {
-        	MimeMessage message = emailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+		try {
+			MimeMessage message = emailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-            helper.setFrom("kaisamaslain+Nerdyers@gmail.com");
-            helper.setTo(toEmail);
-            helper.setSubject("Mã OTP cho đăng ký tài khoản");
-            helper.setText("Mã OTP của bạn là: " + otp);
-            emailSender.send(message);
-            session.setAttribute("otp", otp);
-            session.setAttribute("email", toEmail);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public boolean verifyOTP(String otp) {
-        String sessionOtp = (String) session.getAttribute("otp");
-        return sessionOtp != null && sessionOtp.equals(otp);
-    }
-    
-
-    public String generateOTP() {
-        SecureRandom random = new SecureRandom();
-        int otpValue = 100000 + random.nextInt(900000);
-        return String.valueOf(otpValue);
-    }
-    
-    public boolean checkUsername(Account account,Model model) {
-    	if(findByusername(account.getUsername()) != null) {
-    		String messError = "Username already exists";
-			model.addAttribute("messError", messError);
-			return false;	
-    	}
-    return true;
-    }
-    
-    public boolean checkEmail(Account account,Model model) {
-    	if(findByemail(account.getEmail()) != null) {
-    		String messError = "Email already exists";
-			model.addAttribute("messError", messError);
-			return false;	
-    	}
-    	return true;
-    }
-    
-    public boolean checkFillRegister( Model model,String ... args) {
-    	for (String string : args) {
-		if(string.equals("")) {
-			String messError = "Please fill in complete information";
-			model.addAttribute("messError", messError);
-			return false;	
+			helper.setFrom("kaisamaslain+Nerdyers@gmail.com");
+			helper.setTo(toEmail);
+			helper.setSubject("Mã OTP cho đăng ký tài khoản");
+			helper.setText("Mã OTP của bạn là: " + otp);
+			emailSender.send(message);
+			session.setAttribute("otp", otp);
+			session.setAttribute("email", toEmail);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		}
-    	return true;
-    	
-    }
-    
-    public boolean checkFillOtp( Model model,String ... args) {
-    	for (String string : args) {
-		if(string.equals("")) {
-			String messError = "Please fill in complete otp";
+	}
+
+	public boolean verifyOTP(String otp) {
+		String sessionOtp = (String) session.getAttribute("otp");
+		return sessionOtp != null && sessionOtp.equals(otp);
+	}
+
+	public String generateOTP() {
+		SecureRandom random = new SecureRandom();
+		int otpValue = 100000 + random.nextInt(900000);
+		return String.valueOf(otpValue);
+	}
+
+	public boolean checkUsername(Account account, Model model) {
+		if (findByusername(account.getUsername()) != null) {
+			String messError = "Username already exists";
 			model.addAttribute("messError", messError);
-			return false;	
+			return false;
+		}
+		return true;
+	}
+
+	public boolean checkEmail(Account account, Model model) {
+		if (findByemail(account.getEmail()) != null) {
+			String messError = "Email already exists";
+			model.addAttribute("messError", messError);
+			return false;
+		}
+		return true;
+	}
+
+	public boolean checkFillRegister(Model model, String... args) {
+		for (String string : args) {
+			if (string.equals("")) {
+				String messError = "Please fill in complete information";
+				model.addAttribute("messError", messError);
+				return false;
+			}
+		}
+		return true;
+
+	}
+
+	public boolean checkFillOtp(Model model, String... args) {
+		for (String string : args) {
+			if (string.equals("")) {
+				String messError = "Please fill in complete otp";
+				model.addAttribute("messError", messError);
+				return false;
+			}
 		}
 	}
     	return true;
@@ -131,8 +130,33 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public boolean isDisable(Account account) {
 		// TODO Auto-generated method stub
-    	return account != null && account.isDisable();
+		return account != null && account.isDisable();
 	}
+
+
+	public void sendLinkEmail(String toEmail, String resetPasswordUrl) {
+		try {
+			MimeMessage message = emailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+			helper.setFrom("kaisamaslain+Nerdyers@gmail.com");
+			helper.setTo(toEmail);
+			helper.setSubject("Đường link để lấy lại mật khẩu !!!");
+			helper.setText("Vui lòng nhấp vào đường link sau để đặt lại mật khẩu: " + resetPasswordUrl);
+			emailSender.send(message);
+			session.setAttribute("resetPasswordUrl", resetPasswordUrl); // Lưu đường dẫn vào session
+			session.setAttribute("email", toEmail);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	public String sendUrl() {
+		
+		String resetPasswordUrl = "http://localhost:8083/ConfirmPassword-Forgot-mk";
+		return resetPasswordUrl;
+	}
+
 
 	
     public String submitLogin(Account accountRequest, Model model, HttpSession session) {
@@ -158,4 +182,5 @@ public class AccountServiceImpl implements AccountService {
         System.out.println(session.getAttribute("loggedInUser"));
         return "Front_End/TrangChu";
     }
+
 }

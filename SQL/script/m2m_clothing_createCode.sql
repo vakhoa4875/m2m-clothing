@@ -51,6 +51,7 @@ CREATE TABLE Product (
   sold int,
   pictures varchar(max),
   videos varchar(255),
+  slug_url varchar(255) default '',
   category_id int FOREIGN KEY REFERENCES Category(category_id)
 );
 

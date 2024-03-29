@@ -42,7 +42,6 @@ public class ProductController {
 		model.addAttribute("sold",productServiceImpl.getProductSold(product.getSold()));
 		model.addAttribute("average_rate",productServiceImpl.getProductAverage_rate(product.getAverageRate()));
 		model.addAttribute("checkemply",productServiceImpl.checkEmply(product));
-
 		return "Front_End/ChiTietSanPham";
 	}
 }
