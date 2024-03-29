@@ -39,6 +39,10 @@ angular.module("myApp", ["ngRoute"])
                 templateUrl: 'assests/html/productList.html',
                 controller: 'productListCtrl'
             })
+            .when('/category', {
+                templateUrl: 'assests/html/product_All.html',
+                controller: 'productAllCtrl'
+            })
             .when('/searchResult', {
                 templateUrl: 'assests/html/searchResult.html',
                 controller: 'searchResultCtrl'
@@ -958,6 +962,10 @@ angular.module("myApp", ["ngRoute"])
 
 
 
+    })
+
+    .controller("productAllCtrl",function($scope, $interval, $routeParams, $rootScope, $location){
+        
     })
 
     
