@@ -110,22 +110,23 @@ public class AccountServiceImpl implements AccountService {
 				return false;
 			}
 		}
-		return true;
 	}
-
-	public String concatOtp(String... args) {
-		String otpConcatSuccess = "";
-		for (int i = 0; i < args.length; i++) {
-			otpConcatSuccess += args[i];
-		}
-		return otpConcatSuccess;
-	}
-
-	@Override
-	public Account findByuserId(Integer id) {
-		return repo.findByuserId(id);
-	}
-
+    	return true;
+    }
+    
+    public String concatOtp(String ... args) {
+        String otpConcatSuccess = "";
+        for (int i = 0; i < args.length; i++) {
+            otpConcatSuccess += args[i];
+        }
+        return otpConcatSuccess;
+    }
+    
+    @Override
+    public Account findByuserId(Integer id) {
+        return repo.findByuserId(id);
+    }
+    
 	@Override
 	public boolean isDisable(Account account) {
 		// TODO Auto-generated method stub

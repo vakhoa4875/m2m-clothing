@@ -1,5 +1,5 @@
 ng-view {
-    min-height: 65vh;
+    /* min-height: 65vh; */
     background-color: white;
 }
 
@@ -310,4 +310,16 @@ footer i {
 .icons {
     height: 25px;
     margin: auto;
+}
+
+/* admin */
+
+#v-pills-tab .active{
+    background-color: #707474;
+    color: aliceblue;
+
+}
+.nav-link:hover{
+    background-color: #707474;
+    color: aliceblue;
 }
