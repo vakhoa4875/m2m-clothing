@@ -1,5 +1,5 @@
 ng-view {
-    min-height: 65vh;
+    /* min-height: 65vh; */
     background-color: white;
 }
 
