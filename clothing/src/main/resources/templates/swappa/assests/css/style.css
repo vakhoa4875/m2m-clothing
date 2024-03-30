@@ -1,3 +1,23 @@
+.hoverbutton:hover{
+    background-color: gray;
+}
+
+.active-custom{
+    color: rgb(243, 84, 84);
+    font-weight: bold;
+}
+
+.nav-link:hover{
+    background-color: rgb(18,17,13) !important;
+}
+
+header i:hover{
+    color: white !important;
+}
+
+
+
+
 ng-view {
     /* min-height: 65vh; */
     background-color: white;
@@ -35,6 +55,8 @@ body {
     height: 35px;
     width: auto;
 }
+
+
 
 img,
 svg {
@@ -101,11 +123,11 @@ header i:hover {
 }
 
 .bgg-cf-100 {
-    background-image: linear-gradient(rgb(255, 255, 255), rgb(231, 227, 223));
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(240, 238, 235));
 }
 
 .bgg-cf-0 {
-    background-image: linear-gradient(rgb(231, 227, 223), rgb(255, 255, 255));
+    background-image: linear-gradient(rgb(255, 255, 255), rgb(231, 227, 223));
 }
 
 .bgg-orange-100 {
@@ -165,12 +187,12 @@ a {
 }
 
 .text-bg-cf {
-    background-color: rgb(231, 227, 223) !important;
+    background-color: rgb(255, 255, 255) !important;
     color: rgb(18, 17, 13) !important;
 }
 
 #brand-swappa img {
-    max-height: 50px;
+    max-height: 110px;
     margin: auto;
 }
 

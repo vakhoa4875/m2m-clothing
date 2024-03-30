@@ -13,60 +13,64 @@ angular.module("myApp", ["ngRoute"])
             alert("Lỗi đc chưa");
         })
     })
-    .config(($routeProvider) => {
-        $routeProvider
-            .when('/', {
-                templateUrl: 'assests/html/home.html',
-                controller: 'homeCtrl'
-            })
-            .when('/category/:name/:child', {
-                templateUrl: 'assests/html/productList.html',
-                controller: 'productList2Ctrl'
-            })
-            .when('/category/:name/:child/:product', {
-                templateUrl: 'assests/html/productList3.html',
-                controller: 'productList3Ctrl'
-            })
-            .when('/category/:name/:child/:product/:code', {
-                templateUrl: 'assests/html/productDetail.html',
-                controller: 'productDetailCtrl'
-            })
-            .when('/search/:code', {
-                templateUrl: 'assests/html/productDetail.html',
-                controller: 'productDetailCtrl'
-            })
-            .when('/category/:name', {
-                templateUrl: 'assests/html/productList.html',
-                controller: 'productListCtrl'
-            })
-            .when('/searchResult', {
-                templateUrl: 'assests/html/searchResult.html',
-                controller: 'searchResultCtrl'
-            })
-            .when('/cart', {
-                templateUrl: 'assests/html/cart.html',
-                controller: 'cartCtrl'
-            })
-            .when('/account', {
-                templateUrl: 'assests/html/account_login.html',
-                controller: 'accountCtrl'
-            })
-            .when('/account/register',{
-                templateUrl: 'assests/html/account_register.html',
-                controller : 'accountregister_Ctrl'
-            })
-            .when('/account/changePass', {
-                templateUrl: 'assests/html/changePass.html',
-                controller: 'changePassCtrl'
-            })
-            .when('/account/admin', {
-                templateUrl: 'assests/html/account_admin_login.html',
-                controller: 'account_admin_loginCtrl'
-            })
-            .otherwise({
-                template: '<img src="assests/srcPic/404.gif">',
-            })
-    })
+    // .config(($routeProvider) => {
+    //     $routeProvider
+    //         .when('/', {
+    //             templateUrl: 'assests/html/home.html',
+    //             controller: 'homeCtrl'
+    //         })
+    //         .when('/category/:name/:child', {
+    //             templateUrl: 'assests/html/productList.html',
+    //             controller: 'productList2Ctrl'
+    //         })
+    //         .when('/category/:name/:child/:product', {
+    //             templateUrl: 'assests/html/productList3.html',
+    //             controller: 'productList3Ctrl'
+    //         })
+    //         .when('/category/:name/:child/:product/:code', {
+    //             templateUrl: 'assests/html/productDetail.html',
+    //             controller: 'productDetailCtrl'
+    //         })
+    //         .when('/search/:code', {
+    //             templateUrl: 'assests/html/productDetail.html',
+    //             controller: 'productDetailCtrl'
+    //         })
+    //         .when('/category/:name', {
+    //             templateUrl: 'assests/html/productList.html',
+    //             controller: 'productListCtrl'
+    //         })
+    //         .when('/category', {
+    //             templateUrl: 'assests/html/product_All.html',
+    //             controller: 'productAllCtrl'
+    //         })
+    //         .when('/searchResult', {
+    //             templateUrl: 'assests/html/searchResult.html',
+    //             controller: 'searchResultCtrl'
+    //         })
+    //         .when('/cart', {
+    //             templateUrl: 'assests/html/cart.html',
+    //             controller: 'cartCtrl'
+    //         })
+    //         .when('/account', {
+    //             templateUrl: 'assests/html/account_login.html',
+    //             controller: 'accountCtrl'
+    //         })
+    //         .when('/account/register',{
+    //             templateUrl: 'assests/html/account_register.html',
+    //             controller : 'accountregister_Ctrl'
+    //         })
+    //         .when('/account/changePass', {
+    //             templateUrl: 'assests/html/changePass.html',
+    //             controller: 'changePassCtrl'
+    //         })
+    //         .when('/account/admin', {
+    //             templateUrl: 'assests/html/account_admin_login.html',
+    //             controller: 'account_admin_loginCtrl'
+    //         })
+    //         .otherwise({
+    //             template: '<img src="assests/srcPic/404.gif">',
+    //         })
+    // })
     .config(['$locationProvider', function ($locationProvider) {
         $locationProvider.hashPrefix('!');
     }])
@@ -958,6 +962,10 @@ angular.module("myApp", ["ngRoute"])
 
 
 
+    })
+
+    .controller("productAllCtrl",function($scope, $interval, $routeParams, $rootScope, $location){
+        
     })
 
     
