@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/css/style.css">
+    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body ng-app="myApp" ng-Controller="changePassCtrl">
+
+    <div>
+        <!-- mobileNav -->
+    <div class="d-block d-lg-none">
+        <div id="mobileNav"  style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
+            <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
+                <div class="container-sm">
+
+                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <a href="trangchu.html" class="navbar-brand" title="Swappa">
+                        <img class="img-fluid"
+                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                            alt="Swappa Logo">
+                    </a>
+
+                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_search"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
+                        <i class="fa-solid fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+    </div>
+    <!-- mainNav -->
+    <div class="d-none d-lg-block">
+        <!-- first-nav -->
+        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
+            <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
+                <div class="container d-block">
+                    <div class="d-flex gap-3">
+                        <ul class="navbar-nav" role="presentation">
+                            <li class="nav-item">
+                                <a class="navbar-brand d-block text-center pt-2" href="trangchu.html">
+                                    <img class="img-fluid"
+                                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                        width="167px" height="35px" alt="Bootstrap">
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="flex-grow-1">
+                            <form action="" class="d-flex align-items-center position-relative h-100">
+                                <!-- {{keyword}} -->
+                                <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
+                                <input type="search" class="form-control rounded-0" id="navbar_search_input" name="q"
+                                    ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
+                                <!-- </a> -->
+                            </form>
+                        </div>
+                        <ul class="navbar-nav" role="presentation">
+                            <li class="d-flex align-items-center justify-content-center">
+                                <div class="">
+                                    <a href="acc_login.html">
+                                        <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="ms-3 d-flex align-items-center justify-content-center">
+                                <a href="card.html" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
+                                    <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                      1
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="d-flex justify-content-around pb-1">
+                        <div>
+                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Outerwear</a>
+                        </div>
+
+                        <div>
+                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Tops</a>
+                        </div>
+                        <div>
+                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Bottoms</a>
+                        </div>
+                        <div>
+                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 200px;">Jewels & Accessories</a>
+                        </div>
+                        <div>
+                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Headwear</a>
+                        </div>
+                        <div>
+                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Footwear</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- second-nav -->
+    </div>
+</div>
+
+    <div style="background-image: url('/assests/images/1323882.png');background-attachment: fixed;" class="">
+            <!-- body -->
+            <main class="container pt-5 pb-5 align-content-center align-middle" style="min-height: 90vh;">
+                <!-- Section: Design Block -->
+                <div class="row">
+
+                    <section class="text-center offset-md-1 col-md-10 offset-lg-3 col-lg-6">
+
+                        <div class="card shadow-5-strong" style="
+                background: hsla(0, 0%, 0%, 0.5);
+                backdrop-filter: blur(15px);
+                ">
+                            <div class="card-body">
+
+                                <div class="justify-content-center">
+                                    <div class="">
+                                        <h2 class="fw-bold mb-5 text-white">CHANGE PASSWORD</h2>
+                                        <form name="formChange" ng-submit="changePass()" class="text-white">
+                                            <div ng-hide="status == null" class="alert text-bg-dark"
+                                                ng-class="{'text-danger invalid-input':(status !== 1), 'text-success valid-input': (status === 1)}">
+                                                {{textStatus}}</div>
+
+                                            <!-- Password input -->
+                                            <div class="form-group mb-4">
+                                                <div class="input-group">
+                                                    <input type="{{(showPass)?'text':'password'}}" id="password" name="password"
+                                                        class="text-bg-dark form-control" placeholder="Current Password"
+                                                        ng-blur="passwordBlurred = true" required
+                                                        ng-class="{'invalid-input border-0':isInvalidPassword()}"
+                                                        ng-model="password" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,30}$" />
+                                                    <span class="input-group-text"><button type="button"
+                                                            class="btn border-0 m-0 p-0" ng-mousedown="showPass = true"
+                                                            ng-mouseup="showPass = false"><i
+                                                                class="fa-solid {{(showPass)?'fa-eye':'fa-eye-slash'}}"></i></button></span>
+                                                </div>
+
+                                                <div class="mt-1 text-danger fs-14 text-start" ng-show="isInvalidPassword()">
+                                                    <i class="fa-solid fa-circle-info"></i> Type your current password above.
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mb-4">
+                                                <div class="input-group">
+                                                    <input type="{{(showPass2)?'text':'password'}}" id="password2"
+                                                        name="password2" class="text-bg-dark form-control"
+                                                        placeholder="New Password" ng-blur="password2Blurred = true" required
+                                                        ng-class="{'invalid-input border-0':isInvalidPassword2()}"
+                                                        ng-model="password2"
+                                                        pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,30}$" />
+                                                    <span class="input-group-text"><button type="button"
+                                                            class="btn border-0 m-0 p-0" ng-mousedown="showPass2 = true"
+                                                            ng-mouseup="showPass2 = false"><i
+                                                                class="fa-solid {{(showPass2)?'fa-eye':'fa-eye-slash'}}"></i></button></span>
+                                                </div>
+
+                                                <div class="mt-1 text-danger fs-14 text-start" ng-show="isInvalidPassword2()">
+                                                    <i class="fa-solid fa-circle-info"></i> Invalid password. Make
+                                                    sure it's containing at least 6 characters (max:30) a uppercase
+                                                    letter, lowercase letter and number.
+                                                </div>
+                                            </div>
+
+                                            <!-- Submit button -->
+                                            <button type="submit" class="btn btn-outline-success btn-block px-5 mb-4 rounded-5">
+                                                Change password
+                                            </button>
+
+                                            <!-- Register buttons -->
+                                            <div class="text-center visually-hidden">
+                                                <p>or sign in with:</p>
+                                                <button type="button" class="btn text-success btn-floating mx-1">
+                                                    <i class="fab fa-facebook-f"></i>
+                                                </button>
+
+                                                <button type="button" class="btn text-success btn-floating mx-1">
+                                                    <i class="fab fa-google"></i>
+                                                </button>
+
+                                                <button type="button" class="btn text-success btn-floating mx-1">
+                                                    <i class="fab fa-twitter"></i>
+                                                </button>
+
+                                                <button type="button" class="btn text-success btn-floating mx-1">
+                                                    <i class="fab fa-github"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+                <!-- Section: Design Block -->
+            </main>
+    </div>
+    
+
+    <!-- footer -->
+    <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+        <div class="container pt-2 pb-2">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+                
+            </div>
+            <div class="row row-cols-1 row-cols-md-3">
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class=" text-white">
+                        <i class="fa-brands fa-square-facebook fs-1"></i>
+                        <i class="fa-brands fa-square-instagram fs-1"></i>
+                        <i class="fa-brands fa-youtube fs-1"></i>
+                        <i class="fa-brands fa-linkedin fs-1"></i>
+                        <i class="fa-brands fa-square-reddit fs-1"></i>
+                    </div>
+                </div>
+                <div class="col text-center ">
+                    <a href="./index.html"><img
+                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
+                            alt=""></a>
+                </div>
+                <div class="col text-center text-white d-flex justify-content-center align-items-center">
+                    <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+    <script src="/node_modules/angular/angular.min.js"></script>
+    <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+    <script src="/node_modules/angular/angular.route.min.js"></script>
+    <script src="/assests/js/app.js"></script>
+    <script src="/assests/js/script.js"></script>
+</html>

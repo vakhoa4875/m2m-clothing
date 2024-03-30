@@ -196,6 +196,21 @@ angular.module("myApp", ["ngRoute"])
         $scope.isInvalidPassword = function () {
             return $scope.formForgot.password.$invalid && $scope.passwordBlurred;
         };
+
+        $scope.showAlert = function() {
+            Swal.fire({
+                title: 'Thông Báo từ hệ thống',
+                text: 'Đã gửi link vào gmail, Vui lòng nhấn vào để link để lấy lại mật khẩu',
+                icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                confirmButtonText: 'Xác nhận',
+                allowOutsideClick: false
+            }).then((result) => {
+                // Nếu người dùng nhấn OK, chuyển trang
+                if (result.isConfirmed) {
+                    window.location.href = "/index.html"; // Thay đổi URL để chuyển trang
+                }
+            });
+        }
     })
 
     .controller("accountForgotXacNhanCtrl", function ($scope, $rootScope, $location, $timeout){
@@ -223,6 +238,42 @@ angular.module("myApp", ["ngRoute"])
                     }
                 });
             }
+        }
+    })
+
+    .controller("AdminController",function($scope, $rootScope, $location, $timeout){
+        $scope.showAlert = function(){
+            Swal.fire({
+                title: 'Thông Báo từ hệ thống',
+                text: 'Tài khoản của bạn đã được thêm thành công',
+                icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                confirmButtonText: 'Xác nhận',
+                allowOutsideClick: false
+            });
+            return;
+        }
+
+        $scope.showEdit = function(){
+            Swal.fire({
+                title: 'Thông Báo từ hệ thống',
+                text: 'Tài khoản của bạn đã được chỉnh sửa thành công',
+                icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                confirmButtonText: 'Xác nhận',
+                allowOutsideClick: false
+            });
+            return;
+        }
+
+
+        $scope.showDelete = function(){
+            Swal.fire({
+                title: 'Thông Báo từ hệ thống',
+                text: 'Bạn có chắc là xóa tài khoản này',
+                icon: 'warning', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                confirmButtonText: 'Xác nhận',
+                allowOutsideClick: true
+            });
+            return;
         }
     })
     

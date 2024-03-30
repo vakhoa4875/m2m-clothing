@@ -1,3 +1,23 @@
+.hoverbutton:hover{
+    background-color: gray;
+}
+
+.active-custom{
+    color: rgb(243, 84, 84);
+    font-weight: bold;
+}
+
+.nav-link:hover{
+    background-color: rgb(18,17,13) !important;
+}
+
+header i:hover{
+    color: white !important;
+}
+
+
+
+
 ng-view {
     /* min-height: 65vh; */
     background-color: white;
@@ -35,6 +55,8 @@ body {
     height: 35px;
     width: auto;
 }
+
+
 
 img,
 svg {
@@ -170,7 +192,7 @@ a {
 }
 
 #brand-swappa img {
-    max-height: 50px;
+    max-height: 110px;
     margin: auto;
 }
 
