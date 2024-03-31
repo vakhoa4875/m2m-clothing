@@ -8,6 +8,6 @@ import m2m_phase2.clothing.clothing.entity.Product;
 public interface ProductService {
 	
 	List<Product> findAll();
-	Product findByproductId(Integer id);
+	Product findByslug_url(String slug_url);
 	Category findCategoryNameByProductId (Integer productId);
 }
