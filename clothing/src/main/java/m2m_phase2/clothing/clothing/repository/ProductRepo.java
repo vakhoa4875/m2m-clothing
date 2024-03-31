@@ -13,7 +13,7 @@ import m2m_phase2.clothing.clothing.entity.Product;
 public interface ProductRepo extends JpaRepository<Product, Integer> {
 	List<Product> findAll();
 	
-	Product findByproductId(Integer id);
+	Product findByslugUrl(String slugUrl);
 	
     @Query("SELECT c  FROM Product p JOIN p.category c WHERE p.productId = :productId")
     Category findCategoryNameByProductId(Integer productId);
