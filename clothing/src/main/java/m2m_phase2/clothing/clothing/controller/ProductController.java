@@ -24,24 +24,14 @@ public class ProductController {
 	@GetMapping("/allproduct")
 	public String testfuntionproduct(Model model) {
 			 
-		List<Product> list =   productServiceImpl.findAll();
-		List<Category> listCategory = category.findAll();
- 		model.addAttribute("products", list);
-		 model.addAttribute("category", listCategory);
-		return "Front_End/SanPham";
+
+		return "swappa/assests/html/productAll";
 	}
 	@Autowired
 	private CategoryImpl categoryimpl;
 	@GetMapping("/product/{id}")
 	public String getDetail(@PathVariable Integer id, Model model ) {
 		
-		Product product = productServiceImpl.findByproductId(id);
-		model.addAttribute("product",product);
-		model.addAttribute("arraypictures",productServiceImpl.getProductPictures(product));
-		model.addAttribute("descriptions",productServiceImpl.getProductDescriptions(product));
-		model.addAttribute("sold",productServiceImpl.getProductSold(product.getSold()));
-		model.addAttribute("average_rate",productServiceImpl.getProductAverage_rate(product.getAverageRate()));
-		model.addAttribute("checkemply",productServiceImpl.checkEmply(product));
-		return "Front_End/ChiTietSanPham";
+		return "swappa/assests/html/productDetail";
 	}
 }

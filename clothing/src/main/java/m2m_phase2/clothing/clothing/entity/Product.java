@@ -50,6 +50,9 @@ public class Product implements Serializable {
 	@Column(name = "videos")
     private String videos;
 	
+	@Column(name = "slug_url")
+	private String slugUrl;
+	
 	@ManyToOne()
 	@JoinColumn(name = "category_id")
 	@JsonBackReference
@@ -138,6 +141,14 @@ public class Product implements Serializable {
 
 	public void setVideos(String videos) {
 		this.videos = videos;
+	}
+	
+	public String getSlugUrl() {
+		return slugUrl;
+	}
+
+	public void setSlugUrl(String slugUrl) {
+		this.slugUrl = slugUrl;
 	}
 
 	public Category getCategory() {
