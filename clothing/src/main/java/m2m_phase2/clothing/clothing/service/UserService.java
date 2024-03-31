@@ -15,6 +15,8 @@ public interface UserService {
 
 	Map<Account, Userinfo> getAll();
 
+
+
 	void  save(Account acc, Userinfo info);
 
 }
