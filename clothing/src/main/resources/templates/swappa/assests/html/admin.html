@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org" lang="java">
 
 <head>
     <meta charset="UTF-8">
@@ -8,394 +8,354 @@
     <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script th:src="@{/swappa/assests/js/UserManagement.js}"></script>
+
+    <style>
+        .max-width-col {
+            max-width: 128px;
+        }
+    </style>
+
+    <script>
+        const services = new UserManagement();
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.log("Test kinda done")
+            services.loadInit();
+        })
+    </script>
 </head>
 
 <body class="bg-black" ng-app="myApp" ng-Controller="AdminController">
-    <div class="d-block d-lg-none">
-        <div id="mobileNav" style="color: rgb(231,227,223);">
-            <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
-                <div class="container-sm">
+<div class="d-block d-lg-none">
+    <div id="mobileNav" style="color: rgb(231,227,223);">
+        <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
+            <div class="container-sm">
 
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
+                <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
+                    <i class="fa-solid fa-bars"></i>
+                </button>
 
-                    <a href="#" class="navbar-brand" title="Swappa">
-                        <img class="img-fluid"
-                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                            alt="Swappa Logo">
-                    </a>
+                <a href="#" class="navbar-brand" title="Swappa">
+                    <img class="img-fluid"
+                         src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                         alt="Swappa Logo">
+                </a>
 
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
                         data-bs-target="#slide_search" aria-controls="navbarSupportedContent" aria-expanded="false"
                         aria-label="Search">
-                        <i class="fa-solid fa-search" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </nav>
-        </div>
-
+                    <i class="fa-solid fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
     </div>
-    <!-- mainNav -->
-    <div class="d-none d-lg-block">
-        <!-- first-nav -->
-        <div class="stNav" style="color: rgb(231,227,223);">
-            <nav class="navbar navbar-expand-lg  navbar-dark">
-                <div class="container d-block">
-                    <div class="d-flex justify-content-between align-items-center">
-                        <ul class="navbar-nav" role="presentation">
-                            <li class="nav-item">
-                                <a class="navbar-brand d-block text-center pt-2" href="#">
-                                    <img class="img-fluid"
-                                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                        width="167px" height="35px" alt="Bootstrap">
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="navbar-nav" role="presentation">
-                            
 
-                            <li class="nav-item">
-                                <a href="#!/cart" class="nav-link position-relative">
+</div>
+<!-- mainNav -->
+<div class="d-none d-lg-block">
+    <!-- first-nav -->
+    <div class="stNav" style="color: rgb(231,227,223);">
+        <nav class="navbar navbar-expand-lg  navbar-dark">
+            <div class="container d-block">
+                <div class="d-flex justify-content-between align-items-center">
+                    <ul class="navbar-nav" role="presentation">
+                        <li class="nav-item">
+                            <a class="navbar-brand d-block text-center pt-2" href="#">
+                                <img class="img-fluid"
+                                     src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                     width="167px" height="35px" alt="Bootstrap">
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav" role="presentation">
 
-                                    <i class="fa-solid fa-bell"></i>
-                                    <span ng-bind="cartLen"
-                                        class="position-absolute top-0 start-100 translate-middle-x px-2 text-bg-cf badge rounded-pill">
+
+                        <li class="nav-item">
+                            <a href="#!/cart" class="nav-link position-relative">
+
+                                <i class="fa-solid fa-bell"></i>
+                                <span ng-bind="cartLen"
+                                      class="position-absolute top-0 start-100 translate-middle-x px-2 text-bg-cf badge rounded-pill">
                                         1 <span class="visually-hidden">Cart Items</span>
                                     </span>
 
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-
+                            </a>
+                        </li>
+                    </ul>
                 </div>
-            </nav>
-        </div>
+
+            </div>
+        </nav>
     </div>
+</div>
 
-    <div class="container-fluid  bg-body-secondary" style="height: 800px;">
-        <div class="row">
-            <div class="col-xl-3 col-lg-12 mt-4">
-                <div class="card">
-                    <div class="card-header bg-black text-center">
-                        <a class="text-white bg-gradient-primary" href="../pages/tables.html">
-                            <h5 class="m-0"> <strong>Quản lý người dùng</strong></h5>
-                        </a>
-                    </div>
+<div class="container-fluid  bg-body-secondary" style="height: 800px;">
+    <div class="row">
+        <div class="col-xl-3 col-lg-12 mt-4">
+            <div class="card">
+                <div class="card-header bg-black text-center">
+                    <a class="text-white bg-gradient-primary" href="../pages/tables.html">
+                        <h5 class="m-0"><strong>Quản lý người dùng</strong></h5>
+                    </a>
+                </div>
 
-                    <div class="card-body pt-2">
-                        <div class="align-items-start">
-                            <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
-                                aria-orientation="vertical">
-                                <button class="nav-link mt-1 text-black active" id="v-pills-home-tab" data-bs-toggle="pill"
+                <div class="card-body pt-2">
+                    <div class="align-items-start">
+                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                             aria-orientation="vertical">
+                            <button class="nav-link mt-1 text-black active" id="v-pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
-                                    aria-selected="true">Thông tin tài khoản</button>
-                                <!-- <button class="nav-link mt-1 text-black" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-profile" type="button" role="tab"
-                                    aria-controls="v-pills-profile" aria-selected="false">Đăng nhập</button> -->
-                                <button class="nav-link mt-1 text-black" id="v-pills-messages-tab" data-bs-toggle="pill"
+                                    aria-selected="true">Thông tin tài khoản
+                            </button>
+                            <!-- <button class="nav-link mt-1 text-black" id="v-pills-profile-tab" data-bs-toggle="pill"
+                                data-bs-target="#v-pills-profile" type="button" role="tab"
+                                aria-controls="v-pills-profile" aria-selected="false">Đăng nhập</button> -->
+                            <button class="nav-link mt-1 text-black" id="v-pills-messages-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-messages" type="button" role="tab"
-                                    aria-controls="v-pills-messages" aria-selected="false">Đăng xuất</button>
-                                <!-- <button class="nav-link mt-1 text-black" id="v-pills-settings-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-settings" type="button" role="tab"
-                                    aria-controls="v-pills-settings" aria-selected="false">Settings</button> -->
-                            </div>
-                            <div class="tab-content" id="v-pills-tabContent">
-                                <!-- <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0"></div>
-                                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">...</div>
-                                <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">...</div>
-                                <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">...</div> -->
-                            </div>
-
+                                    aria-controls="v-pills-messages" aria-selected="false">Đăng xuất
+                            </button>
+                            <!-- <button class="nav-link mt-1 text-black" id="v-pills-settings-tab" data-bs-toggle="pill"
+                                data-bs-target="#v-pills-settings" type="button" role="tab"
+                                aria-controls="v-pills-settings" aria-selected="false">Settings</button> -->
                         </div>
+                        <div class="tab-content" id="v-pills-tabContent">
+                            <!-- <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0"></div>
+                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">...</div>
+                            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">...</div>
+                            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">...</div> -->
+                        </div>
+
                     </div>
                 </div>
             </div>
-            <div class="col-xl-9 col-lg-12">
-                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
-                    aria-labelledby="v-pills-home-tab" tabindex="0">
-                    <div class="card my-4">
-                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
-                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">NGƯỜI DÙNG TRONG HỆ THỐNG
-                                </h5>
-                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
-                                data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
+        </div>
+        <div class="col-xl-9 col-lg-12">
+            <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                 aria-labelledby="v-pills-home-tab" tabindex="0">
+                <div class="card my-4">
+                    <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                        <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                            <h5 class="text-black ps-3 d-flex align-items-center mb-0">NGƯỜI DÙNG TRONG HỆ THỐNG</h5>
+                            <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
+                                    data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
                                     style="padding: 7px 12px 7px 12px;">
-                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>
-                                </button>
-
-
-                            </div>
+                                <i class="fa-solid fa-plus " aria-hidden="true"></i>
+                            </button>
                         </div>
-                        
-                        <div class="card-body px-0 mx-3 pb-2">
-                            <div class="table-responsive p-0">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                        <tr>
-                                            <th
-                                                class=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Người dùng
-                                            </th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Email
-                                            </th>
-                                            <th
-                                                class=" text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7 ps-2">
-                                                Mật khẩu
-                                            </th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Ngày sinh
-                                            </th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Giới tính
-                                            </th>
-                                            <th
-                                                class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">
-                                                Vai trò
-                                            </th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        <tr th:each="acc : ${listUser.entrySet()}" th:if="${!acc.key.isDisable()}">
-                                            <td>
-                                                <div class="d-flex px-2 py-1">
-
-                                                    <div>
-                                                        <img src="https://placehold.co/36x36/"
-                                                            class="avatar avatar-sm me-3 border-radius-lg" alt="user1"
-                                                            id="thongtin">
-                                                    </div>
-                                                    <div class="d-flex w-100 flex-column justify-content-center">
-                                                        <h6 class="mb-0 text-sm" th:text="${acc.key.getUsername}">Cao
-                                                            trong le</h6>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <p class="text-xs text-secondary mb-0" th:text="${acc.key.getEmail}">
-                                                    heh@ádadasdasd</p>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <p class="text-xs text-secondary mb-0"
-                                                    th:text="${acc.key.getHashedPassword}">123123456432</p>
-                                            </td>
-                                            <td class="align-middle text-center">
-                                                <span class="text-secondary text-xs font-weight-bold"
-                                                    th:text="${acc.value.getDob}">05-11-2004</span>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <span class="text-secondary text-xs font-weight-bold"
-                                                    th:text="${acc.value.getGender}">Nam</span>
-                                            </td>
-                                            <td class="align-middle text-center text-sm">
-                                                <input class="form-check-input " style="border: 2px solid #ccc;"
-                                                    type="checkbox" id="inlineCheckbox1" value="option1"
-                                                    th:checked="${acc.key.isAdmin}">
-                                                <!--												 <label class="form-check-label" for="inlineCheckbox1">1</label> -->
-                                            </td>
-
-                                            <td class="align-middle text-center">
-                                                <a href="javascript:;" class="text-secondary font-weight-bold text-xs"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalsua">
-                                                    Sửa
-                                                </button>
-                                                <button  class="border border-0 rounded text-secondary font-weight-bold text-xs ms-2 text-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalXoa" ng-click="showDelete()">
-                                                    Xóa
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                    </div>
+                    <div class="card-body px-0 mx-3 pb-2">
+                        <div class="table-responsive p-0" id="tableUserContainer">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 
-    <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thông tin người dùng cần thêm</h1>
-                    <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-                </div>
-                <div class="modal-body">
-                    <div class="mb-2">
-                        <label for="basic-url" class="form-label">Ảnh</label>
-                        <input type="file" class="form-controll" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                    </div>
-    
-                    <div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Tên người dùng</label>
-                        <input type="text" class="form-control ps-3" id="basic-url" aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    </div>
-    
-                    <div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Email</label>
-                        <input type="text" class="form-control ps-3" id="basic-url" aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    </div>
-    
-                    <!--	<div class="mb-2 ">
-                            <label for="basic-url" class="form-label">Số điện thoại</label>
-                            <input type="text" class="form-control ps-3" id="basic-url"
-                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                        </div> -->
-    
-                    <div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Mật khẩu</label>
-                        <input type="text" class="form-control ps-3" id="basic-url" aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    </div>
-    
-                    <div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Ngày sinh</label>
-                        <input id="startDate" class="form-control ps-3 pe-3" type="date" style="border: 1px solid #d2d6da;">
-                        <!-- <span id="startDateSelected"></span> -->
-                    </div>
-    
-                    <div class="mt-3 ">
-                        <label for="basic-url" class="form-label me-3 m-0">Giới tính</label>
-                        <input id="startDate" class="" type="radio" name="gender" style="border: 1px solid #d2d6da;">
-                        Nam
-                        <input id="startDate" class="ms-1" type="radio" name="gender" style="border: 1px solid #d2d6da;"> Nữ
-                        <!-- <span id="startDateSelected"></span> -->
-                    </div>
-    
-                    <div class="mt-3 ">
-                        <label for="basic-url" class="form-label me-3 m-0">Vai trò</label>
-                        <input id="startDate" class="" type="radio" name="role" style="border: 1px solid #d2d6da;">
-                        Admin
-                        <input id="startDate" class="ms-1" type="radio" name="role" style="border: 1px solid #d2d6da;"> Khách
-                        <!-- <span id="startDateSelected"></span> -->
-                    </div>
-    
-    
-                </div>
-                <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="showAlert()">Lưu người dùng</button>
-                </div>
+<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="insertedUserModal">Thông tin người dùng cần thêm</h1>
+                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
             </div>
-        </div>
-      </div>
+            <div class="modal-body">
+                <div class="mb-2">
+                    <label for="basic-url" class="form-label">Ảnh</label>
+                    <input type="file" class="form-control" id="insertedUserAvatar"
+                           aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                </div>
 
-      <!-- modal sửa -->
-      <div class="modal fade" id="exampleModalSua" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Thông tin người dùng cần sửa</h1>
-                    <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                <div class="mb-2 ">
+                    <label for="basic-url" class="form-label">Tên người dùng</label>
+                    <input type="text" class="form-control ps-3" id="insertedUserFullname"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
-                <div class="modal-body">
-                    <div class="mb-2">
-                        <label for="basic-url" class="form-label">Ảnh</label>
-                        <input type="file" class="form-controll" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                    </div>
-    
-                    <div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Tên người dùng</label>
-                        <input type="text" class="form-control ps-3" id="basic-url" aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    </div>
-    
-                    <div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Email</label>
-                        <input type="text" class="form-control ps-3" id="basic-url" aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    </div>
-    
-                    <!--	<div class="mb-2 ">
-                            <label for="basic-url" class="form-label">Số điện thoại</label>
-                            <input type="text" class="form-control ps-3" id="basic-url"
-                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                        </div> -->
-    
-                    <div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Mật khẩu</label>
-                        <input type="text" class="form-control ps-3" id="basic-url" aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    </div>
-    
-                    <div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Ngày sinh</label>
-                        <input id="startDate" class="form-control ps-3 pe-3" type="date" style="border: 1px solid #d2d6da;">
-                        <!-- <span id="startDateSelected"></span> -->
-                    </div>
-    
-                    <div class="mt-3 ">
-                        <label for="basic-url" class="form-label me-3 m-0">Giới tính</label>
-                        <input id="startDate" class="" type="radio" name="gender" style="border: 1px solid #d2d6da;">
-                        Nam
-                        <input id="startDate" class="ms-1" type="radio" name="gender" style="border: 1px solid #d2d6da;"> Nữ
-                        <!-- <span id="startDateSelected"></span> -->
-                    </div>
-    
-                    <div class="mt-3 ">
-                        <label for="basic-url" class="form-label me-3 m-0">Vai trò</label>
-                        <input id="startDate" class="" type="radio" name="role" style="border: 1px solid #d2d6da;">
-                        Admin
-                        <input id="startDate" class="ms-1" type="radio" name="role" style="border: 1px solid #d2d6da;"> Khách
-                        <!-- <span id="startDateSelected"></span> -->
-                    </div>
-    
-    
-                </div>
-                <div class="modal-footer">
-                    <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="showEdit()">Lưu Thay Đổi</button>
-                </div>
-            </div>
-        </div>
-      </div>
-    
-      
 
-    <!-- footer -->
-    <div class="container pt-2 pb-2">
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
-            
-        </div>
-        <div class="row row-cols-1 row-cols-md-3">
-            <div class="col d-flex justify-content-center align-items-center">
-                <div class=" text-white">
-                    <i class="fa-brands fa-square-facebook fs-1"></i>
-                    <i class="fa-brands fa-square-instagram fs-1"></i>
-                    <i class="fa-brands fa-youtube fs-1"></i>
-                    <i class="fa-brands fa-linkedin fs-1"></i>
-                    <i class="fa-brands fa-square-reddit fs-1"></i>
+                <div class="mb-2 ">
+                    <label for="basic-url" class="form-label">Email</label>
+                    <input type="text" class="form-control ps-3" id="insertedUserEmail"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
+
+                <!--	<div class="mb-2 ">
+                        <label for="basic-url" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control ps-3" id="basic-url"
+                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                    </div> -->
+
+                <div class="mb-2 ">
+                    <label for="basic-url" class="form-label">Mật khẩu</label>
+                    <input type="text" class="form-control ps-3" id="insertedUserPassword"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+
+                <div class="mb-2 ">
+                    <label for="basic-url" class="form-label">Ngày sinh</label>
+                    <input id="insertedUserDob" class="form-control ps-3 pe-3" type="date" style="border: 1px solid #d2d6da;">
+                    <!-- <span id="startDateSelected"></span> -->
+                </div>
+
+                <div class="mt-3 ">
+                    <label for="basic-url" class="form-label me-3 m-0">Giới tính</label>
+                    <input id="insertedUserGenderMale" class="" type="radio" name="gender" style="border: 1px solid #d2d6da;">
+                    Nam
+                    <input id="insertedUserGenderFemale" class="ms-1" type="radio" name="gender" style="border: 1px solid #d2d6da;"> Nữ
+                    <!-- <span id="startDateSelected"></span> -->
+                </div>
+
+                <div class="mt-3 ">
+                    <label for="basic-url" class="form-label me-3 m-0">Vai trò</label>
+                    <input id="insertedUserRoleAdmin" class="" type="radio" name="role" style="border: 1px solid #d2d6da;">
+                    Admin
+                    <input id="insertedUserRoleUser" class="ms-1" type="radio" name="role" style="border: 1px solid #d2d6da;">
+                    Khách
+                    <!-- <span id="startDateSelected"></span> -->
+                </div>
+
+
             </div>
-            <div class="col text-center ">
-                <a href="./index.html"><img
-                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
-                        alt=""></a>
-            </div>
-            <div class="col text-center text-white d-flex justify-content-center align-items-center">
-                <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="showAlert()">Lưu người
+                    dùng
+                </button>
             </div>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="/node_modules/angular/angular.min.js"></script>
-    <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
-    <script src="/node_modules/angular/angular.route.min.js"></script>
-    <script src="/assests/js/app_admin.js"></script>
-    <script src="/assests/js/script.js"></script>
-    
+</div>
+
+<!-- modal sửa -->
+<div class="modal fade" id="exampleModalSua" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="updateUserModal">Thông tin người dùng cần sửa</h1>
+                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-2">
+                    <label for="basic-url" class="form-label">Ảnh</label>
+                    <input type="file" class="form-control" id="inputGroupFile04"
+                           aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                </div>
+
+                <div class="mb-2 ">
+                    <label for="basic-url" class="form-label">Tên người dùng</label>
+                    <input type="text" class="form-control ps-3" id="basic-url1"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+
+                <div class="mb-2 ">
+                    <label for="basic-url" class="form-label">Email</label>
+                    <input type="text" class="form-control ps-3" id="basic-url"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+
+                <!--	<div class="mb-2 ">
+                        <label for="basic-url" class="form-label">Số điện thoại</label>
+                        <input type="text" class="form-control ps-3" id="basic-url"
+                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                    </div> -->
+
+                <div class="mb-2 ">
+                    <label for="basic-url" class="form-label">Mật khẩu</label>
+                    <input type="text" class="form-control ps-3" id="basic-url3"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+
+                <div class="mb-2 ">
+                    <label for="basic-url" class="form-label">Ngày sinh</label>
+                    <input id="startDate1" class="form-control ps-3 pe-3" type="date" style="border: 1px solid #d2d6da;">
+                    <!-- <span id="startDateSelected"></span> -->
+                </div>
+
+                <div class="mt-3 ">
+                    <label for="basic-url" class="form-label me-3 m-0">Giới tính</label>
+                    <input id="startDate4" class="" type="radio" name="gender" style="border: 1px solid #d2d6da;">
+                    Nam
+                    <input id="startDate2" class="ms-1" type="radio" name="gender" style="border: 1px solid #d2d6da;"> Nữ
+                    <!-- <span id="startDateSelected"></span> -->
+                </div>
+
+                <div class="mt-3 ">
+                    <label for="basic-url" class="form-label me-3 m-0">Vai trò</label>
+                    <input id="startDate" class="" type="radio" name="role" style="border: 1px solid #d2d6da;">
+                    Admin
+                    <input id="startDate3" class="ms-1" type="radio" name="role" style="border: 1px solid #d2d6da;">
+                    Khách
+                    <!-- <span id="startDateSelected"></span> -->
+                </div>
+
+
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="showEdit()">Lưu Thay
+                    Đổi
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- footer -->
+<div class="container pt-2 pb-2">
+    <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+
+    </div>
+    <div class="row row-cols-1 row-cols-md-3">
+        <div class="col d-flex justify-content-center align-items-center">
+            <div class=" text-white">
+                <i class="fa-brands fa-square-facebook fs-1"></i>
+                <i class="fa-brands fa-square-instagram fs-1"></i>
+                <i class="fa-brands fa-youtube fs-1"></i>
+                <i class="fa-brands fa-linkedin fs-1"></i>
+                <i class="fa-brands fa-square-reddit fs-1"></i>
+            </div>
+        </div>
+        <div class="col text-center ">
+            <a href="./index.html"><img
+                    src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
+                    alt=""></a>
+        </div>
+        <div class="col text-center text-white d-flex justify-content-center align-items-center">
+            <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+<script src="/node_modules/angular/angular.route.min.js"></script>
+<script src="/assests/js/app_admin.js"></script>
+<script src="/assests/js/script.js"></script>
+
 </body>
 
 <script>
-
+    $.ajax({
+        url: '/api-admin/users/getAllUsers',
+        method: 'GET',
+        success: (response) => {
+            console.log(response);
+        },
+        error: (xhr, status, error) => {
+            console.error("Error:", error);
+        }
+    });
 </script>
 
 </html>

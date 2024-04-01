@@ -1,5 +1,6 @@
 package m2m_phase2.clothing.clothing.entity.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import m2m_phase2.clothing.clothing.entity.Account;
 
@@ -13,13 +14,15 @@ import java.util.stream.Collectors;
 @Builder
 public class AccountM {
     private int userId;
+    @JsonIgnore
     private String username;
     private String email;
+    @JsonIgnore
     private String hashedPassword;
     private Boolean isAdmin;
     private Boolean isDisable;
 
-    static AccountM convertAccountToAccountM(Account account) {
+    public static AccountM convertAccountToAccountM(Account account) {
         return AccountM.builder()
                 .userId(account.getUserId())
                 .username(account.getUsername())
