@@ -80,26 +80,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="d-flex justify-content-around pb-1">
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Outerwear</a>
-                        </div>
-
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Tops</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Bottoms</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 200px;">Jewels & Accessories</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Headwear</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Footwear</a>
-                        </div>
+                    <div class="d-flex justify-content-around pb-1" id="userListCategory">
+                        <!-- api -->
                     </div>
                 </div>
             </nav>
@@ -522,7 +504,48 @@
     </footer>
 
 </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="/node_modules/angular/angular.min.js"></script>
     <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+    <script>
+       $(document).ready(function(){
+       
+        $.ajax({
+            type: "get",
+            url: "http://localhost:8083/allcategoryapi",
+            data: "data",
+            dataType: "json",
+            success: function (response) {
+                var categories = [];
+
+                for(var i = 0 ; i < response.length ; i++){
+                    categories.push(response[i].category_name);
+                }
+
+                appendCategoriesToList(categories);
+            },
+            error: function(xhr, status, error){
+                alert("Tải dữ liệu thất bại");
+                console.log(error);
+            }
+        });
+
+        function appendCategoriesToList(categories){
+            $.each(categories, function(index, category) {
+                // Tạo một thẻ li mới cho mỗi đối tượng user
+                var link = $("<a>").attr("href", "productAll.html").addClass("rounded-1 btn text-white hoverbutton").css("width", "120px").text(category);
+                var div = $("<div>").append(link);   
+                    
+                if(category == "Jewels & Accessories"){
+                    div.addClass("special-category");
+                    link.css("width", "200px");
+                }
+                // Thêm thẻ li vào danh sách
+                $("#userListCategory").append(div);
+            });
+        }
+        
+       })
+    </script>
 </html>

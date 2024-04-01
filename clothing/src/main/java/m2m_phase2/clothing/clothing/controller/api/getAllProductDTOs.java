@@ -1,4 +1,4 @@
-package m2m_phase2.clothing.clothing.repository.api;
+package m2m_phase2.clothing.clothing.controller.api;
 
 import m2m_phase2.clothing.clothing.entity.DTO.ProductDTO;
 import m2m_phase2.clothing.clothing.entity.Product;
