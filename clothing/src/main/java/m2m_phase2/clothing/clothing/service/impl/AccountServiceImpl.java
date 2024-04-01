@@ -1,7 +1,12 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
 import java.security.SecureRandom;
+import java.sql.SQLException;
+import java.util.List;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import m2m_phase2.clothing.clothing.entity.model.UserM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -130,6 +135,12 @@ public class AccountServiceImpl implements AccountService {
 	public boolean isDisable(Account account) {
 		// TODO Auto-generated method stub
 		return account != null && account.isDisable();
+	}
+
+	@Override
+	public List<UserM> findAll() throws SQLException {
+		List<Account> listAccount = repo.findAll();
+		return UserM.convertListAccountToListUserM(listAccount);
 	}
 
 
