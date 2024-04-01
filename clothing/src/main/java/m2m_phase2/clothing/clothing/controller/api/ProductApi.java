@@ -29,8 +29,8 @@ public class ProductApi {
 	}
 	
 	@GetMapping("/findbyproductidapi")
-	public Product getfindbyproductid(@RequestParam Integer product_id) {
-		return productserviceimpl.findByproductId(product_id);
+	public Product getfindbyproductid(@RequestParam String slug_url) {
+		return productserviceimpl.findByslug_url(slug_url);
 	}
 	
 	@GetMapping("/findcategorynamebyproductidapi")
