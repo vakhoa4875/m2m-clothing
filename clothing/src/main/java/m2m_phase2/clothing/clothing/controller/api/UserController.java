@@ -22,14 +22,11 @@ public class UserController {
     private UserService userService;
     @Autowired
     private HttpSession httpSession;
-
-
     @GetMapping(path = {"/", "/login"})
     public String doGetAdminLogin(Model model) {
         model.addAttribute("loginInfo", new AccountDto());// truyền AccountDto qua admin's loginform để hứng data
         return "swappa/assests/html/admin_login";
     }
-
     @PostMapping("/loginSucceed")
     public String doPostAdminLoginSucceed(@ModelAttribute("loginInfo") AccountDto accountDto) {
         userService.saveToSession(httpSession, accountDto);
@@ -37,10 +34,15 @@ public class UserController {
             return "redirect:/admin/home";
         return "redirect:/admin/";
     }
-
     @GetMapping("/home")
-    public String doGetHomeAdmin() {
+    public String doGetHomeAdmin(Model model) {
+//        model.addAttribute("currentAccount", new)
         return "swappa/assests/html/admin";
+    }
+
+    @GetMapping("/cart")
+    public String doGetCart() {
+        return "swappa/assests/html/card";
     }
 
 }

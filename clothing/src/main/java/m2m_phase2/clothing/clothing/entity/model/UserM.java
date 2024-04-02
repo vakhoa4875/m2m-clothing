@@ -29,7 +29,7 @@ public class UserM {
     private String jobTitle;
 
 
-    static UserM convertAccountToAccountM(Account account) {
+    public static UserM convertAccountToAccountM(Account account) {
         return UserM.builder()
                 .userId(account.getUserId())
                 .username(account.getUsername())

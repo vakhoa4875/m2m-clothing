@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin</title>
+    <title>User Management</title>
     <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
@@ -100,7 +100,7 @@
             <div class="card">
                 <div class="card-header bg-black text-center">
                     <a class="text-white bg-gradient-primary" href="../pages/tables.html">
-                        <h5 class="m-0"><strong>Quản lý người dùng</strong></h5>
+                        <h5 class="m-0"><strong>User Management</strong></h5>
                     </a>
                 </div>
 
@@ -110,14 +110,14 @@
                              aria-orientation="vertical">
                             <button class="nav-link mt-1 text-black active" id="v-pills-home-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
-                                    aria-selected="true">Thông tin tài khoản
+                                    aria-selected="true">Account's Infomation
                             </button>
                             <!-- <button class="nav-link mt-1 text-black" id="v-pills-profile-tab" data-bs-toggle="pill"
                                 data-bs-target="#v-pills-profile" type="button" role="tab"
                                 aria-controls="v-pills-profile" aria-selected="false">Đăng nhập</button> -->
                             <button class="nav-link mt-1 text-black" id="v-pills-messages-tab" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-messages" type="button" role="tab"
-                                    aria-controls="v-pills-messages" aria-selected="false">Đăng xuất
+                                    aria-controls="v-pills-messages" aria-selected="false">Log Out
                             </button>
                             <!-- <button class="nav-link mt-1 text-black" id="v-pills-settings-tab" data-bs-toggle="pill"
                                 data-bs-target="#v-pills-settings" type="button" role="tab"
@@ -140,7 +140,7 @@
                 <div class="card my-4">
                     <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                         <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                            <h5 class="text-black ps-3 d-flex align-items-center mb-0">NGƯỜI DÙNG TRONG HỆ THỐNG</h5>
+                            <h5 class="text-black ps-3 d-flex align-items-center mb-0">System Users</h5>
                             <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                     data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
                                     style="padding: 7px 12px 7px 12px;">
@@ -157,8 +157,29 @@
         </div>
     </div>
 </div>
+<!--Model edit user-->
+<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="updateUserModal">USER'S INFO</h1>
+                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body" id="updateUserModalBody">
 
+            </div>
+            <div class="modal-footer">
+                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" ng-click="showEdit()">Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<!--Modal insert new User-->
 <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -174,50 +195,45 @@
                     <input type="file" class="form-control" id="insertedUserAvatar"
                            aria-describedby="inputGroupFileAddon04" aria-label="Upload">
                 </div>
-
                 <div class="mb-2 ">
                     <label for="basic-url" class="form-label">Tên người dùng</label>
                     <input type="text" class="form-control ps-3" id="insertedUserFullname"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
-
                 <div class="mb-2 ">
                     <label for="basic-url" class="form-label">Email</label>
                     <input type="text" class="form-control ps-3" id="insertedUserEmail"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
-
-                <!--	<div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control ps-3" id="basic-url"
-                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    </div> -->
-
                 <div class="mb-2 ">
                     <label for="basic-url" class="form-label">Mật khẩu</label>
                     <input type="text" class="form-control ps-3" id="insertedUserPassword"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
-
                 <div class="mb-2 ">
                     <label for="basic-url" class="form-label">Ngày sinh</label>
-                    <input id="insertedUserDob" class="form-control ps-3 pe-3" type="date" style="border: 1px solid #d2d6da;">
+                    <input id="insertedUserDob" class="form-control ps-3 pe-3" type="date"
+                           style="border: 1px solid #d2d6da;">
                     <!-- <span id="startDateSelected"></span> -->
                 </div>
 
                 <div class="mt-3 ">
                     <label for="basic-url" class="form-label me-3 m-0">Giới tính</label>
-                    <input id="insertedUserGenderMale" class="" type="radio" name="gender" style="border: 1px solid #d2d6da;">
+                    <input id="insertedUserGenderMale" class="" type="radio" name="gender"
+                           style="border: 1px solid #d2d6da;">
                     Nam
-                    <input id="insertedUserGenderFemale" class="ms-1" type="radio" name="gender" style="border: 1px solid #d2d6da;"> Nữ
+                    <input id="insertedUserGenderFemale" class="ms-1" type="radio" name="gender"
+                           style="border: 1px solid #d2d6da;"> Nữ
                     <!-- <span id="startDateSelected"></span> -->
                 </div>
 
                 <div class="mt-3 ">
                     <label for="basic-url" class="form-label me-3 m-0">Vai trò</label>
-                    <input id="insertedUserRoleAdmin" class="" type="radio" name="role" style="border: 1px solid #d2d6da;">
+                    <input id="insertedUserRoleAdmin" class="" type="radio" name="role"
+                           style="border: 1px solid #d2d6da;">
                     Admin
-                    <input id="insertedUserRoleUser" class="ms-1" type="radio" name="role" style="border: 1px solid #d2d6da;">
+                    <input id="insertedUserRoleUser" class="ms-1" type="radio" name="role"
+                           style="border: 1px solid #d2d6da;">
                     Khách
                     <!-- <span id="startDateSelected"></span> -->
                 </div>
@@ -234,82 +250,27 @@
     </div>
 </div>
 
-<!-- modal sửa -->
-<div class="modal fade" id="exampleModalSua" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+<!--Modal remove user-->
+<div class="modal fade" id="exampleModalXoa" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2"
+     tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="updateUserModal">Thông tin người dùng cần sửa</h1>
-                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                <h1 class="modal-title fs-5" id="exampleModalToggleLabel2">CONFIRM</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="mb-2">
-                    <label for="basic-url" class="form-label">Ảnh</label>
-                    <input type="file" class="form-control" id="inputGroupFile04"
-                           aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                </div>
-
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Tên người dùng</label>
-                    <input type="text" class="form-control ps-3" id="basic-url1"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Email</label>
-                    <input type="text" class="form-control ps-3" id="basic-url"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-
-                <!--	<div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control ps-3" id="basic-url"
-                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    </div> -->
-
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Mật khẩu</label>
-                    <input type="text" class="form-control ps-3" id="basic-url3"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Ngày sinh</label>
-                    <input id="startDate1" class="form-control ps-3 pe-3" type="date" style="border: 1px solid #d2d6da;">
-                    <!-- <span id="startDateSelected"></span> -->
-                </div>
-
-                <div class="mt-3 ">
-                    <label for="basic-url" class="form-label me-3 m-0">Giới tính</label>
-                    <input id="startDate4" class="" type="radio" name="gender" style="border: 1px solid #d2d6da;">
-                    Nam
-                    <input id="startDate2" class="ms-1" type="radio" name="gender" style="border: 1px solid #d2d6da;"> Nữ
-                    <!-- <span id="startDateSelected"></span> -->
-                </div>
-
-                <div class="mt-3 ">
-                    <label for="basic-url" class="form-label me-3 m-0">Vai trò</label>
-                    <input id="startDate" class="" type="radio" name="role" style="border: 1px solid #d2d6da;">
-                    Admin
-                    <input id="startDate3" class="ms-1" type="radio" name="role" style="border: 1px solid #d2d6da;">
-                    Khách
-                    <!-- <span id="startDateSelected"></span> -->
-                </div>
-
-
+                Accept removing this user?
             </div>
             <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="showEdit()">Lưu Thay
-                    Đổi
+                <button class="btn btn-success" data-bs-target="#exampleModalToggle3" data-bs-toggle="modal">Confirm
+                </button>
+                <button class="btn btn-danger" data-bs-target="#exampleModalToggle4" data-bs-toggle="modal">Cancel
                 </button>
             </div>
         </div>
     </div>
 </div>
-
-
 <!-- footer -->
 <div class="container pt-2 pb-2">
     <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
@@ -356,6 +317,7 @@
             console.error("Error:", error);
         }
     });
+
 </script>
 
 </html>

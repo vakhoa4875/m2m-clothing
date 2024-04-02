@@ -5,6 +5,7 @@ import m2m_phase2.clothing.clothing.entity.Account;
 import m2m_phase2.clothing.clothing.entity.DTO.AccountDto;
 import m2m_phase2.clothing.clothing.entity.Userinfo;
 import m2m_phase2.clothing.clothing.entity.model.AccountM;
+import m2m_phase2.clothing.clothing.entity.model.UserM;
 import m2m_phase2.clothing.clothing.repository.AccountRepo;
 import m2m_phase2.clothing.clothing.repository.UserinfoRepo;
 import m2m_phase2.clothing.clothing.service.UserService;
@@ -12,6 +13,7 @@ import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,6 +46,11 @@ public class UserServiceImpl implements UserService {
     public void save(Account acc, Userinfo info) {
         accRepo.save(acc);
         in4Repo.save(info);
+    }
+
+    @Override
+    public UserM findUserById(int id) throws SQLException {
+        return UserM.convertAccountToAccountM(accRepo.findByuserId(id));
     }
 
     @Override

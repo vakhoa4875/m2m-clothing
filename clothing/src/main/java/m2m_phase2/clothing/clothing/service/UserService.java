@@ -1,10 +1,12 @@
 package m2m_phase2.clothing.clothing.service;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.entity.DTO.AccountDto;
+import m2m_phase2.clothing.clothing.entity.model.UserM;
 import org.springframework.stereotype.Service;
 
 import m2m_phase2.clothing.clothing.entity.Account;
@@ -23,4 +25,5 @@ public interface UserService {
 
 	void  save(Account acc, Userinfo info);
 
+    UserM findUserById(int id) throws SQLException;
 }
