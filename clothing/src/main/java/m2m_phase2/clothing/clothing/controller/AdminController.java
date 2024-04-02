@@ -62,6 +62,11 @@ public class AdminController {
 			return "swappa/assests/";
 	}
 
+	@GetMapping("/admin/forgot-password")
+	public String doGetFormForgotPassword() {
+		return "swappa/assests/html/acc_forgot_pass";
+	}
+
 
 	@GetMapping("/admin/UserID")
 	public String getUserID(@RequestParam Integer id,@ModelAttribute("accadmin") Account account, Model model) {
