@@ -167,12 +167,13 @@
                 <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
                         class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
             </div>
+<!--            <form method="post" action="http://localhost:8083/api-admin/users/updateUser"-->
             <div class="modal-body" id="updateUserModalBody">
 
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" ng-click="showEdit()">Save changes
+                <button onclick="services.updateUser()" type="button" class="btn btn-success" data-bs-dismiss="modal" ng-click="showEdit()">Save changes
                 </button>
             </div>
         </div>

@@ -59,7 +59,7 @@ public class AdminController {
 				model.addAttribute("authorities", true);
 			}
 		}
-			return "Front_End/pages/sign-in-admin";
+			return "swappa/assests/";
 	}
 
 

@@ -3,19 +3,18 @@ package m2m_phase2.clothing.clothing.controller.api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.entity.Account;
+import m2m_phase2.clothing.clothing.entity.DTO.UserDto;
 import m2m_phase2.clothing.clothing.entity.model.UserM;
 import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.service.UserService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import m2m_phase2.clothing.clothing.service.impl.UserServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,6 +45,16 @@ public class AdminApi {
 		}
 		return ResponseEntity.ok(userM);
 	}
-	
+	@PutMapping("/updateUser")
+	public ResponseEntity<?> doPutUser(@RequestBody Map<String, Object> params) {
+		UserDto userDto = new UserDto();
+		byte rowAffected;
+		try {
+			rowAffected = userService.updateUser(userDto);
+		} catch (Exception e) {
+			rowAffected = 0;
+		}
+		return ResponseEntity.ok(rowAffected);
+	}
 	
 }

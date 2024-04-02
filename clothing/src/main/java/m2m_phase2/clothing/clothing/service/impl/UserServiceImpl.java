@@ -3,6 +3,7 @@ package m2m_phase2.clothing.clothing.service.impl;
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.entity.Account;
 import m2m_phase2.clothing.clothing.entity.DTO.AccountDto;
+import m2m_phase2.clothing.clothing.entity.DTO.UserDto;
 import m2m_phase2.clothing.clothing.entity.Userinfo;
 import m2m_phase2.clothing.clothing.entity.model.AccountM;
 import m2m_phase2.clothing.clothing.entity.model.UserM;
@@ -33,6 +34,11 @@ public class UserServiceImpl implements UserService {
 
     public boolean isAdminAuth() {
         return false;
+    }
+
+    @Override
+    public byte updateUser(UserDto userDto) throws SQLException {
+        return 0;
     }
 
     @Override

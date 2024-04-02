@@ -2,6 +2,7 @@ package m2m_phase2.clothing.clothing.entity.model;
 
 import lombok.*;
 import m2m_phase2.clothing.clothing.entity.Account;
+import m2m_phase2.clothing.clothing.utils.DateUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -24,7 +25,7 @@ public class UserM {
     private String fullname;
     private String gender;
     private String avatar;
-    private Date dob;
+    private String dob;
     private String description;
     private String jobTitle;
 
@@ -40,7 +41,7 @@ public class UserM {
                 .fullname(account.getUserinfo().getFullname())
                 .gender(account.getUserinfo().getGender())
                 .avatar(account.getUserinfo().getAvatar())
-                .dob(account.getUserinfo().getDob())
+                .dob(DateUtils.dateToString(account.getUserinfo().getDob()))
                 .description(account.getUserinfo().getDescription())
                 .jobTitle(account.getUserinfo().getJobTitle())
                 .build();

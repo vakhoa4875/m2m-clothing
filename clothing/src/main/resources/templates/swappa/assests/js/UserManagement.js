@@ -109,50 +109,54 @@ class UserManagement {
 
     fillToUpdateModal = () => {
         // let services.self.user = services.self.user;
-        let modelBody = `<div class="mb-2">
-                    <label for="basic-url" class="form-label">Avatar</label>
-                    <input type="file" class="form-control" id="inputGroupFile04"
-                           aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                </div>
-
+        let modelBody = `
                 <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Username</label>
-                    <input type="text" class="form-control ps-3" id="basic-url1" value="${services.self.user.username}"
+                    <label for="updatedFullname" class="form-label">Email</label>
+                    <input type="text" class="form-control ps-3" id="updatedFullname" name="updatedFullname"  value="${services.self.user.fullname}"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Email</label>
-                    <input type="text" class="form-control ps-3" id="basic-url"  value="${services.self.user.email}"
+                    <label for="updatedEmail" class="form-label">Email</label>
+                    <input type="text" class="form-control ps-3" id="updatedEmail" name="updatedEmail"  value="${services.self.user.email}"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Password</label>
-                    <input type="text" class="form-control ps-3" id="basic-url3" value="${services.self.user.password}"
+                    <label for="updatedPassword" class="form-label">Password</label>
+                    <input type="text" class="form-control ps-3" id="updatedPassword" name="updatedPassword" value=""
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
-                <div th:text="${services.self.user}"></div>
-                <div>Hello ${services.self.user.username}</div>
                 <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Date of Birth</label>
-                    <input id="startDate1" class="form-control ps-3 pe-3" type="date" value="${services.self.user.dob}
-                           style="border: 1px solid #d2d6da;">
+                    <label for="updatedDob" class="form-label">Date of Birth</label>
+                    <input id="updatedDob" name="updatedDob" class="form-control ps-3 pe-3" type="text" placeholder="dd/MM/yyyy"
+                           style="border: 1px solid #d2d6da;" value="${services.self.user.dob}">
                     <!-- <span id="startDateSelected"></span> -->
                 </div>
                 <div class="mt-3 ">
-                    <label for="basic-url" class="form-label me-3 m-0">Gender</label>
-                    <input id="startDate4" class="" type="radio" name="gender" style="border: 1px solid #d2d6da;" th:checked="${services.self.user.gender === 'Male'}">
+                    <label for="updatedGender" class="form-label me-3 m-0">Gender</label>
+                    <input id="updatedGender1" class="" type="radio" name="updatedGender" style="border: 1px solid #d2d6da;" ${services.self.user.gender === 'Male'?"checked":''}>
                     Male
-                    <input id="startDate2" class="ms-1" type="radio" name="gender" style="border: 1px solid #d2d6da;" th:checked="${services.self.user.gender === 'Female'}">
+                    <input id="updatedGender0" class="ms-1" type="radio" name="updatedGender" style="border: 1px solid #d2d6da;" ${services.self.user.gender === 'Female'?"checked":''}>
                     Female
                     <!-- <span id="startDateSelected"></span> -->
                 </div>
                 <div class="mt-3 ">
-                    <label for="basic-url" class="form-label me-3 m-0">Role</label>
-                    <input id="startDate" class="" type="radio" name="role" style="border: 1px solid #d2d6da;" th:checked="${services.self.user.isAdmin}">
+                    <label for="updatedRole" class="form-label me-3 m-0">Role</label>
+                    <input id="updatedRole1" class="" type="radio" name="updatedRole" style="border: 1px solid #d2d6da;" ${services.self.user.isAdmin ? 'checked' : ''}>
                     Admin
-                    <input id="startDate3" class="ms-1" type="radio" name="role" style="border: 1px solid #d2d6da;" th:checked="${!services.self.user.isAdmin}">
+                    <input id="updatedRole0" class="ms-1" type="radio" name="updatedRole" style="border: 1px solid #d2d6da;" ${services.self.user.isAdmin ? '' : 'checked'}>
                     Site User
+                </div>
+                <div class="mb-2 ">
+                    <label for="updatedDescription" class="form-label">Description</label>
+                    <input type="text" class="form-control ps-3" id="updatedDescription" name="updatedDescription"  value="${services.self.user.description}"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>`;
         $('#updateUserModalBody').html(modelBody);
+    }
+
+    updateUser = () => {
+        $.ajax({
+
+        })
     }
 }
