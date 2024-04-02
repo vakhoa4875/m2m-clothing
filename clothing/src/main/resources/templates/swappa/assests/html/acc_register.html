@@ -116,31 +116,16 @@
                                         </div>
                                         <!-- 2 column grid layout with text inputs for the first and last names -->
                                         <div class="row">
-                                            <div class="col-md-6 mb-4">
+                                            <div class="col-md-12 mb-4">
                                                 <div class="form-outline">
                                                     <input required ng-model="firstName" ng-blur="firstNameBlurred = true"
                                                         type="text" id="firstName" name="firstName"
-                                                        class="form-control text-bg-dark" placeholder="First name"
+                                                        class="form-control text-bg-dark" placeholder="User Name"
                                                         ng-class="{'invalid-input border-0': isInvalidFirstName()}" />
                                                 </div>
                                                 <div class="mt-1 text-danger fs-14 text-start"
                                                     ng-show="isInvalidFirstName()">
                                                     <i class="fa-solid fa-circle-info"></i> Invalid first name. Make
-                                                    sure it's written correctly.
-                                                </div>
-                                            </div>
-                
-                
-                                            <div class="col-md-6 mb-4">
-                                                <div class="form-outline">
-                                                    <input type="text" id="lastName" name="lastName"
-                                                        class="form-control text-bg-dark" placeholder="Last name" required
-                                                        ng-model="lastName" ng-blur="lastNameBlurred = true"
-                                                        ng-class="{'invalid-input border-0' : isInvalidLastName()}" />
-                                                </div>
-                                                <div class="mt-1 text-danger fs-14 text-start"
-                                                    ng-show="isInvalidLastName()">
-                                                    <i class="fa-solid fa-circle-info"></i> Invalid last name. Make
                                                     sure it's written correctly.
                                                 </div>
                                             </div>
@@ -193,12 +178,23 @@
                                         </div>
                 
                                         <!-- Checkbox -->
-                                        <div class="form-check d-flex justify-content-center mb-4">
-                                            <input class="form-check-input me-2 text-bg-success" type="checkbox" value=""
-                                                id="form2Example33" checked />
-                                            <label class="form-check-label" for="form2Example33">
-                                                Subscribe to our newsletter
-                                            </label>
+                                        <div class="form-check  mb-4">
+                                            <div class="d-flex justify-content-center">
+                                                <input class="form-check-input me-2 text-bg-success" type="radio" value=""
+                                                    id="form2Example33" name="gioitinh" />
+                                                <label class="form-check-label" for="form2Example33">
+                                                    Nam 
+                                                </label>
+
+                                                <input class="form-check-input ms-4 me-2 text-bg-success" type="radio" value=""
+                                                    id="form2Example33" name="gioitinh" />
+                                                <label class="form-check-label" for="form2Example33">
+                                                    Nu
+                                                </label>
+                                            </div>
+                                            <div class="d-flex">
+                                                
+                                            </div>
                                         </div>
                 
                                         <!-- Submit button -->
@@ -206,7 +202,7 @@
                                             <button type="submit" class="btn btn-outline-success fw-bold btn-block px-5 rounded-5 w-75">
                                                 Sign up
                                             </button>
-                                            <a href="#!/account" class="btn btn-outline-success btn-block rounded-5 w-50 mt-3">Return Login</a>
+                                            <a href="/login" class="btn btn-outline-success btn-block rounded-5 w-50 mt-3">Return Login</a>
                                         </div>
                                     </form>
                                 </div>
