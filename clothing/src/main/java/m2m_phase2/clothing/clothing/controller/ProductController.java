@@ -13,6 +13,8 @@ import m2m_phase2.clothing.clothing.entity.Category;
 import m2m_phase2.clothing.clothing.entity.Product;
 import m2m_phase2.clothing.clothing.service.impl.CategoryImpl;
 import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
+import org.springframework.web.bind.annotation.RequestParam;
+
 @Controller
 public class ProductController {
 	@Autowired
@@ -29,9 +31,10 @@ public class ProductController {
 	}
 	@Autowired
 	private CategoryImpl categoryimpl;
-	@GetMapping("/product/{id}")
-	public String getDetail(@PathVariable Integer id, Model model ) {
-		
+	@GetMapping("/product")
+	public String getDetail(@RequestParam String slug_url,Model model) {
+		Product product  = productServiceImpl.findByslug_url(slug_url);
+		model.addAttribute("listProduct", product);
 		return "swappa/assests/html/productDetail";
 	}
 }

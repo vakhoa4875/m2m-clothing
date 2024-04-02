@@ -13,101 +13,83 @@
     <!-- header -->
     <div>
         <!-- mobileNav -->
-    <div class="d-block d-lg-none">
-        <div id="mobileNav"  style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
-            <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
-                <div class="container-sm">
+        <div class="d-block d-lg-none">
+            <div id="mobileNav"  style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
+                <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
+                    <div class="container-sm">
 
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
+                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
 
-                    <a href="trangchu.html" class="navbar-brand" title="Swappa">
-                        <img class="img-fluid"
-                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                            alt="Swappa Logo">
-                    </a>
+                        <a href="/trangchu" class="navbar-brand" title="Swappa">
+                            <img class="img-fluid"
+                                 src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                 alt="Swappa Logo">
+                        </a>
 
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_search"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
-                        <i class="fa-solid fa-search" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </nav>
+                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_search"
+                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
+                            <i class="fa-solid fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+
         </div>
-
-    </div>
-    <!-- mainNav -->
-    <div class="d-none d-lg-block">
-        <!-- first-nav -->
-        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
-            <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
-                <div class="container d-block">
-                    <div class="d-flex gap-3">
-                        <ul class="navbar-nav" role="presentation">
-                            <li class="nav-item">
-                                <a class="navbar-brand d-block text-center pt-2" href="trangchu.html">
-                                    <img class="img-fluid"
-                                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                        width="167px" height="35px" alt="Bootstrap">
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="flex-grow-1">
-                            <form action="" class="d-flex align-items-center position-relative h-100">
-                                <!-- {{keyword}} -->
-                                <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
-                                <input type="search" class="form-control rounded-0" id="navbar_search_input" name="q"
-                                    ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
-                                <!-- </a> -->
-                            </form>
-                        </div>
-                        <ul class="navbar-nav" role="presentation">
-                            <li class="d-flex align-items-center justify-content-center">
-                                <div class="">
-                                    <a href="acc_login.html">
-                                        <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
+        <!-- mainNav -->
+        <div class="d-none d-lg-block">
+            <!-- first-nav -->
+            <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
+                <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
+                    <div class="container d-block">
+                        <div class="d-flex gap-3">
+                            <ul class="navbar-nav" role="presentation">
+                                <li class="nav-item">
+                                    <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
+                                        <img class="img-fluid"
+                                             src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                             width="167px" height="35px" alt="Bootstrap">
                                     </a>
-                                </div>
-                            </li>
-                            <li class="ms-3 d-flex align-items-center justify-content-center">
-                                <a href="card.html" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
-                                    <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                </li>
+                            </ul>
+                            <div class="flex-grow-1">
+                                <form action="" class="d-flex align-items-center position-relative h-100">
+                                    <!-- {{keyword}} -->
+                                    <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
+                                    <input type="search" class="form-control rounded-0" id="navbar_search_input" name="q"
+                                           ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
+                                    <!-- </a> -->
+                                </form>
+                            </div>
+                            <ul class="navbar-nav" role="presentation">
+                                <li class="d-flex align-items-center justify-content-center">
+                                    <div class="">
+                                        <a href="/login">
+                                            <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="ms-3 d-flex align-items-center justify-content-center">
+                                    <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
+                                        <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                       1
                                     </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="d-flex justify-content-around pb-1">
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Outerwear</a>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
-
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Tops</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Bottoms</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 200px;">Jewels & Accessories</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Headwear</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Footwear</a>
+                        <div class="d-flex justify-content-around pb-1" id="userListCategory">
+                            <!-- api -->
                         </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            </div>
+            <!-- second-nav -->
         </div>
-        <!-- second-nav -->
     </div>
-</div>
     <!-- main -->
     <div class="flex-shrink-0 " style="min-height: 800px;">
         <div class="d-flex flex-column">
@@ -239,8 +221,8 @@
 
 
                                 <div class="col-lg-9 col-md-7">
-                                    <div class="row">
-                                        <!-- sản phẩm -->
+                                    <div class="row" id="sanpham">
+                                        <!-- sản phẩm
                                         <div class="col-lg-2 col-md-3 col-sm-4">
                                             <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
                                                 <a href="#" class="stretched-link">
@@ -283,7 +265,7 @@
                                                     </div>
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div> -->
 
 
                                         
@@ -302,16 +284,26 @@
     <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
         <div class="container pt-2 pb-2">
             <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
-                
+
             </div>
             <div class="row row-cols-1 row-cols-md-3">
                 <div class="col d-flex justify-content-center align-items-center">
                     <div class=" text-white">
-                        <i class="fa-brands fa-square-facebook fs-1"></i>
-                        <i class="fa-brands fa-square-instagram fs-1"></i>
-                        <i class="fa-brands fa-youtube fs-1"></i>
-                        <i class="fa-brands fa-linkedin fs-1"></i>
-                        <i class="fa-brands fa-square-reddit fs-1"></i>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-facebook fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-instagram fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-youtube fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-linkedin fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-reddit fs-1"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="col text-center ">
@@ -326,7 +318,61 @@
         </div>
     </footer>
 </body>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="/node_modules/angular/angular.min.js"></script>
     <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                type: "get",
+                url: "http://localhost:8083/allproductapi",
+                data: "data",
+                dataType: "json",
+                success: function (response) {
+                    var sanpham =[];
+                    var anh = [];
+
+                    for(var i = 0 ; i < response.length ; i++){
+                        sanpham.push(response[i]);
+                        anh.push(response[i].pictures.split(','));
+                    }
+                    loadSanPhamNoiBat(sanpham, anh);
+                },
+                error: function(xhr, status, error){
+                    alert("Tải dữ liệu thất bại");
+                    console.log(error);
+                }
+            });
+
+            function loadSanPhamNoiBat(sanpham, anh){
+                $.each(sanpham, function(index, item){
+                        var html = `
+                                <div class="col-lg-2 col-md-3 col-sm-4">
+                                    <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
+                                        <a href="/product?slug_url=${item.slugUrl}" class="stretched-link">
+                                                <img  src="/assests/media/${anh[index][0]}" class="img-fluid mt-2 mb-3" alt="">
+                                                <div class="w-100">
+                                                    <span class="d-inline-block text-truncate" style="max-width: 90%;"> ${item.productName} </span>
+                                                </div>
+                                            <div class="w-100">
+                                                <div class="d-flex justify-content-around">
+                                                    <span> ${item.price}</span>
+                                                    <!--   <span><del>${item.price}</del></span> -->
+                                                </div>
+                                                <div class="">
+                                                    <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
+                                                        <div class="text-white fw-bolder ">Mua ngay</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                    `
+                    $("#sanpham").append(html);
+                });
+            }
+        })
+    </script>
 </html>
