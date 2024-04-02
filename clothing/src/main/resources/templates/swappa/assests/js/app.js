@@ -410,6 +410,39 @@ angular.module("myApp", ["ngRoute"])
             console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.password22.$invalid && $scope.password22Blurred;
         };
+
+        $scope.allInputsFilled = false;
+
+        $scope.checkInputsFilled = function() {
+            // Kiểm tra tất cả các ô input
+            // Đặt biến allInputsFilled thành true nếu tất cả các ô input đều được điền đầy đủ
+            // Đặt biến allInputsFilled thành false nếu có bất kỳ ô input nào chưa được điền
+            // Ví dụ:
+            if ($scope.formSignUp.firstName.$valid && $scope.formSignUp.lastName.$valid && $scope.formSignUp.email.$valid && $scope.formSignUp.password.$valid) {
+                $scope.allInputsFilled = true;
+            } else {
+                $scope.allInputsFilled = false;
+            }
+        };
+
+
+        $scope.submitForm = function() {
+            if (!$scope.formSignUp.$invalid) {
+                // Hiển thị thông báo lỗi khi form không hợp lệ
+                Swal.fire({
+                    title: 'Thông Báo từ hệ thống',
+                    text: 'Bạn đã đăng ký tài khoản thành công',
+                    icon: 'success',
+                    confirmButtonText: 'Xác nhận',
+                    allowOutsideClick: false
+                });
+            } 
+        };
+
+        
+        
+        
+
         /*
         LOG IN
         */
@@ -424,42 +457,6 @@ angular.module("myApp", ["ngRoute"])
             return $scope.formLogIn.password.$invalid && $scope.passwordBlurred;
         };
 
-        // $scope.loginSuccess = true;
-        $scope.textStatus = '';
-        $rootScope.isLogin = false;
-        $rootScope.user = null;
-
-        $rootScope.login = () => {
-            $scope.status = -1;
-            let log = 'Your email hasn\'t been registered yet!';
-            if ($scope.formLogIn.$valid) {
-                for (acc of $rootScope.accounts) {
-                    if (acc.email.toLowerCase() == $scope.email.toLowerCase()) {
-                        if (acc.password == $scope.password) {
-                            // $scope.loginSuccess = true;
-                            log = 'Welcome back, ' + acc.lastName + ' ' + acc.firstName + '!! You\'re automatically redirect to your previous page in 3 seconds';
-                            $scope.status = 1;
-                            $rootScope.user = acc;
-                            break;
-                        } else {
-                            // $scope.loginSuccess = false;
-                            $scope.textStatus = 'Wrong Password, please try again!!'
-                            $scope.status = 0;
-                            return;
-                        }
-                    }
-                }
-            }
-            console.log(log);
-            $scope.textStatus = log;
-            $rootScope.isLogin = true;
-            $timeout(() => {
-                // Redirect to the desired page after the delay
-                $location.path($rootScope.currentPath);  // Replace '/your-page' with the actual URL
-            }, 2250);
-        }
-
-        
 
     })
     .controller("accountregister_Ctrl", function ($scope, $rootScope, $location, $timeout) {
