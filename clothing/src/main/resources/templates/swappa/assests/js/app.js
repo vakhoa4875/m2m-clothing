@@ -344,7 +344,8 @@ angular.module("myApp", ["ngRoute"])
         $scope.showPass2 = false;
 
         $scope.isInvalidPassword = function () {
-            return $scope.formChange.password.$invalid && $scope.passwordBlurred;
+            return false;
+            // return $scope.formChange.password.$invalid && $scope.passwordBlurred;
         };
 
         $scope.isInvalidPassword2 = function () {

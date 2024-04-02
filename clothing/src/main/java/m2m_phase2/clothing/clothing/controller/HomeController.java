@@ -40,21 +40,17 @@ public class HomeController {
 	public String defaultPage(Model model){
 		List<Product> list =   productServiceImpl.findAll();
 		model.addAttribute("products", list) ;
-		return "Front_End/TrangChu";
+		return "swappa/assests/html/trangchu";
 	}
 
 	@GetMapping("/trangchu")
 	public String getTrangchu(Model model){
 		List<Product> list =   productServiceImpl.findAll();
 		model.addAttribute("products", list) ;
-		return "Front_End/TrangChu";
+		return "swappa/assests/html/trangchu";
 	}
 
 
-	@GetMapping("/lienhe")
-	public String getLienHe(){
-		return "Front_End/LienHe";
-	}
 
 	@GetMapping("/Setting")
 	public String getSetting(){
@@ -63,7 +59,7 @@ public class HomeController {
 
 	@GetMapping("/giohang")
 	public String getGioHang(){
-		return "Front_End/Giohang";
+		return "swappa/assests/html/card";
 	}
 
 	@GetMapping("/login")

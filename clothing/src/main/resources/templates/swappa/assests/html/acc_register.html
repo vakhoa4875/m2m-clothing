@@ -10,26 +10,26 @@
 </head>
 <body ng-app="myApp" ng-controller="accountCtrl">
 
-    <div>
-        <!-- mobileNav -->
+<div>
+    <!-- mobileNav -->
     <div class="d-block d-lg-none">
         <div id="mobileNav"  style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
             <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
                 <div class="container-sm">
 
                     <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <i class="fa-solid fa-bars"></i>
                     </button>
 
-                    <a href="trangchu.html" class="navbar-brand" title="Swappa">
+                    <a href="/trangchu" class="navbar-brand" title="Swappa">
                         <img class="img-fluid"
-                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                            alt="Swappa Logo">
+                             src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                             alt="Swappa Logo">
                     </a>
 
                     <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_search"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
                         <i class="fa-solid fa-search" aria-hidden="true"></i>
                     </button>
                 </div>
@@ -46,10 +46,10 @@
                     <div class="d-flex gap-3">
                         <ul class="navbar-nav" role="presentation">
                             <li class="nav-item">
-                                <a class="navbar-brand d-block text-center pt-2" href="trangchu.html">
+                                <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
                                     <img class="img-fluid"
-                                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                        width="167px" height="35px" alt="Bootstrap">
+                                         src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                         width="167px" height="35px" alt="Bootstrap">
                                 </a>
                             </li>
                         </ul>
@@ -58,20 +58,20 @@
                                 <!-- {{keyword}} -->
                                 <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
                                 <input type="search" class="form-control rounded-0" id="navbar_search_input" name="q"
-                                    ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
+                                       ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
                                 <!-- </a> -->
                             </form>
                         </div>
                         <ul class="navbar-nav" role="presentation">
                             <li class="d-flex align-items-center justify-content-center">
                                 <div class="">
-                                    <a href="acc_login.html">
+                                    <a href="/login">
                                         <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
                                     </a>
                                 </div>
                             </li>
                             <li class="ms-3 d-flex align-items-center justify-content-center">
-                                <a href="card.html" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
+                                <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
                                     <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
                                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                       1
@@ -80,26 +80,8 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="d-flex justify-content-around pb-1">
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Outerwear</a>
-                        </div>
-
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Tops</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Bottoms</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 200px;">Jewels & Accessories</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Headwear</a>
-                        </div>
-                        <div>
-                            <a href="productAll.html" class="rounded-1 btn text-white hoverbutton" style="width: 120px;">Footwear</a>
-                        </div>
+                    <div class="d-flex justify-content-around pb-1" id="userListCategory">
+                        <!-- api -->
                     </div>
                 </div>
             </nav>
@@ -134,31 +116,16 @@
                                         </div>
                                         <!-- 2 column grid layout with text inputs for the first and last names -->
                                         <div class="row">
-                                            <div class="col-md-6 mb-4">
+                                            <div class="col-md-12 mb-4">
                                                 <div class="form-outline">
                                                     <input required ng-model="firstName" ng-blur="firstNameBlurred = true"
                                                         type="text" id="firstName" name="firstName"
-                                                        class="form-control text-bg-dark" placeholder="First name"
+                                                        class="form-control text-bg-dark" placeholder="User Name"
                                                         ng-class="{'invalid-input border-0': isInvalidFirstName()}" />
                                                 </div>
                                                 <div class="mt-1 text-danger fs-14 text-start"
                                                     ng-show="isInvalidFirstName()">
                                                     <i class="fa-solid fa-circle-info"></i> Invalid first name. Make
-                                                    sure it's written correctly.
-                                                </div>
-                                            </div>
-                
-                
-                                            <div class="col-md-6 mb-4">
-                                                <div class="form-outline">
-                                                    <input type="text" id="lastName" name="lastName"
-                                                        class="form-control text-bg-dark" placeholder="Last name" required
-                                                        ng-model="lastName" ng-blur="lastNameBlurred = true"
-                                                        ng-class="{'invalid-input border-0' : isInvalidLastName()}" />
-                                                </div>
-                                                <div class="mt-1 text-danger fs-14 text-start"
-                                                    ng-show="isInvalidLastName()">
-                                                    <i class="fa-solid fa-circle-info"></i> Invalid last name. Make
                                                     sure it's written correctly.
                                                 </div>
                                             </div>
@@ -210,21 +177,31 @@
                                             </div>
                                         </div>
                 
-                                        <!-- Checkbox -->
-                                        <div class="form-check d-flex justify-content-center mb-4">
-                                            <input class="form-check-input me-2 text-bg-success" type="checkbox" value=""
-                                                id="form2Example33" checked />
-                                            <label class="form-check-label" for="form2Example33">
-                                                Subscribe to our newsletter
-                                            </label>
-                                        </div>
+                                        <!-- <div class="form-check  mb-4">
+                                            <div class="d-flex justify-content-center">
+                                                <input class="form-check-input me-2 text-bg-success" type="radio" value=""
+                                                    id="form2Example33" name="gioitinh" />
+                                                <label class="form-check-label" for="form2Example33">
+                                                    Nam 
+                                                </label>
+
+                                                <input class="form-check-input ms-4 me-2 text-bg-success" type="radio" value=""
+                                                    id="form2Example33" name="gioitinh" />
+                                                <label class="form-check-label" for="form2Example33">
+                                                    Nu
+                                                </label>
+                                            </div>
+                                            <div class="d-flex">
+                                                
+                                            </div>
+                                        </div> -->
                 
                                         <!-- Submit button -->
                                         <div class="d-flex flex-column align-items-center">
                                             <button type="submit" class="btn btn-outline-success fw-bold btn-block px-5 rounded-5 w-75">
                                                 Sign up
                                             </button>
-                                            <a href="#!/account" class="btn btn-outline-success btn-block rounded-5 w-50 mt-3">Return Login</a>
+                                            <a href="/login" class="btn btn-outline-success btn-block rounded-5 w-50 mt-3">Return Login</a>
                                         </div>
                                     </form>
                                 </div>
@@ -240,32 +217,42 @@
         
 
     <!-- footer -->
-    <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-        <div class="container pt-2 pb-2">
-            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
-                
-            </div>
-            <div class="row row-cols-1 row-cols-md-3">
-                <div class="col d-flex justify-content-center align-items-center">
-                    <div class=" text-white">
+<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+    <div class="container pt-2 pb-2">
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+
+        </div>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col d-flex justify-content-center align-items-center">
+                <div class=" text-white">
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
                         <i class="fa-brands fa-square-facebook fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
                         <i class="fa-brands fa-square-instagram fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
                         <i class="fa-brands fa-youtube fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
                         <i class="fa-brands fa-linkedin fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
                         <i class="fa-brands fa-square-reddit fs-1"></i>
-                    </div>
+                    </a>
                 </div>
-                <div class="col text-center ">
-                    <a href="./index.html"><img
-                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
-                            alt=""></a>
-                </div>
-                <div class="col text-center text-white d-flex justify-content-center align-items-center">
-                    <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
-                </div>
+            </div>
+            <div class="col text-center ">
+                <a href="./index.html"><img
+                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
+                        alt=""></a>
+            </div>
+            <div class="col text-center text-white d-flex justify-content-center align-items-center">
+                <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 </body>
     <script src="/node_modules/angular/angular.min.js"></script>
     <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
