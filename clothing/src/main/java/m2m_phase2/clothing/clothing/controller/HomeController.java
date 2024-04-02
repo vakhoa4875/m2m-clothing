@@ -40,21 +40,17 @@ public class HomeController {
 	public String defaultPage(Model model){
 		List<Product> list =   productServiceImpl.findAll();
 		model.addAttribute("products", list) ;
-		return "Front_End/TrangChu";
+		return "swappa/assests/html/trangchu";
 	}
 
 	@GetMapping("/trangchu")
 	public String getTrangchu(Model model){
 		List<Product> list =   productServiceImpl.findAll();
 		model.addAttribute("products", list) ;
-		return "Front_End/TrangChu";
+		return "swappa/assests/html/trangchu";
 	}
 
 
-	@GetMapping("/lienhe")
-	public String getLienHe(){
-		return "Front_End/LienHe";
-	}
 
 	@GetMapping("/Setting")
 	public String getSetting(){
@@ -63,14 +59,14 @@ public class HomeController {
 
 	@GetMapping("/giohang")
 	public String getGioHang(){
-		return "Front_End/Giohang";
+		return "swappa/assests/html/card";
 	}
 
 	@GetMapping("/login")
 	public String getLog(Model model) {
 		Account accountlog = new Account();
 		model.addAttribute("accountlog", accountlog);
-		return "Front_End/pages/sign-in";
+		return "swappa/assests/html/acc_login";
 	}
 	@PostMapping("/submitLogin")
 	public String submitLogin(@ModelAttribute("accountlog") Account accountRequest, Model model) {

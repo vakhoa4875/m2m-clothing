@@ -197,20 +197,29 @@ angular.module("myApp", ["ngRoute"])
             return $scope.formForgot.password.$invalid && $scope.passwordBlurred;
         };
 
+        $scope.validateInputs = function() {
+            // Kiểm tra các ô input
+            if (!$scope.username || !$scope.email) {
+                return false; // Nếu có ô input nào chưa được điền, trả về false
+            }
+            return true; // Nếu tất cả các ô input đều được điền, trả về true
+        };
+
         $scope.showAlert = function() {
-            Swal.fire({
-                title: 'Thông Báo từ hệ thống',
-                text: 'Đã gửi link vào gmail, Vui lòng nhấn vào để link để lấy lại mật khẩu',
-                icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-                confirmButtonText: 'Xác nhận',
-                allowOutsideClick: false
-            }).then((result) => {
-                // Nếu người dùng nhấn OK, chuyển trang
-                if (result.isConfirmed) {
-                    window.location.href = "/index.html"; // Thay đổi URL để chuyển trang
-                }
-            });
-        }
+                // Nếu dữ liệu hợp lệ, hiển thị cảnh báo thành công và thực hiện hành động tiếp theo
+                Swal.fire({
+                    title: 'Thông Báo từ hệ thống',
+                    text: 'Đã gửi link vào gmail, Vui lòng nhấn vào để link để lấy lại mật khẩu',
+                    icon: 'success',
+                    confirmButtonText: 'Xác nhận',
+                    allowOutsideClick: false
+                }).then((result) => {
+                    // Nếu người dùng nhấn OK, chuyển trang
+                    if (result.isConfirmed) {
+                        window.location.href = "/index.html"; // Thay đổi URL để chuyển trang
+                    }
+                });
+        };
     })
 
     .controller("accountForgotXacNhanCtrl", function ($scope, $rootScope, $location, $timeout){

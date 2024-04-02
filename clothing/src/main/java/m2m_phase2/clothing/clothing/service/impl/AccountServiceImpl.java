@@ -175,22 +175,22 @@ public class AccountServiceImpl implements AccountService {
         Account existingAccount = findByemail(email);
         if (existingAccount == null) {
             model.addAttribute("error", "Tài khoản không tồn tại");
-            return "Front_End/pages/sign-in";
+            return "swappa/assests/html/acc_login";
         }
         boolean passwordMatch = PasswordEncoderUtil.verifyPassword(password, existingAccount.getHashedPassword());
         if (!passwordMatch) {
             model.addAttribute("error", "Mật khẩu không đúng");
-            return "Front_End/pages/sign-in";
+            return "swappa/assests/html/acc_login";
         }
         // Kiểm tra xem tài khoản có bị vô hiệu hóa không
         if (isDisable(existingAccount)) {
             model.addAttribute("error", "Tài khoản của bạn tạm thời bị vô hiệu hóa");
-            return "Front_End/pages/sign-in";
+            return "swappa/assests/html/acc_login";
         }
         // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
         session.setAttribute("loggedInUser", accountRequest.getEmail());
         System.out.println(session.getAttribute("loggedInUser"));
-        return "Front_End/TrangChu";
+        return "swappa/assests/html/trangchu";
     }
 
 }
