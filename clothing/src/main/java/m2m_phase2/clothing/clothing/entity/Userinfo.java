@@ -3,6 +3,7 @@ package m2m_phase2.clothing.clothing.entity;
 import java.io.Serializable;
 import java.sql.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
@@ -46,6 +47,7 @@ public class Userinfo implements Serializable {
 
 	@OneToOne
 	@PrimaryKeyJoinColumn
+	@JsonIgnore
 	private Account account;
 
 	@Override

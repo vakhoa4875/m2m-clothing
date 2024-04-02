@@ -2,6 +2,7 @@ package m2m_phase2.clothing.clothing.entity;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -43,6 +44,7 @@ public class Account implements Serializable {
 	private boolean isDisable;
 
 	@OneToOne(mappedBy = "account")
+	@JsonIgnore
 	private Userinfo userinfo;
 
 	public boolean isDisable() {
