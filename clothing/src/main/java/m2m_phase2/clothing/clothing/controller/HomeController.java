@@ -70,7 +70,7 @@ public class HomeController {
 	public String getLog(Model model) {
 		Account accountlog = new Account();
 		model.addAttribute("accountlog", accountlog);
-		return "Front_End/pages/sign-in";
+		return "swappa/assests/html/acc_login";
 	}
 	@PostMapping("/submitLogin")
 	public String submitLogin(@ModelAttribute("accountlog") Account accountRequest, Model model) {
