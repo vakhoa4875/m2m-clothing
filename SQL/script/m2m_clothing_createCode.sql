@@ -55,7 +55,7 @@ CREATE TABLE Product (
   category_id int FOREIGN KEY REFERENCES Category(category_id)
 );
 create table [user] (
-    id          int             primary key,
+    id          int             primary key identity(1,1),
     username    varchar(63)     not null unique ,
     email       varchar(63)     not null unique ,
     gg_token    varchar(255)    null ,
@@ -67,47 +67,99 @@ create table [user] (
     avatar      varchar(63)     default 'user.png',
     dob         date            default getdate(),
     description nvarchar(300)   default 'description_val',
-    job_title   nvarchar(63)    default 'site user'
-)
+    job_title   nvarchar(63)    default 'Unemployed',
+    role_id     int             not null default 3,
+    role_name   nvarchar(63)    not null default 'User',
+    processed   bit             default 0
+);
 go
 
-create or alter trigger trigger_insert_into_user
-    on Userinfo
+--trigger insert into user after insert into Account
+create or alter trigger trigger_after_insert_into_UserInfo
+    on Account
+    after insert
+    as
+begin
+    insert into [user] (username, email, hashed_pass, is_admin, is_disable, processed)
+    select  top 1 a.username,
+                  a.email,
+                  a.hashed_password,
+                  a.is_admin,
+                  a.is_disable,
+                  1
+    from inserted i
+    join Account a on a.user_id = i.user_id;
+    --update role
+    update [user]
+    set role_id = 1, role_name = 'Admin'
+    where   id = (select user_id from inserted)
+            and is_admin = 1;
+end;
+go
+--trigger after insert into user for syncing with account
+create or alter trigger trigger_after_insert_into_user
+    on [user]
     after insert
     as
     begin
-        insert into [user]
-        select  top 1 a.user_id,
-                a.username,
-                a.email,
-                null,
-                a.hashed_password,
-                a.is_admin,
-                a.is_disable,
-                i.fullname,
-                i.gender,
-                i.avatar,
-                i.dob,
-                i.description,
-                i.job_title
-        from inserted i
-        join Account a
-        on a.user_id = i.user_id
+        declare @i_processed bit;
+        select @i_processed = i.processed
+        from inserted i;
+
+        if (@i_processed = 0)
+        begin
+            begin TRANSACTION ;
+                -- insert into account with inserted value of table user
+                insert into Account (username, email, hashed_password, is_admin)
+                select  u.username,
+                        u.email,
+                        u.hashed_pass,
+                        IIF(u.role_id = 3, 0, 1)
+                from [inserted] u;
+                -- set processed to 1
+                update [user]
+                set processed = 1
+                where id = (select i.id from inserted i);
+            IF @@TRANCOUNT > 0
+                COMMIT TRANSACTION;
+        end
     end
 go
 
+--trigger after update user for syncing with account table
+create or alter trigger trigger_after_update_user
+    on [user]
+    after update
+    as
+    begin
+        declare @u_isAdmin bit,
+                @u_isDisable bit,
+                @u_hashed_pass varchar(255),
+                @u_user_id int;
+        select  @u_isAdmin = i.is_admin,
+                @u_isDisable = i.is_disable,
+                @u_hashed_pass = i.hashed_pass,
+                @u_user_id = i.id
+        from inserted i;
+        update Account
+        set is_admin = @u_isAdmin,
+            is_disable = @u_isDisable,
+            hashed_password = @u_hashed_pass
+        where user_id = @u_user_id;
+    end
 go
-CREATE OR ALTER TRIGGER gen_user_info 
-ON Account
-AFTER INSERT
-AS
-BEGIN
-    INSERT INTO Userinfo (user_id)
-    SELECT user_id
-    FROM inserted;
-END;
 
-go
+--CREATE OR ALTER TRIGGER gen_user_info 
+--ON Account
+--AFTER INSERT
+--AS
+--BEGIN
+--    INSERT INTO Userinfo (user_id)
+--    SELECT user_id
+--    FROM inserted;
+--END;
+
+--go
 
 
 
