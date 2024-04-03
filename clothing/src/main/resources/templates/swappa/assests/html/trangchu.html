@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     <!-- header -->
@@ -73,8 +74,8 @@
                             <li class="ms-3 d-flex align-items-center justify-content-center">
                                 <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
                                     <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                      1
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
+
                                     </span>
                                 </a>
                             </li>
@@ -264,119 +265,7 @@
                             <div class="flex-fill hori-stripe-pattern-warm"></div>
                         </div>
                         <div class="row row-cols-3 row-cols-md-4 row-cols-lg-5 row-cols-xl-6 justify-content-around" id="sanpham">
-                            <!-- <div class="col-lg-2 col-md-3 col-sm-4">
-                                <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                                    <a href="#" class="stretched-link">
-                                            <img src="/assests/images/1-2.jpg" class="img-fluid mt-2 mb-3" alt="">
-                                            <div class="w-100">
-                                                <span class="d-inline-block text-truncate" style="max-width: 90%;"> Áo </span>
-                                            </div>
-                                        <div class="w-100">
-                                            <div class="d-flex justify-content-around">
-                                                <span><del>200$</del></span>
-                                                <span class="fw-bold active-custom">100$</span>
-                                            </div>
-                                            <div class="">
-                                                <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                                    <div class="text-white fw-bolder ">Mua ngay</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
 
-
-                            <div class="col-lg-2 col-md-3 col-sm-4">
-                                <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                                    <a href="#" class="stretched-link">
-                                            <img src="/assests/images/1-2.jpg" class="img-fluid mt-2 mb-3" alt="">
-                                            <div class="w-100">
-                                                <span class="d-inline-block text-truncate" style="max-width: 90%;"> Áo </span>
-                                            </div>
-                                        <div class="w-100">
-                                            <div class="d-flex justify-content-around">
-                                                <span><del>200$</del></span>
-                                                <span class="fw-bold active-custom">100$</span>
-                                            </div>
-                                            <div class="">
-                                                <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                                    <div class="text-white fw-bolder ">Mua ngay</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-2 col-md-3 col-sm-4">
-                                <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                                    <a href="#" class="stretched-link">
-                                            <img src="/assests/images/1-2.jpg" class="img-fluid mt-2 mb-3" alt="">
-                                            <div class="w-100">
-                                                <span class="d-inline-block text-truncate" style="max-width: 90%;"> Áo </span>
-                                            </div>
-                                        <div class="w-100">
-                                            <div class="d-flex justify-content-around">
-                                                <span><del>200$</del></span>
-                                                <span class="fw-bold active-custom">100$</span>
-                                            </div>
-                                            <div class="">
-                                                <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                                    <div class="text-white fw-bolder ">Mua ngay</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-2 col-md-3 col-sm-4">
-                                <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                                    <a href="#" class="stretched-link">
-                                            <img src="/assests/images/1-2.jpg" class="img-fluid mt-2 mb-3" alt="">
-                                            <div class="w-100">
-                                                <span class="d-inline-block text-truncate" style="max-width: 90%;"> Áo </span>
-                                            </div>
-                                        <div class="w-100">
-                                            <div class="d-flex justify-content-around">
-                                                <span><del>200$</del></span>
-                                                <span class="fw-bold active-custom">100$</span>
-                                            </div>
-                                            <div class="">
-                                                <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                                    <div class="text-white fw-bolder ">Mua ngay</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-
-
-                            <div class="col-lg-2 col-md-3 col-sm-4">
-                                <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                                    <a href="#" class="stretched-link">
-                                            <img src="/assests/images/1-2.jpg" class="img-fluid mt-2 mb-3" alt="">
-                                            <div class="w-100">
-                                                <span class="d-inline-block text-truncate" style="max-width: 90%;"> Áo </span>
-                                            </div>
-                                        <div class="w-100">
-                                            <div class="d-flex justify-content-around">
-                                                <span><del>200$</del></span>
-                                                <span class="fw-bold active-custom">100$</span>
-                                            </div>
-                                            <div class="">
-                                                <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                                    <div class="text-white fw-bolder ">Mua ngay</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </section>
@@ -514,105 +403,9 @@
     </footer>
 
 </body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="/node_modules/angular/angular.min.js"></script>
     <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
-    <script>
-       $(document).ready(function(){
-        //sản phẩm
-        $.ajax({
-            type: "get",
-            url: "http://localhost:8083/allproductapi",
-            data: "data",
-            dataType: "json",
-            success: function (response) {
-                var sanpham =[];
-                var anh = [];
+    <script src="/assests/js/jsAll.js"/></script>
 
-                for(var i = 0 ; i < response.length ; i++){
-                    sanpham.push(response[i]);
-                    anh.push(response[i].pictures.split(','));
-                }
-                loadSanPhamNoiBat(sanpham, anh);
-            },
-            error: function(xhr, status, error){
-                alert("Tải dữ liệu thất bại");
-                console.log(error);
-            }
-        });
-
-        //lloại
-        $.ajax({
-            type: "get",
-            url: "http://localhost:8083/allcategoryapi",
-            data: "data",
-            dataType: "json",
-            success: function (response) {
-                var categories = [];
-
-
-                for(var i = 0 ; i < response.length ; i++){
-                    categories.push(response[i].category_name);
-                }
-
-                appendCategoriesToList(categories);
-            },
-            error: function(xhr, status, error){
-                alert("Tải dữ liệu thất bại");
-                console.log(error);
-            }
-        });
-
-        function appendCategoriesToList(categories){
-            $.each(categories, function(index, category) {
-                // Tạo một thẻ li mới cho mỗi đối tượng user
-                var link = $("<a>").attr("href", "/allproduct").addClass("rounded-1 btn text-white hoverbutton").css("width", "120px").text(category);
-                var div = $("<div>").append(link);   
-                    
-                if(category == "Jewels & Accessories"){
-                    div.addClass("special-category");
-                    link.css("width", "200px");
-                }
-                // Thêm thẻ li vào danh sách
-                $("#userListCategory").append(div);
-            });
-        }
-
-        function loadSanPhamNoiBat(sanpham, anh){
-        
-            $.each(sanpham, function(index, item){
-                if(index <= 5){
-                    var html = `
-                            <div class="col-lg-2 col-md-3 col-sm-4">
-                                <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                                    <a href="/product?slug_url=${item.slugUrl}" class="stretched-link">
-                                            <img src="/assests/media/${anh[index][0]}" class="img-fluid mt-2 mb-3" alt="">
-                                            <div class="w-100">
-                                                <span class="d-inline-block text-truncate" style="max-width: 90%;"> ${item.productName} </span>
-                                            </div>
-                                        <div class="w-100">
-                                            <div class="d-flex justify-content-around">
-                                                <span> ${item.price}</span>
-                                                <!--   <span><del>${item.price}</del></span> -->
-                                            </div>
-                                            <div class="">
-                                                <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                                    <div class="text-white fw-bolder ">Mua ngay</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                `
-                $("#sanpham").append(html);
-                }else{
-                    
-                }
-            });
-        }
-        
-       })
-    </script>
 </html>

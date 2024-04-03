@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body ng-app="myApp" ng-controller="accountCtrl">
 
@@ -74,8 +76,8 @@
                             <li class="ms-3 d-flex align-items-center justify-content-center">
                                 <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
                                     <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                      1
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
+                                    0
                                     </span>
                                 </a>
                             </li>
@@ -113,46 +115,46 @@
                                     <div class="mb-5">
                                         <span class="text-white fw-bolder">Please enter all information below</span>
                                     </div>
-                                    <form name="formSignUp" class="text-white" ng-submit="submitForm()" >
+                                    <form name="formSignUp" class="text-white" ng-submit="submitForm()" th:action="@{/otp}" method="post">
                                         <div class="row">
                                             <div class="col-md-2 mb-4">
                                                 <div class="form-outline">
-                                                    <input type="text"   maxlength="1" required class="form-control text-bg-dark text-center" />
+                                                    <input type="text" name="otp1"   maxlength="1" required class="form-control text-bg-dark text-center" />
                                                 </div>
                                                 
                                             </div>
 
                                             <div class="col-md-2 mb-4">
                                                 <div class="form-outline">
-                                                    <input type="text"  maxlength="1" required class="form-control text-bg-dark text-center" />
+                                                    <input type="text" name="otp2"  maxlength="1" required class="form-control text-bg-dark text-center" />
                                                 </div>
                                                 
                                             </div>
 
                                             <div class="col-md-2 mb-4">
                                                 <div class="form-outline">
-                                                    <input type="text"  maxlength="1" required class="form-control text-bg-dark text-center" />
+                                                    <input type="text" name="otp3"  maxlength="1" required class="form-control text-bg-dark text-center" />
                                                 </div>
                                                 
                                             </div>
 
                                             <div class="col-md-2 mb-4">
                                                 <div class="form-outline">
-                                                    <input type="text"  maxlength="1" required class="form-control text-bg-dark text-center" />
+                                                    <input type="text" name="otp4" maxlength="1" required class="form-control text-bg-dark text-center" />
                                                 </div>
                                                 
                                             </div>
 
                                             <div class="col-md-2 mb-4">
                                                 <div class="form-outline">
-                                                    <input type="text"  maxlength="1" required class="form-control text-bg-dark text-center" />
+                                                    <input type="text" name="otp5" maxlength="1" required class="form-control text-bg-dark text-center" />
                                                 </div>
                                                 
                                             </div>
 
                                             <div class="col-md-2 mb-4">
                                                 <div class="form-outline">
-                                                    <input type="text"  maxlength="1" required class="form-control text-bg-dark text-center" />
+                                                    <input type="text" name="otp6"  maxlength="1" required class="form-control text-bg-dark text-center" />
                                                 </div>
                                             </div>
                                         </div>
@@ -222,4 +224,5 @@
     <script src="/node_modules/angular/angular.route.min.js"></script>
     <script src="/assests/js/app.js"></script>
     <script src="/assests/js/script.js"></script>
+    <script src="/assests/js/jsAll.js"></script>
 </html>

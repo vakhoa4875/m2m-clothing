@@ -1,18 +1,22 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
-import jakarta.mail.internet.MimeMessage;
-import jakarta.servlet.http.HttpSession;
-import m2m_phase2.clothing.clothing.entity.Account;
-import m2m_phase2.clothing.clothing.repository.AccountRepo;
-import m2m_phase2.clothing.clothing.service.AccountService;
-import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
+import java.security.SecureRandom;
+import java.sql.SQLException;
+import java.util.List;
+
+import m2m_phase2.clothing.clothing.entity.model.UserM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import java.security.SecureRandom;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpSession;
+import m2m_phase2.clothing.clothing.entity.Account;
+import m2m_phase2.clothing.clothing.repository.AccountRepo;
+import m2m_phase2.clothing.clothing.service.AccountService;
+import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Service
 public class AccountServiceImpl implements AccountService {
@@ -184,5 +188,9 @@ public class AccountServiceImpl implements AccountService {
         System.out.println(session.getAttribute("loggedInUser"));
         return "swappa/assests/html/trangchu";
     }
+	@Override
+	public Account findByUsernameAndEmail(String username, String email){
+		return repo.findByUsernameAndEmail(username,email);
+	}
 
 }

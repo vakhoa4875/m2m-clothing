@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body ng-app="myApp" ng-Controller="productDetailCtrl">
 
@@ -74,8 +75,8 @@
                             <li class="ms-3 d-flex align-items-center justify-content-center">
                                 <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
                                     <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                      1
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
+                                      0
                                     </span>
                                 </a>
                             </li>
@@ -114,18 +115,18 @@
             <section class="justify-content-center">`
                 <div class="row mt-3">
                     <div class="col-12 col-md-12 col-lg-12">
-                        <div id="myCarousel" class="carousel slide d-flex justify-content-center" data-bs-ride="carousel" th:with="chuoiAnh=${listProduct.pictures}">
+                        <div id="myCarousel" class="carousel slide d-flex justify-content-center" data-bs-ride="carousel" th:with="chuoiAnh=${listProduct.getPictures()}">
                             <!-- Carousel indicators -->
                             <!-- Wrapper for carousel items -->
                             <div class="carousel-inner h-50 w-50" th:with="mangAnh=${#strings.arraySplit(chuoiAnh, ',')}">
                                 <div class="carousel-item active" >
-                                    <img th:src="@{'../media/'+${mangAnh[0]}}"  class="d-block w-100" alt="Slide 1">
+                                    <img th:src="@{'../media/'+${mangAnh[0]}}"  class="d-block w-100" alt="Slide 1" id="productAnh" style="object-fit: contain; width: 340px; height: 420px;">
                                 </div>
                                 <div class="carousel-item" th:if="${mangAnh.length  > 1}">
-                                    <img th:src="@{'../media/'+${mangAnh[1]}}"  class="d-block w-100" alt="Slide 2">
+                                    <img th:src="@{'../media/'+${mangAnh[1]}}"  class="d-block w-100" alt="Slide 2" style="object-fit: contain; width: 340px; height: 420px;">
                                 </div>
                                 <div class="carousel-item" th:if="${mangAnh.length  > 2}">
-                                    <img th:src="@{'../media/'+${mangAnh[2]}}" class="d-block w-100" alt="Slide 3">
+                                    <img th:src="@{'../media/'+${mangAnh[2]}}" class="d-block w-100" alt="Slide 3"  style="object-fit: contain; width: 340px; height: 420px;">
                                 </div>
                             </div>
                     
@@ -143,17 +144,19 @@
 
                             </div>
                             <div class="d-flex justify-content-center gap-3 m-0 mt-1 mb-3 p-0">
-                                <button class="btn border btn-outline-success fw-bolder" type="button" style="width: 10rem;">
+                                <button class="btn border btn-outline-success fw-bolder" id="buynow" type="button" style="width: 10rem;">
                                     BuyNow
                                 </button>
-                                <button class="btn border btn-outline-success" type="button"
+                                <button class="btn border btn-outline-success" type="button" id="soLuong"
                                     ><i class="fa-solid fa-cart-plus"></i>
                                 </button>
                             </div>
                         </div>
                         <div class="card text-start mt-2">
                             <div class="card-header d-flex align-items-center justify-content-center">
-                                <span class="fs-4 fw-bolder" th:text="${listProduct.productName}"></span>
+                                <span class="fs-4 fw-bolder" th:text="${listProduct.productName}" id="productName"></span>
+                                <span class="fs-4 fw-bolder">------ Rate : </span>
+                                <span class="fs-4 fw-bolder" style="color: #c24444" th:text="'$'+${listProduct.price}" id="productPrice"></span>
                             </div>
                             <div>
                                 <ul class="small-ul">
@@ -167,7 +170,7 @@
                         <div class="card text-start mt-4">
                             
                             <div class="p-2">
-                                <video controls class="w-100">
+                                <video controls class="w-100" style="max-width: 1098px; max-height: 549px;">
                                     <source th:src="@{'../media/'+${listProduct.videos}}">
                                   </video>
                             </div>
@@ -393,7 +396,7 @@
     <script src="/node_modules/angular/angular.route.min.js"></script>
     <script src="/assests/js/app.js"></script>
     <script src="/assests/js/script.js"></script>
-    <script> 
-        
-    </script>
+    <script src="/assests/js/jsAll.js"/></script>
+
+
 </html>

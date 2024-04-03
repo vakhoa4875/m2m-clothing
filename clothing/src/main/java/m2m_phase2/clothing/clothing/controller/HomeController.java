@@ -1,10 +1,7 @@
 package m2m_phase2.clothing.clothing.controller;
 
-import java.io.Console;
-import java.security.SecureRandom;
 import java.util.List;
 
-import m2m_phase2.clothing.clothing.entity.Password;
 import m2m_phase2.clothing.clothing.entity.Product;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +9,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.entity.Account;
-import m2m_phase2.clothing.clothing.entity.Otp;
 import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
 import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
-import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 import m2m_phase2.clothing.clothing.service.impl.UserServiceImpl;
 
 @Controller
@@ -58,8 +51,15 @@ public class HomeController {
 	}
 
 	@GetMapping("/giohang")
-	public String getGioHang(){
+	public String getGioHang(Model model){
+		List<Product> list = productServiceImpl.findAll();
+		model.addAttribute("listSp",list);
 		return "swappa/assests/html/card";
+	}
+
+	@GetMapping("/thanhtoan")
+	public String getThanhToan(){
+		return "swappa/assests/html/payment";
 	}
 
 	@GetMapping("/login")
