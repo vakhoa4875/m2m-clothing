@@ -127,13 +127,13 @@
                                 <div class="justify-content-center">
                                     <div class="">
                                         <h2 class="fw-bold mb-5 text-white text-uppercase">Confirm password</h2>
-                                        <form name="formForgot" ng-submit="login()" class="text-white">
+                                        <form name="formForgot" ng-submit="login()" class="text-white" th:action="@{/submit-forgot-password-change}" method="post">
                                             <!-- lỗi thì thông báo ở đây nè -->
                                             <div ng-hide="status == null" class="alert text-bg-dark"
                                                 ng-class="{'text-danger invalid-input':(status !== 1), 'text-success valid-input': (status === 1)}">
                                                 {{textStatus}}</div> 
                                             <div class="form-outline mb-4">
-                                                <input autofocus type="text" id="newPassword" name="newPassword"
+                                                <input autofocus type="password" id="newPassword" name="newPassword"
                                                     class="text-bg-dark form-control" placeholder="A new password"
                                                     ng-blur="checkUsernameValidity()" required
                                                     
@@ -141,7 +141,7 @@
                                             </div>
 
                                             <div class="form-outline mb-4">
-                                                <input autofocus type="text" id="confirmPassword" name="confirmPassword"
+                                                <input autofocus type="password" id="confirmPassword" name="confirmPassword"
                                                     class="text-bg-dark form-control" placeholder="Confirm new password"
                                                     ng-blur="checkUsernameValidity()" required
                                                     ng-class="{'invalid-input border-0': isInvalidUserName()}" ng-model="confirmPassword" />

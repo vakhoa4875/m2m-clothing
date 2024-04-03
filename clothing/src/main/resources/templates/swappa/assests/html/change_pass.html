@@ -108,7 +108,7 @@
                                 <div class="justify-content-center">
                                     <div class="">
                                         <h2 class="fw-bold mb-5 text-white">CHANGE PASSWORD</h2>
-                                        <form name="formChange" ng-submit="changePass()" class="text-white">
+                                        <form name="formChange" ng-submit="changePass()" class="text-white" th:action="@{/submit-change-password}" method="post">
                                             <div ng-hide="status == null" class="alert text-bg-dark"
                                                 ng-class="{'text-danger invalid-input':(status !== 1), 'text-success valid-input': (status === 1)}">
                                                 {{textStatus}}</div>
