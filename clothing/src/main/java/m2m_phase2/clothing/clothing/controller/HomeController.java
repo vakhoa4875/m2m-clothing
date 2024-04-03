@@ -58,8 +58,15 @@ public class HomeController {
 	}
 
 	@GetMapping("/giohang")
-	public String getGioHang(){
+	public String getGioHang(Model model){
+		List<Product> list = productServiceImpl.findAll();
+		model.addAttribute("listSp",list);
 		return "swappa/assests/html/card";
+	}
+
+	@GetMapping("/thanhtoan")
+	public String getThanhToan(){
+		return "swappa/assests/html/payment";
 	}
 
 	@GetMapping("/login")
