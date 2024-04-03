@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Page</title>
+    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/css/style.css">
+    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <style>
+        #fileInput {
+            display: none;
+        }
+        .custom-file-label {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #909498;
+            color: #fff;
+
+        }
+        .custom-file-label:hover {
+            background-color: #9a9fa4;
+        }
+        #previewImage {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+        margin-top: 20px;
+    }
+    </style>
+</head>
+
+<body>
+    <!-- header -->
+    <div>
+        <!-- mobileNav -->
+        <div class="d-block d-lg-none">
+            <div id="mobileNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+                <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
+                    <div class="container-sm">
+
+                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                            data-bs-target="#slide_menu" aria-controls="navbarSupportedContent" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+
+                        <a href="trangchu.html" class="navbar-brand" title="Swappa">
+                            <img class="img-fluid"
+                                src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                alt="Swappa Logo">
+                        </a>
+
+                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                            data-bs-target="#slide_search" aria-controls="navbarSupportedContent" aria-expanded="false"
+                            aria-label="Search">
+                            <i class="fa-solid fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+        <!-- mainNav -->
+        <div class="d-none d-lg-block">
+            <!-- first-nav -->
+            <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+                <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
+                    <div class="container d-block">
+                        <div class="d-flex gap-3">
+                            <ul class="navbar-nav" role="presentation">
+                                <li class="nav-item">
+                                    <a class="navbar-brand d-block text-center pt-2" href="trangchu.html">
+                                        <img class="img-fluid"
+                                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                            width="167px" height="35px" alt="Bootstrap">
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="flex-grow-1">
+                                <form action="" class="d-flex align-items-center position-relative h-100">
+                                    <!-- {{keyword}} -->
+                                    <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
+                                    <input type="search" class="form-control rounded-0" id="navbar_search_input"
+                                        name="q" ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
+                                    <!-- </a> -->
+                                </form>
+                            </div>
+                            <ul class="navbar-nav" role="presentation">
+                                <li class="d-flex align-items-center justify-content-center">
+                                    <div class="">
+                                        <a href="acc_login.html">
+                                            <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="ms-3 d-flex align-items-center justify-content-center">
+                                    <a href="card.html" class="border border-0 position-relative"
+                                        style="background-color: rgb(18,17,13) !important;">
+                                        <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;"
+                                            aria-hidden="true"></i>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            1
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="d-flex justify-content-around pb-1">
+                            <div>
+                                <a href="productAll.html" class="rounded-1 btn text-white hoverbutton"
+                                    style="width: 120px;">Outerwear</a>
+                            </div>
+
+                            <div>
+                                <a href="productAll.html" class="rounded-1 btn text-white hoverbutton"
+                                    style="width: 120px;">Tops</a>
+                            </div>
+                            <div>
+                                <a href="productAll.html" class="rounded-1 btn text-white hoverbutton"
+                                    style="width: 120px;">Bottoms</a>
+                            </div>
+                            <div>
+                                <a href="productAll.html" class="rounded-1 btn text-white hoverbutton"
+                                    style="width: 200px;">Jewels & Accessories</a>
+                            </div>
+                            <div>
+                                <a href="productAll.html" class="rounded-1 btn text-white hoverbutton"
+                                    style="width: 120px;">Headwear</a>
+                            </div>
+                            <div>
+                                <a href="productAll.html" class="rounded-1 btn text-white hoverbutton"
+                                    style="width: 120px;">Footwear</a>
+                            </div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <!-- second-nav -->
+        </div>
+    </div>
+
+    <!-- main -->
+
+    <div class="container-fluid bg-semiBlack mb-5">
+        <main class="flex-shrink-0">
+            <div class="container text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
+                <div class="row">
+                    <div class="col-xl-3 col-lg-12">
+                        <div class="container mt-4">
+                            <h4 class="text-center">Edit Profile</h4>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <a href="">Change Password</a>
+                                </li>
+                                <li class="list-group-item">A second item</li>
+                                <li class="list-group-item">A third item</li>
+                                <li class="list-group-item">A fourth item</li>
+                                <li class="list-group-item">And a fifth one</li>
+                                <li class="list-group-item"></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xl-9 col-lg-12 bg-body-secondary">
+
+                        <div class="header mt-3">
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item bg-body-secondary">
+                                    <h3>My profile</h3>
+                                    <span>Manage profile information for account security</span>
+                                </li>
+                                <li class="list-group-item bg-body-secondary"></li>
+                            </ul>
+                        </div>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="container">
+                                    <div class="mb-3 row">
+                                        <label for="staticName" class="col-xl-2 col-lg-12 col-form-label">UserName</label>
+                                        <div class="col-xl-10 col-lg-12">
+                                            <input type="text" readonly class="form-control-plaintext" id="staticName"
+                                                value="hindev">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="inputName" class="col-xl-2 col-lg-12 col-form-label">Name</label>
+                                        <div class="col-xl-10 col-lg-12">
+                                            <input type="name" class="form-control" id="inputName">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="staticEmail" class="col-xl-2 col-lg-12 col-form-label">Email</label>
+                                        <div class="col-xl-10 col-lg-12">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon">
+                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Edit</button>
+                                          </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="staticEmail" class="col-xl-2 col-lg-12 col-form-label">Phone</label>
+                                        <div class="col-xl-10 col-lg-12">
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon1">
+                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Edit</button>
+                                          </div>
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="staticEmail" class="col-xl-2 col-lg-12 col-form-label">Phone</label>
+                                        <div class="col-xl-10 col-lg-12">
+                                            <div class="row">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                        id="flexRadioDefaultMale">
+                                                    <label class="form-check-label" for="flexRadioDefaultMale">
+                                                        Male
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                        id="flexRadioDefaultFemale" checked>
+                                                    <label class="form-check-label" for="flexRadioDefaultFemale">
+                                                        Female
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                        id="flexRadioDefaultother" checked>
+                                                    <label class="form-check-label" for="flexRadioDefaultother">
+                                                        other
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-4 text-center">
+                                <div class="d-flex justify-content-center">
+                                    <img src="https://placehold.co/36x36/"
+                                        class="avatar me-3 border-radius-lg" id="previewImage" src="#" alt="Ảnh đã chọn">
+                                </div>
+                                <img id="previewImage" src="#" alt="Ảnh đã chọn" style="display: none;">
+                                <div class="text-center my-3" style="margin-right: 10px;">
+                                    <input type="file" class="form-control" id="fileInput" accept="image/*">
+                                    <label class="custom-file-label" for="fileInput">Chọn ảnh từ local</label>
+                                </div>
+                            </div>
+                            <button type="button" class=" col-5 btn btn-secondary ms-5 mb-5">Submit</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- footer -->
+    <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+        <div class="container pt-2 pb-2">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+
+            </div>
+            <div class="row row-cols-1 row-cols-md-3">
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class=" text-white">
+                        <i class="fa-brands fa-square-facebook fs-1"></i>
+                        <i class="fa-brands fa-square-instagram fs-1"></i>
+                        <i class="fa-brands fa-youtube fs-1"></i>
+                        <i class="fa-brands fa-linkedin fs-1"></i>
+                        <i class="fa-brands fa-square-reddit fs-1"></i>
+                    </div>
+                </div>
+                <div class="col text-center ">
+                    <a href="./index.html"><img
+                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
+                            class="img-fluid" alt=""></a>
+                </div>
+                <div class="col text-center text-white d-flex justify-content-center align-items-center">
+                    <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+<script>
+    document.getElementById('fileInput').addEventListener('change', function() {
+        var file = this.files[0];
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function(event) {
+                document.getElementById('previewImage').setAttribute('src', event.target.result);
+                document.getElementById('previewImage').style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+
+</html>

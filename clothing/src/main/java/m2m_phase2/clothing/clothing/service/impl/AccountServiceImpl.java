@@ -4,8 +4,6 @@ import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.List;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.entity.model.UserM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -16,7 +14,6 @@ import org.springframework.ui.Model;
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.entity.Account;
-import m2m_phase2.clothing.clothing.entity.Password;
 import m2m_phase2.clothing.clothing.repository.AccountRepo;
 import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
@@ -175,22 +172,26 @@ public class AccountServiceImpl implements AccountService {
         Account existingAccount = findByemail(email);
         if (existingAccount == null) {
             model.addAttribute("error", "Tài khoản không tồn tại");
-            return "Front_End/pages/sign-in";
+            return "swappa/assests/html/acc_login";
         }
         boolean passwordMatch = PasswordEncoderUtil.verifyPassword(password, existingAccount.getHashedPassword());
         if (!passwordMatch) {
             model.addAttribute("error", "Mật khẩu không đúng");
-            return "Front_End/pages/sign-in";
+            return "swappa/assests/html/acc_login";
         }
         // Kiểm tra xem tài khoản có bị vô hiệu hóa không
         if (isDisable(existingAccount)) {
             model.addAttribute("error", "Tài khoản của bạn tạm thời bị vô hiệu hóa");
-            return "Front_End/pages/sign-in";
+            return "swappa/assests/html/acc_login";
         }
         // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
         session.setAttribute("loggedInUser", accountRequest.getEmail());
         System.out.println(session.getAttribute("loggedInUser"));
-        return "Front_End/TrangChu";
+        return "swappa/assests/html/trangchu";
     }
+	@Override
+	public Account findByUsernameAndEmail(String username, String email){
+		return repo.findByUsernameAndEmail(username,email);
+	}
 
 }

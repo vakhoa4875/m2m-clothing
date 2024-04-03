@@ -20,4 +20,6 @@ public interface AccountService {
 
 	List<UserM> findAll() throws SQLException;
 
+	Account findByUsernameAndEmail(String username, String email);
+
 }
