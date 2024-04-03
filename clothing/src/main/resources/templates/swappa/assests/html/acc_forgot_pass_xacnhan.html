@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body ng-app="myApp" ng-Controller="accountForgotXacNhanCtrl">
 
@@ -74,8 +75,8 @@
                             <li class="ms-3 d-flex align-items-center justify-content-center">
                                 <a href="card.html" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
                                     <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                      1
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
+                                    0
                                     </span>
                                 </a>
                             </li>
@@ -206,7 +207,5 @@
     <script src="/node_modules/angular/angular.route.min.js"></script>
     <script src="/assests/js/app_admin.js"></script>
     <script src="/assests/js/script.js"></script>
-    <script> 
-        
-    </script>
+    <script src="/assests/js/jsAll.js"></script>
 </html>
