@@ -54,6 +54,47 @@ CREATE TABLE Product (
   slug_url varchar(255) default '',
   category_id int FOREIGN KEY REFERENCES Category(category_id)
 );
+create table [user] (
+    id          int             primary key,
+    username    varchar(63)     not null unique ,
+    email       varchar(63)     not null unique ,
+    gg_token    varchar(255)    null ,
+    hashed_pass varchar(255)    not null,
+    is_admin    bit             default 0,
+    is_disable  bit             default 0,
+    fullname    nvarchar(63)    default 'fullname_val',
+    gender      nvarchar(10)    default 'Nam',
+    avatar      varchar(63)     default 'user.png',
+    dob         date            default getdate(),
+    description nvarchar(300)   default 'description_val',
+    job_title   nvarchar(63)    default 'site user'
+)
+go
+
+create or alter trigger trigger_insert_into_user
+    on Userinfo
+    after insert
+    as
+    begin
+        insert into [user]
+        select  top 1 a.user_id,
+                a.username,
+                a.email,
+                null,
+                a.hashed_password,
+                a.is_admin,
+                a.is_disable,
+                i.fullname,
+                i.gender,
+                i.avatar,
+                i.dob,
+                i.description,
+                i.job_title
+        from inserted i
+        join Account a
+        on a.user_id = i.user_id
+    end
+go
 
 go
 CREATE OR ALTER TRIGGER gen_user_info 
