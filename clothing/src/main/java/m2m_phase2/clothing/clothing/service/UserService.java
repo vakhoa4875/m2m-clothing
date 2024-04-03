@@ -1,30 +1,31 @@
 package m2m_phase2.clothing.clothing.service;
 
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
-
 import jakarta.servlet.http.HttpSession;
-import m2m_phase2.clothing.clothing.entity.DTO.AccountDto;
-import m2m_phase2.clothing.clothing.entity.DTO.UserDto;
-import m2m_phase2.clothing.clothing.entity.model.UserM;
+import m2m_phase2.clothing.clothing.data.dto.UserDto;
+import m2m_phase2.clothing.clothing.data.model.UserM;
 import org.springframework.stereotype.Service;
 
-import m2m_phase2.clothing.clothing.entity.Account;
-import m2m_phase2.clothing.clothing.entity.Userinfo;
+import java.sql.SQLException;
+import java.util.List;
 
-@Service
 public interface UserService {
-	byte updateUser(UserDto userDto) throws SQLException;
-	void deleteById(Integer id);
+    /**
+     * @api
+     * @return list containing all [user] from database
+     */
+    List<UserM> getAllUser() throws SQLException;
 
-	Map<Account, Userinfo> getAll();
-
-	String checkUserAdminRole(AccountDto accountDto);
-
-	void saveToSession(HttpSession httpSession, AccountDto accountDto);
-
-	void  save(Account acc, Userinfo info);
-
-    UserM findUserById(int id) throws SQLException;
+    /**
+     * @api
+     * @param userDto as a map contained essential attribute for a query
+     * @return list as result of query
+     */
+//    List<UserM> getUserByDto(UserDto userDto) throws SQLException;
+    UserM getUserByUsernameAndEmail(UserDto userDto) throws SQLException;
+    boolean isUserExist(UserDto userDto) throws SQLException;
+    byte saveUser(UserDto userDto) throws SQLException;
+    byte disableUser(UserDto userDto) throws SQLException;
+    void saveAdminTokenToSession(HttpSession session, UserDto userDto);
+//    String checkUserAdminRole(UserDto userDto);
+//    void saveToSession(HttpSession httpSession, UserDto userDto);
 }

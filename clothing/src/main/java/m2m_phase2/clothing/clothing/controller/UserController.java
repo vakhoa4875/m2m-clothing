@@ -1,7 +1,7 @@
-package m2m_phase2.clothing.clothing.controller.api;
+package m2m_phase2.clothing.clothing.controller;
 
 import jakarta.servlet.http.HttpSession;
-import m2m_phase2.clothing.clothing.entity.DTO.AccountDto;
+import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,21 +22,25 @@ public class UserController {
     private UserService userService;
     @Autowired
     private HttpSession httpSession;
-    @GetMapping(path = {"/", "/login"})
+
+    @GetMapping(path = {"/login"})
     public String doGetAdminLogin(Model model) {
-        model.addAttribute("loginInfo", new AccountDto());// truyền AccountDto qua admin's loginform để hứng data
+        model.addAttribute("loginInfo", new UserDto());// truyền AccountDto qua admin's loginform để hứng data
         return "swappa/assests/html/admin_login";
     }
+
     @PostMapping("/loginSucceed")
-    public String doPostAdminLoginSucceed(@ModelAttribute("loginInfo") AccountDto accountDto) {
-        userService.saveToSession(httpSession, accountDto);
+    public String doPostAdminLoginSucceed(@ModelAttribute("loginInfo") UserDto userDto) {
+        userService.saveAdminTokenToSession(httpSession, userDto);
         if (httpSession.getAttribute("adminToken") != null)
             return "redirect:/admin/home";
-        return "redirect:/admin/";
+        return "redirect:/admin/login";
     }
+
     @GetMapping("/home")
     public String doGetHomeAdmin(Model model) {
-//        model.addAttribute("currentAccount", new)
+//        if (httpSession.getAttribute("adminToken") == null)
+//            return "redirect:/admin/login";
         return "swappa/assests/html/admin";
     }
 
