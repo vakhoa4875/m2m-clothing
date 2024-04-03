@@ -9,6 +9,7 @@ xmlns:th="http://www.thymeleaf.org">
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body ng-app="myApp" ng-controller="accountCtrl">
 
@@ -75,8 +76,8 @@ xmlns:th="http://www.thymeleaf.org">
                             <li class="ms-3 d-flex align-items-center justify-content-center">
                                 <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
                                     <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                      1
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
+                                    0
                                     </span>
                                 </a>
                             </li>
@@ -223,4 +224,5 @@ xmlns:th="http://www.thymeleaf.org">
     <script src="/node_modules/angular/angular.route.min.js"></script>
     <script src="/assests/js/app.js"></script>
     <script src="/assests/js/script.js"></script>
+    <script src="/assests/js/jsAll.js"></script>
 </html>
