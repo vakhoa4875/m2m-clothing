@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,108 +9,116 @@
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
 </head>
+
 <body ng-app="myApp" ng-controller="accountCtrl">
 
-<div>
-    <!-- mobileNav -->
-    <div class="d-block d-lg-none">
-        <div id="mobileNav"  style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
-            <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
-                <div class="container-sm">
+    <div>
+        <!-- mobileNav -->
+        <div class="d-block d-lg-none">
+            <div id="mobileNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+                <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
+                    <div class="container-sm">
 
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
+                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                            data-bs-target="#slide_menu" aria-controls="navbarSupportedContent" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
 
-                    <a href="/trangchu" class="navbar-brand" title="Swappa">
-                        <img class="img-fluid"
-                             src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                             alt="Swappa Logo">
-                    </a>
+                        <a href="/trangchu" class="navbar-brand" title="Swappa">
+                            <img class="img-fluid"
+                                src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                alt="Swappa Logo">
+                        </a>
 
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_search"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
-                        <i class="fa-solid fa-search" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </nav>
+                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                            data-bs-target="#slide_search" aria-controls="navbarSupportedContent" aria-expanded="false"
+                            aria-label="Search">
+                            <i class="fa-solid fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+
         </div>
-
-    </div>
-    <!-- mainNav -->
-    <div class="d-none d-lg-block">
-        <!-- first-nav -->
-        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
-            <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
-                <div class="container d-block">
-                    <div class="d-flex gap-3">
-                        <ul class="navbar-nav" role="presentation">
-                            <li class="nav-item">
-                                <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
-                                    <img class="img-fluid"
-                                         src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                         width="167px" height="35px" alt="Bootstrap">
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="flex-grow-1">
-                            <form action="" class="d-flex align-items-center position-relative h-100">
-                                <!-- {{keyword}} -->
-                                <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
-                                <input type="search" class="form-control rounded-0" id="navbar_search_input" name="q"
-                                       ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
-                                <!-- </a> -->
-                            </form>
-                        </div>
-                        <ul class="navbar-nav" role="presentation">
-                            <li class="d-flex align-items-center justify-content-center">
-                                <div class="">
-                                    <a href="/login">
-                                        <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
+        <!-- mainNav -->
+        <div class="d-none d-lg-block">
+            <!-- first-nav -->
+            <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+                <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
+                    <div class="container d-block">
+                        <div class="d-flex gap-3">
+                            <ul class="navbar-nav" role="presentation">
+                                <li class="nav-item">
+                                    <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
+                                        <img class="img-fluid"
+                                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                            width="167px" height="35px" alt="Bootstrap">
                                     </a>
-                                </div>
-                            </li>
-                            <li class="ms-3 d-flex align-items-center justify-content-center">
-                                <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
-                                    <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                      1
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
+                                </li>
+                            </ul>
+                            <div class="flex-grow-1">
+                                <form action="" class="d-flex align-items-center position-relative h-100">
+                                    <!-- {{keyword}} -->
+                                    <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
+                                    <input type="search" class="form-control rounded-0" id="navbar_search_input"
+                                        name="q" ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
+                                    <!-- </a> -->
+                                </form>
+                            </div>
+                            <ul class="navbar-nav" role="presentation">
+                                <li class="d-flex align-items-center justify-content-center">
+                                    <div class="">
+                                        <a href="/login">
+                                            <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="ms-3 d-flex align-items-center justify-content-center">
+                                    <a href="/giohang" class="border border-0 position-relative"
+                                        style="background-color: rgb(18,17,13) !important;">
+                                        <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;"
+                                            aria-hidden="true"></i>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                            1
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="d-flex justify-content-around pb-1" id="userListCategory">
+                            <!-- api -->
+                        </div>
                     </div>
-                    <div class="d-flex justify-content-around pb-1" id="userListCategory">
-                        <!-- api -->
-                    </div>
-                </div>
-            </nav>
+                </nav>
+            </div>
+            <!-- second-nav -->
         </div>
-        <!-- second-nav -->
     </div>
-</div>
 
     <!-- main -->
-    <div style="background-image: url('/assests/images/1323882.png');background-attachment: fixed; min-height: 800px;" class="">
-        
+    <div style="background-image: url('/assests/images/1323882.png');background-attachment: fixed; min-height: 800px;"
+        class="">
+
         <!-- body -->
         <main class="container pt-5 pb-5">
             <!-- Section: Design Block -->
             <div class="row">
-    
+
                 <section class="text-center d-flex justify-content-center">
-    
-                    <div class="card shadow-5-strong w-50"  style="
+
+                    <div class="card shadow-5-strong w-50" style="
                 background: hsla(0, 0%, 0%, 0.5);
                 backdrop-filter: blur(15px);
                 ">
                         <div class="card-body py-5">
-                
+
                             <div class="d-flex justify-content-center">
                                 <div class="">
                                     <h2 class="fw-bold mb-5 text-white">SIGN UP</h2>
-                                    <form name="formSignUp" class="text-white" ng-submit="signUp()">
+                                    <form name="formSignUp" class="text-white" ng-submit="signUp()"
+                                        th:object="${account}" th:action="@{/submitRegister}" method="post">
                                         <div ng-hide="status2 == null" class="alert rounded-2 text-bg-success"
                                             ng-class="{'text-white fw-bold invalid-input':(status2 === true), 'text-white fw-bold valid-input': (status2 === true)}">
                                             {{textStatus2}}
@@ -118,9 +127,10 @@
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
                                                 <div class="form-outline">
-                                                    <input required ng-model="firstName" ng-blur="firstNameBlurred = true"
-                                                        type="text" id="firstName" name="firstName"
-                                                        class="form-control text-bg-dark" placeholder="User Name"
+                                                    <input th-field="${username}" required ng-model="firstName" 
+                                                        ng-blur="firstNameBlurred = true" type="text" id="firstName"
+                                                        name="firstName" class="form-control text-bg-dark"
+                                                        placeholder="User Name"
                                                         ng-class="{'invalid-input border-0': isInvalidFirstName()}" />
                                                 </div>
                                                 <div class="mt-1 text-danger fs-14 text-start"
@@ -130,12 +140,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                
+
                                         <!-- Email input -->
                                         <div class="form-outline mb-4">
-                                            <input type="email" id="email2" name="email2" class="form-control text-bg-dark"
-                                                placeholder="Email address" required ng-model="email2"
-                                                ng-blur="email2Blurred = true"
+                                            <input th-field="${email}" type="email" id="email2" name="email2" 
+                                                class="form-control text-bg-dark" placeholder="Email address" required
+                                                ng-model="email2" ng-blur="email2Blurred = true"
                                                 ng-class="{'invalid-input border-0' : isInvalidEmail2()}" />
                                             <div class="mt-1 text-danger fs-14 text-start" ng-show="isInvalidEmail2()">
                                                 <i class="fa-solid fa-circle-info"></i> Invalid email. Make
@@ -143,11 +153,11 @@
                                             </div>
                                         </div>
                                         <div></div>
-                
+
                                         <div class="row row-cols-md-2">
                                             <div class="col">
                                                 <div class="form-outline mb-4">
-                                                    <input type="password" id="password21" name="password21"
+                                                    <input th-field="${hashedPassword}" type="password" id="password21" name="password21"
                                                         class="form-control text-bg-dark" placeholder="Password"
                                                         ng-model="password21" ng-blur="password21Blurred = true"
                                                         pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,30}$" required
@@ -169,15 +179,26 @@
                                                         ng-class="{'invalid-input border-0':isInvalidPassword22()}" />
                                                     <div class="mt-1 text-danger fs-14 text-start"
                                                         ng-show="isInvalidPassword22()">
-                                                        <i class="fa-solid fa-circle-info"></i> The confirm password isn't
+                                                        <i class="fa-solid fa-circle-info"></i> The confirm password
+                                                        isn't
                                                         matched. Make
                                                         sure it's written correctly.
                                                     </div>
                                                 </div>
                                             </div>
+
                                         </div>
-                
-                                        <!-- <div class="form-check  mb-4">
+
+
+                                        <div class="alert alert-danger" style="display: none;" id="errorMess"
+                                            role="alert">
+                                        </div>
+
+
+                                </div>
+                            </div>
+
+                            <!-- <div class="form-check  mb-4">
                                             <div class="d-flex justify-content-center">
                                                 <input class="form-check-input me-2 text-bg-success" type="radio" value=""
                                                     id="form2Example33" name="gioitinh" />
@@ -195,69 +216,100 @@
                                                 
                                             </div>
                                         </div> -->
-                
-                                        <!-- Submit button -->
-                                        <div class="d-flex flex-column align-items-center">
-                                            <button type="submit" class="btn btn-outline-success fw-bold btn-block px-5 rounded-5 w-75">
-                                                Sign up
-                                            </button>
-                                            <a href="/login" class="btn btn-outline-success btn-block rounded-5 w-50 mt-3">Return Login</a>
-                                        </div>
-                                    </form>
-                                </div>
+
+                            <!-- Submit button -->
+                            <div class="d-flex flex-column align-items-center">
+                                <button type="button" id="signupBtn"
+                                    class="btn btn-outline-success fw-bold btn-block px-5 rounded-5 w-75"
+                                    onclick="callByUsernameAndEmail()">
+                                    Sign up
+                                </button>
+                                <a href="/login" class="btn btn-outline-success btn-block rounded-5 w-50 mt-3">Return
+                                    Login</a>
                             </div>
+                            </form>
                         </div>
                     </div>
-                </section>
             </div>
-            <!-- Section: Design Block -->
-        </main>
-    
     </div>
-        
+    </section>
+    </div>
+    <!-- Section: Design Block -->
+    </main>
+
+    </div>
+
 
     <!-- footer -->
-<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-    <div class="container pt-2 pb-2">
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+    <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+        <div class="container pt-2 pb-2">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
 
-        </div>
-        <div class="row row-cols-1 row-cols-md-3">
-            <div class="col d-flex justify-content-center align-items-center">
-                <div class=" text-white">
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-square-facebook fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-square-instagram fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-youtube fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-linkedin fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-square-reddit fs-1"></i>
-                    </a>
+            </div>
+            <div class="row row-cols-1 row-cols-md-3">
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class=" text-white">
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-facebook fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-instagram fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-youtube fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-linkedin fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-reddit fs-1"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col text-center ">
+                    <a href="./index.html"><img
+                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
+                            class="img-fluid" alt=""></a>
+                </div>
+                <div class="col text-center text-white d-flex justify-content-center align-items-center">
+                    <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
                 </div>
             </div>
-            <div class="col text-center ">
-                <a href="./index.html"><img
-                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
-                        alt=""></a>
-            </div>
-            <div class="col text-center text-white d-flex justify-content-center align-items-center">
-                <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
-            </div>
         </div>
-    </div>
-</footer>
+    </footer>
 </body>
-    <script src="/node_modules/angular/angular.min.js"></script>
-    <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
-    <script src="/node_modules/angular/angular.route.min.js"></script>
-    <script src="/assests/js/app.js"></script>
-    <script src="/assests/js/script.js"></script>
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+<script src="/node_modules/angular/angular.route.min.js"></script>
+<script src="/assests/js/app.js"></script>
+<script src="/assests/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+
+    function callByUsernameAndEmail() {
+        var username = $('#firstName').val();
+        var email = $('#email2').val();
+        $.ajax({
+            url: '/getAccountByUsernameAndEmail?username=' + username + '&email=' + email,
+            type: 'GET',
+            success: function (data) {
+                var mess = $('#errorMess');
+                if (data) {
+                    mess.text('Account already exists');
+                    mess.show();
+                } else {
+                    $('#signupBtn').attr('type', 'submit'); // Thay đổi loại của button thành "submit"
+                }
+            },
+            error: function (xhr, status, error) {
+                console.log(data);
+            }
+
+
+        })
+    }
+
+</script>
+
 </html>
