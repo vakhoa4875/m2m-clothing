@@ -2,6 +2,7 @@ package m2m_phase2.clothing.clothing.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 	
     @Query("SELECT c  FROM Product p JOIN p.category c WHERE p.productId = :productId")
     Category findCategoryNameByProductId(Integer productId);
-
-	
-}	
+    @Query("select o from Product o order by o.sold DESC")
+    List<Product> findTop6ByOrderByGiaBanDesc(Pageable pageable); //Pageable được chuyển vào để lấy 6 sản phẩm có giá bán cao nhất
+}
