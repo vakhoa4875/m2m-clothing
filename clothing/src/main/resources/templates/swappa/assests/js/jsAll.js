@@ -194,7 +194,6 @@ $(document).ready(function () {
                 sanpham.push(response[i]);
                 anh.push(response[i].pictures.split(','));
             }
-            loadSanPhamNoiBat(sanpham, anh);
             layTongSoLuong();
         },
         error: function (xhr, status, error) {
@@ -235,6 +234,28 @@ $(document).ready(function () {
         }
     });
 
+    $.ajax({
+        type: "get",
+        url: "http://localhost:8083/findTop6ByOrderByGiaBanDesc",
+        data: "data",
+        dataType: "json",
+        success: function (response) {
+            var sanpham = [];
+            var anh = [];
+
+            for (var i = 0; i < response.length; i++) {
+                sanpham.push(response[i]);
+                anh.push(response[i].pictures.split(','));
+            }
+            loadSanPhamNoiBat(sanpham, anh);
+            layTongSoLuong();
+        },
+        error: function (xhr, status, error) {
+            alert("Tải dữ liệu thất bại");
+            console.log(error);
+        }
+    });
+
     function appendCategoriesToList(categories) {
         $.each(categories, function (index, category) {
             // Tạo một thẻ li mới cho mỗi đối tượng user
@@ -253,7 +274,6 @@ $(document).ready(function () {
     function loadSanPhamNoiBat(sanpham, anh) {
 
         $.each(sanpham, function (index, item) {
-            if (index <= 5) {
                 var html = `
                             <div class="col-lg-2 col-md-3 col-sm-4">
                                 <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
@@ -279,9 +299,6 @@ $(document).ready(function () {
                 `
                 $("#sanpham").append(html);
                 layTongSoLuong();
-            } else {
-
-            }
         });
     }
 
