@@ -1,10 +1,6 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
 import java.security.SecureRandom;
-import java.sql.SQLException;
-import java.util.List;
-
-import m2m_phase2.clothing.clothing.entity.model.UserM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;

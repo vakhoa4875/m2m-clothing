@@ -7,10 +7,7 @@ import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -48,12 +45,24 @@ public class UserApi {
     }
 
     @PostMapping("/saveUser")
-    public ResponseEntity<?> doPostSaveUser(UserDto userDto) {
+    public ResponseEntity<?> doPostSaveUser(@RequestBody UserDto userDto) {
         byte rowEffected;
         try {
             rowEffected = userService.saveUser(userDto);
         } catch (Exception e) {
             System.out.println("Call API Failed: /api-public/users/saveUser");
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(rowEffected);
+    }
+    @PostMapping("/disableUser")
+    public ResponseEntity<?> doDeleteUser(@RequestBody UserDto userDto) {
+        byte rowEffected;
+        try {
+            rowEffected = userService.disableUser(userDto);
+        } catch (SQLException e) {
+            System.out.println("Call API Failed: /api-public/users/saveUser");
+            rowEffected = 0;
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(rowEffected);

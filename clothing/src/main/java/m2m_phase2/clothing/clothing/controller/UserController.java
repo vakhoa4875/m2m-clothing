@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.sql.SQLException;
+import java.util.Objects;
+
 @Controller
 @RequestMapping("/admin")
 public class UserController {
@@ -25,23 +28,35 @@ public class UserController {
 
     @GetMapping(path = {"/login"})
     public String doGetAdminLogin(Model model) {
+        if (Objects.nonNull(httpSession.getAttribute("adminToken")))
+            return "redirect:/admin/home";
         model.addAttribute("loginInfo", new UserDto());// truyền AccountDto qua admin's loginform để hứng data
         return "swappa/assests/html/admin_login";
     }
 
     @PostMapping("/loginSucceed")
     public String doPostAdminLoginSucceed(@ModelAttribute("loginInfo") UserDto userDto) {
-        userService.saveAdminTokenToSession(httpSession, userDto);
-        if (httpSession.getAttribute("adminToken") != null)
+        try {
+            userService.saveAdminTokenToSession(httpSession, userDto);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if (Objects.nonNull(httpSession.getAttribute("adminToken")))
             return "redirect:/admin/home";
         return "redirect:/admin/login";
     }
 
     @GetMapping("/home")
     public String doGetHomeAdmin(Model model) {
-//        if (httpSession.getAttribute("adminToken") == null)
-//            return "redirect:/admin/login";
+        if (Objects.isNull(httpSession.getAttribute("adminToken")))
+            return "redirect:/admin/login";
         return "swappa/assests/html/admin";
+    }
+
+    @GetMapping("/logout")
+    public String doGetLogOut() {
+        httpSession.removeAttribute("adminToken");
+        return "redirect:/admin/login";
     }
 
     @GetMapping("/cart")

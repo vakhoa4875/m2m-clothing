@@ -2,15 +2,18 @@ package m2m_phase2.clothing.clothing.service.impl;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
+import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.repository.UserRepo;
 import m2m_phase2.clothing.clothing.service.UserService;
+import m2m_phase2.clothing.clothing.utils.DateUtils;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -24,19 +27,20 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserM getUserByUsernameAndEmail(UserDto userDto) throws SQLException {
+        if (!this.isUserExist(userDto)) return null;
         return UserM.convertUserEToUserM(userRepo.getUserByUsernameAndEmail(userDto.getUsername(), userDto.getEmail()));
     }
 
     @Override
-    public boolean isUserExist(UserDto userDto) {
-        return UserM.convertUserEToUserM(userRepo.getUserByUsernameAndEmail(userDto.getUsername(), userDto.getEmail())) != null;
+    public boolean isUserExist(UserDto userDto) throws SQLException{
+        var user = userRepo.getUserByUsernameAndEmail(userDto.getUsername(), userDto.getEmail());
+        return Objects.nonNull(user);
     }
 
     @Override
     public byte saveUser(UserDto userDto) throws SQLException {
-        byte rowEffected;
         if (this.isUserExist(userDto)) {
-            rowEffected = userRepo.updateUser(userDto.getUsername(),
+            userRepo.updateUser(userDto.getUsername(),
                     userDto.getEmail(),
                     userDto.getFullname(),
                     userDto.getHashedPassword(),
@@ -44,43 +48,61 @@ public class UserServiceImpl implements UserService {
                     userDto.getRoleId(),
                     userDto.getRoleName(),
                     userDto.getDescription(),
-                    userDto.getDob(),
+                    userDto.getJobTitle(),
+                    DateUtils.toDateFormat(userDto.getDob(), "dd/MM/yyyy", "yyyy-MM-dd"),
                     userDto.getAvatar());
         } else {
-            rowEffected = userRepo.insertNewUser(userDto.getUsername(),
+//            var x = userRepo.save(UserE.convertUserDtoToUserE(userDto));
+            userRepo.insertNewUser(userDto.getUsername(),
                     userDto.getEmail(),
                     userDto.getFullname(),
                     userDto.getHashedPassword(),
-                    userDto.getGender(),
+//                    userDto.getGender(),
                     userDto.getRoleId(),
                     userDto.getRoleName(),
                     userDto.getDescription());
         }
-        return rowEffected;
+        return 1;
     }
 
     @Override
     public byte disableUser(UserDto userDto) throws SQLException {
-        return 0;
+        if (this.isUserExist(userDto)) {
+            userRepo.disableUser(userDto.getUsername(), userDto.getEmail());
+        } else {
+            System.out.println("cannot find user with ..");
+        }
+        return 1;
     }
 
-    public int statusAdminLogin(UserDto userDto) {
-        try {
-            UserM userM = UserM.convertUserEToUserM(userRepo.getUserByUsernameAndEmail(userDto.getUsername(), userDto.getEmail()));
-            if (userM.getRoleId() == 3)
-                return 0;//khong du quyen
-            if (!PasswordEncoderUtil.verifyPassword(userDto.getPassword(), userM.getHashedPassword())) {
-                return 2;//sai mat khau
-            } else {
-                return 1;//dung mat khau va du quyen
-            }
-        } catch (Exception e) {
-            return 3;//tai khoan khong ton tai
+    public byte statusAdminLogin(UserDto userDto) throws SQLException {
+        if (!this.isUserExist(userDto)) {
+            return 3;
         }
+        var userM = this.getUserByUsernameAndEmail(userDto);
+        if (Objects.equals(userM.getRoleId(), 3)) {
+            return 0;
+        }
+        if (!PasswordEncoderUtil.verifyPassword(userDto.getPassword(), userM.getHashedPassword())) {
+            return 2;
+        }
+        return 1;
+//        try {
+//            UserM userM = UserM.convertUserEToUserM(userRepo.getUserByUsernameAndEmail(userDto.getUsername(), userDto.getEmail()));
+//            if (userM.getRoleId() == 3)
+//                return 0;//khong du quyen
+//            if (!PasswordEncoderUtil.verifyPassword(userDto.getPassword(), userM.getHashedPassword())) {
+//                return 2;//sai mat khau
+//            } else {
+//                return 1;//dung mat khau va du quyen
+//            }
+//        } catch (Exception e) {
+//            return 3;//tai khoan khong ton tai
+//        }
     }
 
     @Override
-    public void saveAdminTokenToSession(HttpSession session, UserDto userDto) {
+    public void saveAdminTokenToSession(HttpSession session, UserDto userDto) throws SQLException {
         if (statusAdminLogin(userDto) == 1) {
             session.setAttribute("adminToken", PasswordEncoderUtil.encodePassword(userDto.getEmail() + userDto.getPassword()));
         } else {

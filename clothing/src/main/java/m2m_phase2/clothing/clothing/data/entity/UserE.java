@@ -8,15 +8,19 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.utils.DateUtils;
+import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Table(name = "[user]")
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class UserE {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -66,4 +70,22 @@ public class UserE {
 
     @Column(name = "processed")
     private boolean processed = false;
+
+
+
+    public static UserE convertUserDtoToUserE(UserDto userDto) {
+        return UserE.builder()
+                .username(userDto.getUsername())
+                .email(userDto.getEmail())
+                .hashedPassword(PasswordEncoderUtil.encodePassword(userDto.getPassword()))
+                .fullname(userDto.getFullname())
+                .gender(userDto.getGender())
+                .avatar(userDto.getAvatar())
+                .dob(DateUtils.stringToDate(userDto.getDob()))
+                .description(userDto.getDescription())
+                .jobTitle(userDto.getJobTitle())
+                .roleId(userDto.getRoleId())
+                .roleName(userDto.getRoleName())
+                .build();
+    }
 }

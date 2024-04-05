@@ -25,7 +25,7 @@ public interface UserService {
     boolean isUserExist(UserDto userDto) throws SQLException;
     byte saveUser(UserDto userDto) throws SQLException;
     byte disableUser(UserDto userDto) throws SQLException;
-    void saveAdminTokenToSession(HttpSession session, UserDto userDto);
+    void saveAdminTokenToSession(HttpSession session, UserDto userDto) throws SQLException;
 //    String checkUserAdminRole(UserDto userDto);
 //    void saveToSession(HttpSession httpSession, UserDto userDto);
 }

@@ -1,8 +1,10 @@
 package m2m_phase2.clothing.clothing.repository;
 
+import jakarta.transaction.Transactional;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -13,37 +15,52 @@ import java.util.List;
 public interface UserRepo extends JpaRepository<UserE, Integer> {
     @Query(value = "select * from [user] u where u.is_disable <> 1", nativeQuery = true)
     List<UserE> findAll();
-    @Query(value = "insert into [user] (username, email, fullname, hashed_pass, gender, roleId, roleName, description) " +
-            "values (:username, :email, :fullname, :hashedPassword, :gender, :roleId, :roleName, :description)", nativeQuery = true)
-    byte insertNewUser(@Param("username")String username,
+    @Modifying
+    @Transactional
+    @Query(value = "insert into [user] (username, email, fullname, hashed_pass, role_id, role_name, description, processed) " +
+            "values (:username, :email, :fullname, :hashedPassword, :roleId, :roleName, :description, 1)", nativeQuery = true)
+    void insertNewUser(@Param("username")String username,
                        @Param("email")String email,
                        @Param("fullname")String fullname,
                        @Param("hashedPassword")String hashedPassword,
-                       @Param("gender")String gender,
+//                       @Param("gender")String gender,
                        @Param("roleId")Integer roleId,
                        @Param("roleName")String roleName,
                        @Param("description")String description);
-    @Query(value = "update [user] " +
-            "set hashed_pass = :hashedPassword," +
-            "fullname = :fullname," +
-            "gender = :gender," +
-            "role_id = :roleId," +
-            "role_name = :roleName," +
-            "description = :description," +
-            "job_title = :jobTitle," +
-            "dob = :dob," +
-            "avatar = :avatar," +
-            "where username = :username and email = :email", nativeQuery = true)
-    byte updateUser(@Param("username")String username,
+
+    @Override
+    <UserDto extends UserE> UserDto save(UserDto userDto);
+    @Modifying
+    @Transactional
+    @Query(value =  "update [user] " +
+                    "set hashed_pass = :hashedPassword," +
+                    "fullname = :fullname," +
+                    "gender = :gender," +
+                    "role_id = :roleId," +
+                    "role_name = :roleName," +
+                    "description = :description," +
+                    "job_title = :jobTitle," +
+                    "dob = :dob," +
+                    "avatar = :avatar " +
+                    "where username = :username and email = :email", nativeQuery = true)
+    void updateUser(@Param("username")String username,
                    @Param("email")String email,
                    @Param("fullname")String fullname,
                    @Param("hashedPassword")String hashedPassword,
                    @Param("gender")String gender,
                    @Param("roleId")Integer roleId,
                    @Param("roleName")String roleName,
-                   @Param("description")String description,
+                    @Param("description")String description,
+                    @Param("jobTitle")String jobTitle,
                    @Param("dob")String dob,
                    @Param("avatar")String avatar);
+
+    @Modifying
+    @Transactional
+    @Query(value =  "update [user] " +
+            "set is_disable = 1 " +
+            "where username = :username and email = :email", nativeQuery = true)
+    void disableUser(@Param("username")String username, @Param("email")String email);
     @Query( value =
             "select *" +
             "from [user] u " +
