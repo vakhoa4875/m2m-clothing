@@ -1,20 +1,19 @@
 use m2m_clothing
 go
-delete from Userinfo
-go
-delete from Account
-go
+-- delete from Userinfo
+-- go
+-- delete from Account
+-- go
 
-INSERT INTO Account (username, email, hashed_password, is_admin)
-VALUES ('john.doe', 'john.doe@example.com', 'your_hashed_password1', 0),
-       ('jane.smith', 'jane.smith@example.com', 'your_hashed_password2', 0),
-       ('admin', 'admin@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 1),
-       ('site_user', 'abc@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 0);
+INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('john.doe', 'john.doe@example.com', 'your_hashed_password1', 0)
+INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('jane.smith', 'jane.smith@example.com', 'your_hashed_password2', 0)
+INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('admin', 'admin@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 1)
+INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('site_user', 'abc@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 0)
 
 
 go
-delete from Category
-go
+-- delete from Category
+-- go
 
 INSERT INTO Category (category_name, logo, description)
 VALUES ('Outerwear', 'outerwear_logo.avif', 'Jackets, coats and vests'),
@@ -24,8 +23,8 @@ VALUES ('Outerwear', 'outerwear_logo.avif', 'Jackets, coats and vests'),
        ('Headwear', 'headwear_logo.webp', 'Hats, caps, beanies'),
        ('Footwear', 'footwear_logo.jpg', 'Shoes, boots, sandals');
 go
-delete from Product
-go
+-- delete from Product
+-- go
 
 SET IDENTITY_INSERT Product ON;
 INSERT INTO product (product_id, product_name, price, quantity, description, average_rate, rate_count, sold, pictures, videos, slug_url ,category_id)

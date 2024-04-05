@@ -80,35 +80,47 @@ create or alter trigger trigger_after_insert_into_UserInfo
     after insert
     as
 begin
-    insert into [user] (username, email, hashed_pass, is_admin, is_disable, processed)
-    select  top 1 a.username,
-                  a.email,
-                  a.hashed_password,
-                  a.is_admin,
-                  a.is_disable,
-                  1
-    from inserted i
-    join Account a on a.user_id = i.user_id;
-    --update role
-    update [user]
-    set role_id = 1, role_name = 'Admin'
-    where   id = (select user_id from inserted)
-            and is_admin = 1;
+    --check if the inserted user is already existed in [user]
+    declare @existed int = 0;
+    select @existed = id
+    from [user]
+    where id = (select user_id from inserted);
+    --if inserted user is not existed -> insert into [user]
+    if (@existed = 0)
+        begin
+            insert into [user] (username, email, hashed_pass, is_admin, is_disable,role_id, role_name, processed)
+            select  top 1 a.username,
+                          a.email,
+                          a.hashed_password,
+                          a.is_admin,
+                          a.is_disable,
+                          iif(a.is_admin = 1, 1, 3),
+                          iif(a.is_admin = 1, 'Admin', 'User'),
+                          1
+            from inserted i
+            join Account a on a.user_id = i.user_id;
+            --update role
+            update [user]
+            set role_id = 1, role_name = 'Admin'
+            where   id = (select user_id from inserted)
+                    and is_admin = 1;
+        end
 end;
 go
 --trigger after insert into user for syncing with account
 create or alter trigger trigger_after_insert_into_user
     on [user]
-    after insert
+    AFTER insert
     as
     begin
         declare @i_processed bit;
         select @i_processed = i.processed
         from inserted i;
 
-        if (@i_processed = 0)
+        if (@i_processed <> 1)
         begin
-            begin TRANSACTION ;
+--             begin TRANSACTION ;
+            print ('begin transaction');
                 -- insert into account with inserted value of table user
                 insert into Account (username, email, hashed_password, is_admin)
                 select  u.username,
@@ -120,8 +132,11 @@ create or alter trigger trigger_after_insert_into_user
                 update [user]
                 set processed = 1
                 where id = (select i.id from inserted i);
-            IF @@TRANCOUNT > 0
-                COMMIT TRANSACTION;
+--             IF @@TRANCOUNT > 0
+--             begin
+--                 print ('end transaction');
+--                 COMMIT TRANSACTION;
+--             end
         end
     end
 go

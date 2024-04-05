@@ -99,7 +99,7 @@ go
 --trigger after insert into user for syncing with account
 create or alter trigger trigger_after_insert_into_user
     on [user]
-    after insert
+    FOR insert
     as
     begin
         declare @i_processed bit;
