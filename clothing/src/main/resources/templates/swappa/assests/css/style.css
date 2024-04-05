@@ -16,6 +16,12 @@ header i:hover{
 }
 
 
+.max-width-column {
+    max-width: 100px; /* Đây là giá trị max-width bạn muốn */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Để tránh hiển thị quá nhiều văn bản nếu vượt quá max-width */
+    white-space: nowrap; /* Ngăn chặn văn bản từ việc xuống dòng */
+}
 
 
 ng-view {
