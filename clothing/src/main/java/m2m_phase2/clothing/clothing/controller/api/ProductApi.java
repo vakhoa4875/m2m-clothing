@@ -42,7 +42,10 @@ public class ProductApi {
 	public List<Category> getallcategoryapi() {
 		return categoryimpl.findAll();
 	}
-	
-	
+
+	@GetMapping("/findTop6ByOrderByGiaBanDesc")
+	public List<Product> findTop6ByOrderByGiaBanDesc(){
+		return productserviceimpl.findTop6ByOrderByGiaBanDesc();
+	}
 	
 }
