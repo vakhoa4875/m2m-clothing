@@ -20,7 +20,6 @@ import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
 public class UserE {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -70,22 +69,4 @@ public class UserE {
 
     @Column(name = "processed")
     private boolean processed = false;
-
-
-
-    public static UserE convertUserDtoToUserE(UserDto userDto) {
-        return UserE.builder()
-                .username(userDto.getUsername())
-                .email(userDto.getEmail())
-                .hashedPassword(PasswordEncoderUtil.encodePassword(userDto.getPassword()))
-                .fullname(userDto.getFullname())
-                .gender(userDto.getGender())
-                .avatar(userDto.getAvatar())
-                .dob(DateUtils.stringToDate(userDto.getDob()))
-                .description(userDto.getDescription())
-                .jobTitle(userDto.getJobTitle())
-                .roleId(userDto.getRoleId())
-                .roleName(userDto.getRoleName())
-                .build();
-    }
 }
