@@ -213,12 +213,7 @@ angular.module("myApp", ["ngRoute"])
                     icon: 'success',
                     confirmButtonText: 'Xác nhận',
                     allowOutsideClick: false
-                }).then((result) => {
-                    // Nếu người dùng nhấn OK, chuyển trang
-                    if (result.isConfirmed) {
-                        window.location.href = "/index.html"; // Thay đổi URL để chuyển trang
-                    }
-                });
+                })
         };
     })
 
@@ -243,7 +238,7 @@ angular.module("myApp", ["ngRoute"])
             }).then((result) => {
                 // Nếu người dùng nhấn OK, chuyển trang
                 if (result.isConfirmed) {
-                    window.location.href = "/index.html"; // Thay đổi URL để chuyển trang
+                    window.location.href = "swappa/assests/html/acc_login.html"; // Thay đổi URL để chuyển trang
                     }
                 });
             }
@@ -258,6 +253,7 @@ angular.module("myApp", ["ngRoute"])
                 icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
                 confirmButtonText: 'Xác nhận',
                 allowOutsideClick: false
+
             });
             return;
         }

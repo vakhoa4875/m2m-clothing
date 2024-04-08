@@ -12,6 +12,7 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("/media/**")
-                .addResourceLocations("file:C:/Users/PHAT/Desktop/M2M/Du_an/m2m-clothing/clothing/src/main/resources/templates/swappa/assests/media/");
+                .addResourceLocations("classpath:/templates/swappa/assests/media/");
+
     }
 }

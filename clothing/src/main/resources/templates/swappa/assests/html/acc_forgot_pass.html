@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,6 +9,7 @@
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body ng-app="myApp" ng-Controller="accountForgotCtrl">
 
@@ -74,8 +76,8 @@
                             <li class="ms-3 d-flex align-items-center justify-content-center">
                                 <a href="card.html" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
                                     <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                      1
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
+
                                     </span>
                                 </a>
                             </li>
@@ -130,7 +132,7 @@
                                         <div class="mb-5">
                                             <span class="text-white fw-bolder">Please enter all information below</span>
                                         </div>
-                                        <form name="formForgot" ng-submit="login()" class="text-white">
+                                        <form name="formForgot" class="text-white"  th:action="@{/submit-forgot-password}" method="post">
                                             <!-- lỗi thì thông báo ở đay nè -->
                                             <div ng-hide="status == null" class="alert text-bg-dark"
                                                 ng-class="{'text-danger invalid-input':(status !== 1), 'text-success valid-input': (status === 1)}">
@@ -157,11 +159,18 @@
                                                     example@gmail.com
                                                 </div>
                                             </div>
-                                            
+                                            <div class="form-outline mb-4">
+                                                <div class="alert alert-danger" style="display: none;" id="errorMess"
+                                                     role="alert">
+                                                </div>
+                                            </div>
+
+
                                             <!-- Submit button -->
-                                            <button type="submit" class="btn btn-outline-success btn-block px-5 mb-4 rounded-5 " ng-click="showAlert()" ng-disabled="!validateInputs()">
+                                            <button type="submit" id="signupBtn" class="btn btn-outline-success btn-block px-5 mb-4 rounded-5"
+                                                    ng-disabled="!validateInputs()" onclick="callByUsernameAndEmail()">
                                                 Confirm
-                                            </button>
+                                               </button>
         
                                             <!-- Sumit register -->
                                             <!-- <a href="#!/account/register" class="btn btn-outline-success btn-block px-5 mb-4 rounded-5 ms-3">
@@ -221,7 +230,40 @@
     <script src="/node_modules/angular/angular.route.min.js"></script>
     <script src="/assests/js/app_admin.js"></script>
     <script src="/assests/js/script.js"></script>
-    <script> 
-        
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+
+        function callByUsernameAndEmail() {
+            var $scope = angular.element(document.getElementById('email')).scope();
+            var username = $('#username').val();
+            var email = $('#email').val();
+            $.ajax({
+                url: '/getAccountByUsernameAndEmail?username=' + username + '&email=' + email,
+                type: 'GET',
+                success: function (data) {
+                    var mess = $('#errorMess');
+                    if (!data) {
+                        // Nếu không tìm thấy tài khoản, hiển thị thông báo lỗi
+                        mess.text('Account does not exist !!!');
+                        mess.show();
+                    } else {
+                        // Nếu tài khoản tồn tại, gọi hàm showAlert() trong phạm vi của controller
+                        $scope.showAlert();
+                        mess.hide();
+                        // $('#signupBtn').attr('type', 'submit'); // Thay đổi loại của button thành "submit"
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log(error);
+                }
+            });
+        }
+
+
+
+
+
     </script>
+
 </html>
