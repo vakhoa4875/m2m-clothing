@@ -16,7 +16,7 @@
 <div>
     <!-- mobileNav -->
     <div class="d-block d-lg-none">
-        <div id="mobileNav"  style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
+        <div id="mobileNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
             <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
                 <div class="container-sm">
 
@@ -31,7 +31,8 @@
                              alt="Swappa Logo">
                     </a>
 
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_search"
+                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                            data-bs-target="#slide_search"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
                         <i class="fa-solid fa-search" aria-hidden="true"></i>
                     </button>
@@ -43,7 +44,7 @@
     <!-- mainNav -->
     <div class="d-none d-lg-block">
         <!-- first-nav -->
-        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
+        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
             <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
                 <div class="container d-block">
                     <div class="d-flex gap-3">
@@ -68,16 +69,18 @@
                         <ul class="navbar-nav" role="presentation">
                             <li class="d-flex align-items-center justify-content-center">
                                 <div class="">
-                                    <a href="/login">
+                                    <a href="/userprofile">
                                         <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
                                     </a>
                                 </div>
                             </li>
                             <li class="ms-3 d-flex align-items-center justify-content-center">
+
                                 <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
                                     <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
                                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
                                     0
+
                                     </span>
                                 </a>
                             </li>
@@ -86,132 +89,140 @@
                     <div class="d-flex justify-content-around pb-1" id="userListCategory">
                         <!-- api -->
                     </div>
-                </nav>
-            </div>
-            <!-- second-nav -->
+                </div>
+            </nav>
         </div>
+        <!-- second-nav -->
     </div>
+</div>
 
-    <!-- main -->
-    <div style="background-image: url('/assests/images/1323882.png');background-attachment: fixed; min-height: 800px;"
-        class="">
-        <!-- body -->
-        <main class="container pt-5 pb-5">
-            <!-- Section: Design Block -->
-            <div class="row">
+<!-- main -->
+<main style="background-image: url('/assests/images/1323882.png');background-attachment: fixed; min-height: 800px;"
+      class="">
+    <!-- body -->
+    <main class="container pt-5 pb-5">
+        <!-- Section: Design Block -->
+        <div class="row">
 
-                <section class="text-center d-flex justify-content-center">
+            <section class="text-center d-flex justify-content-center">
 
-                    <div class="card shadow-5-strong w-50" style="
+                <div class="card shadow-5-strong w-50" style="
                   background: hsla(0, 0%, 0%, 0.5);
-                  backdrop-filter: blur(15px);
-                  ">
-                        <div class="card-body py-5 px-md-5 pb-2">
+                  backdrop-filter: blur(15px);">
+                    <div class="card-body py-5 px-md-5 pb-2">
 
-                            <div class="justify-content-center">
-                                <div class="">
-                                    <h2 class="fw-bold mb-5 text-white">LOGIN</h2>
-                                    <form class="text-white" method="POST" th:action="@{/submitLogin}"
-                                        th:object="${accountlog}">
-                                        <div ng-hide="status == null" class="alert text-bg-dark"
-                                            ng-class="{'text-danger invalid-input':(status !== 1), 'text-success valid-input': (status === 1)}">
-                                            {{textStatus}}</div>
+                        <div class="justify-content-center">
+                            <div class="">
+                                <h2 class="fw-bold mb-5 text-white">LOGIN</h2>
+                                <form class="text-white" method="POST" th:action="@{/submitLogin}">
+                                    <!--                                        th:object="${accountlog}">-->
+                                    <!--                                        <div ng-hide="status == null" class="alert text-bg-dark"-->
+                                    <!--                                            ng-class="{'text-danger invalid-input':(status !== 1), 'text-success valid-input': (status === 1)}">-->
+                                    <!--                                            {{textStatus}}</div>-->
 
-                                        <div class="text-center" style="display: none;">
+                                    <div class="text-center" style="display: none;">
                                             <span class="text-danger" style="font-weight: bolder;">Tài khoản hoặc mật
                                                 khẩu đã sai</span>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="inputMail" class="col-sm-2 col-form-label">Email</label>
+                                        <div class="col-sm-10">
+                                            <input type="email" class="form-control" id="inputMail" name="email"
+                                                   th-field="*{email}">
                                         </div>
-                                          <div class="mb-3 row">
-										    <label for="inputMail" class="col-sm-2 col-form-label">Email</label>
-										    <div class="col-sm-10">
-										      <input type="email" class="form-control" id="inputMail" name="email" th-field="*{email}">
-										    </div>
-										  </div>
-                                        
-                                        
-                                          <div class="mb-3 row">
-										    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-										    <div class="col-sm-10">
-										      <input type="password" class="form-control" id="inputPassword" name="hashedPassword"
-                                                th-field="*{hashedPassword}">
-										    </div>
-										  </div>
-                                        
-                                        <div th:if="${error}" class="alert alert-danger p-0" role="alert">
-                                            <p th:text="${error}"></p>
+                                    </div>
+
+
+                                    <div class="mb-3 row">
+                                        <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="inputPassword"
+                                                   name="hashedPassword"
+                                                   th-field="*{hashedPassword}">
                                         </div>
-                                        <div class="form-check form-switch d-flex align-items-center mb-3">
-                                            <input class="form-check-input" type="checkbox" id="rememberMe" checked>
-                                            <label class="form-check-label mb-0 ms-3" for="rememberMe">Ghi nhớ đăng nhập
-                                                lần sau</label>
+                                    </div>
+
+                                    <div th:if="${error}" class="alert alert-danger p-0" role="alert">
+                                        <p th:text="${error}"></p>
+                                    </div>
+                                    <div class="form-check form-switch d-flex align-items-center mb-3">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe" checked>
+                                        <label class="form-check-label mb-0 ms-3" for="rememberMe">Remember to log in
+                                            next time</label>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit"
+                                                class="btn btn-outline-success btn-block px-5 mb-4 rounded-5 ms-3">Login
+                                        </button>
+                                    </div>
+                                    <a href="/register" class="btn btn-outline-success btn-block px-5 mb-4 rounded-5 ms-3">
+                                        Register
+                                    </a>
+                                    <!-- Email input -->
+                                    <!-- <div class="form-outline mb-4">
+                                        <input autofocus type="email" id="email" name="email"
+                                            class="text-bg-dark form-control" placeholder="Email address"
+                                            ng-blur="emailBlurred = true" required
+                                            ng-class="{'invalid-input border-0':isInvalidEmail()}"
+                                            ng-model="email" />
+                                        <div class="mt-1 text-danger fs-14 text-start" ng-show="isInvalidEmail()">
+                                            <i class="fa-solid fa-circle-info"></i> Invalid email. Example:
+                                            example@gmail.com
                                         </div>
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-outline-success btn-block px-5 mb-4 rounded-5 ms-3">Đăng
-                                                nhập</button>
+                                    </div> -->
+
+                                    <!-- Password input -->
+                                    <!-- <div class="form-outline mb-4">
+                                        <div class="input-group">
+                                            <input type="{{(showPass)?'text':'password'}}" id="password"
+                                                name="password" class="text-bg-dark form-control"
+                                                placeholder="Password" ng-blur="passwordBlurred = true" required
+                                                ng-class="{'invalid-input border-0':isInvalidPassword()}"
+                                                ng-model="password"
+                                                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,30}$" />
+                                            <span class="input-group-text"><button type="button"
+                                                    class="btn border-0 m-0 p-0" ng-mousedown="showPass = true"
+                                                    ng-mouseup="showPass = false"><i
+                                                        class="fa-solid {{(showPass)?'fa-eye':'fa-eye-slash'}}"></i></button></span>
                                         </div>
-                                        <!-- Email input -->
-                                        <!-- <div class="form-outline mb-4">
-                                            <input autofocus type="email" id="email" name="email"
-                                                class="text-bg-dark form-control" placeholder="Email address"
-                                                ng-blur="emailBlurred = true" required
-                                                ng-class="{'invalid-input border-0':isInvalidEmail()}"
-                                                ng-model="email" />
-                                            <div class="mt-1 text-danger fs-14 text-start" ng-show="isInvalidEmail()">
-                                                <i class="fa-solid fa-circle-info"></i> Invalid email. Example:
-                                                example@gmail.com
-                                            </div>
-                                        </div> -->
 
-                                        <!-- Password input -->
-                                        <!-- <div class="form-outline mb-4">
-                                            <div class="input-group">
-                                                <input type="{{(showPass)?'text':'password'}}" id="password"
-                                                    name="password" class="text-bg-dark form-control"
-                                                    placeholder="Password" ng-blur="passwordBlurred = true" required
-                                                    ng-class="{'invalid-input border-0':isInvalidPassword()}"
-                                                    ng-model="password"
-                                                    pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,30}$" />
-                                                <span class="input-group-text"><button type="button"
-                                                        class="btn border-0 m-0 p-0" ng-mousedown="showPass = true"
-                                                        ng-mouseup="showPass = false"><i
-                                                            class="fa-solid {{(showPass)?'fa-eye':'fa-eye-slash'}}"></i></button></span>
-                                            </div>
+                                        <div class="mt-1 text-danger fs-14 text-start"
+                                            ng-show="isInvalidPassword()">
+                                            <i class="fa-solid fa-circle-info"></i> Invalid password. Make
+                                            sure it's containing at least 6 characters (max:30) a uppercase
+                                            letter, lowercase letter and number.
+                                        </div>
+                                    </div> -->
 
-                                            <div class="mt-1 text-danger fs-14 text-start"
-                                                ng-show="isInvalidPassword()">
-                                                <i class="fa-solid fa-circle-info"></i> Invalid password. Make
-                                                sure it's containing at least 6 characters (max:30) a uppercase
-                                                letter, lowercase letter and number.
-                                            </div>
-                                        </div> -->
+                                    <!-- Checkbox -->
+                                    <!-- <div class="form-check d-flex justify-content-between mb-4">
+                                        <div>
+                                            <input class="form-check-input text-bg-success me-2" type="checkbox"
+                                                value="" id="remmemberme" checked />
+                                            <label class="form-check-label" for="remmemberme">
+                                                Remember me?
+                                            </label>
+                                        </div>
+                                        <div>
+                                            <a href="#" class="text-white">Quên mật khẩu</a>
+                                        </div>
 
-                                        <!-- Checkbox -->
-                                        <!-- <div class="form-check d-flex justify-content-between mb-4">
-                                            <div>
-                                                <input class="form-check-input text-bg-success me-2" type="checkbox"
-                                                    value="" id="remmemberme" checked />
-                                                <label class="form-check-label" for="remmemberme">
-                                                    Remember me?
-                                                </label>
-                                            </div>
-                                            <div>
-                                                <a href="#" class="text-white">Quên mật khẩu</a>
-                                            </div>
+                                    </div> -->
 
-                                        </div> -->
+                                    <!-- Submit button -->
+                                    <!-- <button type="submit"
+                                        class="btn btn-outline-success btn-block px-5 mb-4 rounded-5">
+                                        Login
+                                    </button> -->
 
-                                        <!-- Submit button -->
-                                        <!-- <button type="submit"
-                                            class="btn btn-outline-success btn-block px-5 mb-4 rounded-5">
-                                            Login
-                                        </button> -->
+                                    <!-- Sumit register -->
+                                    <!--                                        <a href="#!/account/register"-->
+                                    <!--                                            class="btn btn-outline-success btn-block px-5 mb-4 rounded-5 ms-3">-->
+                                    <!--                                            Register-->
+                                    <!--                                        </a>-->
 
-                                        <!-- Sumit register -->
-                                        <a href="#!/account/register"
-                                            class="btn btn-outline-success btn-block px-5 mb-4 rounded-5 ms-3">
-                                            Register
-                                        </a>
-
+                                    <!-- Register buttons -->
+                                    <div class="text-center">
                                         <!-- Register buttons -->
                                         <div class="text-center">
                                             <p>or sign in with:</p>
@@ -219,36 +230,26 @@
                                             <button type="button" class="btn text-success btn-floating mx-1">
                                                 <i class="fab fa-google"></i>
                                             </button>
-        
-                                            <!-- Sumit register -->
-                                            <a href="/register" class="btn btn-outline-success btn-block px-5 mb-4 rounded-5 ms-3">
-                                                Register
-                                            </a>
-        
-                                            <!-- Register buttons -->
-                                            <div class="text-center">
-                                                <p>or sign in with:</p>
-        
-                                                <button type="button" class="btn text-success btn-floating mx-1">
-                                                    <i class="fab fa-google"></i>
-                                                </button>
-                                            </div>
-                                        </form>
+                                        </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                </section>
-                <hr class="d-lg-none mb-4 d-sm-block">
-            </div>
-            <!-- Section: Design Block -->
-        </main>
-
-    </div>
+                </div>
+            </section>
+        </div>
 
 
-    <!-- footer -->
+        <hr class="d-lg-none mb-4 d-sm-block">
+    </main>
+    <!-- Section: Design Block -->
+</main>
+
+</div>
+
+
+<!-- footer -->
 <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
     <div class="container pt-2 pb-2">
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
