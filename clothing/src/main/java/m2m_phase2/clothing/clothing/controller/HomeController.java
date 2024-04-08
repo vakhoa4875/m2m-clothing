@@ -54,7 +54,7 @@ public class HomeController {
 
 	@GetMapping("/Setting")
 	public String getSetting(){
-		return "Front_End/Seting(User)";
+		return "swappa/assests/html/admin";
 	}
 
 	@GetMapping("/giohang")
@@ -71,5 +71,17 @@ public class HomeController {
 	@PostMapping("/submitLogin")
 	public String submitLogin(@ModelAttribute("accountlog") Account accountRequest, Model model) {
 		return accountServiceImpl.submitLogin(accountRequest, model, session);
-	}	
+	}
+
+	@GetMapping("/userprofile")
+	public String userProfileGet(Model model, HttpSession session) {
+		// Kiểm tra xem người dùng đã đăng nhập hay chưa
+		if (accountServiceImpl.isLoggedIn(session)) {
+			// Nếu đã đăng nhập, chuyển hướng đến trang profile của người dùng
+			return "swappa/assests/html/userpage";
+		} else {
+			// Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
+			return "swappa/assests/html/acc_login";
+		}
+	}
 }

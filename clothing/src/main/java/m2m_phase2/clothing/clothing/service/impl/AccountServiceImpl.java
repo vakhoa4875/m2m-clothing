@@ -189,8 +189,13 @@ public class AccountServiceImpl implements AccountService {
         }
         // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
         session.setAttribute("loggedInUser", accountRequest.getEmail());
-        System.out.println(session.getAttribute("loggedInUser"));
-        return "swappa/assests/html/trangchu";
+		session.setAttribute("loggedInPassword", accountRequest.getHashedPassword());
+
+		return "swappa/assests/html/trangchu";
     }
 
+	public boolean isLoggedIn(HttpSession session) {
+		// Kiểm tra xem session có chứa thông tin người dùng hay không
+		return session.getAttribute("loggedInUser") != null && session.getAttribute("loggedInPassword") != null;
+	}
 }
