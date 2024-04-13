@@ -9,11 +9,36 @@
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script th:src="@{/swappa/assests/js/UserManagement.js}"></script>
+    <script th:src="@{/assests/js/UserManagement.js}"></script>
 
     <style>
         .max-width-col {
             max-width: 128px;
+        }
+    </style>
+
+    <style>
+        #fileInput {
+            display: none;
+        }
+
+        .custom-file-label {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #909498;
+            color: #fff;
+
+        }
+
+        .custom-file-label:hover {
+            background-color: #9a9fa4;
+        }
+
+        #previewImage {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-top: 20px;
         }
     </style>
 
@@ -100,34 +125,31 @@
             <div class="card">
                 <div class="card-header bg-black text-center">
                     <a class="text-white bg-gradient-primary" href="../pages/tables.html">
-                        <h5 class="m-0"><strong>Quản lý người dùng</strong></h5>
+                        <h5 class="m-0"><strong>USERS MANAGEMENT</strong></h5>
                     </a>
                 </div>
-
                 <div class="card-body pt-2">
                     <div class="align-items-start">
                         <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
                              aria-orientation="vertical">
-                            <button class="nav-link mt-1 text-black active" id="v-pills-home-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
-                                    aria-selected="true">Thông tin tài khoản
+                            <button class="nav-link mt-1 text-black active" id="v-pills-home-tab"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab"
+                                    aria-controls="v-pills-home" aria-selected="true">Account Information
                             </button>
                             <!-- <button class="nav-link mt-1 text-black" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                data-bs-target="#v-pills-profile" type="button" role="tab"
-                                aria-controls="v-pills-profile" aria-selected="false">Đăng nhập</button> -->
-                            <button class="nav-link mt-1 text-black" id="v-pills-messages-tab" data-bs-toggle="pill"
-                                    data-bs-target="#v-pills-messages" type="button" role="tab"
-                                    aria-controls="v-pills-messages" aria-selected="false">Đăng xuất
-                            </button>
+                            data-bs-target="#v-pills-profile" type="button" role="tab"
+                            aria-controls="v-pills-profile" aria-selected="false">Đăng nhập</button> -->
+                            <a class="nav-link mt-1 text-black" href="/admin/logout">Log Out
+                            </a>
                             <!-- <button class="nav-link mt-1 text-black" id="v-pills-settings-tab" data-bs-toggle="pill"
-                                data-bs-target="#v-pills-settings" type="button" role="tab"
-                                aria-controls="v-pills-settings" aria-selected="false">Settings</button> -->
+                            data-bs-target="#v-pills-settings" type="button" role="tab"
+                            aria-controls="v-pills-settings" aria-selected="false">Settings</button> -->
                         </div>
                         <div class="tab-content" id="v-pills-tabContent">
                             <!-- <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0"></div>
-                            <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">...</div>
-                            <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">...</div>
-                            <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">...</div> -->
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab" tabindex="0">...</div>
+                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab" tabindex="0">...</div>
+                        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab" tabindex="0">...</div> -->
                         </div>
 
                     </div>
@@ -139,8 +161,10 @@
                  aria-labelledby="v-pills-home-tab" tabindex="0">
                 <div class="card my-4">
                     <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
-                        <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                            <h5 class="text-black ps-3 d-flex align-items-center mb-0">NGƯỜI DÙNG TRONG HỆ THỐNG</h5>
+                        <div
+                                class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                            <h5 class="text-black ps-3 d-flex align-items-center mb-0">SYSTEM'S USERS
+                            </h5>
                             <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                     data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
                                     style="padding: 7px 12px 7px 12px;">
@@ -158,152 +182,180 @@
     </div>
 </div>
 
+<!--
 
+insert modal
+
+-->
 <div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="insertedUserModal">Thông tin người dùng cần thêm</h1>
+                <h1 class="modal-title fs-5" id="insertedUserModal">User's Information</h1>
                 <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
                         class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" id="insertModalBody">
+                <div class="mb-2 ">
+                    <label for="inUsername" class="form-label">Username</label>
+                    <input type="text" class="form-control ps-3" id="inUsername"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+                <div class="mb-2 ">
+                    <label for="inFullname" class="form-label">Fullname</label>
+                    <input type="text" class="form-control ps-3" id="inFullname"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+                <div class="mb-2 ">
+                    <label for="inEmail" class="form-label">Email</label>
+                    <input type="email" class="form-control ps-3" id="inEmail"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+
+                <div class="mb-2 ">
+                    <label for="inPass" class="form-label">Password</label>
+                    <input type="password" class="form-control ps-3" id="inPass" aria-describedby=""
+                           style="border: 1px solid #d2d6da;">
+                </div>
+                <div class="mb-2 ">
+                    <label for="inConfirmPass" class="form-label">Confirm password</label>
+                    <input id="inConfirmPass" class="form-control ps-3 pe-3" type="password"
+                           style="border: 1px solid #d2d6da;">
+
+                </div>
+<!--                <div class="mb-2 ">-->
+<!--                    <label class="form-label me-3 m-0">Gender</label>-->
+<!--                    <input id="ingenderMale" class="" type="radio" name=inGender"-->
+<!--                           style="border: 1px solid #d2d6da;"> Male-->
+<!--                    <input id="ingenderFemale" class="ms-1" type="radio" name="inGender"-->
+<!--                           style="border: 1px solid #d2d6da;"> Female-->
+<!--                </div>-->
+                <div class="mb-2 ">
+                    <label for="inRole" class="form-label me-3 m-0">Role</label>
+                    <select class="form-select" id="inRole" aria-label="Default select example">
+                        <option value="1">Admin</option>
+                        <option value="2">Manager</option>
+                        <option value="3">User</option>
+                    </select>
+                </div>
                 <div class="mb-2">
-                    <label for="basic-url" class="form-label">Ảnh</label>
-                    <input type="file" class="form-control" id="insertedUserAvatar"
-                           aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                    <label for="inDescription" class="form-label">Description</label>
+                    <textarea class="form-control" id="inDescription" rows="3"></textarea>
                 </div>
-
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Tên người dùng</label>
-                    <input type="text" class="form-control ps-3" id="insertedUserFullname"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Email</label>
-                    <input type="text" class="form-control ps-3" id="insertedUserEmail"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-
-                <!--	<div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control ps-3" id="basic-url"
-                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    </div> -->
-
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Mật khẩu</label>
-                    <input type="text" class="form-control ps-3" id="insertedUserPassword"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Ngày sinh</label>
-                    <input id="insertedUserDob" class="form-control ps-3 pe-3" type="date" style="border: 1px solid #d2d6da;">
-                    <!-- <span id="startDateSelected"></span> -->
-                </div>
-
-                <div class="mt-3 ">
-                    <label for="basic-url" class="form-label me-3 m-0">Giới tính</label>
-                    <input id="insertedUserGenderMale" class="" type="radio" name="gender" style="border: 1px solid #d2d6da;">
-                    Nam
-                    <input id="insertedUserGenderFemale" class="ms-1" type="radio" name="gender" style="border: 1px solid #d2d6da;"> Nữ
-                    <!-- <span id="startDateSelected"></span> -->
-                </div>
-
-                <div class="mt-3 ">
-                    <label for="basic-url" class="form-label me-3 m-0">Vai trò</label>
-                    <input id="insertedUserRoleAdmin" class="" type="radio" name="role" style="border: 1px solid #d2d6da;">
-                    Admin
-                    <input id="insertedUserRoleUser" class="ms-1" type="radio" name="role" style="border: 1px solid #d2d6da;">
-                    Khách
-                    <!-- <span id="startDateSelected"></span> -->
-                </div>
-
-
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="showAlert()">Lưu người
-                    dùng
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="services.insertNewUser()">
+                    Add new user
                 </button>
             </div>
         </div>
     </div>
 </div>
 
+
 <!-- modal sửa -->
-<div class="modal fade" id="exampleModalSua" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+<div class="modal fade modal-lg" id="exampleModalSua1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="updateUserModal">Thông tin người dùng cần sửa</h1>
+                <h1 class="modal-title fs-5" id="updateUserModal">User's Infomation</h1>
                 <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
                         class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
             </div>
-            <div class="modal-body">
-                <div class="mb-2">
-                    <label for="basic-url" class="form-label">Ảnh</label>
-                    <input type="file" class="form-control" id="inputGroupFile04"
-                           aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                </div>
+            <div class="modal-body" id="updateUserModalBody">
+<!--                <div class="row">-->
+<!--                    <div class="col-8">-->
+<!--                        <div class="mb-2 ">-->
+<!--                            <label for="upUsername" class="form-label">Username</label>-->
+<!--                            <p class="form-control" id="upUsername">Cao Trọng Lễ</p>-->
+<!--                        </div>-->
+<!--                        <div class="mb-2 ">-->
+<!--                            <label for="upEmail" class="form-label">Email</label>-->
+<!--                            <p class="form-control" id="upEmail">trongle311021@gmail.com</p>-->
+<!--                        </div>-->
 
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Tên người dùng</label>
-                    <input type="text" class="form-control ps-3" id="basic-url1"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
+<!--                        <div class="mb-2 ">-->
+<!--                            <label for="upPass" class="form-label">Password</label>-->
+<!--                            <input type="text" class="form-control ps-3" id="upPass" aria-describedby=""-->
+<!--                                   style="border: 1px solid #d2d6da;">-->
+<!--                        </div>-->
+<!--                        <div class="mb-2 ">-->
+<!--                            <label for="upFullname" class="form-label">Fullname</label>-->
+<!--                            <input type="text" class="form-control ps-3" id="upFullname"-->
+<!--                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">-->
+<!--                        </div>-->
 
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Email</label>
-                    <input type="text" class="form-control ps-3" id="basic-url"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
+<!--                        <div class="mb-2 ">-->
+<!--                            <label for="upBirth" class="form-label">Date of birth</label>-->
+<!--                            <input id="upBirth" class="form-control ps-3 pe-3" type="text"-->
+<!--                                   style="border: 1px solid #d2d6da;">-->
 
-                <!--	<div class="mb-2 ">
-                        <label for="basic-url" class="form-label">Số điện thoại</label>
-                        <input type="text" class="form-control ps-3" id="basic-url"
-                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    </div> -->
+<!--                        </div>-->
 
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Mật khẩu</label>
-                    <input type="text" class="form-control ps-3" id="basic-url3"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
+<!--                        <div class="mb-2 ">-->
+<!--                            <label for="upGender" class="form-label me-3 m-0">Gender</label>-->
+<!--                            <input id="upgenderMale" class="" type="radio" name="gender"-->
+<!--                                   style="border: 1px solid #d2d6da;"> Male-->
+<!--                            <input id="upgenderFemale" class="ms-1" type="radio" name="gender"-->
+<!--                                   style="border: 1px solid #d2d6da;"> Female-->
 
-                <div class="mb-2 ">
-                    <label for="basic-url" class="form-label">Ngày sinh</label>
-                    <input id="startDate1" class="form-control ps-3 pe-3" type="date" style="border: 1px solid #d2d6da;">
-                    <!-- <span id="startDateSelected"></span> -->
-                </div>
-
-                <div class="mt-3 ">
-                    <label for="basic-url" class="form-label me-3 m-0">Giới tính</label>
-                    <input id="startDate4" class="" type="radio" name="gender" style="border: 1px solid #d2d6da;">
-                    Nam
-                    <input id="startDate2" class="ms-1" type="radio" name="gender" style="border: 1px solid #d2d6da;"> Nữ
-                    <!-- <span id="startDateSelected"></span> -->
-                </div>
-
-                <div class="mt-3 ">
-                    <label for="basic-url" class="form-label me-3 m-0">Vai trò</label>
-                    <input id="startDate" class="" type="radio" name="role" style="border: 1px solid #d2d6da;">
-                    Admin
-                    <input id="startDate3" class="ms-1" type="radio" name="role" style="border: 1px solid #d2d6da;">
-                    Khách
-                    <!-- <span id="startDateSelected"></span> -->
-                </div>
-
-
+<!--                        </div>-->
+<!--                        <div class="mb-2 ">-->
+<!--                            <label for="upRole" class="form-label me-3 m-0">Role</label>-->
+<!--                            <select class="form-select" id="upRole" aria-label="Default select example">-->
+<!--                                <option value="1">Admin</option>-->
+<!--                                <option value="2">Manager</option>-->
+<!--                                <option value="3">User</option>-->
+<!--                            </select>-->
+<!--                        </div>-->
+<!--                        <div class="mb-2 ">-->
+<!--                            <label for="upJobTitle" class="form-label">Job Title</label>-->
+<!--                            <input type="text" class="form-control ps-3" id="upJobTitle" aria-describedby=""-->
+<!--                                   style="border: 1px solid #d2d6da;">-->
+<!--                        </div>-->
+<!--                        <div class="mb-2">-->
+<!--                            <label for="upDescription" class="form-label">Description</label>-->
+<!--                            <textarea class="form-control" id="upDescription" rows="3"></textarea>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="col-4">-->
+<!--                        <div class="container " style="margin-top: 150px;">-->
+<!--                            <div class="d-flex justify-content-center">-->
+<!--                                <img src="https://placehold.co/36x36/" class="avatar me-3 border-radius-lg"-->
+<!--                                     id="previewImage" alt="Ảnh đã chọn">-->
+<!--                            </div>-->
+<!--                            <div class="text-center my-3" style="margin-right: 10px;">-->
+<!--                                <input type="file" class="form-control" id="fileInput" accept="image/*">-->
+<!--                                <label class="custom-file-label" for="fileInput">Chọn ảnh từ local</label>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
             <div class="modal-footer">
                 <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" ng-click="showEdit()">Lưu Thay
-                    Đổi
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="services.updateUser()">
+                    Save changes
                 </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalXoa" tabindex="-1" aria-labelledby="exampleModalXoa" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm delete user?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">Are your sure to delete this user out of your system?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="services.disableUser()">I'm sure!</button>
             </div>
         </div>
     </div>
@@ -338,13 +390,14 @@
             </div>
             <div class="col text-center ">
                 <a href="./index.html"><img
-                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
-                        alt=""></a>
+                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
+                        class="img-fluid" alt=""></a>
             </div>
             <div class="col text-center text-white d-flex justify-content-center align-items-center">
                 <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
             </div>
         </div>
+
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -355,19 +408,33 @@
 <script src="/assests/js/app_admin.js"></script>
 <script src="/assests/js/script.js"></script>
 
+
 </body>
 
-<script>
-    $.ajax({
-        url: '/api-admin/users/getAllUsers',
-        method: 'GET',
-        success: (response) => {
-            console.log(response);
-        },
-        error: (xhr, status, error) => {
-            console.error("Error:", error);
-        }
-    });
-</script>
+<!--<script>-->
+<!--    $.ajax({-->
+<!--        url: '/api-admin/users/getAllUsers',-->
+<!--        method: 'GET',-->
+<!--        success: (response) => {-->
+<!--            console.log(response);-->
+<!--        },-->
+<!--        error: (xhr, status, error) => {-->
+<!--            console.error("Error:", error);-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
+<!--<script>-->
+<!--    document.getElementById('fileInput').addEventListener('change', function () {-->
+<!--        var file = this.files[0];-->
+<!--        if (file) {-->
+<!--            var reader = new FileReader();-->
+<!--            reader.onload = function (event) {-->
+<!--                document.getElementById('previewImage').setAttribute('src', event.target.result);-->
+<!--                document.getElementById('previewImage').style.display = 'block';-->
+<!--            }-->
+<!--            reader.readAsDataURL(file);-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
 
 </html>
