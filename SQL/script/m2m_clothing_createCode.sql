@@ -20,6 +20,12 @@ CREATE TABLE Account (
   is_admin bit
 );
 
+CREATE TABLE Category (
+  category_id int IDENTITY(1,1) PRIMARY KEY,
+  category_name nvarchar(63) NOT NULL unique,
+  logo varchar(255),
+  description nvarchar(300)
+);
 
 CREATE TABLE Userinfo (
   user_id int PRIMARY KEY,
@@ -32,12 +38,13 @@ CREATE TABLE Userinfo (
   FOREIGN KEY (user_id) REFERENCES Account(user_id)
 );
 
-CREATE TABLE Category (
-  category_id int IDENTITY(1,1) PRIMARY KEY,
-  category_name nvarchar(63) NOT NULL unique,
-  logo varchar(255),
-  description nvarchar(300)
-);
+CREATE TABLE Sale(
+    sale_ID int IDENTITY(1,1) PRIMARY key,
+    sale_Name nvarchar(255) not null,
+    sale_Percent int not null ,
+    sale_Start date,
+    sale_End date,
+)
 
 
 CREATE TABLE Product (
@@ -52,8 +59,11 @@ CREATE TABLE Product (
   pictures varchar(max),
   videos varchar(255),
   slug_url varchar(255) default '',
-  category_id int FOREIGN KEY REFERENCES Category(category_id)
+  category_id int FOREIGN KEY REFERENCES Category(category_id),
+  sale_ID int FOREIGN KEY REFERENCES Sale(sale_ID)
 );
+
+
 
 go
 CREATE OR ALTER TRIGGER gen_user_info 
