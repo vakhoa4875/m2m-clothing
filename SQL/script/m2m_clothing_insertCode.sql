@@ -5,6 +5,7 @@ go
 -- delete from Account
 -- go
 
+
 INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('john.doe', 'john.doe@example.com', 'your_hashed_password1', 0)
 INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('jane.smith', 'jane.smith@example.com', 'your_hashed_password2', 0)
 INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('admin', 'admin@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 1)
@@ -598,6 +599,58 @@ Tele Tone toe and heel taps mounted on fiberboard, Scored rubber non-skid pad.
 Achilles notch with padded collar for comfort, Eyerows are attached with elastic, Grosgrain ribbon tie
 Light toe box, Lower vamp and sides and a Firm heel counter
 Begin with street shoe size"',4.7,13311,26622,'90-1.jpg,90-2.jpg,90-3.jpg',NULL,'capezio-girls-jr-tyette-tap-shoe-dance',6)
+
+
+go
+delete from Sale
+INSERT INTO m2m_clothing.dbo.Sale (sale_Name, sale_Percent, sale_Start, sale_End)
+VALUES
+    (N'4/4', 20, N'2024-04-13', N'2024-04-14'),
+    (N'5/5', 30, N'2024-04-17', N'2024-04-17')
+go
+
+-- update sale for product
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 28
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 5
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 24
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 1
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 14
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 37
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 36
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 33
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 32
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 10
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 13
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 39
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 25
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 27
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 29
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 20
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 18
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 23
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 21
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 9
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 22
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 8
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 38
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 11
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 7
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 16
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 26
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 30
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 35
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 3
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 15
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 12
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 4
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 19
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 17
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 2
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 31
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 1 WHERE product_id = 6
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 34
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 40
+ UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 41
 
 
 
