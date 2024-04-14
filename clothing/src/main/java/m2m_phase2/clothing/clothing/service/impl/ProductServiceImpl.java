@@ -40,6 +40,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
+	public List<Product> findProductsWithSaleInfo() {
+		return repo.findProductsWithSaleInfo();
+  }
+  
+  @Override
 	public List<Product> findBycategory(Category category) {
 		return repo.findBycategory(category);
 	}

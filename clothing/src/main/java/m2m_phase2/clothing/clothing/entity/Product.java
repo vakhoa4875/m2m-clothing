@@ -1,18 +1,12 @@
 package m2m_phase2.clothing.clothing.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.ToString;
 
 @Entity
@@ -36,7 +30,7 @@ public class Product implements Serializable {
     private String description;
 	
 	@Column(name = "average_rate")
-    private float averageRate;
+		private float averageRate;
 	
 	@Column(name = "rate_count")
     private int rateCount;
@@ -58,11 +52,23 @@ public class Product implements Serializable {
 	@JsonBackReference
 	private Category category;
 
+	@ManyToOne()
+	@JoinColumn(name = "sale_ID")
+	private Sale sale;
+
 	@Override
 	public String toString() {
 	    return productName;
 	}
-	
+
+	public Sale getSale() {
+		return sale;
+	}
+
+	public void setSale(Sale sale) {
+		this.sale = sale;
+	}
+
 	public int getProductId() {
 		return productId;
 	}
