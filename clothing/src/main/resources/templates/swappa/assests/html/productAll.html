@@ -8,7 +8,20 @@
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        .img-container {
+            height: 200px; /* Điều chỉnh chiều cao tùy theo nhu cầu */
+            display: flex; /* Sử dụng flexbox để căn chỉnh hình ảnh */
+            align-items: center; /* Căn chỉnh hình ảnh theo trục dọc */
+            justify-content: center; /* Căn chỉnh hình ảnh theo trục ngang */
+            overflow: hidden; /* Đảm bảo ảnh không bị tràn ra ngoài */
+        }
 
+        .img-container img {
+            max-height: 100%; /* Đảm bảo chiều cao của ảnh không vượt quá container */
+            width: auto; /* Chiều rộng tự động điều chỉnh để duy trì tỷ lệ khung hình */
+        }
+    </style>
 </head>
 <body>
     <!-- header -->
@@ -348,7 +361,9 @@
                             <div class="col-lg-2 col-md-3 col-sm-4">
                                 <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
                                     <a href="/product?slug_url=${item.slugUrl}" class="stretched-link">
-                                            <img src="/assests/media/${anh[index][0]}" class="img-fluid mt-2 mb-3" alt="">
+                                            <div class="img-container">
+                                                <img src="/assests/media/${anh[index][0]}" class="img-fluid mt-2 mb-3" alt="">
+                                            </div>
                                             <div class="w-100">
                                                 <span class="d-inline-block text-truncate" style="max-width: 90%;"> ${item.productName} </span>
                                             </div>

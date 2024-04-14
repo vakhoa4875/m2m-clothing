@@ -47,5 +47,9 @@ public class ProductApi {
 	public List<Product> findTop6ByOrderByGiaBanDesc(){
 		return productserviceimpl.findTop6ByOrderByGiaBanDesc();
 	}
-	
+
+	@GetMapping("/sale")
+	public List<Product> productWithSaleInfo(){
+		return productserviceimpl.findProductsWithSaleInfo();
+	}
 }

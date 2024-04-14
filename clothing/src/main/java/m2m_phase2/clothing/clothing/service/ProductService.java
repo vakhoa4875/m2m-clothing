@@ -10,6 +10,7 @@ public interface ProductService {
 	List<Product> findAll();
 	Product findByslug_url(String slug_url);
 	Category findCategoryNameByProductId (Integer productId);
-
 	List<Product> findTop6ByOrderByGiaBanDesc();
+
+	List<Product> findProductsWithSaleInfo();
 }

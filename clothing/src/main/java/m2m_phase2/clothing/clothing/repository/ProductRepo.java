@@ -18,6 +18,9 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 	
     @Query("SELECT c  FROM Product p JOIN p.category c WHERE p.productId = :productId")
     Category findCategoryNameByProductId(Integer productId);
-    @Query("select o from Product o order by o.sold DESC")
+    @Query("SELECT p FROM Product p LEFT JOIN p.sale s ORDER BY p.sold DESC")
     List<Product> findTop6ByOrderByGiaBanDesc(Pageable pageable); //Pageable được chuyển vào để lấy 6 sản phẩm có giá bán cao nhất
+
+    @Query("SELECT p, s FROM Product p LEFT JOIN p.sale s")
+    List<Product> findProductsWithSaleInfo();
 }
