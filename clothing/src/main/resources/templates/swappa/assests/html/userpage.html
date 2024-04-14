@@ -12,6 +12,7 @@
         #fileInput {
             display: none;
         }
+
         .custom-file-label {
             cursor: pointer;
             padding: 10px 20px;
@@ -19,19 +20,21 @@
             color: #fff;
 
         }
+
         .custom-file-label:hover {
             background-color: #9a9fa4;
         }
+
         #previewImage {
-        width: 200px;
-        height: 200px;
-        object-fit: cover;
-        margin-top: 20px;
-    }
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-top: 20px;
+        }
     </style>
 </head>
 
-<body>
+<body style="background-color: rgb(18,17,13);">
     <!-- header -->
     <div>
         <!-- mobileNav -->
@@ -164,99 +167,97 @@
                         </div>
                     </div>
                     <div class="col-xl-9 col-lg-12 bg-body-secondary">
-                        <div class="container"></div>
-                        <div class="header mt-3">
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item bg-body-secondary">
-                                    <h3>My profile</h3>
-                                    <span>Manage profile information for account security</span>
-                                </li>
-                                <li class="list-group-item bg-body-secondary"></li>
-                            </ul>
-                        </div>
-                        <div class="row">
-                            <div class="col-8">
-                                <div class="container">
-                                    <div class="mb-3 row">
-                                        <label for="staticName" class="col-xl-2 col-lg-12 col-form-label">UserName</label>
-                                        <div class="col-xl-10 col-lg-12">
-                                            <input type="text" readonly class="form-control-plaintext" id="staticName"
-                                                value="hindev">
+                        <div class="container">
+                            <div class="header mt-3">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item bg-body-secondary">
+                                        <h3>My profile</h3>
+                                        <span>Manage profile information for account security</span>
+                                    </li>
+                                    <li class="list-group-item bg-body-secondary"></li>
+                                </ul>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <div class="container">
+                                        <div class="mb-3 row">
+                                            <label for="staticName"
+                                                class="col-xl-2 col-lg-12 col-form-label">UserName</label>
+                                            <div class="col-xl-10 col-lg-12">
+                                                <input type="text" readonly class="form-control-plaintext"
+                                                    id="staticName" value="hindev">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="inputName" class="col-xl-2 col-lg-12 col-form-label">Name</label>
-                                        <div class="col-xl-10 col-lg-12">
-                                            <input type="name" class="form-control" id="inputName">
+                                        <div class="mb-3 row">
+                                            <label for="inputName"
+                                                class="col-xl-2 col-lg-12 col-form-label">Name</label>
+                                            <div class="col-xl-10 col-lg-12">
+                                                <input type="name" class="form-control" id="inputName">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="staticEmail" class="col-xl-2 col-lg-12 col-form-label">Email</label>
-                                        <div class="col-xl-10 col-lg-12">
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon">
-                                            <button class="btn btn-outline-secondary" type="button" id="button-addon">Edit</button>
-                                          </div>
+                                        <div class="mb-3 row">
+                                            <label for="staticEmail"
+                                                class="col-xl-2 col-lg-12 col-form-label">Email</label>
+                                            <div class="col-xl-10 col-lg-12">
+                                                <input type="mail" class="form-control" id="staticEmail"> 
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="staticEmail" class="col-xl-2 col-lg-12 col-form-label">Phone</label>
-                                        <div class="col-xl-10 col-lg-12">
-                                        <div class="input-group mb-3">
-                                            <input type="text" class="form-control" placeholder="" aria-label="" aria-describedby="button-addon1">
-                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Edit</button>
-                                          </div>
-                                        </div>
-                                        
-                                    </div>
-                                    <div class="mb-3 row">
-                                        <label for="staticEmail" class="col-xl-2 col-lg-12 col-form-label">Phone</label>
-                                        <div class="col-xl-10 col-lg-12">
-                                            <div class="row">
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                        id="flexRadioDefaultMale">
-                                                    <label class="form-check-label" for="flexRadioDefaultMale">
-                                                        Male
-                                                    </label>
+                                        <div class="mb-3 row">
+                                            <label for="staticPhone"
+                                                class="col-xl-2 col-lg-12 col-form-label">Phone</label>
+                                                <div class="col-xl-10 col-lg-12">
+                                                    <input type="Phone" class="form-control" id="staticPhone"> 
                                                 </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                        id="flexRadioDefaultFemale" checked>
-                                                    <label class="form-check-label" for="flexRadioDefaultFemale">
-                                                        Female
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                        id="flexRadioDefaultother" checked>
-                                                    <label class="form-check-label" for="flexRadioDefaultother">
-                                                        other
-                                                    </label>
+
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="staticRole"
+                                                class="col-xl-2 col-lg-12 col-form-label">Role</label>
+                                            <div class="col-xl-10 col-lg-12">
+                                                <div class="row">
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="flexRadioDefault" id="flexRadioDefaultMale">
+                                                        <label class="form-check-label" for="flexRadioDefaultMale">
+                                                            Male
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="flexRadioDefault" id="flexRadioDefaultFemale" checked>
+                                                        <label class="form-check-label" for="flexRadioDefaultFemale">
+                                                            Female
+                                                        </label>
+                                                    </div>
+                                                    <div class="form-check">
+                                                        <input class="form-check-input" type="radio"
+                                                            name="flexRadioDefault" id="flexRadioDefaultother" checked>
+                                                        <label class="form-check-label" for="flexRadioDefaultother">
+                                                            other
+                                                        </label>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="d-flex justify-content-center">
+                                        <img src="https://placehold.co/36x36/" class="avatar me-3 border-radius-lg"
+                                            id="previewImage" alt="Ảnh đã chọn">
                                     </div>
 
+                                    <div class="text-center my-3" style="margin-right: 10px;">
+                                        <input type="file" class="form-control" id="fileInput" accept="image/*">
+                                        <label class="custom-file-label" for="fileInput">Chọn ảnh từ local</label>
+                                    </div>
                                 </div>
+                                <button type="button" class=" col-5 btn btn-secondary ms-5 mb-5">Submit</button>
                             </div>
-                            <div class="col-4 text-center">
-                                <div class="d-flex justify-content-center">
-                                    <img src="https://placehold.co/36x36/"
-                                        class="avatar me-3 border-radius-lg" id="previewImage"  alt="Ảnh đã chọn">
-                                </div>
-
-                                <div class="text-center my-3" style="margin-right: 10px;">
-                                    <input type="file" class="form-control" id="fileInput" accept="image/*">
-                                    <label class="custom-file-label" for="fileInput">Chọn ảnh từ local</label>
-                                </div>
-                            </div>
-                            <button type="button" class=" col-5 btn btn-secondary ms-5 mb-5">Submit</button>
                         </div>
-
                     </div>
                 </div>
-            </div>
             </div>
         </main>
     </div>
@@ -270,11 +271,21 @@
             <div class="row row-cols-1 row-cols-md-3">
                 <div class="col d-flex justify-content-center align-items-center">
                     <div class=" text-white">
-                        <i class="fa-brands fa-square-facebook fs-1"></i>
-                        <i class="fa-brands fa-square-instagram fs-1"></i>
-                        <i class="fa-brands fa-youtube fs-1"></i>
-                        <i class="fa-brands fa-linkedin fs-1"></i>
-                        <i class="fa-brands fa-square-reddit fs-1"></i>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-facebook fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-instagram fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-youtube fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-linkedin fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-reddit fs-1"></i>
+                        </a>
                     </div>
                 </div>
                 <div class="col text-center ">
@@ -291,11 +302,11 @@
 
 </body>
 <script>
-    document.getElementById('fileInput').addEventListener('change', function() {
+    document.getElementById('fileInput').addEventListener('change', function () {
         var file = this.files[0];
         if (file) {
             var reader = new FileReader();
-            reader.onload = function(event) {
+            reader.onload = function (event) {
                 document.getElementById('previewImage').setAttribute('src', event.target.result);
                 document.getElementById('previewImage').style.display = 'block';
             }
