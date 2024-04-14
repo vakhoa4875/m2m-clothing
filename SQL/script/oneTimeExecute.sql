@@ -1,19 +1,183 @@
+use master
+go
+
+drop database if exists m2m_clothing
+go
+
+create database m2m_clothing
+go
+
 use m2m_clothing
 go
--- delete from Userinfo
--- go
--- delete from Account
--- go
+
+--create table
+CREATE TABLE Account (
+  user_id int IDENTITY(1,1) PRIMARY KEY,
+  username nvarchar(63) NOT NULL unique,
+  email varchar(255) NOT NULL unique,
+  hashed_password varchar(255) NOT NULL,
+  is_disable bit default 0,
+  is_admin bit
+);
+
+
+CREATE TABLE Userinfo (
+  user_id int PRIMARY KEY,
+  fullname nvarchar(127) default 'your fullname here',
+  gender nvarchar(20) default 'Male',
+  avatar nvarchar(255) default 'user.jpg',
+  dob date default getdate(),
+  description nvarchar(300),
+  job_title nvarchar(63),
+  FOREIGN KEY (user_id) REFERENCES Account(user_id)
+);
+
+CREATE TABLE Category (
+  category_id int IDENTITY(1,1) PRIMARY KEY,
+  category_name nvarchar(63) NOT NULL unique,
+  logo varchar(255),
+  description nvarchar(300)
+);
+
+
+CREATE TABLE Product (
+  product_id int IDENTITY(1,1) PRIMARY KEY,
+  product_name nvarchar(255) NOT NULL,
+  price float,
+  quantity int,
+  description nvarchar(max),
+  average_rate float,
+  rate_count int,
+  sold int,
+  pictures varchar(max),
+  videos varchar(255),
+  slug_url varchar(255) default '',
+  category_id int FOREIGN KEY REFERENCES Category(category_id)
+);
+create table [user] (
+    id          int             primary key identity(1,1),
+    username    varchar(63)     not null unique ,
+    email       varchar(63)     not null unique ,
+    gg_token    varchar(255)    null ,
+    hashed_pass varchar(255)    not null,
+    is_admin    bit             default 0,
+    is_disable  bit             default 0,
+    fullname    nvarchar(63)    default 'fullname_val',
+    gender      nvarchar(10)    default 'Nam',
+    avatar      varchar(63)     default 'user.png',
+    dob         date            default getdate(),
+    description nvarchar(300)   default 'description_val',
+    job_title   nvarchar(63)    default 'Unemployed',
+    role_id     int             not null default 3,
+    role_name   nvarchar(63)    not null default 'User',
+    processed   bit             default 0
+);
+go
+
+--trigger insert into user after insert into Account
+create or alter trigger trigger_after_insert_into_UserInfo
+    on Account
+    after insert
+    as
+begin
+    insert into [user] (username, email, hashed_pass, is_admin, is_disable, processed)
+    select  top 1 a.username,
+                  a.email,
+                  a.hashed_password,
+                  a.is_admin,
+                  a.is_disable,
+                  1
+    from inserted i
+    join Account a on a.user_id = i.user_id;
+    --update role
+    update [user]
+    set role_id = 1, role_name = 'Admin'
+    where   id = (select user_id from inserted)
+            and is_admin = 1;
+end;
+go
+--trigger after insert into user for syncing with account
+create or alter trigger trigger_after_insert_into_user
+    on [user]
+    FOR insert
+    as
+    begin
+        declare @i_processed bit;
+        select @i_processed = i.processed
+        from inserted i;
+
+        if (@i_processed = 0)
+        begin
+            begin TRANSACTION ;
+                -- insert into account with inserted value of table user
+                insert into Account (username, email, hashed_password, is_admin)
+                select  u.username,
+                        u.email,
+                        u.hashed_pass,
+                        IIF(u.role_id = 3, 0, 1)
+                from [inserted] u;
+                -- set processed to 1
+                update [user]
+                set processed = 1
+                where id = (select i.id from inserted i);
+            IF @@TRANCOUNT > 0
+                COMMIT TRANSACTION;
+        end
+    end
+go
+
+--trigger after update user for syncing with account table
+create or alter trigger trigger_after_update_user
+    on [user]
+    after update
+    as
+    begin
+        declare @u_isAdmin bit,
+                @u_isDisable bit,
+                @u_hashed_pass varchar(255),
+                @u_user_id int;
+        select  @u_isAdmin = i.is_admin,
+                @u_isDisable = i.is_disable,
+                @u_hashed_pass = i.hashed_pass,
+                @u_user_id = i.id
+        from inserted i;
+        update Account
+        set is_admin = @u_isAdmin,
+            is_disable = @u_isDisable,
+            hashed_password = @u_hashed_pass
+        where user_id = @u_user_id;
+    end
+go
+
+--CREATE OR ALTER TRIGGER gen_user_info 
+--ON Account
+--AFTER INSERT
+--AS
+--BEGIN
+--    INSERT INTO Userinfo (user_id)
+--    SELECT user_id
+--    FROM inserted;
+--END;
+
+--go
+
+--
+--INSERT INTO ALL TABLES
+--
+use m2m_clothing
+go
+delete from [user]
+go
+delete from Account
+go
 
 INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('john.doe', 'john.doe@example.com', 'your_hashed_password1', 0)
 INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('jane.smith', 'jane.smith@example.com', 'your_hashed_password2', 0)
 INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('admin', 'admin@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 1)
 INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('site_user', 'abc@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 0)
 
-
+delete from Category
 go
--- delete from Category
--- go
 
 INSERT INTO Category (category_name, logo, description)
 VALUES ('Outerwear', 'outerwear_logo.avif', 'Jackets, coats and vests'),
@@ -23,8 +187,8 @@ VALUES ('Outerwear', 'outerwear_logo.avif', 'Jackets, coats and vests'),
        ('Headwear', 'headwear_logo.webp', 'Hats, caps, beanies'),
        ('Footwear', 'footwear_logo.jpg', 'Shoes, boots, sandals');
 go
--- delete from Product
--- go
+delete from Product
+go
 
 SET IDENTITY_INSERT Product ON;
 INSERT INTO product (product_id, product_name, price, quantity, description, average_rate, rate_count, sold, pictures, videos, slug_url ,category_id)
@@ -141,7 +305,7 @@ DETAILS: Featuring a pull-on crew neckline and a sleeveless racer back design fo
 
     (21,'Kanu Surf Men-s UPF 50+ Long Sleeve Rashguard Swim Shirt',18.58,9102,'"Loose-fit rashguard in solid tone featuring long sleeves and crew neckline
 UPF 50+ protection
-Comfortable and versatile"',4.5,1517,3034,'21-1.jpg,21-2.jpg,21-3.jpg',NULL,'Kanu-Surf-Mens-UPF-50-Long-Sleeve-Rashguard-Swim-Shirt',2),
+Comfortable and versatile"',4.5,1517,3034,'21-1.jpg,21-2.jpg,21-3.jpg',NULL,'Kanu-Surf-Mens-UPF-50+-Long-Sleeve-Rashguard-Swim-Shirt',2),
 
 
     (22,'Clique Men-s Parma Colorblock Polo',17.98,264,'"Colorblocked polo with three button placket
@@ -553,7 +717,7 @@ Guess detailing on straps"',4.6,1995,3990,'83-1.jpg,83-2.jpg,83-3.jpg',NULL,'gue
 Lightweight And Fun: The Crocs For Men And Women Feature Lightweight Iconic Crocs Comfort. Ventilation Ports Add Breathability And Help Shed Water And Debris Quickly.
 What Size Should I Buy?: These Men-S And Women-S Crocs Offer A Roomy Fit And We Recommend Ordering A Size Down To The Next Largest Whole Size.
 Designed To Fit: These Slip-On Clogs Are Easy To Take On And Off, While Being Extremely Durable. These Crocs Even Offer Pivoting Heel Straps For A More Secure Fit.
-Shop with Confidence: Crocs products are backed by our 90-day manufacturer-s warranty for high quality and authenticity. Terms and conditions apply"',4.8,568427,1136854,'84-1.jpg,84-2.jpg','84.mp4','crocs-unisex-adult-classic-clogs',6),
+Shop with Confidence: Crocs products are backed by our 90-day manufacturer-s warranty for high quality and authenticity. Terms and conditions apply"',4.8,568427,1136854,'84-1.jpg, 84-2.jpg','84.mp4','crocs-unisex-adult-classic-clogs',6),
 
 
     (85,'OshKosh Unisex-Child Hilda Sneaker',40,12,'"Toddler-s fashion eyelet sneakers in an easy slip-on style
@@ -598,6 +762,10 @@ Tele Tone toe and heel taps mounted on fiberboard, Scored rubber non-skid pad.
 Achilles notch with padded collar for comfort, Eyerows are attached with elastic, Grosgrain ribbon tie
 Light toe box, Lower vamp and sides and a Firm heel counter
 Begin with street shoe size"',4.7,13311,26622,'90-1.jpg,90-2.jpg,90-3.jpg',NULL,'capezio-girls-jr-tyette-tap-shoe-dance',6)
+
+
+
+
 
 
 

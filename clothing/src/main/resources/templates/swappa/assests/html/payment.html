@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
 <body class="bg-black">
@@ -75,8 +77,8 @@
                                 <li class="ms-3 d-flex align-items-center justify-content-center">
                                     <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
                                         <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                                      1
+                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
+                                        0
                                     </span>
                                     </a>
                                 </li>
@@ -194,38 +196,38 @@
                                     <th class="align-middle text-center">total payment</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
+                            <tbody id="thanhtoan">
+<!--                                <tr>-->
+<!--                                    <td>-->
+<!--                                        <div class="d-flex px-2 py-1">-->
 
-                                            <div>
-                                                <img src="https://placehold.co/36x36/"
-                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user1"
-                                                    id="thongtin">
-                                            </div>
-                                            <div class="w-100 d-flex align-items-center">
-                                                <p class="text-xs text-secondary mb-0">
-                                                    Loại: Mặt Đen 80x20cm,....</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs text-secondary mb-0" >
-                                            100$</p>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs text-secondary mb-0" th:text="${acc.key.getEmail}">
-                                            2</p>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs text-secondary mb-0" th:text="${acc.key.getEmail}">
-                                            200$</p>
-                                    </td>
+<!--                                            <div>-->
+<!--                                                <img src="https://placehold.co/36x36/"-->
+<!--                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user1"-->
+<!--                                                    id="thongtin">-->
+<!--                                            </div>-->
+<!--                                            <div class="w-100 d-flex align-items-center">-->
+<!--                                                <p class="text-xs text-secondary mb-0">-->
+<!--                                                    Loại: Mặt Đen 80x20cm,....</p>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </td>-->
+<!--                                    <td class="align-middle text-center">-->
+<!--                                    </td>-->
+<!--                                    <td class="align-middle text-center">-->
+<!--                                        <p class="text-xs text-secondary mb-0" >-->
+<!--                                            100$</p>-->
+<!--                                    </td>-->
+<!--                                    <td class="align-middle text-center">-->
+<!--                                        <p class="text-xs text-secondary mb-0" >-->
+<!--                                            2</p>-->
+<!--                                    </td>-->
+<!--                                    <td class="align-middle text-center">-->
+<!--                                        <p class="text-xs text-secondary mb-0" >-->
+<!--                                            200$</p>-->
+<!--                                    </td>-->
 
-                                </tr>
+<!--                                </tr>-->
 
                             </tbody>
                         </table>
@@ -249,7 +251,7 @@
                                         <div class="p-2 me-4 flex-fill align-middle text-center">
                                             <a href="" class="text-danger">Edit</a>
                                         </div>
-                                        <div class="p-2 me-4 flex-fill align-middle text-center">10$</div>
+                                        <div class="p-2 me-4 flex-fill align-middle text-center">$2</div>
                                     </li>
                                     <li class=" list-group-item text-success"> <i class="fa-solid fa-truck-moving"></i>
                                         Orders will be received on April 30</li>
@@ -262,7 +264,7 @@
                         <div class="container">
                             <div class="d-flex flex-row-reverse">
                                 <div class="p-2 text-danger">
-                                    <div><strong>210$</strong></div>
+                                    <div><strong class="tienThanhToan"></strong></div>
                                 </div>
                                 <div class="p-2">
                                     <div><strong>Total payment amount:</strong></div>
@@ -316,15 +318,15 @@
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                        id="flexRadioDefault2" checked>
-                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                         checked>
+                                                    <label class="form-check-label" >
                                                         MOMO
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                        id="flexRadioDefault2" checked>
-                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                         checked>
+                                                    <label class="form-check-label" >
                                                         Tiền mặt
                                                     </label>
                                                 </div>
@@ -356,10 +358,10 @@
                                         <div>Tổng thanh toán</div>
                                     </div>
                                     <div class="col-6">
-                                        <div>₫299.880</div>
-                                        <div>₫299.880</div>
-                                        <div>₫299.880</div>
-                                        <div>₫299.880</div>
+                                        <div class="tienThanhToan"></div>
+                                        <div>$2</div>
+                                        <div>$0</div>
+                                        <div id="TongThanhToan"></div>
                                     </div>
                                 </div>
                             </div>
@@ -370,7 +372,7 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-4 ms-auto">
-                                <button type="button" class="btn btn-outline-success ">Xác nhận thanh toán</button>
+                                <button type="button" class="btn btn-outline-success " onclick="thanhtoan()">Xác nhận thanh toán</button>
                             </div>
                         </div>
                     </div>
@@ -421,8 +423,106 @@
     <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
     <script src="/node_modules/angular/angular.route.min.js"></script>
-    <script src="/assests/js/app.js"></script>
+    <script src="/assests/js/app_admin.js"></script>
     <script src="/assests/js/script.js"></script>
+    <script src="/assests/js/jsAll.js"></script>
+    <script>
+        function Finalpayment (){
+            var productList = document.getElementById("thanhtoan");
+            productList.innerHTML = '';
+            if (localStorage.length > 0) {
+                // Duyệt qua tất cả các phần tử trong local storage
+                for (var i = 0; i < localStorage.length; i++) {
+                    var key = localStorage.key(i);
+                    var value = localStorage.getItem(key);
+
+                    var object = JSON.parse(value);
+                    // Tạo các thẻ HTML để hiển thị thông tin của đối tượng
+                    var tr = document.createElement("tr");
+
+                    tr.innerHTML = `<tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+
+                                            <div>
+                                                <img src="${object.linkanh}"
+                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user1"
+                                                    id="thongtin" style="display: block; max-width: 150px; max-height: 150px; width: auto; height: auto;">
+                                            </div>
+                                            <div class="w-100 d-flex align-items-center">
+                                                <p class="text-xs text-secondary mb-0">
+                                                    ${object.tensp}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs text-secondary mb-0" >
+                                            $${object.gia}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs text-secondary mb-0" >
+                                            ${object.soLuong}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs text-secondary mb-0" >
+                                            $${(object.soLuong * object.gia)}</p>
+                                    </td>
+
+                                </tr>
+                    `;
+                    document.getElementById("thanhtoan").appendChild(tr);
+                    capNhatTienTong();
+                }
+            }
+        }
+
+        function capNhatTienTong() {
+            var tongTien = 0;
+            if (localStorage.length > 0) {
+                // Duyệt qua tất cả các phần tử trong local storage
+                for (var i = 0; i < localStorage.length; i++) {
+                    var key = localStorage.key(i);
+                    var value = localStorage.getItem(key);
+
+                    var object = JSON.parse(value);
+
+                    tongTien += object.soLuong * object.gia;
+                }
+
+                var cacPhanTu = document.querySelectorAll(".tienThanhToan");
+                // Lặp qua từng phần tử và cập nhật giá trị mới
+                cacPhanTu.forEach(function (element) {
+                    element.textContent = "$" + tongTien; // Cập nhật giá trị mới, ở đây là tổng tiền
+                });
+
+                var tongthanhtoan = document.getElementById("TongThanhToan");
+
+                tongthanhtoan.textContent = "$" + (parseInt(tongTien) + parseInt(2));
+
+
+            }
+        }
+
+        function thanhtoan(){
+            Swal.fire({
+                title: 'Thông Báo từ hệ thống',
+                text: 'Cảm ơn bạn đã thanh toán hóa đơn!',
+                icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                confirmButtonText: 'Xác nhận',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Xác nhận đã được nhấn
+                    localStorage.clear();
+                    window.location.href = "/trangchu"; // Chuyển hướng trang ngược lại trang hiện tại
+                }
+            });;
+        }
+
+        window.onload = Finalpayment;
+    </script>
 </body>
 
 </html>
