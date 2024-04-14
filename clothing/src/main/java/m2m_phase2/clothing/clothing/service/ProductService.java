@@ -13,4 +13,5 @@ public interface ProductService {
 	List<Product> findTop6ByOrderByGiaBanDesc();
 
 	List<Product> findProductsWithSaleInfo();
+	List<Product> findBycategory(Category category);
 }

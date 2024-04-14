@@ -1,6 +1,7 @@
 package m2m_phase2.clothing.clothing.controller.api;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,8 +49,14 @@ public class ProductApi {
 		return productserviceimpl.findTop6ByOrderByGiaBanDesc();
 	}
 
+
 	@GetMapping("/sale")
 	public List<Product> productWithSaleInfo(){
 		return productserviceimpl.findProductsWithSaleInfo();
+    
+	@GetMapping("/findproductbycategoryid")
+	public List<Product> getfindbycategoryid(Category category){
+		return productserviceimpl.findBycategory(category);
+
 	}
 }

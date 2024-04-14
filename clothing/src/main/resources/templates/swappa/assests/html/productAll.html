@@ -309,7 +309,7 @@
                     sanpham.push(response[i]);
                     anh.push(response[i].pictures.split(','));
                 }
-                loadSanPhamNoiBat(sanpham, anh);
+                // loadSanPhamNoiBat(sanpham, anh);
             },
             error: function(xhr, status, error){
                 alert("Tải dữ liệu thất bại");
@@ -342,9 +342,9 @@
         function appendCategoriesToList(categories){
             $.each(categories, function(index, category) {
                 // Tạo một thẻ li mới cho mỗi đối tượng user
-                var link = $("<a>").attr("href", "/allproduct").addClass("rounded-1 btn text-white hoverbutton").css("width", "120px").text(category);
+                var link = $("<a>").attr("href", "/allproduct").attr("value", index+1).attr("id", "category_" + index).addClass("rounded-1 btn text-white hoverbutton").css("width", "120px").text(category);
                 var div = $("<div>").append(link);
-
+                console.log(link)
                 if(category == "Jewels & Accessories"){
                     div.addClass("special-category");
                     link.css("width", "200px");
@@ -353,6 +353,31 @@
                 $("#userListCategory").append(div);
             });
         }
+
+        var category = $("#category_0").attr("value");
+        console.log(category);
+        $.ajax({
+            type: "get",
+            url: "http://localhost:8083/findproductbycategoryid",
+            data: {
+                category: "2"
+            },
+            dataType: "json",
+            success: function (response) {
+                var sanpham =[];
+                var anh = [];
+
+                for(var i = 0 ; i < response.length ; i++){
+                    sanpham.push(response[i]);
+                    anh.push(response[i].pictures.split(','));
+                }
+                loadSanPhamNoiBat(sanpham, anh);
+            },
+            error: function(xhr, status, error){
+                alert("Tải dữ liệu thất bại 1");
+                console.log(error);
+            }
+        });
 
         function loadSanPhamNoiBat(sanpham, anh){
 

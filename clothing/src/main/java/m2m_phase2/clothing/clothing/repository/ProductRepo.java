@@ -23,4 +23,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 
     @Query("SELECT p, s FROM Product p LEFT JOIN p.sale s")
     List<Product> findProductsWithSaleInfo();
+
+    List<Product> findBycategory(Category category);
 }
