@@ -274,18 +274,29 @@ $(document).ready(function () {
     function loadSanPhamNoiBat(sanpham, anh) {
 
         $.each(sanpham, function (index, item) {
-                var html = `
+            var html = `
                             <div class="col-lg-2 col-md-3 col-sm-4">
                                 <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
                                     <a href="/product?slug_url=${item.slugUrl}" class="stretched-link">
-                                            <img src="/assests/media/${anh[index][0]}" class="img-fluid mt-2 mb-3" alt="">
+                                            ${item.sale ? `
+                                                <div style="position: absolute">       
+                                                    <span class="badge text-bg-danger">${item.sale.salePercent}%</span>
+                                                </div>
+                                            `:``}
+                                            <div class="img-container">
+                                                <img src="/assests/media/${anh[index][0]}" class="img-fluid mt-2 mb-3" alt="">
+                                            </div>
                                             <div class="w-100">
                                                 <span class="d-inline-block text-truncate" style="max-width: 90%;"> ${item.productName} </span>
                                             </div>
                                         <div class="w-100">
                                             <div class="d-flex justify-content-around">
-                                                <span> ${item.price}</span>
-                                                <!--   <span><del>${item.price}</del></span> -->
+                                                ${item.sale ? `
+                                                       <span> <del> ${item.price} </del> </span>
+                                                       <span style="color:#c07d4b; font-weight: bolder">${((item.price) - (item.sale.salePercent / 100 * item.price)).toFixed(2)}</span>
+                                                ` : `
+                                                        <span> ${item.price}</span>
+                                                `}
                                             </div>
                                             <div class="">
                                                 <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
@@ -297,8 +308,8 @@ $(document).ready(function () {
                                 </div>
                             </div>
                 `
-                $("#sanpham").append(html);
-                layTongSoLuong();
+            $("#sanpham").append(html);
+            layTongSoLuong();
         });
     }
 

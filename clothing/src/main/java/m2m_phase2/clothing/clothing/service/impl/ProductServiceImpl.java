@@ -38,4 +38,14 @@ public class ProductServiceImpl implements ProductService {
 		Pageable pageable = PageRequest.of(0, 6); //bắt đầu từ 0 và kích thước 6
 		return repo.findTop6ByOrderByGiaBanDesc(pageable);
 	}
+
+	@Override
+	public List<Product> findProductsWithSaleInfo() {
+		return repo.findProductsWithSaleInfo();
+  }
+  
+  	@Override
+	public List<Product> findBycategory(Category category) {
+		return repo.findBycategory(category);
+	}
 }

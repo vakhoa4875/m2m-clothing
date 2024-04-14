@@ -8,6 +8,20 @@
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        .img-container {
+            height: 200px; /* Điều chỉnh chiều cao tùy theo nhu cầu */
+            display: flex; /* Sử dụng flexbox để căn chỉnh hình ảnh */
+            align-items: center; /* Căn chỉnh hình ảnh theo trục dọc */
+            justify-content: center; /* Căn chỉnh hình ảnh theo trục ngang */
+            overflow: hidden; /* Đảm bảo ảnh không bị tràn ra ngoài */
+        }
+
+        .img-container img {
+            max-height: 100%; /* Đảm bảo chiều cao của ảnh không vượt quá container */
+            width: auto; /* Chiều rộng tự động điều chỉnh để duy trì tỷ lệ khung hình */
+        }
+    </style>
 </head>
 <body>
     <!-- header -->
