@@ -55,8 +55,4 @@ public class ProductApi {
 		return productserviceimpl.findProductsWithSaleInfo();
 	}
 
-	@GetMapping("/findproductbycategoryid")
-	public List<Product> getfindbycategoryid(Category category){
-		return productserviceimpl.findBycategory(category);
-	}
 }
