@@ -20,4 +20,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     Category findCategoryNameByProductId(Integer productId);
     @Query("select o from Product o order by o.sold DESC")
     List<Product> findTop6ByOrderByGiaBanDesc(Pageable pageable); //Pageable được chuyển vào để lấy 6 sản phẩm có giá bán cao nhất
+
+    List<Product> findBycategory(Category category);
 }
