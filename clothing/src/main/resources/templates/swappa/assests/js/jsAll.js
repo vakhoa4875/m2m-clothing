@@ -177,39 +177,8 @@ window.onload = compareData;
 
 
 
-
-//chi tiết 1 sản phẩm
 $(document).ready(function () {
-    //sản phẩm
-    $.ajax({
-        type: "get",
-        url: "http://localhost:8083/allproductapi",
-        data: "data",
-        dataType: "json",
-        success: function (response) {
-            var sanpham = [];
-            var anh = [];
-
-            for (var i = 0; i < response.length; i++) {
-                sanpham.push(response[i]);
-                anh.push(response[i].pictures.split(','));
-            }
-            layTongSoLuong();
-        },
-        error: function (xhr, status, error) {
-            alert("Tải dữ liệu thất bại");
-            console.log(error);
-        }
-    });
-
-
-
-
-
-
-
-
-
+    let selectedCategoryId = null;
 
     //Trang chủ
     $.ajax({
@@ -247,7 +216,7 @@ $(document).ready(function () {
                 sanpham.push(response[i]);
                 anh.push(response[i].pictures.split(','));
             }
-            loadSanPhamNoiBat(sanpham, anh);
+            loadSanPhamNoiBat(sanpham,anh);
             layTongSoLuong();
         },
         error: function (xhr, status, error) {
@@ -256,18 +225,28 @@ $(document).ready(function () {
         }
     });
 
+
     function appendCategoriesToList(categories) {
         $.each(categories, function (index, category) {
             // Tạo một thẻ li mới cho mỗi đối tượng user
-            var link = $("<a>").attr("href", "/allproduct").addClass("rounded-1 btn text-white hoverbutton").css("width", "120px").text(category);
+            var link = $("<a>").attr("id", "category_" + index).addClass("rounded-1 btn text-white hoverbutton nghe").css("width", "120px").text(category);
             var div = $("<div>").append(link);
 
             if (category == "Jewels & Accessories") {
                 div.addClass("special-category");
                 link.css("width", "200px");
             }
+            // Lưu trữ ID của danh mục vào thuộc tính "data-category-id"
+            link.attr("data-category-id", index + 1);
+
             // Thêm thẻ li vào danh sách
             $("#userListCategory").append(div);
+            link.on("click", function() {
+                // Lấy giá trị của thuộc tính "value" của thẻ <a>
+                selectedCategoryId = $(this).attr("data-category-id");
+                console.log(selectedCategoryId);
+                window.location.href = "/categoryType?categoryId="+(index+1);
+            });
         });
     }
 
@@ -293,7 +272,7 @@ $(document).ready(function () {
                                             <div class="d-flex justify-content-around">
                                                 ${item.sale ? `
                                                        <span> <del> ${item.price} </del> </span>
-                                                       <span style="color:#c07d4b; font-weight: bolder">${((item.price) - (item.sale.salePercent / 100 * item.price)).toFixed(2)}</span>
+                                                       <span style="color:#c07d4b; font-weight: bolder">${((item.price) - (item.sale.salePercent / 100.00 * item.price)).toFixed(2)}</span>
                                                 ` : `
                                                         <span> ${item.price}</span>
                                                 `}
@@ -308,13 +287,17 @@ $(document).ready(function () {
                                 </div>
                             </div>
                 `
-            $("#sanpham").append(html);
+            $("#sanphamtrangchu").append(html);
             layTongSoLuong();
         });
     }
 
-})
 
+
+
+
+
+})
 
 
 

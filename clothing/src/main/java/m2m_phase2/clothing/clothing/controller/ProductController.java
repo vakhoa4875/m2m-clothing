@@ -24,12 +24,21 @@ public class ProductController {
 	private CategoryImpl category;
 
 	
-	@GetMapping("/allproduct")
-	public String testfuntionproduct(Model model) {
-			 
-
+	@GetMapping("/categoryType")
+	public String getcategoryType(@RequestParam Integer categoryId ,Model model) {
+		List<Product> products	= productServiceImpl.findBycategory(categoryId);
+		model.addAttribute("listProduct",products);
+		model.addAttribute("active",categoryId);
 		return "swappa/assests/html/productAll";
 	}
+
+	@GetMapping("/AllcategoryType")
+	public String getAllcategory(Model model) {
+		List<Product> products	= productServiceImpl.findAll();
+		model.addAttribute("listProduct",products);
+		return "swappa/assests/html/productAll";
+	}
+
 	@Autowired
 	private CategoryImpl categoryimpl;
 	@GetMapping("/product")
