@@ -29,6 +29,7 @@ public class UserM {
     private int roleId;
     private String roleName;
     private boolean processed;
+    private String sdt;
 
     public static UserM convertUserEToUserM(UserE userE) {
         return UserM.builder()
@@ -48,6 +49,7 @@ public class UserM {
                 .roleId(userE.getRoleId())
                 .roleName(userE.getRoleName())
                 .processed(userE.isProcessed())
+                .sdt(userE.getSdt())
                 .build();
     }
 
