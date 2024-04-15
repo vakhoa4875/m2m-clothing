@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -167,7 +167,7 @@
                         </div>
                     </div>
                     <div class="col-xl-9 col-lg-12 bg-body-secondary">
-                        <div class="container">
+                        <div class="container" >
                             <div class="header mt-3">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item bg-body-secondary">
@@ -177,7 +177,7 @@
                                     <li class="list-group-item bg-body-secondary"></li>
                                 </ul>
                             </div>
-                            <div class="row">
+                            <div class="row" th:object="${userM}">
                                 <div class="col-8">
                                     <div class="container">
                                         <div class="mb-3 row">
@@ -185,60 +185,60 @@
                                                 class="col-xl-2 col-lg-12 col-form-label">UserName</label>
                                             <div class="col-xl-10 col-lg-12">
                                                 <input type="text" readonly class="form-control-plaintext"
-                                                    id="staticName" value="hindev">
+                                                    id="staticName" th:value="*{username}" disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label for="inputName"
                                                 class="col-xl-2 col-lg-12 col-form-label">Name</label>
                                             <div class="col-xl-10 col-lg-12">
-                                                <input type="name" class="form-control" id="inputName">
+                                                <input type="name" class="form-control" id="inputName" th:value="*{fullname}">
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label for="staticEmail"
                                                 class="col-xl-2 col-lg-12 col-form-label">Email</label>
                                             <div class="col-xl-10 col-lg-12">
-                                                <input type="mail" class="form-control" id="staticEmail"> 
+                                                <input type="mail" class="form-control" id="staticEmail" th:value="*{email}" disabled>
                                             </div>
                                         </div>
                                         <div class="mb-3 row">
                                             <label for="staticPhone"
                                                 class="col-xl-2 col-lg-12 col-form-label">Phone</label>
                                                 <div class="col-xl-10 col-lg-12">
-                                                    <input type="Phone" class="form-control" id="staticPhone"> 
+                                                    <input type="Phone" class="form-control" id="staticPhone" th:value="*{sdt}">
                                                 </div>
 
                                         </div>
-                                        <div class="mb-3 row">
-                                            <label for="staticRole"
-                                                class="col-xl-2 col-lg-12 col-form-label">Role</label>
-                                            <div class="col-xl-10 col-lg-12">
-                                                <div class="row">
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="flexRadioDefault" id="flexRadioDefaultMale">
-                                                        <label class="form-check-label" for="flexRadioDefaultMale">
-                                                            Male
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="flexRadioDefault" id="flexRadioDefaultFemale" checked>
-                                                        <label class="form-check-label" for="flexRadioDefaultFemale">
-                                                            Female
-                                                        </label>
-                                                    </div>
-                                                    <div class="form-check">
-                                                        <input class="form-check-input" type="radio"
-                                                            name="flexRadioDefault" id="flexRadioDefaultother" checked>
-                                                        <label class="form-check-label" for="flexRadioDefaultother">
-                                                            other
-                                                        </label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+<!--                                        <div class="mb-3 row">-->
+<!--                                            <label for="staticRole"-->
+<!--                                                class="col-xl-2 col-lg-12 col-form-label">Role</label>-->
+<!--                                            <div class="col-xl-10 col-lg-12">-->
+<!--                                                <div class="row">-->
+<!--                                                    <div class="form-check">-->
+<!--                                                        <input class="form-check-input" type="radio"-->
+<!--                                                            name="flexRadioDefault" id="flexRadioDefaultMale">-->
+<!--                                                        <label class="form-check-label" for="flexRadioDefaultMale">-->
+<!--                                                            Male-->
+<!--                                                        </label>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-check">-->
+<!--                                                        <input class="form-check-input" type="radio"-->
+<!--                                                            name="flexRadioDefault" id="flexRadioDefaultFemale" checked>-->
+<!--                                                        <label class="form-check-label" for="flexRadioDefaultFemale">-->
+<!--                                                            Female-->
+<!--                                                        </label>-->
+<!--                                                    </div>-->
+<!--                                                    <div class="form-check">-->
+<!--                                                        <input class="form-check-input" type="radio"-->
+<!--                                                            name="flexRadioDefault" id="flexRadioDefaultother" checked>-->
+<!--                                                        <label class="form-check-label" for="flexRadioDefaultother">-->
+<!--                                                            other-->
+<!--                                                        </label>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
 
                                     </div>
                                 </div>
@@ -253,7 +253,7 @@
                                         <label class="custom-file-label" for="fileInput">Chọn ảnh từ local</label>
                                     </div>
                                 </div>
-                                <button type="button" class=" col-5 btn btn-secondary ms-5 mb-5">Submit</button>
+                                <button type="button"  id="submitBtn" class=" col-5 btn btn-secondary ms-5 mb-5" >Submit</button>
                             </div>
                         </div>
                     </div>
@@ -317,5 +317,46 @@
 <script src="/node_modules/angular/angular.min.js"></script>
 <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<!--<script th:src="@{/assests/js/userpage.js}"></script>-->
 
+
+<script >
+    $(document).ready(function (){
+        updateUser = async () => {
+            let username = $('#staticName').val();
+            let fullname = $('#inputName').val();
+            let email = $('#staticEmail').val();
+            let sdt = $('#staticPhone').val();
+            let avatar = $('#fileInput')[0].files[0].name;
+            console.log(avatar);
+            var userDto = {
+                "username": username,
+                "email": email,
+                "fullname": fullname,
+                "sdt": sdt,
+                "avatar": avatar
+            };
+            await $.ajax({
+                url: '/api-public/users/updateUserInfo',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(userDto),
+                success: function (response) {
+                    console.log(response === 1 ? 'update succeed' : 'update failed');
+                },
+                error: function (xhr, status, error) {
+                    // Xử lý lỗi nếu có
+                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                }
+            });
+            // location.reload();
+        }
+        $('#submitBtn').click(function() {
+            console.log("Button clicked");
+            updateUser(); // Gọi hàm updateUser() khi nhấn vào nút "Submit"
+        });
+    })
+
+</script>
 </html>

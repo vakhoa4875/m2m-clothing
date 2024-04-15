@@ -1,7 +1,10 @@
 package m2m_phase2.clothing.clothing.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import m2m_phase2.clothing.clothing.data.dto.UserDto;
+import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.entity.Product;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,10 +77,14 @@ public class HomeController {
 	}
 
 	@GetMapping("/userprofile")
-	public String userProfileGet(Model model, HttpSession session) {
+	public String userProfileGet(Model model, HttpSession session) throws SQLException {
 		// Kiểm tra xem người dùng đã đăng nhập hay chưa
 		if (accountServiceImpl.isLoggedIn(session)) {
 			// Nếu đã đăng nhập, chuyển hướng đến trang profile của người dùng
+			UserDto userDto = new UserDto();
+			userDto.setEmail(session.getAttribute("loggedInUser")+"");
+			UserM userM =  userService.getUserByEmail(userDto);
+			model.addAttribute("userM",userM);
 			return "swappa/assests/html/userpage";
 		} else {
 			// Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập

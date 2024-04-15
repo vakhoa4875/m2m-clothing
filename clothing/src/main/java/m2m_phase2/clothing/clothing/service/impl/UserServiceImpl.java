@@ -32,6 +32,25 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserM getUserByEmail(UserDto userDto) throws SQLException {
+        if (!this.isUserExist(userDto)) return null;
+        return UserM.convertUserEToUserM(userRepo.getUserByEmail(userDto.getEmail()));
+    }
+
+    @Override
+    public byte updateUserInfo(UserDto userDto) throws SQLException {
+        if (this.isUserExist(userDto)) {
+            userRepo.updateUserInfo(userDto.getUsername(),
+                    userDto.getEmail(),
+                    userDto.getFullname(),
+                    userDto.getSdt(),
+                    userDto.getAvatar());
+            return 1;
+        }
+        return  0;
+    }
+
+    @Override
     public boolean isUserExist(UserDto userDto) throws SQLException{
         var user = userRepo.getUserByUsernameAndEmail(userDto.getUsername(), userDto.getEmail());
         return Objects.nonNull(user);

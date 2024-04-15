@@ -26,7 +26,7 @@ VALUES ('Outerwear', 'outerwear_logo.avif', 'Jackets, coats and vests'),
 go
 -- delete from Product
 -- go
-
+-- SET IDENTITY_INSERT Sale Off;
 SET IDENTITY_INSERT Product ON;
 INSERT INTO product (product_id, product_name, price, quantity, description, average_rate, rate_count, sold, pictures, videos, slug_url ,category_id)
 values

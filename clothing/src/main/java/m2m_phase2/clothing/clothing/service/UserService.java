@@ -22,6 +22,8 @@ public interface UserService {
      */
 //    List<UserM> getUserByDto(UserDto userDto) throws SQLException;
     UserM getUserByUsernameAndEmail(UserDto userDto) throws SQLException;
+    UserM getUserByEmail(UserDto userDto) throws  SQLException;
+    byte updateUserInfo(UserDto userDto) throws SQLException;
     boolean isUserExist(UserDto userDto) throws SQLException;
     byte saveUser(UserDto userDto) throws SQLException;
     byte disableUser(UserDto userDto) throws SQLException;

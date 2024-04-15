@@ -18,6 +18,7 @@ public class UserDto {
     private String jobTitle;
     private int roleId;
     private String roleName;
+    private String sdt;
 
     public String getHashedPassword() {
         return PasswordEncoderUtil.encodePassword(this.password);

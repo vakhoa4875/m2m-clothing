@@ -69,4 +69,7 @@ public class UserE {
 
     @Column(name = "processed")
     private boolean processed = false;
+
+    @Column(name = "sdt" , length = 15)
+    private String sdt;
 }
