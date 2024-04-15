@@ -156,7 +156,7 @@
                             <div class="card-header d-flex align-items-center justify-content-center">
                                 <span class="fs-4 fw-bolder" th:text="${listProduct.productName}" id="productName"></span>
                                 <span class="fs-4 fw-bolder">------ Rate : </span>
-                                <span class="fs-4 fw-bolder" style="color: #c24444" th:text="'$'+${listProduct.price}" id="productPrice"></span>
+                                <span class="fs-4 fw-bolder" style="color: #c24444" th:text="'$'+ ${(listProduct.getSale() != null ? #numbers.formatDecimal(listProduct.getPrice.intValue() - (listProduct.getSale.getSalePercent() / 100.00 * listProduct.getPrice().intValue()), 1, 'DEFAULT', 2,'DEFAULT') : listProduct.getPrice())}" id="productPrice"></span>
                             </div>
                             <div>
                                 <ul class="small-ul">
@@ -398,5 +398,11 @@
     <script src="/assests/js/script.js"></script>
     <script src="/assests/js/jsAll.js"/></script>
 
+    <script th:inline="javascript">
+        /* Định nghĩa hàm formatNumber để format số thành chuỗi với số lượng chữ số thập phân cho trước */
+        function formatNumber(number) {
+            return number.toFixed(2);
+        }
+    </script>
 
 </html>
