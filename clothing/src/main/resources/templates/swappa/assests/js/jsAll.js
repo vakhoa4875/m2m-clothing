@@ -272,7 +272,7 @@ $(document).ready(function () {
                                             <div class="d-flex justify-content-around">
                                                 ${item.sale ? `
                                                        <span> <del> ${item.price} </del> </span>
-                                                       <span style="color:#c07d4b; font-weight: bolder">${((item.price) - (item.sale.salePercent / 100 * item.price)).toFixed(2)}</span>
+                                                       <span style="color:#c07d4b; font-weight: bolder">${((item.price) - (item.sale.salePercent / 100.00 * item.price)).toFixed(2)}</span>
                                                 ` : `
                                                         <span> ${item.price}</span>
                                                 `}
