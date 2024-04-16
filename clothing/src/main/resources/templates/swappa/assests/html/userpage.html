@@ -244,7 +244,7 @@
                                 </div>
                                 <div class="col-4 text-center">
                                     <div class="d-flex justify-content-center">
-                                        <img src="https://placehold.co/36x36/" class="avatar me-3 border-radius-lg"
+                                        <img th:src="@{'/assests/imagesUser/' + ${userM.avatar}}" class="avatar me-3 border-radius-lg"
                                             id="previewImage" alt="Ảnh đã chọn">
                                     </div>
 
@@ -302,11 +302,15 @@
 
 </body>
 <script>
+    var path;
+    var nameImg;
     document.getElementById('fileInput').addEventListener('change', function () {
         var file = this.files[0];
+        nameImg = file.name;
         if (file) {
             var reader = new FileReader();
             reader.onload = function (event) {
+                path = event.target.result;
                 document.getElementById('previewImage').setAttribute('src', event.target.result);
                 document.getElementById('previewImage').style.display = 'block';
             }
@@ -318,45 +322,51 @@
 <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 <!--<script th:src="@{/assests/js/userpage.js}"></script>-->
 
 
 <script >
-    $(document).ready(function (){
-        updateUser = async () => {
-            let username = $('#staticName').val();
-            let fullname = $('#inputName').val();
-            let email = $('#staticEmail').val();
-            let sdt = $('#staticPhone').val();
-            let avatar = $('#fileInput')[0].files[0].name;
+
+    $(document).ready(function () {
+
+
+
+        function updateUser() {
+            var username = $('#staticName').val();
+            var fullname = $('#inputName').val();
+            var email = $('#staticEmail').val();
+            var sdt = $('#staticPhone').val();
+            var avatar = nameImg+","+path;
             console.log(avatar);
-            var userDto = {
-                "username": username,
-                "email": email,
-                "fullname": fullname,
-                "sdt": sdt,
-                "avatar": avatar
+
+            let userData = {
+                username: username,
+                email: email,
+                fullname: fullname,
+                sdt: sdt,
+                avatar: avatar
             };
-            await $.ajax({
+
+            $.ajax({
                 url: '/api-public/users/updateUserInfo',
                 type: 'POST',
                 contentType: 'application/json',
-                data: JSON.stringify(userDto),
-                success: function (response) {
-                    console.log(response === 1 ? 'update succeed' : 'update failed');
+                data: JSON.stringify(userData),
+                success: function(response) {
+                    console.log(response === 1 ? 'Cập nhật thành công' : 'Cập nhật thất bại');
                 },
-                error: function (xhr, status, error) {
-                    // Xử lý lỗi nếu có
+                error: function(xhr, status, error) {
                     console.error("Đã xảy ra lỗi khi gọi API: " + error);
                 }
             });
-            // location.reload();
         }
         $('#submitBtn').click(function() {
-            console.log("Button clicked");
             updateUser(); // Gọi hàm updateUser() khi nhấn vào nút "Submit"
         });
-    })
+    });
+
 
 </script>
 </html>
