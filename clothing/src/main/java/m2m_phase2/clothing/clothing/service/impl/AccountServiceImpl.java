@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
-import m2m_phase2.clothing.clothing.entity.Account;
+import m2m_phase2.clothing.clothing.data.entity.Account;
 import m2m_phase2.clothing.clothing.repository.AccountRepo;
 import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;

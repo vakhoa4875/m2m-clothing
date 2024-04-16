@@ -1,9 +1,6 @@
 package m2m_phase2.clothing.clothing.service;
 
-import m2m_phase2.clothing.clothing.entity.Account;
-
-import java.sql.SQLException;
-import java.util.List;
+import m2m_phase2.clothing.clothing.data.entity.Account;
 
 public interface AccountService {
 

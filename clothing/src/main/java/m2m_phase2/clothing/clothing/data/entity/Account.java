@@ -1,4 +1,4 @@
-package m2m_phase2.clothing.clothing.entity;
+package m2m_phase2.clothing.clothing.data.entity;
 
 import java.io.Serializable;
 
