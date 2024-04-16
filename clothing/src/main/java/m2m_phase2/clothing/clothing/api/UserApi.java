@@ -5,7 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.service.UserService;
-import m2m_phase2.clothing.clothing.utils.FileUploadUtils;
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -90,14 +91,23 @@ public class UserApi {
     public ResponseEntity<?> doPostUpdateUserInfo(@RequestBody UserDto userDto) {
         byte rowEffected;
         try {
-//            // Lưu hình ảnh vào thư mục của dự án
-//            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
-//            String uploadDir = "src/main/resources/templates/swappa/assests/imagesUser";
-//            FileUploadUtils.saveFile(uploadDir, fileName, file);
-//
-//            // Cập nhật đường dẫn hình ảnh vào DTO của người dùng
-//            userDto.setAvatar(fileName);
+            // Nhận dữ liệu base64 từ Frontend
+            String base64Data = userDto.getAvatar();
+            String name = base64Data.substring(0, base64Data.indexOf(","));
+            int viTriDauPhayThuHai = base64Data.indexOf(",", base64Data.indexOf(",") + 1); // vị trí dấu phẩy thứ hai
+            String data = base64Data.substring(viTriDauPhayThuHai + 1);
+            System.out.println(data);
 
+            // Giải mã base64 thành byte array
+            byte[] bytes = Base64.decodeBase64(data);
+
+
+            // Tạo file ảnh
+            File file = new File("src/main/resources/templates/swappa/assests/imagesUser", name); // đường dẫn lưu trữ
+            FileOutputStream fos = new FileOutputStream(file);
+            fos.write(bytes);
+            fos.close();
+            userDto.setAvatar(name);
             rowEffected = userService.updateUserInfo(userDto);
         } catch (Exception e) {
             System.out.println("Gọi API thất bại: /api-public/users/saveUser");
@@ -105,6 +115,8 @@ public class UserApi {
         }
         return ResponseEntity.ok(rowEffected);
     }
+
+
 
 
 }
