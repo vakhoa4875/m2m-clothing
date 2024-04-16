@@ -1,14 +1,13 @@
-package m2m_phase2.clothing.clothing.controller.api;
+package m2m_phase2.clothing.clothing.api;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
-import m2m_phase2.clothing.clothing.entity.Category;
-import m2m_phase2.clothing.clothing.entity.Product;
+import m2m_phase2.clothing.clothing.data.entity.Category;
+import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.service.impl.CategoryImpl;
 import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
 import org.springframework.web.bind.annotation.GetMapping;

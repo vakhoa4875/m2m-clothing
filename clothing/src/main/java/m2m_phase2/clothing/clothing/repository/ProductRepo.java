@@ -7,8 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import m2m_phase2.clothing.clothing.entity.Category;
-import m2m_phase2.clothing.clothing.entity.Product;
+import m2m_phase2.clothing.clothing.data.entity.Category;
+import m2m_phase2.clothing.clothing.data.entity.Product;
 
 @Repository
 public interface ProductRepo extends JpaRepository<Product, Integer> {

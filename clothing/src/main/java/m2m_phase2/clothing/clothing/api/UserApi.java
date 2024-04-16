@@ -1,4 +1,4 @@
-package m2m_phase2.clothing.clothing.controller.api;
+package m2m_phase2.clothing.clothing.api;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
