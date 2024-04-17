@@ -13,6 +13,8 @@ import java.util.List;
 
 @Repository
 public interface UserRepo extends JpaRepository<UserE, Integer> {
+
+    UserE save(UserE userE);
     @Query(value = "select * from [user] u where u.is_disable <> 1", nativeQuery = true)
     List<UserE> findAll();
     @Modifying
@@ -28,8 +30,8 @@ public interface UserRepo extends JpaRepository<UserE, Integer> {
                        @Param("roleName")String roleName,
                        @Param("description")String description);
 
-    @Override
-    <UserDto extends UserE> UserDto save(UserDto userDto);
+//    @Override
+//    <UserDto extends UserE> UserDto save(UserDto userDto);
     @Modifying
     @Transactional
     @Query(value =  "update [user] " +

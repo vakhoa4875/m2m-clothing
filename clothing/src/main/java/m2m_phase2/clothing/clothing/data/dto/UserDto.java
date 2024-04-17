@@ -18,6 +18,8 @@ public class UserDto {
     private String jobTitle;
     private int roleId;
     private String roleName;
+    private String GgToken;
+    private String HashedPassword;
     private String sdt;
 
     public String getHashedPassword() {

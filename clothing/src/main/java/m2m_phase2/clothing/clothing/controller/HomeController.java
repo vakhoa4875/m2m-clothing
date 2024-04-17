@@ -9,6 +9,7 @@ import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
 import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
 import m2m_phase2.clothing.clothing.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {

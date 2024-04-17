@@ -2,6 +2,7 @@ package m2m_phase2.clothing.clothing.service;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
+import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,8 @@ public interface UserService {
     byte saveUser(UserDto userDto) throws SQLException;
     byte disableUser(UserDto userDto) throws SQLException;
     void saveAdminTokenToSession(HttpSession session, UserDto userDto) throws SQLException;
-//    String checkUserAdminRole(UserDto userDto);
+
+    void saveUserGG(UserE usere);
+    //    String checkUserAdminRole(UserDto userDto);
 //    void saveToSession(HttpSession httpSession, UserDto userDto);
 }

@@ -129,6 +129,11 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public void saveUserGG(UserE userE) {
+        userRepo.save(userE);
+    }
+
 //    @Override
 //    public List<UserM> getUserByDto(UserDto userDto) throws SQLException {
 //        return UserM.converListUserEToListUserM(userRepo.getUserByDto(userDto));
