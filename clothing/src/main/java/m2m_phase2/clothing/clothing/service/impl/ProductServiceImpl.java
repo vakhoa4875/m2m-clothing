@@ -7,8 +7,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import m2m_phase2.clothing.clothing.entity.Category;
-import m2m_phase2.clothing.clothing.entity.Product;
+import m2m_phase2.clothing.clothing.data.entity.Category;
+import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
 import m2m_phase2.clothing.clothing.service.ProductService;
 

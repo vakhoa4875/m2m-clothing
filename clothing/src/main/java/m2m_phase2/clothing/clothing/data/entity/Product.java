@@ -1,13 +1,10 @@
-package m2m_phase2.clothing.clothing.entity;
+package m2m_phase2.clothing.clothing.data.entity;
 
 import java.io.Serializable;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.ToString;
 
 @Entity
 @Table(name = "Product")
