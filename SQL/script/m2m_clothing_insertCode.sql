@@ -652,8 +652,15 @@ go
  UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 40
  UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 41
 
+ INSERT INTO Comment(comment, product_id, user_id, create_date)
+ VALUES
+ ('That shirt is so beautiful', 1 , 1, N'2024-04-15'),
+ ('That is so great', 1 , 3, N'2024-04-15'),
+  ('That is so great', 2 , 1, N'2024-04-15'),
+   ('So beautiful', 2 , 2, N'2024-04-15')
 
 
+   select * from Comment
 
 
 
