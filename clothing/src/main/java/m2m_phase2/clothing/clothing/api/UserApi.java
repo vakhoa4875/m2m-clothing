@@ -3,14 +3,11 @@ package m2m_phase2.clothing.clothing.api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
-import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.service.UserService;
-import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -23,7 +20,6 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @Slf4j
@@ -119,15 +115,6 @@ public class UserApi {
         }
         return ResponseEntity.ok(rowEffected);
     }
-
-
-    @GetMapping("/save")
-    public Map<String, Object> currentUser(OAuth2AuthenticationToken oAuth2AuthenticationToken) throws SQLException {
-        Map<String,Object> attributes =  oAuth2AuthenticationToken.getPrincipal().getAttributes();
-//        saveAccGG(attributes);
-        return attributes;
-    }
-
 
 
 

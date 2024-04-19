@@ -1,7 +1,6 @@
 package m2m_phase2.clothing.clothing.repository;
 
 import jakarta.transaction.Transactional;
-import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -13,8 +12,9 @@ import java.util.List;
 
 @Repository
 public interface UserRepo extends JpaRepository<UserE, Integer> {
-
+    //M2M- 010 TanLoc Begin
     UserE save(UserE userE);
+    //M2M- 010 TanLoc End
     @Query(value = "select * from [user] u where u.is_disable <> 1", nativeQuery = true)
     List<UserE> findAll();
     @Modifying

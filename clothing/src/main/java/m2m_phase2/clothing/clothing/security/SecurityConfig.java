@@ -14,14 +14,13 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         return http
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/giohang").authenticated();
                     auth.anyRequest().permitAll();
                 })
                 .formLogin(formlogin -> formlogin
-                        .loginPage("/login")
+                        .loginPage("/userprofile")
                         .defaultSuccessUrl("/home")
                         .permitAll()
                 ).logout(logout -> logout
@@ -32,7 +31,6 @@ public class SecurityConfig {
                 .oauth2Login(
                         Customizer.withDefaults()
                 )
-
                 .build();
     }
 }

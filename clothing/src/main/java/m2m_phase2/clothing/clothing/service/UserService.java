@@ -29,8 +29,9 @@ public interface UserService {
     byte saveUser(UserDto userDto) throws SQLException;
     byte disableUser(UserDto userDto) throws SQLException;
     void saveAdminTokenToSession(HttpSession session, UserDto userDto) throws SQLException;
-
+    //M2M- 010 TanLoc Begin
     void saveUserGG(UserE usere);
+    //M2M- 010 TanLoc End
     //    String checkUserAdminRole(UserDto userDto);
 //    void saveToSession(HttpSession httpSession, UserDto userDto);
 }
