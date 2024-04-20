@@ -40,6 +40,13 @@
             object-fit: cover;
             margin-top: 20px;
         }
+
+        #previewImage1 {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-top: 20px;
+        }
     </style>
 
     <script>
@@ -140,6 +147,14 @@
                                     data-bs-toggle="pill" data-bs-target="#v-pills-product" type="button" role="tab"
                                     aria-controls="v-pills-product" aria-selected="false">ACCESS PRODUCT
                             </button>
+                            <button class="nav-link mt-1 text-black" id="v-pills-home-sale"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-sale" type="button" role="tab"
+                                    aria-controls="v-pills-sale" aria-selected="false">SALE AND PRODUCT
+                            </button>
+                            <button class="nav-link mt-1 text-black" id="v-pills-home-voucher"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-voucher" type="button" role="tab"
+                                    aria-controls="v-pills-voucher" aria-selected="false">VOUCHER ACCOUNT
+                            </button>
                             <a class="nav-link mt-1 text-black" href="/admin/logout">Log Out
                             </a>
                         </div>
@@ -186,9 +201,146 @@
                         </div>
                         <div class="card-body px-0 mx-3 pb-2">
 
-<!--                            viết body vào đây-->
-                            <div class="table-responsive p-0" id="tableUserContainer1">
+                            <!--viết body vào đây-->
+                            <div class="table-responsive p-0" id="tableAccessProductContainer">
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="v-pills-sale" role="tabpanel"
+                     aria-labelledby="v-pills-home-sale" tabindex="0">
+                    <div class="card my-4">
+                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">SALE AND PRODUCT MANAGEMENT
+                                </h5>
+                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
+                                        data-bs-target="#exampleModalToggleProduct" data-bs-toggle="modal"
+                                        style="padding: 7px 12px 7px 12px;">
+                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 mx-3 pb-2">
+
+                            <!--viết body vào đây Lộc-->
+                            <div class="table-responsive p-0" id="tableSaleContainer">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th scope="col" class="max-width-column"></th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="max-width-column">
+                                            <div class="d-flex py-1 justify-content-center">
+                                                <div>
+                                                    <!--Hình của sản phầm... 1 hình avatar product-->
+                                                    <img src="" class="avatar avatar-sm border-radius-lg" alt="">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <div class="d-flex w-100 flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">Sản phẩm 1</h6>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-secondary text-xs font-weight-bold">20$</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">199999</span>
+                                        </td>
+
+                                        <td class="align-middle text-center">
+                                            <button class="btn border-0 rounded btn-outline-info"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalUpdateProduct">
+                                                <i class="fa-solid fa-pen-to-square"></i></button>
+                                            <button class="border border-0 rounded btn-outline-danger"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalDeleteProduct">
+                                                <i class="fa-solid fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="v-pills-voucher" role="tabpanel"
+                     aria-labelledby="v-pills-home-voucher" tabindex="0">
+                    <div class="card my-4">
+                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">VOUCHER ACCOUNT
+                                </h5>
+                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
+                                        data-bs-target="#exampleModalToggleVoucher" data-bs-toggle="modal"
+                                        style="padding: 7px 12px 7px 12px;">
+                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 mx-3 pb-2">
+
+                            <!--viết body vào đây VOUCHER ACCOUNT-->
+                            <div class="table-responsive p-0" id="tableVoucherContainer">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th scope="col" class="max-width-column"></th>
+                                        <th scope="col">Name Voucher</th>
+                                        <th scope="col">Giá giảm</th>
+                                        <th scope="col">Ngày bắt đầu</th>
+                                        <th scope="col">Ngày kết thúc</th>
+                                        <th scope="col">Số lượng Voucher</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="max-width-column">
+                                            <div class="d-flex py-1 justify-content-center">
+                                                <div>
+                                                    <!--Hình của sản phầm... 1 hình avatar product-->
+                                                    <img src="" class="avatar avatar-sm border-radius-lg" alt="">
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <div class="d-flex w-100 flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">Voucher 1</h6>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-secondary text-xs font-weight-bold">-20%</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">5-3-2024</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">20-4-2024</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">500</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <button class="btn border-0 rounded btn-outline-info"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalUpdateVoucher">
+                                                <i class="fa-solid fa-pen-to-square"></i></button>
+                                            <button class="border border-0 rounded btn-outline-danger"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalDeleteVoucher">
+                                                <i class="fa-solid fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
@@ -198,12 +350,10 @@
     </div>
 </div>
 
-<!--
 
-insert modal
-
--->
-<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+<!--==================================================MODAL ACCOUNT INFORMATION==============================================-->
+<!--insert modal Account Information-->
+<div class="modal fade modal-lg" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -240,13 +390,6 @@ insert modal
                            style="border: 1px solid #d2d6da;">
 
                 </div>
-<!--                <div class="mb-2 ">-->
-<!--                    <label class="form-label me-3 m-0">Gender</label>-->
-<!--                    <input id="ingenderMale" class="" type="radio" name=inGender"-->
-<!--                           style="border: 1px solid #d2d6da;"> Male-->
-<!--                    <input id="ingenderFemale" class="ms-1" type="radio" name="inGender"-->
-<!--                           style="border: 1px solid #d2d6da;"> Female-->
-<!--                </div>-->
                 <div class="mb-2 ">
                     <label for="inRole" class="form-label me-3 m-0">Role</label>
                     <select class="form-select" id="inRole" aria-label="Default select example">
@@ -261,8 +404,8 @@ insert modal
                 </div>
             </div>
             <div class="modal-footer">
-                <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="services.insertNewUser()">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                        onclick="services.insertNewUser()">
                     Add new user
                 </button>
             </div>
@@ -271,7 +414,7 @@ insert modal
 </div>
 
 
-<!-- modal sửa -->
+<!-- modal sửa Account Information-->
 <div class="modal fade modal-lg" id="exampleModalSua1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
@@ -283,6 +426,9 @@ insert modal
             </div>
             <div class="modal-body" id="updateUserModalBody">
 
+
+            </div>
+            <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="services.updateUser()">
                     Save changes
                 </button>
@@ -290,7 +436,7 @@ insert modal
         </div>
     </div>
 </div>
-<!-- Modal -->
+<!-- Modal xóa Account Information-->
 <div class="modal fade" id="exampleModalXoa" tabindex="-1" aria-labelledby="exampleModalXoa" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -301,13 +447,220 @@ insert modal
             <div class="modal-body">Are your sure to delete this user out of your system?</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="services.disableUser()">I'm sure!</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="services.disableUser()">
+                    I'm sure!
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--========================================SALE AND PRODUCT MANAGEMENT<=====================================================-->
+<!--insert modal PRODUCT MANAGEMENT<-->
+<div class="modal fade modal-lg" id="exampleModalToggleProduct" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="insertProductModal">SALE AND PRODUCT MANAGEMENT</h1>
+                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body" id="insertProductModalBody">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="mb-2 ">
+                            <label for="insNameProduct" class="form-label">Name</label>
+                            <input type="text" class="form-control ps-3" id="insNameProduct"
+                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="insPriceProduct" class="form-label">Price</label>
+                            <input type="text" class="form-control ps-3" id="insPriceProduct"
+                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="insQuantityProduct" class="form-label">Quantity</label>
+                            <input type="text" class="form-control ps-3" id="insQuantityProduct"
+                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2">
+                            <label for="inDescriptionProduct" class="form-label">Description</label>
+                            <textarea class="form-control" id="inDescriptionProduct" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="container " style="">
+                            <div class="d-flex justify-content-center">
+                                <img src="" class="avatar me-3 border-radius-lg"
+                                     id="previewImage" alt="Ảnh đã chọn">
+                            </div>
+                            <div class="text-center my-3" style="margin-right: 10px;">
+                                <input type="file" class="form-control" id="fileInput" accept="" onchange="">
+                                <label class="custom-file-label" for="fileInput">Chọn ảnh từ local</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+                    Add new Product
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal sửa Product-->
+<div class="modal fade modal-lg" id="exampleModalUpdateProduct" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="updateProductModal">Product</h1>
+                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body" id="updateProductModalBody">
+                <div class="row">
+                    <div class="col-8">
+                        <div class="mb-2 ">
+                            <label for="insNameProduct" class="form-label">Name</label>
+                            <input type="text" class="form-control ps-3" id="updateNameProduct"
+                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="insPriceProduct" class="form-label">Price</label>
+                            <input type="text" class="form-control ps-3" id="updatePriceProduct"
+                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="insQuantityProduct" class="form-label">Quantity</label>
+                            <input type="text" class="form-control ps-3" id="updateQuantityProduct"
+                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2">
+                            <label for="inDescriptionProduct" class="form-label">Description</label>
+                            <textarea class="form-control" id="updateDescriptionProduct" rows="3"></textarea>
+                        </div>
+                    </div>
+                    <div class="col-4">
+                        <div class="container " style="">
+                            <div class="d-flex justify-content-center">
+                                <img src="" class="avatar me-3 border-radius-lg"
+                                     id="previewImage1" alt="Ảnh đã chọn">
+                            </div>
+                            <div class="text-center my-3" style="margin-right: 10px;">
+                                <input type="file" class="form-control" id="fileInput1" accept="" onchange="">
+                                <label class="custom-file-label" for="fileInput1">Chọn ảnh từ local</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal xóa Product-->
+<div class="modal fade" id="exampleModalDeleteProduct" tabindex="-1" aria-labelledby="exampleModalXoa"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="DeleteProductModal">Confirm delete Product?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">Are your sure to delete this user out of your system?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="">
+                    I'm sure!
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--====================================================Voucher==============================================================-->
+<!--insert modal Voucher Acount<-->
+<div class="modal fade modal-lg" id="exampleModalToggleVoucher" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="insertVoucherModal">VOUCHER ACOUNT</h1>
+                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body" id="insertVoucherModalBody">
+                <div class="mb-2 ">
+                    <label for="insNameProduct" class="form-label">Name</label>
+                    <input type="text" class="form-control ps-3" id="insNameVoucher"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal">
+                    Add new Product
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- modal sửa Product-->
+<div class="modal fade modal-lg" id="exampleModalUpdateVoucher" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="updateVoucherModal">Product</h1>
+                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body" id="updateVoucherModalBody">
+                <div class="mb-2 ">
+                    <label for="insNameProduct" class="form-label">Name Voucher</label>
+                    <input type="text" class="form-control ps-3" id="updateNameVoucher"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal xóa Voucher-->
+<div class="modal fade" id="exampleModalDeleteVoucher" tabindex="-1" aria-labelledby="exampleModalXoa"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="DeleteVoucherModal">Confirm delete Voucher?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">Are your sure to delete this user out of your system?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="">
+                    I'm sure!
+                </button>
             </div>
         </div>
     </div>
 </div>
 
-
+<!--=========================================================================================================================-->
 <!-- footer -->
 <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
     <div class="container pt-2 pb-2">
@@ -354,6 +707,57 @@ insert modal
 <script src="/assests/js/app_admin.js"></script>
 <script src="/assests/js/script.js"></script>
 
+
+<!--đọc ảnh cho insert product-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lắng nghe sự kiện khi người dùng chọn file
+        document.getElementById("fileInput").addEventListener("change", function () {
+            // Lấy ra đối tượng file đã chọn
+            var file = this.files[0];
+
+            // Kiểm tra xem file có tồn tại không
+            if (file) {
+                // Tạo một đối tượng FileReader để đọc file
+                var reader = new FileReader();
+
+                // Lắng nghe sự kiện khi FileReader đã đọc xong file
+                reader.onload = function (e) {
+                    // Hiển thị ảnh đã chọn lên giao diện
+                    document.getElementById("previewImage").src = e.target.result;
+                };
+
+                // Đọc file như một đường dẫn URL dạng Data URL
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>
+<!--đọc ảnh cho update product-->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Lắng nghe sự kiện khi người dùng chọn file
+        document.getElementById("fileInput1").addEventListener("change", function () {
+            // Lấy ra đối tượng file đã chọn
+            var file = this.files[0];
+
+            // Kiểm tra xem file có tồn tại không
+            if (file) {
+                // Tạo một đối tượng FileReader để đọc file
+                var reader = new FileReader();
+
+                // Lắng nghe sự kiện khi FileReader đã đọc xong file
+                reader.onload = function (e) {
+                    // Hiển thị ảnh đã chọn lên giao diện
+                    document.getElementById("previewImage1").src = e.target.result;
+                };
+
+                // Đọc file như một đường dẫn URL dạng Data URL
+                reader.readAsDataURL(file);
+            }
+        });
+    });
+</script>
 
 </body>
 
