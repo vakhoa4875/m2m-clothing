@@ -173,6 +173,8 @@ create or alter trigger trigger_after_update_user
     end
 go
 
+
+
 --CREATE OR ALTER TRIGGER gen_user_info 
 --ON Account
 --AFTER INSERT
@@ -186,6 +188,33 @@ go
 --go
 
 
+CREATE TABLE [Order] (
+    order_id int IDENTITY(1,1) PRIMARY KEY,
+    customer_id int NOT NULL,
+    order_date date DEFAULT GETDATE(),
+    phone_number varchar(20),
+    delivery_address nvarchar(255),
+    payment_method nvarchar(50),
+    total_amount float,
+    payment_status nvarchar(50),
+    CONSTRAINT FK_Customer_User FOREIGN KEY (customer_id) REFERENCES [user] (id)
+);
+
+
+
+SELECT 
+    o.order_id,
+    o.order_date,
+    o.phone_number,
+    o.delivery_address,
+    o.payment_method,
+    o.total_amount,
+    o.payment_status,
+    u.*
+FROM 
+    [Order] o
+INNER JOIN 
+    [user] u ON o.customer_id = u.id;
 
 
 

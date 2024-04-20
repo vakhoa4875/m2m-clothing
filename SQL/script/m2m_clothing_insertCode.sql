@@ -653,7 +653,11 @@ go
  UPDATE m2m_clothing.dbo.Product SET sale_ID = 2 WHERE product_id = 41
 
 
-
+ -- Chèn dữ liệu vào bảng [Order]
+INSERT INTO [Order] (customer_id, phone_number, delivery_address, payment_method, total_amount, payment_status)
+VALUES 
+    (1, '123456789', '123 Main Street', 'Credit Card', 100.50, 'Pending'),
+    (2, '987654321', '456 Oak Avenue', 'PayPal', 75.25, 'Completed');
 
 
 
