@@ -128,7 +128,12 @@ public class UserServiceImpl implements UserService {
             session.removeAttribute("adminToken");
         }
     }
-
+    //M2M- 010 TanLoc Begin
+    @Override
+    public void saveUserGG(UserE userE) {
+        userRepo.save(userE);
+    }
+    //M2M- 010 TanLoc End
 //    @Override
 //    public List<UserM> getUserByDto(UserDto userDto) throws SQLException {
 //        return UserM.converListUserEToListUserM(userRepo.getUserByDto(userDto));

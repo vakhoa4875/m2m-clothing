@@ -191,7 +191,9 @@ public class AccountServiceImpl implements AccountService {
 	}
 
 	public boolean isLoggedIn(HttpSession session) {
-		// Kiểm tra xem session có chứa thông tin người dùng hay không
-		return session.getAttribute("loggedInUser") != null && session.getAttribute("loggedInPassword") != null;
-	}
+        //M2M- 010 TanLoc Begin
+        return session.getAttribute("loggedInUser") != null;
+//		return session.getAttribute("loggedInUser") != null && session.getAttribute("loggedInPassword") != null;
+        //M2M- 010 TanLoc End
+    }
 }
