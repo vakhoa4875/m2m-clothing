@@ -1,8 +1,6 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
-import lombok.Builder;
 import lombok.Data;
-import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Data
@@ -18,6 +16,10 @@ public class UserDto {
     private String jobTitle;
     private int roleId;
     private String roleName;
+    //M2M- 010 TanLoc Begin
+    private String GgToken;
+    private String HashedPassword;
+    //M2M- 010 TanLoc End
     private String sdt;
 
     public String getHashedPassword() {
