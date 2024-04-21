@@ -332,6 +332,9 @@
                                         </td>
                                         <td class="align-middle text-center">
                                             <button class="btn border-0 rounded btn-outline-info"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalVoucherSendAcount">
+                                                <i class="fa-solid fa-ticket"></i></button>
+                                            <button class="btn border-0 rounded btn-outline-info"
                                                     data-bs-toggle="modal" data-bs-target="#exampleModalUpdateVoucher">
                                                 <i class="fa-solid fa-pen-to-square"></i></button>
                                             <button class="border border-0 rounded btn-outline-danger"
@@ -659,7 +662,68 @@
         </div>
     </div>
 </div>
+<!--===========================================Select voucher for user=======================================================-->
+<div class="modal fade modal-lg" id="exampleModalVoucherSendAcount" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="VoucherModalSendAcount">Select voucher for user</h1>
+                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body" id="VoucherSendAcountModalBody">
+                <table class="table align-items-center mb-0">
+                    <thead>
+                    <tr class="text-center">
+                        <th scope="col">UserName</th>
+                        <th scope="col">FullName</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td class="align-middle text-center text-sm">
+                            <div class="d-flex w-100 flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">trongle</h6>
+                            </div>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                            <div class="d-flex w-100 flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">Cao Trọng Lễ</h6>
+                            </div>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                            <span class="text-secondary text-xs font-weight-bold">trongle3110@gmail.com</span>
+                        </td>
+                        <td class="align-middle text-center">
+                            <span class="text-secondary text-xs font-weight-bold">0123456789</span>
+                        </td>
 
+                        <td class="align-middle text-center">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedVoucher" checked>
+                                <label class="form-check-label" for="flexCheckCheckedVoucher">
+                                    Voucher
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="">
+                    SEND
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
 <!--=========================================================================================================================-->
 <!-- footer -->
 <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
