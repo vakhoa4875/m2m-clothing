@@ -80,9 +80,16 @@ create table [user] (
     role_name   nvarchar(63)    not null default 'User',
     processed   bit             default 0
 );
+
+
+create table Comment(
+	comment_id int IDENTITY(1,1) PRIMARY KEY,
+	comment varchar(255),
+	product_id int FOREIGN KEY REFERENCES Product(product_id),
+	user_id int FOREIGN KEY REFERENCES [user](id),
+	create_date date
+);
 go
-
-
 --trigger insert into user after insert into Account
 create or alter trigger trigger_after_insert_into_UserInfo
     on Account
@@ -173,6 +180,7 @@ create or alter trigger trigger_after_update_user
     end
 go
 
+select * from Comment
 --CREATE OR ALTER TRIGGER gen_user_info 
 --ON Account
 --AFTER INSERT

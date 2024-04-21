@@ -35,246 +35,250 @@
 </head>
 
 <body style="background-color: rgb(18,17,13);">
-    <!-- header -->
-    <div>
-        <!-- mobileNav -->
-        <div class="d-block d-lg-none">
-            <div id="mobileNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-                <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
-                    <div class="container-sm">
+<!-- header -->
+<div>
+    <!-- mobileNav -->
+    <div class="d-block d-lg-none">
+        <div id="mobileNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+            <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
+                <div class="container-sm">
 
-                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
                             data-bs-target="#slide_menu" aria-controls="navbarSupportedContent" aria-expanded="false"
                             aria-label="Toggle navigation">
-                            <i class="fa-solid fa-bars"></i>
-                        </button>
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
 
-                        <a href="/trangchu" class="navbar-brand" title="Swappa">
-                            <img class="img-fluid"
-                                src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                alt="Swappa Logo">
-                        </a>
+                    <a href="/trangchu" class="navbar-brand" title="Swappa">
+                        <img class="img-fluid"
+                             src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                             alt="Swappa Logo">
+                    </a>
 
-                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
                             data-bs-target="#slide_search" aria-controls="navbarSupportedContent" aria-expanded="false"
                             aria-label="Search">
-                            <i class="fa-solid fa-search" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </nav>
-            </div>
-
+                        <i class="fa-solid fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </nav>
         </div>
-        <!-- mainNav -->
-        <div class="d-none d-lg-block">
-            <!-- first-nav -->
-            <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-                <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
-                    <div class="container d-block">
-                        <div class="d-flex gap-3">
-                            <ul class="navbar-nav" role="presentation">
-                                <li class="nav-item">
-                                    <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
-                                        <img class="img-fluid"
-                                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                            width="167px" height="35px" alt="Bootstrap">
+
+    </div>
+    <!-- mainNav -->
+    <div class="d-none d-lg-block">
+        <!-- first-nav -->
+        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+            <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
+                <div class="container d-block">
+                    <div class="d-flex gap-3">
+                        <ul class="navbar-nav" role="presentation">
+                            <li class="nav-item">
+                                <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
+                                    <img class="img-fluid"
+                                         src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                         width="167px" height="35px" alt="Bootstrap">
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="flex-grow-1">
+                            <form action="" class="d-flex align-items-center position-relative h-100">
+                                <!-- {{keyword}} -->
+                                <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
+                                <input type="search" class="form-control rounded-0" id="navbar_search_input"
+                                       name="q" ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
+                                <!-- </a> -->
+                            </form>
+                        </div>
+                        <ul class="navbar-nav" role="presentation">
+                            <li class="d-flex align-items-center justify-content-center">
+                                <div class="">
+                                    <a href="/userprofile">
+                                        <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
                                     </a>
-                                </li>
-                            </ul>
-                            <div class="flex-grow-1">
-                                <form action="" class="d-flex align-items-center position-relative h-100">
-                                    <!-- {{keyword}} -->
-                                    <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
-                                    <input type="search" class="form-control rounded-0" id="navbar_search_input"
-                                        name="q" ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
-                                    <!-- </a> -->
-                                </form>
-                            </div>
-                            <ul class="navbar-nav" role="presentation">
-                                <li class="d-flex align-items-center justify-content-center">
-                                    <div class="">
-                                        <a href="/userprofile">
-                                            <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </li>
-                                <li class="ms-3 d-flex align-items-center justify-content-center">
-                                    <a href="/giohang" class="border border-0 position-relative"
-                                        style="background-color: rgb(18,17,13) !important;">
-                                        <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;"
-                                            aria-hidden="true"></i>
-                                        <span
+                                </div>
+                            </li>
+                            <li class="ms-3 d-flex align-items-center justify-content-center">
+                                <a href="/giohang" class="border border-0 position-relative"
+                                   style="background-color: rgb(18,17,13) !important;">
+                                    <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;"
+                                       aria-hidden="true"></i>
+                                    <span
                                             class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                                             1
                                         </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="d-flex justify-content-around pb-1" id="userListCategory">
-                            <!-- api -->
-                        </div>
+                                </a>
+                            </li>
+                        </ul>
                     </div>
-                </nav>
-            </div>
-            <!-- second-nav -->
+                    <div class="d-flex justify-content-around pb-1" id="userListCategory">
+                        <!-- api -->
+                    </div>
+                </div>
+            </nav>
         </div>
+        <!-- second-nav -->
     </div>
+</div>
 
-    <!-- main -->
-
-    <div class="container-fluid bg-semiBlack mb-5">
-        <main class="flex-shrink-0">
-            <div class="container text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
-                <div class="row">
-                    <div class="col-xl-3 col-lg-12">
-                        <div class="container mt-4">
-                            <h4 class="text-center">Edit Profile</h4>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">
-                                    <a href="">Change Password</a>
-                                </li>
-                                <li class="list-group-item">A second item</li>
-                                <li class="list-group-item">A third item</li>
-                                <li class="list-group-item">A fourth item</li>
-                                <li class="list-group-item">And a fifth one</li>
-                                <li class="list-group-item"></li>
-                            </ul>
+<!-- main -->
+<div class="container-fluid  bg-body-secondary" style="height: 800px;">
+    <div class="row">
+        <div class="col-xl-3 col-lg-12 mt-4">
+            <div class="card">
+                <div class="card-header bg-black text-center">
+                    <a class="text-white bg-gradient-primary" href="../pages/tables.html">
+                        <h5 class="m-0"><strong>USER PROFILE</strong></h5>
+                    </a>
+                </div>
+                <div class="card-body pt-2">
+                    <div class="align-items-start">
+                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                             aria-orientation="vertical">
+                            <button class="nav-link mt-1 text-black active" id="v-pills-home-tab"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab"
+                                    aria-controls="v-pills-home" aria-selected="true">My profile
+                            </button>
+                            <button class="nav-link mt-1 text-black" id="v-pills-home-status"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-status" type="button" role="tab"
+                                    aria-controls="v-pills-status" aria-selected="false">Trạng thái đơn hàng
+                            </button>
+                            <a class="nav-link mt-1 text-black" href="">Log Out</a>
                         </div>
                     </div>
-                    <div class="col-xl-9 col-lg-12 bg-body-secondary">
-                        <div class="container" >
-                            <div class="header mt-3">
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item bg-body-secondary">
-                                        <h3>My profile</h3>
-                                        <span>Manage profile information for account security</span>
-                                    </li>
-                                    <li class="list-group-item bg-body-secondary"></li>
-                                </ul>
-                            </div>
-                            <div class="row" th:object="${userM}">
-                                <div class="col-8">
-                                    <div class="container">
-                                        <div class="mb-3 row">
-                                            <label for="staticName"
-                                                class="col-xl-2 col-lg-12 col-form-label">UserName</label>
-                                            <div class="col-xl-10 col-lg-12">
-                                                <input type="text" readonly class="form-control-plaintext"
-                                                    id="staticName" th:value="*{username}" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label for="inputName"
-                                                class="col-xl-2 col-lg-12 col-form-label">Name</label>
-                                            <div class="col-xl-10 col-lg-12">
-                                                <input type="name" class="form-control" id="inputName" th:value="*{fullname}">
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label for="staticEmail"
-                                                class="col-xl-2 col-lg-12 col-form-label">Email</label>
-                                            <div class="col-xl-10 col-lg-12">
-                                                <input type="mail" class="form-control" id="staticEmail" th:value="*{email}" disabled>
-                                            </div>
-                                        </div>
-                                        <div class="mb-3 row">
-                                            <label for="staticPhone"
-                                                class="col-xl-2 col-lg-12 col-form-label">Phone</label>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-9 col-lg-12">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                     aria-labelledby="v-pills-home-tab" tabindex="0">
+                    <div class="card my-4">
+                        <div class="card-body px-0 mx-3 pb-2">
+                            <div class="table-responsive p-0" id="tableUserContainer">
+                                <div class="header mt-3">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item bg-body-secondary">
+                                            <h3>My profile</h3>
+                                            <span>Manage profile information for account security</span>
+                                        </li>
+                                        <li class="list-group-item bg-body-secondary"></li>
+                                    </ul>
+                                </div>
+                                <div class="row" th:object="${userM}">
+                                    <div class="col-8">
+                                        <div class="container">
+                                            <div class="mb-3 row">
+                                                <label for="staticName"
+                                                       class="col-xl-2 col-lg-12 col-form-label">UserName</label>
                                                 <div class="col-xl-10 col-lg-12">
-                                                    <input type="Phone" class="form-control" id="staticPhone" th:value="*{sdt}">
+                                                    <input type="text" readonly class="form-control-plaintext"
+                                                           id="staticName" th:value="*{username}" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="inputName"
+                                                       class="col-xl-2 col-lg-12 col-form-label">Name</label>
+                                                <div class="col-xl-10 col-lg-12">
+                                                    <input type="name" class="form-control" id="inputName"
+                                                           th:value="*{fullname}">
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="staticEmail"
+                                                       class="col-xl-2 col-lg-12 col-form-label">Email</label>
+                                                <div class="col-xl-10 col-lg-12">
+                                                    <input type="mail" class="form-control" id="staticEmail"
+                                                           th:value="*{email}" disabled>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3 row">
+                                                <label for="staticPhone"
+                                                       class="col-xl-2 col-lg-12 col-form-label">Phone</label>
+                                                <div class="col-xl-10 col-lg-12">
+                                                    <input type="Phone" class="form-control" id="staticPhone"
+                                                           th:value="*{sdt}">
                                                 </div>
 
+                                            </div>
                                         </div>
-<!--                                        <div class="mb-3 row">-->
-<!--                                            <label for="staticRole"-->
-<!--                                                class="col-xl-2 col-lg-12 col-form-label">Role</label>-->
-<!--                                            <div class="col-xl-10 col-lg-12">-->
-<!--                                                <div class="row">-->
-<!--                                                    <div class="form-check">-->
-<!--                                                        <input class="form-check-input" type="radio"-->
-<!--                                                            name="flexRadioDefault" id="flexRadioDefaultMale">-->
-<!--                                                        <label class="form-check-label" for="flexRadioDefaultMale">-->
-<!--                                                            Male-->
-<!--                                                        </label>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-check">-->
-<!--                                                        <input class="form-check-input" type="radio"-->
-<!--                                                            name="flexRadioDefault" id="flexRadioDefaultFemale" checked>-->
-<!--                                                        <label class="form-check-label" for="flexRadioDefaultFemale">-->
-<!--                                                            Female-->
-<!--                                                        </label>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="form-check">-->
-<!--                                                        <input class="form-check-input" type="radio"-->
-<!--                                                            name="flexRadioDefault" id="flexRadioDefaultother" checked>-->
-<!--                                                        <label class="form-check-label" for="flexRadioDefaultother">-->
-<!--                                                            other-->
-<!--                                                        </label>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <div class="d-flex justify-content-center">
+                                            <img th:src="@{'/assests/imagesUser/' + ${userM.avatar}}"
+                                                 class="avatar me-3 border-radius-lg"
+                                                 id="previewImage" alt="Ảnh đã chọn">
+                                        </div>
 
+                                        <div class="text-center my-3" style="margin-right: 10px;">
+                                            <input type="file" class="form-control" id="fileInput" accept="image/*">
+                                            <label class="custom-file-label" for="fileInput">Chọn ảnh từ local</label>
+                                        </div>
                                     </div>
+                                    <button type="button" id="submitBtn" class=" col-5 btn btn-secondary ms-5 mb-5">
+                                        Submit
+                                    </button>
                                 </div>
-                                <div class="col-4 text-center">
-                                    <div class="d-flex justify-content-center">
-                                        <img th:src="@{'/assests/imagesUser/' + ${userM.avatar}}" class="avatar me-3 border-radius-lg"
-                                            id="previewImage" alt="Ảnh đã chọn">
-                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="v-pills-status" role="tabpanel"
+                     aria-labelledby="v-pills-home-status" tabindex="0">
+                    <div class="card my-4">
 
-                                    <div class="text-center my-3" style="margin-right: 10px;">
-                                        <input type="file" class="form-control" id="fileInput" accept="image/*">
-                                        <label class="custom-file-label" for="fileInput">Chọn ảnh từ local</label>
-                                    </div>
-                                </div>
-                                <button type="button"  id="submitBtn" class=" col-5 btn btn-secondary ms-5 mb-5" >Submit</button>
+                        <div class="card-body px-0 mx-3 pb-2">
+
+                            <!--viết body vào đây Hồ Thanh Tài-->
+                            <div class="table-responsive p-0" id="TableStatusUser">
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </main>
+        </div>
     </div>
+</div>
 
-    <!-- footer -->
-    <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-        <div class="container pt-2 pb-2">
-            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
 
+<!-- footer -->
+<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+    <div class="container pt-2 pb-2">
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+
+        </div>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col d-flex justify-content-center align-items-center">
+                <div class=" text-white">
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-facebook fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-instagram fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-youtube fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-linkedin fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-reddit fs-1"></i>
+                    </a>
+                </div>
             </div>
-            <div class="row row-cols-1 row-cols-md-3">
-                <div class="col d-flex justify-content-center align-items-center">
-                    <div class=" text-white">
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-facebook fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-instagram fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-youtube fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-linkedin fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-reddit fs-1"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col text-center ">
-                    <a href="./index.html"><img
-                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
-                            class="img-fluid" alt=""></a>
-                </div>
-                <div class="col text-center text-white d-flex justify-content-center align-items-center">
-                    <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
-                </div>
+            <div class="col text-center ">
+                <a href="./index.html"><img
+                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
+                        class="img-fluid" alt=""></a>
+            </div>
+            <div class="col text-center text-white d-flex justify-content-center align-items-center">
+                <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
 </body>
 <script>
@@ -303,10 +307,9 @@
 <!--<script th:src="@{/assests/js/userpage.js}"></script>-->
 
 
-<script >
+<script>
 
     $(document).ready(function () {
-
 
 
         function updateUser() {
@@ -314,7 +317,7 @@
             var fullname = $('#inputName').val();
             var email = $('#staticEmail').val();
             var sdt = $('#staticPhone').val();
-            var avatar = nameImg+","+path;
+            var avatar = nameImg + "," + path;
             console.log(avatar);
 
             let userData = {
@@ -330,15 +333,16 @@
                 type: 'POST',
                 contentType: 'application/json',
                 data: JSON.stringify(userData),
-                success: function(response) {
+                success: function (response) {
                     console.log(response === 1 ? 'Cập nhật thành công' : 'Cập nhật thất bại');
                 },
-                error: function(xhr, status, error) {
+                error: function (xhr, status, error) {
                     console.error("Đã xảy ra lỗi khi gọi API: " + error);
                 }
             });
         }
-        $('#submitBtn').click(function() {
+
+        $('#submitBtn').click(function () {
             updateUser(); // Gọi hàm updateUser() khi nhấn vào nút "Submit"
         });
     });
