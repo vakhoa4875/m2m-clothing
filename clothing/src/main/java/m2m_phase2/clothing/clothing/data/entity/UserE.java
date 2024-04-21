@@ -1,19 +1,11 @@
 package m2m_phase2.clothing.clothing.data.entity;
 import java.util.Date;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import m2m_phase2.clothing.clothing.data.dto.UserDto;
-import m2m_phase2.clothing.clothing.utils.DateUtils;
-import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Table(name = "[user]")
 @Entity
@@ -72,4 +64,7 @@ public class UserE {
 
     @Column(name = "sdt" , length = 15)
     private String sdt;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    List<CommentE> comments;
 }

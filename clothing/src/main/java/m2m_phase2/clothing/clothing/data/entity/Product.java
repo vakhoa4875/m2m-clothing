@@ -1,6 +1,7 @@
 package m2m_phase2.clothing.clothing.data.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -52,6 +53,9 @@ public class Product implements Serializable {
 	@ManyToOne()
 	@JoinColumn(name = "sale_ID")
 	private Sale sale;
+
+	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+	List<CommentE> comments;
 
 	@Override
 	public String toString() {

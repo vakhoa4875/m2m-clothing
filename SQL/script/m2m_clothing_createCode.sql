@@ -80,9 +80,18 @@ create table [user] (
     role_name   nvarchar(63)    not null default 'User',
     processed   bit             default 0
 );
+
+
+create table Comment(
+	comment_id int IDENTITY(1,1) PRIMARY KEY,
+	comment varchar(255),
+	product_id int ,
+	user_id int ,
+	create_date date,
+    FOREIGN KEY (user_id) REFERENCES [user](id),
+    FOREIGN KEY (product_id) REFERENCES Product(product_id)
+);
 go
-
-
 --trigger insert into user after insert into Account
 create or alter trigger trigger_after_insert_into_UserInfo
     on Account
@@ -184,9 +193,10 @@ go
 --END;
 
 --go
+select * from Comment
+select * from Comment where product_id = 1;
 
-
-
+select * from [user]
 
 
 
