@@ -85,9 +85,11 @@ create table [user] (
 create table Comment(
 	comment_id int IDENTITY(1,1) PRIMARY KEY,
 	comment varchar(255),
-	product_id int FOREIGN KEY REFERENCES Product(product_id),
-	user_id int FOREIGN KEY REFERENCES [user](id),
-	create_date date
+	product_id int ,
+	user_id int ,
+	create_date date,
+    FOREIGN KEY (user_id) REFERENCES [user](id),
+    FOREIGN KEY (product_id) REFERENCES Product(product_id)
 );
 go
 --trigger insert into user after insert into Account
@@ -180,7 +182,6 @@ create or alter trigger trigger_after_update_user
     end
 go
 
-select * from Comment
 --CREATE OR ALTER TRIGGER gen_user_info 
 --ON Account
 --AFTER INSERT
@@ -192,9 +193,10 @@ select * from Comment
 --END;
 
 --go
+select * from Comment
+select * from Comment where product_id = 1;
 
-
-
+select * from [user]
 
 
 
