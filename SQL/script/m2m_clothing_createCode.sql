@@ -92,6 +92,18 @@ create table Comment(
     FOREIGN KEY (product_id) REFERENCES Product(product_id)
 );
 go
+
+create table Voucher(
+    voucher_id int IDENTITY(1,1) primary key,
+    voucher_name nvarchar(255),
+    reduce int,
+    start_day date,
+    end_day date,
+    user_id int ,
+    FOREIGN KEY (user_id) REFERENCES [user](id),
+)
+go
+
 --trigger insert into user after insert into Account
 create or alter trigger trigger_after_insert_into_UserInfo
     on Account
