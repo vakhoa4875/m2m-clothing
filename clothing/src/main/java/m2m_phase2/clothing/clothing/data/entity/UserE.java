@@ -67,4 +67,7 @@ public class UserE {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     List<CommentE> comments;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    List<Card> card;
 }

@@ -155,6 +155,10 @@
                                     data-bs-toggle="pill" data-bs-target="#v-pills-voucher" type="button" role="tab"
                                     aria-controls="v-pills-voucher" aria-selected="false">VOUCHER ACCOUNT
                             </button>
+                            <button class="nav-link mt-1 text-black" id="v-pills-home-status-product"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-home-status" type="button" role="tab"
+                                    aria-controls="v-pills-home-status" aria-selected="false">Status Product
+                            </button>
                             <a class="nav-link mt-1 text-black" href="/admin/logout">Log Out
                             </a>
                         </div>
@@ -340,6 +344,83 @@
                                             <button class="border border-0 rounded btn-outline-danger"
                                                     data-bs-toggle="modal" data-bs-target="#exampleModalDeleteVoucher">
                                                 <i class="fa-solid fa-trash"></i></button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="v-pills-home-status" role="tabpanel"
+                     aria-labelledby="v-pills-home-product" tabindex="0">
+                    <div class="card my-4">
+                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Status Product
+                                </h5>
+<!--                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"-->
+<!--                                        data-bs-target="#exampleModalAccpectProduct" data-bs-toggle="modal"-->
+<!--                                        style="padding: 7px 12px 7px 12px;">-->
+<!--                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>-->
+<!--                                </button>-->
+                            </div>
+                        </div>
+                        <div class="card-body px-0 mx-3 pb-2">
+
+                            <!--viết body vào đây-->
+                            <div class="table-responsive p-0" id="tableStatusProductContainer">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th scope="col">Mã đơn hàng</th>
+                                        <th scope="col">Tên người dùng</th>
+                                        <th scope="col">Số lượng sản phẩm</th>
+                                        <th scope="col">Trạng thái đơn hàng</th>
+                                        <th scope="col"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td class="align-middle text-center text-sm">
+                                            <div class="d-flex w-100 flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">PS29018</h6>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-secondary text-xs font-weight-bold">Nguyễn hồ phát</span>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-secondary text-xs font-weight-bold">6</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-warning">Chờ xác nhận</span></span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <button class="btn border-0 rounded btn-outline-info"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalVoucherSendAcount">
+                                                <i class="fa-regular fa-circle-check"></i></button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="align-middle text-center text-sm">
+                                            <div class="d-flex w-100 flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">PS29018</h6>
+                                            </div>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-secondary text-xs font-weight-bold">Nguyễn hồ phát</span>
+                                        </td>
+                                        <td class="align-middle text-center text-sm">
+                                            <span class="text-secondary text-xs font-weight-bold">6</span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-success">Xác nhận thành công</span></span>
+                                        </td>
+                                        <td class="align-middle text-center">
+                                            <button class="btn border-0 rounded btn-outline-info"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalVoucherSendAcount">
+                                                <i class="fa-regular fa-circle-check"></i></button>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -719,6 +800,26 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="">
                     SEND
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--===========================================accpect product for admin=======================================================-->
+<!-- Modal accpect product-->
+<div class="modal fade" id="exampleModalAccpectProduct" tabindex="-1" aria-labelledby="exampleModalXoa"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="">Confirm delete Voucher?</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">Are your sure to delete this user out of your system?</div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="">
+                    I'm sure!
                 </button>
             </div>
         </div>
