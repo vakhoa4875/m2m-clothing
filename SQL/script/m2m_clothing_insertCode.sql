@@ -6,10 +6,10 @@ go
 -- go
 
 
-INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('john.doe', 'john.doe@example.com', 'your_hashed_password1', 0)
-INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('jane.smith', 'jane.smith@example.com', 'your_hashed_password2', 0)
-INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('admin', 'admin@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 1)
-INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('site_user', 'abc@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 0)
+INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('john.doe', 'john.doe@example.com', '$2a$12$qERhVwvIO/ov0uxRpUdY3.4eSngfu/t3OC9Utss.qSYJ0Q.AA5oxu', 0)
+INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('jane.smith', 'jane.smith@example.com', '$2a$12$qERhVwvIO/ov0uxRpUdY3.4eSngfu/t3OC9Utss.qSYJ0Q.AA5oxu', 0)
+INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('admin', 'admin@gmail.com', '$2a$12$qERhVwvIO/ov0uxRpUdY3.4eSngfu/t3OC9Utss.qSYJ0Q.AA5oxu', 1)
+INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('site_user', 'abc@gmail.com', '$2a$12$qERhVwvIO/ov0uxRpUdY3.4eSngfu/t3OC9Utss.qSYJ0Q.AA5oxu', 0)
 
 
 go
@@ -654,14 +654,22 @@ go
 
  INSERT INTO Comment(comment, product_id, user_id, create_date)
  VALUES
- ('That shirt is so beautiful', 1 , 1, N'2024-04-15'),
- ('That is so great', 1 , 3, N'2024-04-15'),
-  ('That is so great', 2 , 1, N'2024-04-15'),
-   ('So beautiful', 2 , 2, N'2024-04-15')
+    ('That shirt is so beautiful', 1 , 1, N'2024-04-15'),
+    ('That is so great', 1 , 3, N'2024-04-15'),
+    ('That is so great', 2 , 1, N'2024-04-15'),
+    ('So beautiful', 2 , 2, N'2024-04-15')
 
 
-   select * from Comment
+INSERT INTO Voucher (voucher_name, reduce, start_day, end_day, user_id)
+VALUES
+    (N'Voucher A', 10, '2024-04-21', '2024-05-21', 1),
+    (N'Voucher B', 20, '2024-04-22', '2024-05-22', 2),
+    (N'Voucher C', 50, '2024-04-23', '2024-05-23', 3);
 
+-- select * from Voucher
+-- select * from Voucher where voucher_id = 2
+--
+-- select * from [user] u where u.id not in (select distinct v.user_id from Voucher v where )
 
 
 
