@@ -197,6 +197,19 @@ select * from Comment
 select * from Comment where product_id = 1;
 
 select * from [user]
+CREATE TABLE [Order] (
+    order_id int IDENTITY(1,1) PRIMARY KEY,
+    customer_id int NOT NULL,
+    order_date date DEFAULT GETDATE(),
+    phone_number varchar(20),
+    delivery_address nvarchar(255),
+    payment_method nvarchar(50),
+    total_amount float,
+    payment_status nvarchar(50),
+    CONSTRAINT FK_Customer_User FOREIGN KEY (customer_id) REFERENCES [user] (id)
+);
+
+
 
 
 

@@ -662,8 +662,14 @@ go
 
    select * from Comment
 
-
-
+ -- Chèn dữ liệu vào bảng [Order]
+INSERT INTO [Order] (customer_id,order_date, phone_number, delivery_address, payment_method, total_amount, payment_status)
+VALUES 
+    (1, '2024-04-21', '0327789477', '123 Main Street', 'Credit Card', 100.50, 'Pending'),
+    (1,'2024-04-19', '0327789100', '456 Oak Avenue', 'PayPal', 75.25, 'Completed'),
+	(1, '2024-04-11','1', '123123 Oak Avenue', 'PayPal', 75.25, 'Completed'),
+	(1, '2024-04-05','1', '645 Oak Avenue', 'PayPal', 75.25, 'Completed'),
+	(2, '2024-04-03','1', '123124343 Oak Avenue', 'PayPal', 75.25, 'Completed');
 
 
 
