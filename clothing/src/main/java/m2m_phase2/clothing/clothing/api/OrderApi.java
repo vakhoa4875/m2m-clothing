@@ -7,10 +7,7 @@ import m2m_phase2.clothing.clothing.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -53,10 +50,12 @@ public class OrderApi {
             dto.setDeliveryAddress((String) obj[4]);
             dto.setPaymentMethod((String) obj[5]);
             dto.setTotalAmount((Double) obj[6]);
-            dto.setPaymentStatus((String) obj[7]);
+            dto.setOrderStatus((String) obj[7]);
             dtos.add(dto);
         }
 
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
+
+//    @PostMapping("/paypal/paid")
 }

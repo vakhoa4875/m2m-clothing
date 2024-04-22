@@ -44,6 +44,6 @@ public class Order implements Serializable {
     @Column(name = "total_amount")
     private Double totalAmount;
 
-    @Column(name = "payment_status", length = 50)
-    private String paymentStatus;
+    @Column(name = "order_status", length = 50)
+    private String orderStatus;
 }

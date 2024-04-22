@@ -11,14 +11,14 @@ public class OrderDto {
     private String deliveryAddress;
     private String paymentMethod;
     private Double totalAmount;
-    private String paymentStatus;
+    private String orderStatus;
 
 
 
     public OrderDto() {
     }
 
-    public OrderDto(Long orderId, String username, Date orderDate, String phoneNumber, String deliveryAddress, String paymentMethod, Double totalAmount, String paymentStatus) {
+    public OrderDto(Long orderId, String username, Date orderDate, String phoneNumber, String deliveryAddress, String paymentMethod, Double totalAmount, String orderStatus) {
         this.orderId = orderId;
         this.username = username;
         this.orderDate = orderDate;
@@ -26,7 +26,7 @@ public class OrderDto {
         this.deliveryAddress = deliveryAddress;
         this.paymentMethod = paymentMethod;
         this.totalAmount = totalAmount;
-        this.paymentStatus = paymentStatus;
+        this.orderStatus = orderStatus;
     }
     // Getters and setters
 
@@ -86,12 +86,12 @@ public class OrderDto {
         this.totalAmount = totalAmount;
     }
 
-    public String getPaymentStatus() {
-        return paymentStatus;
+    public String getOrderStatus() {
+        return orderStatus;
     }
 
-    public void setPaymentStatus(String paymentStatus) {
-        this.paymentStatus = paymentStatus;
+    public void setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
     }
 }
 

@@ -300,7 +300,7 @@
                                     </ul>
                                 </div>
 
-                                <table class="table table-bordered table-hover ">
+                                <table class="table table-bordered table-hover text-center">
                                     <thead class="table-dark">
                                     <tr>
                                         <th>Mã đơn đặt hàng</th>
@@ -311,6 +311,7 @@
                                         <th>Hình thức thanh toán </th>
                                         <th>Tổng thành tiền</th>
                                         <th>Trạng thái thanh toán</th>
+                                        <th></th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -467,7 +468,9 @@
                         <td>${order.deliveryAddress}</td>
                         <td>${order.paymentMethod}</td>
                         <td>${order.totalAmount}</td>
-                        <td>${order.paymentStatus}</td>
+                        <td>${order.orderStatus}</td>
+                        <td><button class="btn btn-success" ${order.paymentMethod === 'Paypal' && order.orderStatus === 'Need payment' ? '' : 'disabled'}
+                        onclick="payWithPaypal(${order.totalAmount})">Pay with paypal</button></td>
                     </tr>
                 `);
                 });
@@ -477,6 +480,36 @@
             }
         });
     });
+    const payWithPaypal = async (amount) => {
+        let description = 'testing';
+        let intent = 'sale';
+        let method = 'paypal';
+        let currency = 'USD';
+
+        try {
+            const response = await $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8083/payment/paypal/create-payment',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    description: description,
+                    intent: intent,
+                    method: method,
+                    currency: currency,
+                    totalAmount: amount
+                }),
+                success: (redirectURL) => {
+                    window.location.href = redirectURL;
+                },
+                error: (error) => {
+                    console.log('>>error:', error);
+                }
+            });
+        } catch (error) {
+            console.error('>>error:', error);
+        }
+    }
+
 </script>
 
 

@@ -1,5 +1,7 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
+import m2m_phase2.clothing.clothing.constant.OrderStatus;
+import m2m_phase2.clothing.clothing.data.dto.OrderDto;
 import m2m_phase2.clothing.clothing.data.entity.Order;
 import m2m_phase2.clothing.clothing.repository.OrderRepo;
 import m2m_phase2.clothing.clothing.service.OrderService;
@@ -24,6 +26,12 @@ public class OrderServiceImpl implements OrderService {
         return repo.findOrdersWithUsernameByEmail(email);
     }
 
+    @Override
+    public byte updatePaymentStatusByOrderId(OrderDto orderDto) {
+        String paymentMethod = OrderStatus.PAID.getValue();
+        Long orderId = orderDto.getOrderId();
+        return repo.updatePaymentStatusByOrderId(paymentMethod, orderId);
+    }
 
 
 }

@@ -205,7 +205,7 @@ CREATE TABLE [Order] (
     delivery_address nvarchar(255),
     payment_method nvarchar(50),
     total_amount float,
-    payment_status nvarchar(50),
+    order_status nvarchar(50),
     CONSTRAINT FK_Customer_User FOREIGN KEY (customer_id) REFERENCES [user] (id)
 );
 
