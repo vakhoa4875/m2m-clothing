@@ -62,6 +62,8 @@ CREATE TABLE Product (
   category_id int FOREIGN KEY REFERENCES Category(category_id),
   sale_ID int FOREIGN KEY REFERENCES Sale(sale_ID)
 );
+
+
 create table [user] (
     id          int             primary key identity(1,1),
     username    varchar(63)     not null unique ,
@@ -79,6 +81,14 @@ create table [user] (
     role_id     int             not null default 3,
     role_name   nvarchar(63)    not null default 'User',
     processed   bit             default 0
+);
+
+
+create table [Cart](
+    id int FOREIGN KEY REFERENCES [user](id),
+    name_product varchar(255),
+    quatity int ,
+    price int
 );
 
 
@@ -194,6 +204,34 @@ create or alter trigger trigger_after_update_user
     end
 go
 
+create or alter trigger trigger_after_create_user
+    on [user]
+    after INSERT
+    as
+    begin
+        declare @id int;
+
+        select @id = inserted.id from inserted;
+
+        insert into Cart (id) values (@id)
+    end
+go
+
+create or alter trigger trigger_before_delete_user
+    on [user]
+    after delete
+    as
+    begin
+        declare @iddelete int;
+        select @iddelete = deleted.id from deleted;
+        BEGIN TRANSACTION;
+
+        delete from Cart where Cart.id = @iddelete;
+
+        delete from [user] where [user].id = @iddelete;
+
+        COMMIT TRANSACTION;
+    end
 --CREATE OR ALTER TRIGGER gen_user_info 
 --ON Account
 --AFTER INSERT
