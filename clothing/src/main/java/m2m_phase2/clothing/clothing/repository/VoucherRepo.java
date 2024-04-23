@@ -22,13 +22,12 @@ public interface VoucherRepo extends JpaRepository<VoucherE, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "insert into Voucher (voucher_name, reduce, start_day, end_day, user_id) " +
-            "values (:voucherName, :reduce, :startDay, :endDay, :userID)", nativeQuery = true)
+    @Query(value = "insert into Voucher (voucher_name, reduce, start_day, end_day) " +
+            "values (:voucherName, :reduce, :startDay, :endDay)", nativeQuery = true)
     void insertVoucher(@Param("voucherName")String voucherName,
                        @Param("reduce")Integer reduce,
                        @Param("startDay")Date startDay,
-                       @Param("endDay") Date endDay,
-                       @Param("userID")Integer userID);
+                       @Param("endDay") Date endDay);
 
     @Modifying
     @Transactional

@@ -72,5 +72,5 @@ public class UserE {
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    List<VoucherE> vouchers;
+    List<VoucherDetailsE> voucherDetailsES;
 }

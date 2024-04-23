@@ -26,7 +26,7 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     public byte saveVoucher(VoucherDto voucherDto) throws SQLException {
-        voucherRepo.insertVoucher(voucherDto.getVoucherName(),voucherDto.getReduce(),voucherDto.getStartDay(),voucherDto.getEndDay(),3);
+        voucherRepo.insertVoucher(voucherDto.getVoucherName(),voucherDto.getReduce(),voucherDto.getStartDay(),voucherDto.getEndDay());
         return 1;
     }
 
