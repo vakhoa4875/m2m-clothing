@@ -35,4 +35,4 @@ spring:
       allowed-origins: '*'
   web:
     resources:
-      static-locations: classpath:/templates/swappa, classpath:/templates/swappa/media
+      static-locations: classpath:/templates/swappa, classpath:/templates/swappa/media, classpath:/templates/swappa/imagesUser
