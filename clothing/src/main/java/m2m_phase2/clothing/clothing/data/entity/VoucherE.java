@@ -1,12 +1,14 @@
 package m2m_phase2.clothing.clothing.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Table(name = "Voucher")
 @Entity
@@ -33,7 +35,8 @@ public class VoucherE {
     @Column(name = "end_day")
     private Date endDay;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "user_id")
-    private UserE user;
+    @OneToMany(mappedBy = "voucher",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<VoucherDetailsE> voucherDetailsES;
+
 }

@@ -20,7 +20,6 @@ public class VoucherM {
     private int reduce;
     private Date startDay;
     private Date endDay;
-    private UserE user;
 
     public static VoucherM convertVoucherEToVoucherM(VoucherE voucherE){
         return VoucherM.builder()
@@ -29,7 +28,6 @@ public class VoucherM {
                 .reduce(voucherE.getReduce())
                 .startDay(voucherE.getStartDay())
                 .endDay(voucherE.getEndDay())
-                .user(voucherE.getUser())
                 .build();
     }
 

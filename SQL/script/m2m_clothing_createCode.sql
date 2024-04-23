@@ -108,12 +108,18 @@ create table Voucher(
     voucher_name nvarchar(255),
     reduce int,
     start_day date,
-    end_day date,
-    user_id int ,
-    FOREIGN KEY (user_id) REFERENCES [user](id),
+    end_day date
 )
 go
 
+create table VoucherDetails(
+    voucher_details_id int IDENTITY(1,1) primary key,
+    voucher_id int,
+    user_id int ,
+    FOREIGN KEY (voucher_id) REFERENCES Voucher(voucher_id),
+    FOREIGN KEY (user_id) REFERENCES [user](id)
+)
+go
 --trigger insert into user after insert into Account
 create or alter trigger trigger_after_insert_into_UserInfo
     on Account

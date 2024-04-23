@@ -2,6 +2,7 @@ package m2m_phase2.clothing.clothing.repository;
 
 import jakarta.transaction.Transactional;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
+import m2m_phase2.clothing.clothing.data.entity.VoucherE;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -96,4 +97,7 @@ public interface UserRepo extends JpaRepository<UserE, Integer> {
                     @Param("fullname")String fullname,
                     @Param("sdt")String sdt,
                     @Param("avatar")String avatar);
+
+    @Query(value = "select * from [user] u where u.id not in (select distinct v.user_id from VoucherDetails v where v.voucher_id = :voucherID)", nativeQuery = true)
+    List<UserE> findUserNotInVoucher(@Param("voucherID")Integer voucherID);
 }
