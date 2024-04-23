@@ -31,6 +31,59 @@
             object-fit: cover;
             margin-top: 20px;
         }
+
+        #fileInput {
+            border: 2px solid #909498;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        #fileInput:hover {
+            border-color: #9a9fa4;
+        }
+
+        #fileInput:focus {
+            border-color: #9a9fa4;
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        .custom-file-label {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #909498;
+            color: #fff;
+            border: 2px solid #909498;
+            border-radius: 5px;
+        }
+
+        .custom-file-label:hover {
+            background-color: #9a9fa4;
+        }
+
+        #previewImage {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-top: 20px;
+            border: 2px solid #909498; /* Màu và độ dày của đường viền */
+            border-radius: 5px; /* Độ cong của các góc */
+        }
+
+        #previewImage {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-top: 20px;
+            border: 2px solid #909498; /* Màu và độ dày của đường viền */
+            border-radius: 5px; /* Độ cong của các góc */
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5); /* Hiệu ứng đổ bóng */
+        }
+
+        #previewImage:hover {
+            border-color: #9a9fa4; /* Thay đổi màu sắc của đường viền khi di chuột qua */
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7); /* Hiệu ứng đổ bóng khi di chuột qua */
+        }
+
     </style>
 </head>
 
@@ -122,6 +175,7 @@
 </div>
 
 <!-- main -->
+
 <div class="container-fluid  bg-body-secondary" style="height: 800px;">
     <div class="row">
         <div class="col-xl-3 col-lg-12 mt-4">
@@ -141,7 +195,7 @@
                             </button>
                             <button class="nav-link mt-1 text-black" id="v-pills-home-status"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-status" type="button" role="tab"
-                                    aria-controls="v-pills-status" aria-selected="false">Trạng thái đơn hàng
+                                    aria-controls="v-pills-status" aria-selected="false">Order status
                             </button>
                             <a class="nav-link mt-1 text-black" href="">Log Out</a>
                         </div>
@@ -196,11 +250,15 @@
                                                 <label for="staticPhone"
                                                        class="col-xl-2 col-lg-12 col-form-label">Phone</label>
                                                 <div class="col-xl-10 col-lg-12">
-                                                    <input type="Phone" class="form-control" id="staticPhone"
-                                                           th:value="*{sdt}">
+                                                    <input type="number" class="form-control" id="staticPhone"
+                                                           th:value="*{sdt}" pattern="[0-9]{10}"
+                                                           title="Phone number must have 10 digits">
+                                                    <span id="phoneError" class="text-danger"></span>
                                                 </div>
 
                                             </div>
+                                            <div class="mb-3 row alert alert-success" id="updateSuccess"></div>
+                                            <div class="mb-3 row my-3 alert alert-danger" id="updateError"></div>
                                         </div>
                                     </div>
                                     <div class="col-4 text-center">
@@ -212,9 +270,12 @@
 
                                         <div class="text-center my-3" style="margin-right: 10px;">
                                             <input type="file" class="form-control" id="fileInput" accept="image/*">
-                                            <label class="custom-file-label" for="fileInput">Chọn ảnh từ local</label>
+                                            <label class="custom-file-label" for="fileInput">Select photos from
+                                                local</label>
                                         </div>
+
                                     </div>
+
                                     <button type="button" id="submitBtn" class=" col-5 btn btn-secondary ms-5 mb-5">
                                         Submit
                                     </button>
@@ -226,12 +287,39 @@
                 <div class="tab-pane" id="v-pills-status" role="tabpanel"
                      aria-labelledby="v-pills-home-status" tabindex="0">
                     <div class="card my-4">
-
                         <div class="card-body px-0 mx-3 pb-2">
-
-                            <!--viết body vào đây Hồ Thanh Tài-->
                             <div class="table-responsive p-0" id="TableStatusUser">
+                                <!-- Bắt đầu trạng thái đơn hàng-->
+                                <div class="header mt-3">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item bg-body-secondary">
+                                            <h3>Order status</h3>
+                                            <span>Manage customer orders</span>
+                                        </li>
+                                        <li class="list-group-item bg-body-secondary"></li>
+                                    </ul>
+                                </div>
 
+                                <table class="table table-bordered table-hover text-center">
+                                    <thead class="table-dark">
+                                    <tr>
+                                        <th>Mã đơn đặt hàng</th>
+                                        <th>Khách hàng</th>
+                                        <th>Ngày lập</th>
+                                        <th>Phone</th>
+                                        <th>Nơi giao</th>
+                                        <th>Hình thức thanh toán </th>
+                                        <th>Tổng thành tiền</th>
+                                        <th>Trạng thái thanh toán</th>
+                                        <th></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+
+                                <!-- Kết thúc trạng thái đơn hàng-->
                             </div>
                         </div>
                     </div>
@@ -240,7 +328,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- footer -->
 <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
@@ -310,16 +397,24 @@
 <script>
 
     $(document).ready(function () {
-
+        $('#updateSuccess, #updateError').hide();
 
         function updateUser() {
             var username = $('#staticName').val();
             var fullname = $('#inputName').val();
             var email = $('#staticEmail').val();
             var sdt = $('#staticPhone').val();
-            var avatar = nameImg + "," + path;
+            if (sdt.length !== 10) {
+                $('#phoneError').text("*Phone number must have 10 digits");
+                return;
+            } else {
+                $('#phoneError').text("");
+            }
+            var avatar = null;
+            if (nameImg && path) {
+                avatar = nameImg + "," + path; // Nếu đã chọn ảnh mới, sử dụng giá trị mới cho avatar
+            }
             console.log(avatar);
-
             let userData = {
                 username: username,
                 email: email,
@@ -327,7 +422,6 @@
                 sdt: sdt,
                 avatar: avatar
             };
-
             $.ajax({
                 url: '/api-public/users/updateUserInfo',
                 type: 'POST',
@@ -335,6 +429,13 @@
                 data: JSON.stringify(userData),
                 success: function (response) {
                     console.log(response === 1 ? 'Cập nhật thành công' : 'Cập nhật thất bại');
+                    if (response === 1) {
+                        $('#updateError').hide();
+                        $('#updateSuccess').text('Update successful').show();
+                    } else {
+                        $('#updateSuccess').hide();
+                        $('#updateError').text('Update failed').show();
+                    }
                 },
                 error: function (xhr, status, error) {
                     console.error("Đã xảy ra lỗi khi gọi API: " + error);
@@ -343,10 +444,76 @@
         }
 
         $('#submitBtn').click(function () {
-            updateUser(); // Gọi hàm updateUser() khi nhấn vào nút "Submit"
+            updateUser();
         });
     });
+</script>
+<script>
+    $(document).ready(function() {
+        // Gọi API để lấy danh sách đơn hàng dựa trên email của người dùng
+        $.ajax({
+            url: '/api/orders',
+            type: 'GET',
+            success: function(data) {
+                // Hiển thị dữ liệu trong bảng
+                data.forEach(function(order) {
+                    var orderDateFormatted = new Date(order.orderDate);
+                    var formattedDate = `${orderDateFormatted.getDate()}/${orderDateFormatted.getMonth() + 1}/${orderDateFormatted.getFullYear()}`;
+                    $('#TableStatusUser tbody').append(`
+                    <tr>
+                        <td>${order.orderId}</td>
+                        <td>${order.username}</td>
+                        <td>${formattedDate}</td>
+                        <td>${order.phoneNumber}</td>
+                        <td>${order.deliveryAddress}</td>
+                        <td>${order.paymentMethod}</td>
+                        <td>${order.totalAmount}</td>
+                        <td>${order.orderStatus}</td>
+                        <td><button class="btn btn-success" ${order.paymentMethod === 'Paypal' && order.orderStatus === 'Need payment' ? '' : 'disabled'}
+                        onclick="payWithPaypal(${order.totalAmount})">Pay with paypal</button></td>
+                    </tr>
+                `);
+                });
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.error('Error:', errorThrown);
+            }
+        });
+    });
+    const payWithPaypal = async (amount) => {
+        let description = 'testing';
+        let intent = 'sale';
+        let method = 'paypal';
+        let currency = 'USD';
 
+        try {
+            const response = await $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8083/payment/paypal/create-payment',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    description: description,
+                    intent: intent,
+                    method: method,
+                    currency: currency,
+                    totalAmount: amount
+                }),
+                success: (redirectURL) => {
+                    window.location.href = redirectURL;
+                },
+                error: (error) => {
+                    console.log('>>error:', error);
+                }
+            });
+        } catch (error) {
+            console.error('>>error:', error);
+        }
+    }
 
 </script>
+
+
+
+
+
 </html>
