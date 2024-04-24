@@ -1,7 +1,9 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
+import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDto;
 import m2m_phase2.clothing.clothing.data.entity.VoucherE;
+import m2m_phase2.clothing.clothing.data.model.CommentM;
 import m2m_phase2.clothing.clothing.data.model.VoucherM;
 import m2m_phase2.clothing.clothing.repository.VoucherRepo;
 import m2m_phase2.clothing.clothing.service.VoucherService;
@@ -34,5 +36,10 @@ public class VoucherServiceImpl implements VoucherService {
     public byte updateVoucher(VoucherDto voucherDto) throws SQLException {
         voucherRepo.updateVoucher(voucherDto.getVoucherName(),voucherDto.getReduce(),voucherDto.getStartDay(),voucherDto.getEndDay(),voucherDto.getVoucherID());
         return 1;
+    }
+
+    @Override
+    public List<VoucherM> findVouchersInfoByEmail(String email) throws SQLException {
+        return VoucherM.converListVoucherEToListVoucherM(voucherRepo.findVouchersInfoByEmail(email));
     }
 }
