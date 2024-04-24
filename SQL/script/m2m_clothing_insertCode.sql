@@ -686,5 +686,3 @@ select * from [user] u where u.id not in (select distinct v.user_id from Voucher
 
 
 
-
-
