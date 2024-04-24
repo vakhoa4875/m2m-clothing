@@ -745,34 +745,8 @@
                         <th scope="col"></th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td class="align-middle text-center text-sm">
-                            <div class="d-flex w-100 flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">trongle</h6>
-                            </div>
-                        </td>
-                        <td class="align-middle text-center text-sm">
-                            <div class="d-flex w-100 flex-column justify-content-center">
-                                <h6 class="mb-0 text-sm">Cao Trọng Lễ</h6>
-                            </div>
-                        </td>
-                        <td class="align-middle text-center text-sm">
-                            <span class="text-secondary text-xs font-weight-bold">trongle3110@gmail.com</span>
-                        </td>
-                        <td class="align-middle text-center">
-                            <span class="text-secondary text-xs font-weight-bold">0123456789</span>
-                        </td>
+                    <tbody id="userOnVoucher">
 
-                        <td class="align-middle text-center">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="" id="flexCheckCheckedVoucher" checked>
-                                <label class="form-check-label" for="flexCheckCheckedVoucher">
-                                    Voucher
-                                </label>
-                            </div>
-                        </td>
-                    </tr>
                     </tbody>
                 </table>
 
@@ -937,7 +911,7 @@
                                             <span class="text-secondary text-xs font-weight-bold">${formattedEndDate}</span>
                                 </td>
                                 <td class="align-middle text-center">
-                                    <button class="btn border-0 rounded btn-outline-info"
+                                    <button class="btn border-0 rounded btn-outline-info" id="buttonUserOnVoucher" data-voucher-id="${voucher.voucherID}"
                                                     data-bs-toggle="modal" data-bs-target="#exampleModalVoucherSendAcount">
                                                 <i class="fa-solid fa-ticket"></i></button>
                                     <button class="btn border-0 rounded btn-outline-info" id="updateVoucherButton" data-voucher-id="${voucher.voucherID}"
@@ -1011,8 +985,6 @@
             $('#insStartDay').val('');
             $('#insEndDay').val('');
         });
-
-
         function getVoucherByID(voucherID) {
             $.ajax({
                 url: '/api-public/vouchers/getVoucherByID',
@@ -1083,6 +1055,82 @@
         $('#buttonUpdateVoucher').click(function () {
             updateVoucher();
         });
+
+        //load all user ở voucher
+        var allUser = [];
+        var listUserByVoucherID = [];
+        function getAllUser() {
+            $.ajax({
+                url: '/api-public/users/getAllUsers',
+                type: 'GET',
+                success: function (data) {
+                     allUser = [];
+                    allUser.push(data);
+                    console.log(allUser);
+                    $('#userOnVoucher').empty();
+
+                    $.each(data,function (index,u){
+                        var newRow = `
+                                <tr>
+                        <td class="align-middle text-center text-sm">
+                            <div class="d-flex w-100 flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">${u.username}</h6>
+                            </div>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                            <div class="d-flex w-100 flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm">${u.fullname}</h6>
+                            </div>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                            <span class="text-secondary text-xs font-weight-bold">${u.email}</span>
+                        </td>
+                        <td class="align-middle text-center">
+                            <span class="text-secondary text-xs font-weight-bold">${u.sdt}</span>
+                        </td>
+
+                        <td class="align-middle text-center">
+                            <div class="form-check">
+                               <input class="form-check-input" type="checkbox"  data-username="${u.username}" id="flexCheckCheckedVoucher_${u.id}">
+                                <label class="form-check-label" for="flexCheckCheckedVoucher">
+                                    Voucher
+                                </label>
+                            </div>
+                        </td>
+                    </tr>
+                            `;
+                        $('#userOnVoucher').append(newRow);
+                    });
+
+                },
+                error: function (xhr, status, error) {
+                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                }
+            });
+        }
+        function getListUserNotInVoucher(voucherID) {
+            $.ajax({
+                url: '/api-public/users/getListUserByVoucherID',
+                type: 'GET',
+                data: {
+                    "voucherID": voucherID
+                },
+                success: function (data) {
+                    listUserByVoucherID = [];
+                    listUserByVoucherID.push(data);
+                    console.log(listUserByVoucherID);
+                    compareAndMarkUsers(allUser, listUserByVoucherID);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                }
+            });
+        }
+        function compareAndMarkUsers(allUsers, usersNotInVoucher) {
+            if (allUsers.length === 0 || usersNotInVoucher.length === 0) {
+                console.log("Không nhận được dữ liệu từ API.");
+                return;
+            }
 
 
         function getStatusProductUser(){
@@ -1160,6 +1208,34 @@
                 }
             });
         }
+            // Lặp qua tất cả các người dùng trong mảng allUsers
+            allUsers[0].forEach(function(user) {
+                var found = false;
+
+                // Kiểm tra xem người dùng có trong danh sách không thuộc voucher không
+                usersNotInVoucher[0].forEach(function(userNotInVoucher) {
+                    if (user.username === userNotInVoucher.username) {
+                        found = true;
+                        return; // Thoát khỏi vòng lặp nếu tìm thấy người dùng
+                    }
+                });
+
+                // Xác định phần tử checkbox tương ứng với người dùng
+                var checkboxElement = $('input[data-username="' + user.username + '"]');
+
+                if (checkboxElement.length > 0) { // Kiểm tra xem phần tử có tồn tại hay không
+                    checkboxElement.prop('checked', !found); // Đánh dấu checkbox dựa trên kết quả tìm kiếm
+                } else {
+                    console.warn("Không tìm thấy phần tử checkbox cho người dùng:", user.username);
+                }
+            });
+        }
+
+        $(document).on('click', '#buttonUserOnVoucher', function() {
+            getAllUser();
+            var voucherID = $(this).attr('data-voucher-id');
+            getListUserNotInVoucher(voucherID);
+        });
 
     });
 
