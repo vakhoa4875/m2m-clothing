@@ -8,8 +8,8 @@ go
 
 INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('john.doe', 'john.doe@example.com', 'your_hashed_password1', 0)
 INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('jane.smith', 'jane.smith@example.com', 'your_hashed_password2', 0)
-INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('admin', 'admin@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 1)
-INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('site_user', 'abc@gmail.com', '47be8c36c20369f8ca8f665267661c0e873a4b17370a42809b18300864434fb35d880be64134fb65', 0)
+INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('admin', 'admin@gmail.com', '$2a$12$en5ZfBVuv44iqK6IktThDOUw3QYoKnbPpRymLs1o1Duc.cy4G7Hy.', 1)
+INSERT INTO Account (username, email, hashed_password, is_admin) VALUES ('site_user', 'abc@gmail.com', '$2a$12$en5ZfBVuv44iqK6IktThDOUw3QYoKnbPpRymLs1o1Duc.cy4G7Hy.', 0)
 
 
 go
@@ -662,8 +662,14 @@ go
 
    select * from Comment
 
-
-
+ -- Chèn dữ liệu vào bảng [Order]
+INSERT INTO [Order] (customer_id,order_date, phone_number, delivery_address, payment_method, total_amount, order_status)
+VALUES 
+    (1, '2024-04-21', '0327789477', '123 Main Street', 'Credit Card', 100.50, 'Pending'),
+    (1,'2024-04-19', '0327789100', '456 Oak Avenue', 'PayPal', 75.25, 'Completed'),
+	(1, '2024-04-11','1', '123123 Oak Avenue', 'PayPal', 75.25, 'Completed'),
+	(1, '2024-04-05','1', '645 Oak Avenue', 'PayPal', 75.25, 'Completed'),
+	(2, '2024-04-03','1', '123124343 Oak Avenue', 'PayPal', 75.25, 'Completed');
 
 
 

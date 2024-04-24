@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="java">
+<head>
+    <meta charset="UTF-8">
+    <title>Paypal Integration</title>
+
+    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/css/style.css">
+    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            /*font-family: Arial, sans-serif;*/
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        label {
+            text-align: left;
+            width: 300px;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="number"], select, textarea {
+            width: 300px;
+            margin-bottom: 10px;
+            padding: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            pointer-events: none;
+            background-color: #f2f2f2;
+        }
+        input[type="submit"] {
+            width: 150px;
+            padding: 8px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        h1 {
+            color: green;
+        }
+
+        p {
+            color: #333;
+        }
+
+        a {
+            color: blue;
+        }
+
+        .img-300 {
+            width: 300px;
+            height: auto;
+            margin: auto;
+        }
+    </style>
+<!--    <script type="text/javascript">-->
+<!--        $(document).ready(async function() {-->
+<!--            $('.modal-body').html(-->
+<!--                -->
+<!--            );-->
+<!--        })-->
+<!--    </script>-->
+</head>
+<body>
+<div class="container">
+    <img src="/assests/images/correct.png" class="img-300">
+    <h1>Payment Successfully!</h1>
+    <p>Gratefully thank you for using our service. Your packages will be delivered ASAP :>></p>
+    <p>
+        <button class="btn btn-info" type="button" onclick="loadPaymentDetails('block')"
+                data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Payment details
+        </button>
+    </p>
+    <p><a href="/" class="btn btn-primary">Return home</a></p>
+</div>
+
+<!-- Modal -->
+<div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Payment Details</h1>
+                <button type="button" class="btn-close"  onclick="loadPaymentDetails('none')"
+                        data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form th:object="${paymentDto}">
+                    <label for="orderId">Order ID:</label>
+                    <input type="number" id="orderId" name="orderId" th:value="${paymentDto.orderId}" disabled>
+
+                    <label for="paymentStatus">Payment status:</label>
+                    <input type="text" id="paymentStatus" name="paymentStatus" th:value="${paymentDto.paymentStatus}">
+
+                    <label for="paymentId">Payment ID:</label>
+                    <input type="text" id="paymentId" name="paymentId" th:value="${paymentDto.paymentId}" disabled>
+
+                    <label for="payerId">Payer ID:</label>
+                    <input type="text" id="payerId" name="payerId" th:value="${paymentDto.payerId}" disabled>
+
+                    <label for="totalAmount">Total Amount:</label>
+                    <input type="number" id="totalAmount" name="totalAmount" th:value="${paymentDto.totalAmount}" disabled>
+
+                    <label for="currency">Currency:</label>
+                    <input type="text" id="currency" name="currency" value="USD" disabled>
+
+                    <label for="method">Method:</label>
+                    <input type="text" id="method" name="method" value="Paypal" disabled>
+
+                    <label for="intent">Intent:</label>
+                    <input type="text" id="intent" name="intent" value="Sale" disabled>
+
+                    <label for="description">Description:</label>
+                    <textarea type="text" id="description" name="description" rows="2" disabled
+                    th:text="${paymentDto.description}"></textarea>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="loadPaymentDetails('none')" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                <button type="button" onclick="loadPaymentDetails('none')" class="btn btn-success">Understood</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const loadPaymentDetails = (state) => {
+        let modal = document.querySelector('#exampleModal');
+        modal.style.display = state;
+    }
+</script>
+</body>
+</html>
