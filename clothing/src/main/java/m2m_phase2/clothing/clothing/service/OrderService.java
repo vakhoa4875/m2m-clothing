@@ -20,7 +20,7 @@ public interface OrderService {
 
     void updateOrderStatusByOrderId(Integer orderId, String orderStatus);
 
-    byte updatePaymentStatusByOrderId(OrderDto orderDto);
+//    byte updatePaymentStatusByOrderId(OrderDto orderDto);
 
     void inserOder(OrderDto orderDto);
 
