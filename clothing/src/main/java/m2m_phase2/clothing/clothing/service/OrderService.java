@@ -13,12 +13,12 @@ public interface OrderService {
 
     List<Object[]> findOrdersWithUsernameByEmail(String email);
 
-    Order findOrderByOrderId(Long orderId);
+    Order findOrderByOrderId(Integer orderId);
 
 
-    void paidOrder(Long orderId);
+    void paidOrder(Integer orderId);
 
-    void updateOrderStatusByOrderId(Long orderId, String orderStatus);
+    void updateOrderStatusByOrderId(Integer orderId, String orderStatus);
 
     byte updatePaymentStatusByOrderId(OrderDto orderDto);
 

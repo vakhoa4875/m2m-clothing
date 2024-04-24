@@ -135,6 +135,7 @@ function capNhatTienTong() {
                 // Cập nhật giá trị của thẻ HTML mới
                 var phanTuTienGiam = document.querySelector(".tiengiam");
                 phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
+                console.log(phanTuTienGiam0);
             }
         }
         var cacPhanTu = document.querySelectorAll(".tienThanhToan");
