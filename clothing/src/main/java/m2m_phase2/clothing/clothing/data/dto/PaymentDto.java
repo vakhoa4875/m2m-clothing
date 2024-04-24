@@ -17,13 +17,13 @@ public class PaymentDto {
     private String intent;
     private String description;
     private String paymentStatus = "Pending";
-    private Long orderId;
+    private Integer orderId;
 
     public static PaymentE convertPaymentDtoToPaymentE(PaymentDto paymentDto, Order order) {
         PaymentE paymentE = new PaymentE();
         paymentE.setPaymentId(paymentDto.getPaymentId());
         paymentE.setPayerId(paymentDto.getPayerId());
-        paymentE.setTotalAmount(Double.parseDouble(paymentDto.getTotalAmount()));
+        paymentE.setTotalAmount(Float.valueOf(paymentDto.getTotalAmount()));
         paymentE.setCurrency(paymentDto.getCurrency());
         paymentE.setMethod(paymentDto.getMethod());
         paymentE.setIntent(paymentDto.getIntent());
