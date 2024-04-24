@@ -1,16 +1,20 @@
 package m2m_phase2.clothing.clothing.controller;
 
-import com.paypal.api.payments.Links;
 import com.paypal.api.payments.Payment;
 import com.paypal.base.rest.PayPalRESTException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.PaymentDto;
 import m2m_phase2.clothing.clothing.paypal.PaypalService;
+import m2m_phase2.clothing.clothing.service.OrderService;
+import m2m_phase2.clothing.clothing.service.PaymentService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.view.RedirectView;
+
+import java.util.Map;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,19 +23,23 @@ import org.springframework.web.servlet.view.RedirectView;
 public class PaypalPaymentController {
 
     private final PaypalService paypalService;
+    private final PaymentService paymentService;
+    private final OrderService orderService;
+    private PaymentDto paymentDto = null;
+
     @GetMapping("/executing")
-    public String paymentSuccess(
+    public String executePayment(
             @RequestParam("paymentId") String paymentId,
             @RequestParam("PayerID") String payerId
     ) {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
-            System.out.println(">>>" + payment.getState());
-            if (payment.getState().equals("approved")) {
+            var succeed = paymentService.handlePayment(payment, paymentId, payerId, this.paymentDto);
+            if (succeed)
                 return "redirect:/payment/paypal/succeed";
-            }
-        } catch (PayPalRESTException e) {
+        } catch (PayPalRESTException | NullPointerException e) {
             log.error("Error occurred: ", e);
+            return "redirect:/payment/paypal/error";
         }
         return "redirect:/payment/paypal/error";
     }
@@ -42,7 +50,9 @@ public class PaypalPaymentController {
     }
 
     @GetMapping("/succeed")
-    public String paymentSucceed() {
+    public String paymentSucceed(Model model) {
+        model.addAttribute("paymentDto", this.paymentDto);
+        this.paymentDto = null;
         return "swappa/assests/html/paypal/paymentSuccess";
     }
 
@@ -52,27 +62,18 @@ public class PaypalPaymentController {
     }
 
     @PostMapping("/create-payment")
-    public ResponseEntity<String> createPayment(
+    public ResponseEntity<?> createPayment(
             @RequestBody PaymentDto paymentDto
     ) {
+        String url = "http://localhost:8083/payment/paypal/error";
         try {
-            String cancelUrl = "http://localhost:8083/payment/paypal/cancel";
-            String successUrl = "http://localhost:8083/payment/paypal/executing";
-            Payment payment = paypalService.createPayment(
-                    paymentDto,
-                    cancelUrl,
-                    successUrl
-            );
-            for (Links links : payment.getLinks()) {
-                if (links.getRel().equals("approval_url")) {
-                    System.out.println(links.getHref());
-                    return ResponseEntity.ok(links.getHref());
-                }
+            url = paymentService.createPaypalLink(paymentDto);
+            if (!url.contains("error")) {
+                this.paymentDto = paymentDto;
             }
         } catch (PayPalRESTException e) {
             log.error("Error occurred: ", e);
         }
-        return ResponseEntity.ok("Failed tf out");
+        return ResponseEntity.ok(url);
     }
-
 }
