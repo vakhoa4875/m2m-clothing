@@ -1,5 +1,6 @@
 package m2m_phase2.clothing.clothing.repository;
 
+import jakarta.transaction.Transactional;
 import m2m_phase2.clothing.clothing.data.entity.Order;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OrderRepo extends JpaRepository<Order, Long> {
@@ -17,9 +19,14 @@ public interface OrderRepo extends JpaRepository<Order, Long> {
             "FROM Order o JOIN o.customer u WHERE u.email = :email")
     List<Object[]> findOrdersWithUsernameByEmail(@Param("email") String email);
     @Modifying
-    @Query(value = "update Order " +
-            "set order_status = :paymentStatus " +
+    @Transactional
+    @Query(value = "update [Order] " +
+            "set order_status = :orderStatus " +
             "where order_id = :orderId", nativeQuery = true)
-    byte updatePaymentStatusByOrderId(@Param("paymentStatus") String paymentStatus, @Param("orderId") Long orderId);
+    int updateOrderStatus(@Param("orderId") Long orderId, @Param("orderStatus") String orderStatus);
+
+    @Override
+    Optional<Order> findById(Long id);
+
 
 }

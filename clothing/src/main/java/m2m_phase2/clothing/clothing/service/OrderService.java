@@ -11,6 +11,13 @@ public interface OrderService {
 
     List<Object[]> findOrdersWithUsernameByEmail(String email);
 
-    byte updatePaymentStatusByOrderId(OrderDto orderDto);
+    Order findOrderByOrderId(Long orderId);
+
+
+    void paidOrder(Long orderId);
+
+    void updateOrderStatusByOrderId(Long orderId, String orderStatus);
+
+//    byte updatePaymentStatusByOrderId(OrderDto orderDto);
 
 }

@@ -310,7 +310,7 @@
                                         <th>Nơi giao</th>
                                         <th>Hình thức thanh toán </th>
                                         <th>Tổng thành tiền</th>
-                                        <th>Trạng thái thanh toán</th>
+                                        <th>Trạng thái đơn hàng</th>
                                         <th></th>
                                     </tr>
                                     </thead>
@@ -470,7 +470,7 @@
                         <td>${order.totalAmount}</td>
                         <td>${order.orderStatus}</td>
                         <td><button class="btn btn-success" ${order.paymentMethod === 'Paypal' && order.orderStatus === 'Need payment' ? '' : 'disabled'}
-                        onclick="payWithPaypal(${order.totalAmount})">Pay with paypal</button></td>
+                        onclick="payWithPaypal(${order.totalAmount}, ${order.orderId})">Pay with paypal</button></td>
                     </tr>
                 `);
                 });
@@ -480,7 +480,7 @@
             }
         });
     });
-    const payWithPaypal = async (amount) => {
+    const payWithPaypal = async (amount, orderId) => {
         let description = 'testing';
         let intent = 'sale';
         let method = 'paypal';
@@ -496,10 +496,11 @@
                     intent: intent,
                     method: method,
                     currency: currency,
-                    totalAmount: amount
+                    totalAmount: amount,
+                    orderId: orderId
                 }),
-                success: (redirectURL) => {
-                    window.location.href = redirectURL;
+                success: (data) => {
+                    window.location.href = data.href;
                 },
                 error: (error) => {
                     console.log('>>error:', error);

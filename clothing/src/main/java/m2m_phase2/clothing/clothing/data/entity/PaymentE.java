@@ -5,6 +5,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Entity
 @Data
 @AllArgsConstructor
@@ -38,9 +41,38 @@ public class PaymentE {
     @Column(name = "description")
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id", referencedColumnName = "order_id")
-    private Order order;
+    @Column(name = "payment_status", nullable = false, length = 50, columnDefinition = "nvarchar(50) default 'Processing'")
+    private String paymentStatus;
 
-    // Constructors, getters, setters
+    @Column(name = "date_created", columnDefinition = "datetime default getdate()")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateCreated;
+
+    @Column(name = "date_updated")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateUpdated;
+
+    @ManyToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
+    @Override
+    public String toString() {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("PaymentE {")
+                .append("sysPaymentId=").append(sysPaymentId)
+                .append(", paymentId='").append(paymentId).append('\'')
+                .append(", payerId='").append(payerId).append('\'')
+                .append(", totalAmount=").append(totalAmount)
+                .append(", currency='").append(currency).append('\'')
+                .append(", method='").append(method).append('\'')
+                .append(", intent='").append(intent).append('\'')
+                .append(", description='").append(description).append('\'')
+                .append(", paymentStatus='").append(paymentStatus).append('\'')
+//                .append(", dateCreated=").append(dateFormat.format(dateCreated))
+//                .append(", dateUpdated=").append(dateFormat.format(dateUpdated))
+                .append(", orderId=").append(order.getOrderId())
+                .append('}');
+        return stringBuilder.toString();
+    }
 }
