@@ -312,4 +312,5 @@ class UserManagement {
         this.userIdentifier = undefined;
         location.reload();
     }
+
 }

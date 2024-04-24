@@ -165,9 +165,11 @@
 
                             <tbody>
                                 <tr>
-                                    <th>Cao Trọng Lễ</th>
-                                    <td>0347667063</td>
-                                    <td>Cà Phê Phố Hiến, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh</td>
+<!--                                    nếu có update vui lòng không đổi tên id tránh bị lỗi do call api-->
+                                    <th id="name" th:text="${user.getEmail()}"></th>
+                                    <td id="id" th:text="${user.getId()}"></td>
+                                    <td id="sdt" th:text="${user.getSdt()}"></td>
+                                    <td id="diachi">Cà Phê Phố Hiến, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh</td>
                                     <td>
                                         <a href="">Edit</a>
                                     </td>
@@ -310,24 +312,17 @@
                                         <div class="w-50 ms-auto p-2">
                                             <div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                    <input class="form-check-input" type="radio" value="PayPal" name="flexRadioDefault"
                                                         id="flexRadioDefault1">
                                                     <label class="form-check-label" for="flexRadioDefault1">
-                                                        Bank
+                                                        PayPal
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                    <input class="form-check-input" type="radio" value="Cod" name="flexRadioDefault"
                                                          checked>
                                                     <label class="form-check-label" >
-                                                        MOMO
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                         checked>
-                                                    <label class="form-check-label" >
-                                                        Tiền mặt
+                                                        Cod
                                                     </label>
                                                 </div>
                                             </div>
@@ -372,7 +367,7 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-4 ms-auto">
-                                <button type="button" class="btn btn-outline-success " onclick="thanhtoan()">Xác nhận thanh toán</button>
+                                <button type="button" class="btn btn-outline-success " id="submitBtn">Xác nhận thanh toán</button>
                             </div>
                         </div>
                     </div>
@@ -427,20 +422,21 @@
     <script src="/assests/js/script.js"></script>
     <script src="/assests/js/jsAll.js"></script>
     <script>
-        function Finalpayment (){
-            var productList = document.getElementById("thanhtoan");
-            productList.innerHTML = '';
-            if (localStorage.length > 0) {
-                // Duyệt qua tất cả các phần tử trong local storage
-                for (var i = 0; i < localStorage.length; i++) {
-                    var key = localStorage.key(i);
-                    var value = localStorage.getItem(key);
+        $(document).ready(function (){
+            function Finalpayment (){
+                var productList = document.getElementById("thanhtoan");
+                productList.innerHTML = '';
+                if (localStorage.length > 0) {
+                    // Duyệt qua tất cả các phần tử trong local storage
+                    for (var i = 0; i < localStorage.length; i++) {
+                        var key = localStorage.key(i);
+                        var value = localStorage.getItem(key);
 
-                    var object = JSON.parse(value);
-                    // Tạo các thẻ HTML để hiển thị thông tin của đối tượng
-                    var tr = document.createElement("tr");
+                        var object = JSON.parse(value);
+                        // Tạo các thẻ HTML để hiển thị thông tin của đối tượng
+                        var tr = document.createElement("tr");
 
-                    tr.innerHTML = `<tr>
+                        tr.innerHTML = `<tr>
                                     <td>
                                         <div class="d-flex px-2 py-1">
 
@@ -450,7 +446,7 @@
                                                     id="thongtin" style="display: block; max-width: 150px; max-height: 150px; width: auto; height: auto;">
                                             </div>
                                             <div class="w-100 d-flex align-items-center">
-                                                <p class="text-xs text-secondary mb-0">
+                                                <p class="text-xs text-secondary mb-0" id="${object.tensp},${i}">
                                                     ${object.tensp}</p>
                                             </div>
                                         </div>
@@ -462,66 +458,114 @@
                                             $${object.gia}</p>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <p class="text-xs text-secondary mb-0" >
+                                        <p class="text-xs text-secondary mb-0" id="${object.soLuong},${i}">
                                             ${object.soLuong}</p>
                                     </td>
                                     <td class="align-middle text-center">
-                                        <p class="text-xs text-secondary mb-0" >
+                                        <p class="text-xs text-secondary mb-0" id="${(object.soLuong * object.gia)},${i}">
                                             $${(object.soLuong * object.gia)}</p>
                                     </td>
 
                                 </tr>
                     `;
-                    document.getElementById("thanhtoan").appendChild(tr);
-                    capNhatTienTong();
+                        var tennguoidung = $('#name').text();
+                        var sdt = $('#sdt').text();
+                        var diachi = $('#diachi').text();
+                        var id = $('#id').text();
+                        var thanhtoan = $('input[name="flexRadioDefault"]:checked').val()
+                        getInfoCard(object.tensp, object.soLuong,(object.soLuong * object.gia),tennguoidung, sdt, diachi,id, thanhtoan);
+                        document.getElementById("thanhtoan").appendChild(tr);
+                        capNhatTienTong();
+                    }
                 }
             }
-        }
 
-        function capNhatTienTong() {
-            var tongTien = 0;
-            if (localStorage.length > 0) {
-                // Duyệt qua tất cả các phần tử trong local storage
-                for (var i = 0; i < localStorage.length; i++) {
-                    var key = localStorage.key(i);
-                    var value = localStorage.getItem(key);
+            function capNhatTienTong() {
+                var tongTien = 0;
+                if (localStorage.length > 0) {
+                    // Duyệt qua tất cả các phần tử trong local storage
+                    for (var i = 0; i < localStorage.length; i++) {
+                        var key = localStorage.key(i);
+                        var value = localStorage.getItem(key);
 
-                    var object = JSON.parse(value);
+                        var object = JSON.parse(value);
 
-                    tongTien += object.soLuong * object.gia;
+                        tongTien += object.soLuong * object.gia;
+                    }
+
+                    var cacPhanTu = document.querySelectorAll(".tienThanhToan");
+                    // Lặp qua từng phần tử và cập nhật giá trị mới
+                    cacPhanTu.forEach(function (element) {
+                        element.textContent = "$" + tongTien; // Cập nhật giá trị mới, ở đây là tổng tiền
+                    });
+
+                    var tongthanhtoan = document.getElementById("TongThanhToan");
+
+                    tongthanhtoan.textContent = "$" + (parseFloat(tongTien) + parseFloat(2));
+
+
                 }
+            }
 
-                var cacPhanTu = document.querySelectorAll(".tienThanhToan");
-                // Lặp qua từng phần tử và cập nhật giá trị mới
-                cacPhanTu.forEach(function (element) {
-                    element.textContent = "$" + tongTien; // Cập nhật giá trị mới, ở đây là tổng tiền
+
+
+
+            var objsp =[];
+            function getInfoCard(name, soluong,tien, tennguoidung, sdt, diachi, id, thanhtoan){
+                var tongThanhToanID = $('#TongThanhToan').text();
+                var tongThanhToan = parseFloat(tongThanhToanID.substring(1)) //tiền tổng thanh toán
+
+
+                var sp ={
+                    orderId : id,
+                    phoneNumber : sdt,
+                    deliveryAddress : diachi,
+                    paymentMethod : thanhtoan,
+                    totalAmount : tongThanhToan,
+                    orderStatus : "Wait for confirmation",
+                };
+
+                objsp.push(sp);
+            }
+
+
+
+
+            window.onload = Finalpayment;
+
+            function thanhtoan(){
+                Swal.fire({
+                    title: 'Thông Báo từ hệ thống',
+                    text: 'Cảm ơn bạn đã thanh toán hóa đơn!, vùi lòng xác nhận đơn hàng',
+                    icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                    confirmButtonText: 'Xác nhận',
+                    allowOutsideClick: false,
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/api-product/saveOder',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify(objsp[objsp.length -1]),
+                            success: (redirectURL) => {
+                                // Xác nhận đã được nhấn
+                                localStorage.clear();
+                                window.location.href = "/userprofile"; // Chuyển hướng trang ngược lại trang hiện tại
+                            },
+                            error: (xhr, status, error) => {
+                                console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                            }
+                        });
+                    }
+
                 });
-
-                var tongthanhtoan = document.getElementById("TongThanhToan");
-
-                tongthanhtoan.textContent = "$" + (parseInt(tongTien) + parseInt(2));
-
-
             }
-        }
 
-        function thanhtoan(){
-            Swal.fire({
-                title: 'Thông Báo từ hệ thống',
-                text: 'Cảm ơn bạn đã thanh toán hóa đơn!',
-                icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-                confirmButtonText: 'Xác nhận',
-                allowOutsideClick: false
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Xác nhận đã được nhấn
-                    localStorage.clear();
-                    window.location.href = "/trangchu"; // Chuyển hướng trang ngược lại trang hiện tại
-                }
-            });;
-        }
-
-        window.onload = Finalpayment;
+            $('#submitBtn').click(function () {
+                thanhtoan();
+            });
+        })
     </script>
 </body>
 

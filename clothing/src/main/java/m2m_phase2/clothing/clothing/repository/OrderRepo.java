@@ -9,11 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface OrderRepo extends JpaRepository<Order, Long> {
+public interface OrderRepo extends JpaRepository<Order, Integer> {
     List<Order> findAll();
     @Query("SELECT o.orderId, u.username, o.orderDate, o.phoneNumber, o.deliveryAddress, o.paymentMethod, o.totalAmount, o.orderStatus " +
             "FROM Order o JOIN o.customer u WHERE u.email = :email")
@@ -23,6 +24,16 @@ public interface OrderRepo extends JpaRepository<Order, Long> {
     @Query(value = "update [Order] " +
             "set order_status = :orderStatus " +
             "where order_id = :orderId", nativeQuery = true)
+    byte updatePaymentStatusByOrderId(@Param("paymentStatus") String paymentStatus, @Param("orderId") Integer orderId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "insert into [Order] (customer_id, phone_number, delivery_address, payment_method, total_amount, order_status)"
+            + "values(:customer_id, :phone_number, :delivery_address, :payment_method, :total_amount, :order_status)", nativeQuery = true
+    )
+    void inserOder(@Param("customer_id") Integer customer_id, @Param("phone_number") String phone_number,
+                   @Param("delivery_address") String delivery_address, @Param("payment_method") String payment_method, @Param("total_amount") float total_amount,
+                   @Param("order_status") String order_status);
     int updateOrderStatus(@Param("orderId") Long orderId, @Param("orderStatus") String orderStatus);
 
     @Override

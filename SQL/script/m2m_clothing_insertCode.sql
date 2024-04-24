@@ -654,23 +654,40 @@ go
 
  INSERT INTO Comment(comment, product_id, user_id, create_date)
  VALUES
- ('That shirt is so beautiful', 1 , 1, N'2024-04-15'),
- ('That is so great', 1 , 3, N'2024-04-15'),
-  ('That is so great', 2 , 1, N'2024-04-15'),
-   ('So beautiful', 2 , 2, N'2024-04-15')
+    ('That shirt is so beautiful', 1 , 1, N'2024-04-15'),
+    ('That is so great', 1 , 3, N'2024-04-15'),
+    ('That is so great', 2 , 1, N'2024-04-15'),
+    ('So beautiful', 2 , 2, N'2024-04-15')
 
 
-   select * from Comment
+INSERT INTO Voucher (voucher_name, reduce, start_day, end_day)
+VALUES
+    (N'Mã giảm giá Xuân', 15, '2024-03-01', '2024-03-31'),
+    (N'Mã giảm giá Hạ', 10, '2024-06-01', '2024-08-31'),
+    (N'Mã giảm giá Thu', 20, '2024-09-01', '2024-11-30'),
+    (N'Mã giảm giá Đông', 25, '2024-12-01', '2025-02-28'),
+    (N'Mã giảm giá Tết', 30, '2025-01-01', '2025-01-31');
+
+INSERT INTO VoucherDetails
+VALUES
+    (1, 1),
+    (2, 1),
+    (3, 2),
+    (4, 3),
+    (5, 4)
+select * from [user] u where u.id not in (select distinct v.user_id from VoucherDetails v where v.voucher_id = 1)
+
+
+--    select * from Comment
 
  -- Chèn dữ liệu vào bảng [Order]
 INSERT INTO [Order] (customer_id,order_date, phone_number, delivery_address, payment_method, total_amount, order_status)
 VALUES 
-    (1, '2024-04-21', '0327789477', '123 Main Street', 'Credit Card', 100.50, 'Pending'),
-    (1,'2024-04-19', '0327789100', '456 Oak Avenue', 'PayPal', 75.25, 'Completed'),
-	(1, '2024-04-11','1', '123123 Oak Avenue', 'PayPal', 75.25, 'Completed'),
-	(1, '2024-04-05','1', '645 Oak Avenue', 'PayPal', 75.25, 'Completed'),
-	(2, '2024-04-03','1', '123124343 Oak Avenue', 'PayPal', 75.25, 'Completed');
-
+    (4, '2024-04-21', '0327789477', '123 Main Street', 'Cod', 100.50, 'Wait for confirmation'),
+    (4,'2024-04-19', '0327789100', '456 Oak Avenue', 'Cod', 75.25, 'Confirmed successfully'),
+	(4, '2024-04-11','1', '123123 Oak Avenue', 'PayPal', 75.25, 'Confirmed successfully'),
+	(4, '2024-04-05','1', '645 Oak Avenue', 'PayPal', 75.25, 'Wait for confirmation'),
+	(2, '2024-04-03','1', '123124343 Oak Avenue', 'PayPal', 75.25, 'Confirmed successfully');
 
 
 

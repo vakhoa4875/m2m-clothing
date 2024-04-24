@@ -197,6 +197,10 @@
                                     data-bs-toggle="pill" data-bs-target="#v-pills-status" type="button" role="tab"
                                     aria-controls="v-pills-status" aria-selected="false">Order status
                             </button>
+                            <button class="nav-link mt-1 text-black" id="v-pills-home-AllVoucher"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-AllVoucher" type="button" role="tab"
+                                    aria-controls="v-pills-AllVoucher" aria-selected="false">Sale
+                            </button>
                             <a class="nav-link mt-1 text-black" href="">Log Out</a>
                         </div>
                     </div>
@@ -324,6 +328,48 @@
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane" id="v-pills-AllVoucher" role="tabpanel"
+                     aria-labelledby="v-pills-home-status" tabindex="0">
+                    <div class="card my-4">
+
+                        <div class="card-body px-0 mx-3 pb-2">
+
+                            <!--viết body vào đây Cao Trọng Lễ-->
+                            <div class="table-responsive p-0" id="TableAllVoucher">
+                                <div class="header my-3">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item bg-body-secondary">
+                                            <h3>Sale</h3>
+<!--                                            <span>Manage profile information for account security</span>-->
+                                        </li>
+                                        <li class="list-group-item bg-body-secondary"></li>
+                                    </ul>
+                                </div>
+                                <div class="container">
+                                    <div class="row">
+                                        <div id="voucherList" class="row"></div>
+<!--                                       <div class="col-xl-6 col-lg-12">-->
+<!--                                           <div class="card mb-3">-->
+<!--                                               <div class="row g-0">-->
+<!--                                                   <div class="col-md-4">-->
+<!--                                                       <img src="/assests/images/logoVoucher.jpg" class="img-fluid rounded-start" alt="...">-->
+<!--                                                   </div>-->
+<!--                                                   <div class="col-md-8">-->
+<!--                                                       <div class="card-body py-0 mt-3">-->
+<!--                                                           <h5 class="card-title">Card title</h5>-->
+<!--                                                           <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
+<!--                                                           <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
+<!--                                                       </div>-->
+<!--                                                   </div>-->
+<!--                                               </div>-->
+<!--                                           </div>-->
+<!--                                       </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -392,6 +438,52 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <!--<script th:src="@{/assests/js/userpage.js}"></script>-->
+<script>
+    $(document).ready(function () {
+        // Sử dụng Ajax để gọi API và lấy danh sách voucher
+        $.ajax({
+            url: '/api-public/vouchers/getVouchersByEmail', // URL của API endpoint
+            type: 'GET',
+            success: function (response) {
+                // Xử lý dữ liệu khi API trả về thành công
+                var vouchers = response;
+                var voucherListHTML = '';
+
+                // Duyệt qua danh sách voucher và tạo HTML tương ứng
+                vouchers.forEach(function (voucher) {
+                    voucherListHTML += `
+                <div class="col-xl-6 col-lg-12">
+                    <div class="card mb-3">
+                        <div class="row g-0">
+                            <div class="col-md-4">
+                                <img src="/assests/images/logoVoucher.jpg" class="img-fluid rounded-start" alt="...">
+                            </div>
+                            <div class="col-md-8">
+                                <div class="card-body py-0 mt-3">
+                                    <h5 class="card-title">${voucher.voucherName}</h5>
+                                    <p class="card-text">Giảm giá: ${voucher.reduce}</p>
+                                    <p class="card-text">Ngày bắt đầu: ${voucher.startDay}</p>
+                                    <p class="card-text">Ngày kết thúc: ${voucher.endDay}</p>
+                                    <!-- Thêm các thông tin khác cần hiển thị -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+                });
+
+                // Đưa HTML vào div chứa danh sách voucher
+                $('#voucherList').html(voucherListHTML);
+            },
+            error: function (xhr, status, error) {
+                // Xử lý khi gọi API gặp lỗi
+                console.error('Error calling API:', error);
+            }
+        });
+    });
+</script>
+
 
 
 <script>
@@ -452,7 +544,7 @@
     $(document).ready(function() {
         // Gọi API để lấy danh sách đơn hàng dựa trên email của người dùng
         $.ajax({
-            url: '/api/orders',
+            url: '/api-product/orders',
             type: 'GET',
             success: function(data) {
                 // Hiển thị dữ liệu trong bảng
@@ -460,17 +552,28 @@
                     var orderDateFormatted = new Date(order.orderDate);
                     var formattedDate = `${orderDateFormatted.getDate()}/${orderDateFormatted.getMonth() + 1}/${orderDateFormatted.getFullYear()}`;
                     $('#TableStatusUser tbody').append(`
-                    <tr>
-                        <td>${order.orderId}</td>
-                        <td>${order.username}</td>
-                        <td>${formattedDate}</td>
-                        <td>${order.phoneNumber}</td>
-                        <td>${order.deliveryAddress}</td>
-                        <td>${order.paymentMethod}</td>
-                        <td>${order.totalAmount}</td>
-                        <td>${order.orderStatus}</td>
-                        <td><button class="btn btn-success" ${order.paymentMethod === 'Paypal' && order.orderStatus === 'Need payment' ? '' : 'disabled'}
-                        onclick="payWithPaypal(${order.totalAmount}, ${order.orderId})">Pay with paypal</button></td>
+                    <tr class="align-middle">
+                        <td class="text-center">${order.orderId}</td>
+                        <td class="text-center">${order.username}</td>
+                        <td class="text-center">${formattedDate}</td>
+                        <td class="text-center">${order.phoneNumber}</td>
+                        <td class="text-center">${order.deliveryAddress}</td>
+                        <td class="badge text-bg-secondary text-center" style="vertical-align: middle; text-align: center;">${order.paymentMethod}</td>
+                        <td class="text-center">$${order.totalAmount}</td>
+                        <td class="${order.orderStatus == 'Confirmed successfully' ? 'badge text-bg-success' : 'badge text-bg-warning'} text-center">${order.orderStatus}</td>
+                        <td class="text-center"><button class="btn btn-success" ${
+                        (() => {
+                            switch (true) {
+                                case ((order.paymentMethod === 'Cod' && (order.orderStatus ==='Confirmed successfully' || order.orderStatus ==='Wait for confirmation'))):
+                                    return 'disabled';
+                                case ((order.paymentMethod === 'PayPal' && order.orderStatus ==='Wait for confirmation')):
+                                    return 'disabled';
+                                case ((order.paymentMethod === 'PayPal' && order.orderStatus ==='Confirmed successfully')):
+                                    return "";
+                            }
+                        })()
+                        }
+                        onclick="payWithPaypal(${order.totalAmount})">Pay with paypal</button></td>
                     </tr>
                 `);
                 });
