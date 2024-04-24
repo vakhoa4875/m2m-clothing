@@ -1,11 +1,15 @@
 package m2m_phase2.clothing.clothing.api;
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
+import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDto;
+import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.data.model.VoucherM;
 import m2m_phase2.clothing.clothing.service.impl.VoucherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -70,4 +74,25 @@ public class VoucherApi {
         }
         return ResponseEntity.ok(rowEffected);
     }
+
+
+    @GetMapping("/getVouchersByEmail")
+    public ResponseEntity<?> getVouchersByUserId(HttpSession session) {
+        String email = (String) session.getAttribute("loggedInUser");
+        if (email == null) {
+            // Người dùng chưa đăng nhập, trả về lỗi hoặc thông báo phù hợp
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
+        }
+
+        List<VoucherM> voucherMList;
+        try {
+            // Gọi service để lấy danh sách voucher dựa trên email
+            voucherMList = voucherService.findVouchersInfoByEmail(email);
+        } catch (SQLException e) {
+            System.out.println("Call API Failed: /api-public/vouchers/getVouchersByUserId");
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(voucherMList);
+    }
+
 }
