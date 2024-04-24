@@ -1,6 +1,7 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
 import m2m_phase2.clothing.clothing.constant.OrderStatus;
+import m2m_phase2.clothing.clothing.data.dto.OrderDto;
 import m2m_phase2.clothing.clothing.data.entity.Order;
 import m2m_phase2.clothing.clothing.repository.OrderRepo;
 import m2m_phase2.clothing.clothing.service.OrderService;
@@ -27,33 +28,32 @@ public class OrderServiceImpl implements OrderService {
         return repo.findOrdersWithUsernameByEmail(email);
     }
 
-    @Override
-
-    public byte updatePaymentStatusByOrderId(OrderDto orderDto) {
-        String paymentMethod = OrderStatus.PAID.getValue();
-        Integer orderId = orderDto.getOrderId();
-        return repo.updatePaymentStatusByOrderId(paymentMethod, orderId);
-    }
+//    @Override
+//    public byte updatePaymentStatusByOrderId(OrderDto orderDto) {
+//        String paymentMethod = OrderStatus.PAID.getValue();
+//        Integer orderId = orderDto.getOrderId();
+//        return repo.(paymentMethod, orderId);
+//    }
 
     @Override
     public void inserOder(OrderDto orderDto) {
         repo.inserOder(orderDto.getOrderId(), orderDto.getPhoneNumber(), orderDto.getDeliveryAddress(), orderDto.getPaymentMethod(), orderDto.getTotalAmount(), orderDto.getOrderStatus());
     }
 
-    public Order findOrderByOrderId(Long orderId) {
+    public Order findOrderByOrderId(Integer orderId) {
         var order = repo.findById(orderId);
         return order.orElse(null);
     }
 
     @Override
-    public void paidOrder(Long orderId) {
+    public void paidOrder(Integer orderId) {
         String orderStatus = OrderStatus.PAID.getValue();
         var rowsEffected = repo.updateOrderStatus(orderId, orderStatus);
         System.out.println(">> paid order row effected: " + rowsEffected);
     }
 
     @Override
-    public void updateOrderStatusByOrderId(Long orderId, String orderStatus) {
+    public void updateOrderStatusByOrderId(Integer orderId, String orderStatus) {
         var rowsEffected = repo.updateOrderStatus(orderId, orderStatus);
         System.out.println(">> update order status row effected: " + rowsEffected);
     }
@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
 //    @Override
 //    public byte updatePaymentStatusByOrderId(OrderDto orderDto) {
 //        String paymentMethod = OrderStatus.PAID.getValue();
-//        Long orderId = orderDto.getOrderId();
+//        Integer orderId = orderDto.getOrderId();
 //        return repo.updatePaymentStatusByOrderId(paymentMethod, orderId);
 //    }
 
