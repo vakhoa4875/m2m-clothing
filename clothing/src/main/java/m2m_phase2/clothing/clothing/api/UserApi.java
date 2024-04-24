@@ -59,7 +59,7 @@ public class UserApi {
     public ResponseEntity<?> doGetListUserByVoucherID(@RequestParam("voucherID") Integer voucherID) {
         List<UserM> user;
         try {
-            VoucherDetailsDto voucherDetailsDto = new VoucherDetailsDto(); // Tạo một đối tượng VoucherDto và đặt voucherID vào đó
+            VoucherDetailsDto voucherDetailsDto = new VoucherDetailsDto();
             VoucherE voucherE = new VoucherE();
             voucherE.setVoucherID(voucherID);
             voucherDetailsDto.setVoucher(voucherE);
