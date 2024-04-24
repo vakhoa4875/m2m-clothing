@@ -183,6 +183,28 @@
                                               Danh sách sản phẩm
                                             </div>
                                             <div>
+                                                <div th:if="${menu}">
+                                                    <ul>
+                                                        <li class="pt-1 pb-1" >
+                                                            <a href="/categoryType?categoryId=1" class=""> Outerwear </a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=2" class=""> Tops </a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=3">Bottoms</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=4">Jewels & Accessories</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=5">Headwear</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=6">Footwear</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                                 <ul th:switch="${active}">
                                                     <div th:case="1">
                                                         <li class="pt-1 pb-1" >
@@ -307,6 +329,27 @@
                                                         </li>
                                                         <li class="pt-1 pb-1">
                                                             <a href="/categoryType?categoryId=6" class="active-custom">Footwear</a>
+                                                        </li>
+                                                    </div>
+
+                                                    <div th:case="7">
+                                                        <li class="pt-1 pb-1" >
+                                                            <a href="/categoryType?categoryId=1" class=""> Outerwear </a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=2" class=""> Tops </a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=3">Bottoms</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=4">Jewels & Accessories</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=5">Headwear</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=6">Footwear</a>
                                                         </li>
                                                     </div>
 

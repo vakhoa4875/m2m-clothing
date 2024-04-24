@@ -232,6 +232,7 @@ create or alter trigger trigger_before_delete_user
 
         COMMIT TRANSACTION;
     end
+go
 --CREATE OR ALTER TRIGGER gen_user_info 
 --ON Account
 --AFTER INSERT
@@ -243,10 +244,10 @@ create or alter trigger trigger_before_delete_user
 --END;
 
 --go
-select * from Comment
-select * from Comment where product_id = 1;
+-- select * from Comment
+-- select * from Comment where product_id = 1;
 
-select * from [user]
+-- select * from [user]
 CREATE TABLE [Order] (
     order_id int IDENTITY(1,1) PRIMARY KEY,
     customer_id int NOT NULL,
@@ -258,6 +259,26 @@ CREATE TABLE [Order] (
     order_status nvarchar(50),
     CONSTRAINT FK_Customer_User FOREIGN KEY (customer_id) REFERENCES [user] (id)
 );
+
+Create table [OrderDetail](
+    order_id_detail int FOREIGN KEY REFERENCES [Order](order_id),
+    nameproduct nvarchar(255),
+    quatity int,
+    toal_product float
+)
+
+create or alter trigger trigger_after_create_Order
+    on [Order]
+    after INSERT
+    as
+    begin
+        declare @id int;
+
+        select @id = inserted.order_id from inserted;
+
+        insert into OrderDetail (order_id_detail) values (@id)
+    end
+go
 
 
 

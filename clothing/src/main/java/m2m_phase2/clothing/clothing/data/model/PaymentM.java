@@ -15,12 +15,12 @@ public class PaymentM {
     private Integer sysPaymentId;
     private String paymentId;
     private String payerId;
-    private Double totalAmount;
+    private Float totalAmount;
     private String currency;
     private String method;
     private String intent;
     private String description;
-    private Long orderId;
+    private Integer orderId;
 
     public static PaymentM convertPaymentEToPaymentM(PaymentE paymentE) {
         return PaymentM.builder()

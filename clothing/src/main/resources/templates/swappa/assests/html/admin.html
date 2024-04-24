@@ -335,12 +335,14 @@
                                     <tr class="text-center">
                                         <th scope="col">Mã đơn hàng</th>
                                         <th scope="col">Tên người dùng</th>
+                                        <th scope="col">Số điện thoại</th>
+                                        <th scope="col">Hình thức thanh toán</th>
                                         <th scope="col">Số lượng sản phẩm</th>
                                         <th scope="col">Trạng thái đơn hàng</th>
                                         <th scope="col"></th>
                                     </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody id="TableStatusUser">
                                     <tr>
                                         <td class="align-middle text-center text-sm">
                                             <div class="d-flex w-100 flex-column justify-content-center">
@@ -351,31 +353,18 @@
                                             <span class="text-secondary text-xs font-weight-bold">Nguyễn hồ phát</span>
                                         </td>
                                         <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">6</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-warning">Chờ xác nhận</span></span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <button class="btn border-0 rounded btn-outline-info"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalVoucherSendAcount">
-                                                <i class="fa-regular fa-circle-check"></i></button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle text-center text-sm">
-                                            <div class="d-flex w-100 flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">PS29018</h6>
-                                            </div>
+                                            <span class="text-secondary text-xs font-weight-bold">09xxxxxxxx</span>
                                         </td>
                                         <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">Nguyễn hồ phát</span>
+<!--                                            <span class="text-secondary text-xs font-weight-bold">Pay</span>-->
+                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-secondary">Cod</span></span>
                                         </td>
                                         <td class="align-middle text-center text-sm">
                                             <span class="text-secondary text-xs font-weight-bold">6</span>
                                         </td>
                                         <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-success">Xác nhận thành công</span></span>
+<!--                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-success">Confirmed successfully</span></span>-->
+                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-warning">Wait for confirmation</span></span>
                                         </td>
                                         <td class="align-middle text-center">
                                             <button class="btn border-0 rounded btn-outline-info"
@@ -1096,7 +1085,81 @@
         });
 
 
+        function getStatusProductUser(){
+            $.ajax({
+                url: '/api-product/orders',
+                type: 'GET',
+                success: function(data) {
+                    // Hiển thị dữ liệu trong bảng
+                    data.forEach(function(order) {
+                        var orderDateFormatted = new Date(order.orderDate);
+                        var formattedDate = `${orderDateFormatted.getDate()}/${orderDateFormatted.getMonth() + 1}/${orderDateFormatted.getFullYear()}`;
 
+                        $('#TableStatusUser').append(`
+                           <tr>
+                                <td class="align-middle text-center text-sm">
+                                    <div class="d-flex w-100 flex-column justify-content-center">
+                                        <h6 class="mb-0 text-sm">${order.orderId}</h6>
+                                    </div>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-secondary text-xs font-weight-bold">${order.username}</span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-secondary text-xs font-weight-bold">${order.phoneNumber}</span>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                      ${order.paymentMethod == Cod ?
+                                            '<span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-secondary">Cod</span></span>'
+                                            :
+                                            '<span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-secondary">PayPal</span></span>'}
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                    <span class="text-secondary text-xs font-weight-bold">6</span>
+                                </td>
+                                <td class="align-middle text-center">
+<!--                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-success">Confirmed successfully</span></span>-->
+                                    <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-warning">Wait for confirmation</span></span>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <button class="btn border-0 rounded btn-outline-info"
+                                            data-bs-toggle="modal" data-bs-target="#exampleModalVoucherSendAcount">
+                                        <i class="fa-regular fa-circle-check"></i></button>
+                                </td>
+                            </tr>
+
+
+                    <tr class="align-middle">
+                        <td class="text-center">${order.orderId}</td>
+                        <td class="text-center">${order.username}</td>
+                        <td class="text-center">${formattedDate}</td>
+                        <td class="text-center">${order.phoneNumber}</td>
+                        <td class="text-center">${order.deliveryAddress}</td>
+                        <td class="badge text-bg-secondary text-center" style="vertical-align: middle; text-align: center;">${order.paymentMethod}</td>
+                        <td class="text-center">$${order.totalAmount}</td>
+                        <td class="${order.orderStatus == 'Confirmed successfully' ? 'badge text-bg-success' : 'badge text-bg-warning'} text-center">${order.orderStatus}</td>
+                        <td class="text-center"><button class="btn btn-success" ${
+                            (() => {
+                                switch (true) {
+                                    case ((order.paymentMethod === 'Cod' && (order.orderStatus ==='Confirmed successfully' || order.orderStatus ==='Wait for confirmation'))):
+                                        return 'disabled';
+                                    case ((order.paymentMethod === 'PayPal' && order.orderStatus ==='Wait for confirmation')):
+                                        return 'disabled';
+                                    case ((order.paymentMethod === 'PayPal' && order.orderStatus ==='Confirmed successfully')):
+                                        return "";
+                                }
+                            })()
+                        }
+                        onclick="payWithPaypal(${order.totalAmount})">Pay with paypal</button></td>
+                    </tr>
+                `);
+                    });
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        }
 
     });
 
