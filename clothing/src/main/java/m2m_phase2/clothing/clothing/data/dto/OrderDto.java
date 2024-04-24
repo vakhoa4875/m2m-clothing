@@ -4,21 +4,22 @@ package m2m_phase2.clothing.clothing.data.dto;
 import java.util.Date;
 
 public class OrderDto {
-    private Long orderId;
+    private Integer orderId;
     private String username;
-    private Date orderDate;
+    private String orderDate;
     private String phoneNumber;
     private String deliveryAddress;
     private String paymentMethod;
-    private Double totalAmount;
+    private Float totalAmount;
     private String orderStatus;
+    private String soluong;
 
 
 
     public OrderDto() {
     }
 
-    public OrderDto(Long orderId, String username, Date orderDate, String phoneNumber, String deliveryAddress, String paymentMethod, Double totalAmount, String orderStatus) {
+    public OrderDto(Integer orderId, String username, String orderDate, String phoneNumber, String deliveryAddress, String paymentMethod, Float totalAmount, String orderStatus) {
         this.orderId = orderId;
         this.username = username;
         this.orderDate = orderDate;
@@ -30,11 +31,20 @@ public class OrderDto {
     }
     // Getters and setters
 
-    public Long getOrderId() {
+
+    public String getSoluong() {
+        return soluong;
+    }
+
+    public void setSoluong(String soluong) {
+        this.soluong = soluong;
+    }
+
+    public Integer getOrderId() {
         return orderId;
     }
 
-    public void setOrderId(Long orderId) {
+    public void setOrderId(Integer orderId) {
         this.orderId = orderId;
     }
 
@@ -46,11 +56,11 @@ public class OrderDto {
         this.username = username;
     }
 
-    public Date getOrderDate() {
+    public String getOrderDate() {
         return orderDate;
     }
 
-    public void setOrderDate(Date orderDate) {
+    public void setOrderDate(String orderDate) {
         this.orderDate = orderDate;
     }
 
@@ -78,11 +88,11 @@ public class OrderDto {
         this.paymentMethod = paymentMethod;
     }
 
-    public Double getTotalAmount() {
+    public Float getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Double totalAmount) {
+    public void setTotalAmount(Float totalAmount) {
         this.totalAmount = totalAmount;
     }
 

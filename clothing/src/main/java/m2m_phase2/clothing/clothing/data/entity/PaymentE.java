@@ -27,7 +27,7 @@ public class PaymentE {
     private String payerId;
 
     @Column(name = "total_amount", nullable = false)
-    private double totalAmount;
+    private Float totalAmount;
 
     @Column(name = "currency", columnDefinition = "nvarchar(10) default 'USD'")
     private String currency = "USD";

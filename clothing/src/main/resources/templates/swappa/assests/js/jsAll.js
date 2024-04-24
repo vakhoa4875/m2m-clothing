@@ -25,7 +25,7 @@ function compareData() {
                                                 <span class="ms-3">${object.tensp}</span>
                                             </li>
                                         </th>
-                                        <td class="align-middle">$${object.gia}</td>
+                                        <td class="align-middle">$${object.gia.toFixed(2)}</td>
                                         <td class="align-middle">
                                             <div>
                                                 <nav aria-label="Page navigation example">
@@ -47,7 +47,7 @@ function compareData() {
                                                   </nav>
                                             </div>
                                         </td>
-                                        <td class="align-middle fw-bold" >$${(object.soLuong * object.gia)}</td>
+                                        <td class="align-middle fw-bold" >$${(object.soLuong * object.gia).toFixed(2)}</td>
                                         <td class="align-middle">
                                             <button class="btn btn-close" onclick="xoamSoLuong('${key}')"></button>
                                         </td>
@@ -127,11 +127,21 @@ function capNhatTienTong() {
             var object = JSON.parse(value);
 
             tongTien += object.soLuong * object.gia;
+            // Áp dụng giảm giá từ voucher nếu có
+            if (appliedVoucher) {
+                var reduceAmount = tongTien * (appliedVoucher.voucherReducePercent / 100);
+                console.log(reduceAmount)
+                tongTien -= reduceAmount;
+                // Cập nhật giá trị của thẻ HTML mới
+                var phanTuTienGiam = document.querySelector(".tiengiam");
+                phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
+                console.log(phanTuTienGiam0);
+            }
         }
         var cacPhanTu = document.querySelectorAll(".tienThanhToan");
         // Lặp qua từng phần tử và cập nhật giá trị mới
         cacPhanTu.forEach(function (element) {
-            element.textContent = "$" + tongTien; // Cập nhật giá trị mới, ở đây là tổng tiền
+            element.textContent = "$" + tongTien.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
         });
 
     } else {
@@ -176,7 +186,7 @@ window.onload = compareData;
 
 
 
-
+var appliedVoucher = null; // Biến để lưu trữ thông tin voucher được áp dụng
 $(document).ready(function () {
     let selectedCategoryId = null;
 
@@ -291,9 +301,71 @@ $(document).ready(function () {
             layTongSoLuong();
         });
     }
+    //hàm phatteacher
+    function getAllVoucherByUserEmail() {
+        $.ajax({
+            url: '/api-public/vouchers/getCartVouchersByEmail',
+            type: 'GET',
+            success: function (data) {
+                console.log(data);
+                $('#modalBodyVoucherInCart').empty();
+                // Định dạng ngày bằng Moment.js
 
+                $.each(data,function (index,voucher){
+                    var formattedStartDate = moment(voucher.startDay).format('DD-MM-YYYY');
+                    var formattedEndDate = moment(voucher.endDay).format('DD-MM-YYYY');
+                    var newRow = `
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="card mb-3" >
+                                            <div class="row g-0">
+                                                <div class="col-md-4">
+                                                    <img src="/assests/images/logoVoucher.jpg" class="img-fluid rounded-start" alt="...">
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">${voucher.voucherName}</h5>
+                                                        <p class="card-text">Reduce: ${voucher.reduce}%</p>
+                                                        <p class="card-text">End day: ${formattedEndDate}</p>
+                                                        <button class="btn btn-primary" data-voucher-id="${voucher.voucherID}" id="addVoucherBtn_${voucher.voucherID}">Add Voucher</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                `;
+                    $('#modalBodyVoucherInCart').append(newRow);
+                });
+                // Xử lý sự kiện khi nút "Add Voucher" được nhấn
 
+                $('[id^="addVoucherBtn_"]').click(function() {
+                    var voucherID = $(this).data('voucher-id');
+                    var voucherName = $(this).closest('.card-body').find('.card-title').text();
+                    var voucherReducePercent = parseFloat($(this).siblings('.card-text').text().split(":")[1]);
 
+                    // Lưu thông tin voucher vào biến appliedVoucher
+                    appliedVoucher = {
+                        voucherID: voucherID,
+                        voucherName: voucherName,
+                        voucherReducePercent: voucherReducePercent
+                    };
+
+                    // console.log(appliedVoucher)
+
+                    $('#addVoucherText').text('Bạn đã thêm voucher ' + voucherName + ' vào giỏ hàng.');
+                    $('#addVoucherText').removeClass('d-none').addClass('d-block');
+                    capNhatTienTong();
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("Đã xảy ra lỗi khi gọi API: " + error);
+            }
+        });
+    }
+    $('#btnvoucherModal').click(function () {
+        getAllVoucherByUserEmail(); // Gọi hàm updateUser() khi nhấn vào nút "Submit"
+    });
 
 
 
@@ -311,7 +383,8 @@ $(document).ready(function () {
 //chi tiết sản phẩm
 var gia = document.getElementById("productPrice");
 var giaString = gia.textContent;
-var giaSo = parseInt(giaString.replace("$", ""));
+// Thay thế dấu phẩy bằng dấu chấm
+var giaSo = parseFloat(giaString.replace("$", "").replace(",", "."));
 
 var tensp = document.getElementById("productName");
 var anh = document.getElementById("productAnh");
@@ -340,6 +413,7 @@ btnCart.addEventListener("click", function() {
         localStorage.setItem(tensp.textContent, JSON.stringify(sanPham));
         layTongSoLuong();
     } else {
+        console.log(giaSo)
         // Nếu dữ liệu chưa tồn tại, tạo mới đối tượng sản phẩm và lưu vào local storage
         var sanPhamMoi = {
             gia: giaSo,
@@ -391,3 +465,8 @@ btnBuyNow.addEventListener("click",function (){
         window.location.href = "/giohang";
     }
 })
+
+// $(document).ready(function () {
+//
+//
+// });

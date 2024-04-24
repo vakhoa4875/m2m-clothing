@@ -2,7 +2,9 @@ package m2m_phase2.clothing.clothing.api;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.OrderDto;
+import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.entity.Order;
+import m2m_phase2.clothing.clothing.service.OrderDetailService;
 import m2m_phase2.clothing.clothing.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,10 +16,12 @@ import java.util.Date;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api-product")
 public class OrderApi {
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private OrderDetailService orderDetailService;
     @Autowired
     private HttpSession session;
 //    @GetMapping
@@ -29,7 +33,7 @@ public class OrderApi {
 //        return new ResponseEntity<>(orders, HttpStatus.OK);
 //    }
 
-    @GetMapping
+    @GetMapping("/orders")
     public ResponseEntity<List<OrderDto>> getOrdersWithUsernameByCustomerEmail(HttpSession session) {
         String userEmail = (String) session.getAttribute("loggedInUser");
         if (userEmail == null) {
@@ -43,19 +47,42 @@ public class OrderApi {
         List<OrderDto> dtos = new ArrayList<>();
         for (Object[] obj : ordersWithUsername) {
             OrderDto dto = new OrderDto();
-            dto.setOrderId((Long) obj[0]);
+            dto.setOrderId((Integer) obj[0]);
             dto.setUsername((String) obj[1]);
-            dto.setOrderDate((Date) obj[2]);
+            dto.setOrderDate(obj[2].toString());
             dto.setPhoneNumber((String) obj[3]);
             dto.setDeliveryAddress((String) obj[4]);
             dto.setPaymentMethod((String) obj[5]);
-            dto.setTotalAmount((Double) obj[6]);
+            dto.setTotalAmount((Float) obj[6]);
             dto.setOrderStatus((String) obj[7]);
             dtos.add(dto);
         }
 
         return new ResponseEntity<>(dtos, HttpStatus.OK);
+    };
+
+    @PostMapping("/saveOder")
+    public ResponseEntity<?> saveOderUser(@RequestBody OrderDto orderDto){
+        try{
+           orderService.inserOder(orderDto);
+        }catch (Exception e){
+            System.out.println("Call API Failed: /api/orders/saveOder");
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(orderDto);
     }
 
-//    @PostMapping("/paypal/paid")
+    @PostMapping("/insertOderdetail")
+    public ResponseEntity<?> insertOder(@RequestBody OrderDto orderDto){
+        try{
+            orderDetailService.UpdateOderDetail(orderDto);
+        }catch (Exception e){
+            System.out.println("Call API Failed: /api/orders/saveOder");
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(orderDto);
+    }
+
+
+
 }

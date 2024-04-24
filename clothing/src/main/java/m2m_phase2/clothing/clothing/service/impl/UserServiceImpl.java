@@ -2,6 +2,8 @@ package m2m_phase2.clothing.clothing.service.impl;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
+import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
+import m2m_phase2.clothing.clothing.data.dto.VoucherDto;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.repository.UserRepo;
@@ -132,6 +134,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public void saveUserGG(UserE userE) {
         userRepo.save(userE);
+    }
+
+    @Override
+    public List<UserM> findUserNotInVoucher(VoucherDetailsDto voucherDetailsDto) {
+        return UserM.converListUserEToListUserM(userRepo.findUserNotInVoucher(voucherDetailsDto.getVoucher().getVoucherID()));
     }
     //M2M- 010 TanLoc End
 //    @Override

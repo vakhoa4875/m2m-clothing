@@ -62,6 +62,8 @@ CREATE TABLE Product (
   category_id int FOREIGN KEY REFERENCES Category(category_id),
   sale_ID int FOREIGN KEY REFERENCES Sale(sale_ID)
 );
+
+
 create table [user] (
     id          int             primary key identity(1,1),
     username    varchar(63)     not null unique ,
@@ -82,6 +84,14 @@ create table [user] (
 );
 
 
+create table [Cart](
+    id int FOREIGN KEY REFERENCES [user](id),
+    name_product varchar(255),
+    quatity int ,
+    price int
+);
+
+
 create table Comment(
 	comment_id int IDENTITY(1,1) PRIMARY KEY,
 	comment varchar(255),
@@ -91,6 +101,24 @@ create table Comment(
     FOREIGN KEY (user_id) REFERENCES [user](id),
     FOREIGN KEY (product_id) REFERENCES Product(product_id)
 );
+go
+
+create table Voucher(
+    voucher_id int IDENTITY(1,1) primary key,
+    voucher_name nvarchar(255),
+    reduce int,
+    start_day date,
+    end_day date
+)
+go
+
+create table VoucherDetails(
+    voucher_details_id int IDENTITY(1,1) primary key,
+    voucher_id int,
+    user_id int ,
+    FOREIGN KEY (voucher_id) REFERENCES Voucher(voucher_id),
+    FOREIGN KEY (user_id) REFERENCES [user](id)
+)
 go
 --trigger insert into user after insert into Account
 create or alter trigger trigger_after_insert_into_UserInfo
@@ -182,6 +210,35 @@ create or alter trigger trigger_after_update_user
     end
 go
 
+create or alter trigger trigger_after_create_user
+    on [user]
+    after INSERT
+    as
+    begin
+        declare @id int;
+
+        select @id = inserted.id from inserted;
+
+        insert into Cart (id) values (@id)
+    end
+go
+
+create or alter trigger trigger_before_delete_user
+    on [user]
+    after delete
+    as
+    begin
+        declare @iddelete int;
+        select @iddelete = deleted.id from deleted;
+        BEGIN TRANSACTION;
+
+        delete from Cart where Cart.id = @iddelete;
+
+        delete from [user] where [user].id = @iddelete;
+
+        COMMIT TRANSACTION;
+    end
+go
 --CREATE OR ALTER TRIGGER gen_user_info 
 --ON Account
 --AFTER INSERT
@@ -193,10 +250,10 @@ go
 --END;
 
 --go
-select * from Comment
-select * from Comment where product_id = 1;
+-- select * from Comment
+-- select * from Comment where product_id = 1;
 
-select * from [user]
+-- select * from [user]
 CREATE TABLE [Order] (
     order_id int IDENTITY(1,1) PRIMARY KEY,
     customer_id int NOT NULL,
@@ -208,6 +265,26 @@ CREATE TABLE [Order] (
     order_status nvarchar(50),
     CONSTRAINT FK_Customer_User FOREIGN KEY (customer_id) REFERENCES [user] (id)
 );
+
+Create table [OrderDetail](
+    order_id_detail int FOREIGN KEY REFERENCES [Order](order_id),
+    nameproduct nvarchar(255),
+    quatity int,
+    toal_product float
+)
+
+create or alter trigger trigger_after_create_Order
+    on [Order]
+    after INSERT
+    as
+    begin
+        declare @id int;
+
+        select @id = inserted.order_id from inserted;
+
+        insert into OrderDetail (order_id_detail) values (@id)
+    end
+go
 
 
 
