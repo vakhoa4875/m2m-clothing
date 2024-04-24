@@ -112,21 +112,22 @@ public class UserApi {
         try {
             // Nhận dữ liệu base64 từ Frontend
             String base64Data = userDto.getAvatar();
-            String name = base64Data.substring(0, base64Data.indexOf(","));
-            int viTriDauPhayThuHai = base64Data.indexOf(",", base64Data.indexOf(",") + 1); // vị trí dấu phẩy thứ hai
-            String data = base64Data.substring(viTriDauPhayThuHai + 1);
-            System.out.println(data);
-
-            // Giải mã base64 thành byte array
-            byte[] bytes = Base64.decodeBase64(data);
-
-
-            // Tạo file ảnh
-            File file = new File("src/main/resources/templates/swappa/assests/imagesUser", name); // đường dẫn lưu trữ
-            FileOutputStream fos = new FileOutputStream(file);
-            fos.write(bytes);
-            fos.close();
-            userDto.setAvatar(name);
+            if (base64Data != null && !base64Data.isEmpty()) {
+                String name = base64Data.substring(0, base64Data.indexOf(","));
+                int viTriDauPhayThuHai = base64Data.indexOf(",", base64Data.indexOf(",") + 1);
+                String data = base64Data.substring(viTriDauPhayThuHai + 1);
+                byte[] bytes = Base64.decodeBase64(data);
+                File file = new File("src/main/resources/templates/swappa/assests/imagesUser", name);
+                FileOutputStream fos = new FileOutputStream(file);
+                fos.write(bytes);
+                fos.close();
+                userDto.setAvatar(name);
+            } else {
+                UserM existingUser = userService.getUserByUsernameAndEmail(userDto); // Lấy thông tin người dùng từ UserService
+                if (existingUser != null) {
+                    userDto.setAvatar(existingUser.getAvatar()); // Sử dụng ảnh của người dùng hiện tại
+                }
+            }
             rowEffected = userService.updateUserInfo(userDto);
         } catch (Exception e) {
             System.out.println("Gọi API thất bại: /api-public/users/saveUser");
