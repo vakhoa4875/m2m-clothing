@@ -16,7 +16,7 @@ public class PaymentM {
     private int sysPaymentId;
     private String paymentId;
     private String payerId;
-    private Float totalAmount;
+    private double totalAmount;
     private String currency;
     private String method;
     private String intent;
