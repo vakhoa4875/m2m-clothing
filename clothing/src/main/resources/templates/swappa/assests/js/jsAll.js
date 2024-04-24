@@ -132,6 +132,9 @@ function capNhatTienTong() {
                 var reduceAmount = tongTien * (appliedVoucher.voucherReducePercent / 100);
                 console.log(reduceAmount)
                 tongTien -= reduceAmount;
+                // Cập nhật giá trị của thẻ HTML mới
+                var phanTuTienGiam = document.querySelector(".tiengiam");
+                phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
             }
         }
         var cacPhanTu = document.querySelectorAll(".tienThanhToan");
@@ -297,7 +300,7 @@ $(document).ready(function () {
             layTongSoLuong();
         });
     }
-//hàm phatteacher
+    //hàm phatteacher
     function getAllVoucherByUserEmail() {
         $.ajax({
             url: '/api-public/vouchers/getCartVouchersByEmail',
@@ -351,6 +354,7 @@ $(document).ready(function () {
 
                     $('#addVoucherText').text('Bạn đã thêm voucher ' + voucherName + ' vào giỏ hàng.');
                     $('#addVoucherText').removeClass('d-none').addClass('d-block');
+                    capNhatTienTong();
                 });
             },
             error: function (xhr, status, error) {

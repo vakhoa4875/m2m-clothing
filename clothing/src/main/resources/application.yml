@@ -35,4 +35,8 @@ spring:
       allowed-origins: '*'
   web:
     resources:
-      static-locations: classpath:/templates/swappa, classpath:/templates/swappa/media, classpath:/templates/swappa/imagesUser
+      static-locations: classpath:/templates/swappa, classpath:/templates/swappa/media
+paypal:
+  client-id: AUn8UV5sTafGqBu9Y6BAB9DKZlgUDgy534_sHcoYwifxkvIZsbpNfIjP0zU3H8u8XJEWTiw8UuzatRZC
+  client-secret: ECNMSzeMKvjXkOBdYZ6Vw9SJ6tXJXel8tcBrk6ISBi_pXLxKJxoiq6Uj4dWybRoQTDBaIOamuknc-9sR
+  mode: sandbox # 'sandbox' for testing; 'live' for real production
