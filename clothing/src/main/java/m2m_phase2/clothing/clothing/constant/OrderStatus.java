@@ -5,9 +5,10 @@ public enum OrderStatus {
     APPROVED("Approved"),
     NEED_PAYMENT("Need payment"),
     PAID("Paid"),
+    FAILED("Failed"),
+    CANCELED("Canceled"),
     DELIVERING("Delivering"),
-    DELIVERED("Delivered"),
-    CANCELED("Cancel");
+    DELIVERED("Delivered");
 
     private final String value;
 
