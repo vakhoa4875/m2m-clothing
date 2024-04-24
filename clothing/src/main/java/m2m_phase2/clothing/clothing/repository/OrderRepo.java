@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface OrderRepo extends JpaRepository<Order, Integer> {
@@ -19,9 +20,11 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
             "FROM Order o JOIN o.customer u WHERE u.email = :email")
     List<Object[]> findOrdersWithUsernameByEmail(@Param("email") String email);
     @Modifying
-    @Query(value = "update Order " +
-            "set order_status = :paymentStatus " +
+    @Transactional
+    @Query(value = "update [Order] " +
+            "set order_status = :orderStatus " +
             "where order_id = :orderId", nativeQuery = true)
+
     byte updatePaymentStatusByOrderId(@Param("paymentStatus") String paymentStatus, @Param("orderId") Integer orderId);
 
     @Modifying
@@ -32,6 +35,12 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
     void inserOder(@Param("customer_id") Integer customer_id, @Param("phone_number") String phone_number,
                    @Param("delivery_address") String delivery_address, @Param("payment_method") String payment_method, @Param("total_amount") float total_amount,
                    @Param("order_status") String order_status);
+
+    int updateOrderStatus(@Param("orderId") Long orderId, @Param("orderStatus") String orderStatus);
+
+    @Override
+    Optional<Order> findById(Long id);
+
 
 
 }
