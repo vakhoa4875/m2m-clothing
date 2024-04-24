@@ -23,6 +23,8 @@ import java.util.List;
 public class VoucherApi {
     @Autowired
     private VoucherServiceImpl voucherService;
+    @Autowired
+    private HttpSession session;
 
     @GetMapping("/getAllVouchers")
     public ResponseEntity<?> doGetAllVouchers() {
@@ -84,6 +86,24 @@ public class VoucherApi {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
         }
 
+        List<VoucherM> voucherMList;
+        try {
+            // Gọi service để lấy danh sách voucher dựa trên email
+            voucherMList = voucherService.findVouchersInfoByEmail(email);
+        } catch (SQLException e) {
+            System.out.println("Call API Failed: /api-public/vouchers/getVouchersByUserId");
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(voucherMList);
+    }
+
+    @GetMapping("/getCartVouchersByEmail")
+    public ResponseEntity<?> getCartVouchersByEmail() {
+        String email = (String) session.getAttribute("loggedInUser");
+        if (email == null) {
+            // Người dùng chưa đăng nhập, trả về lỗi hoặc thông báo phù hợp
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not logged in");
+        }
         List<VoucherM> voucherMList;
         try {
             // Gọi service để lấy danh sách voucher dựa trên email
