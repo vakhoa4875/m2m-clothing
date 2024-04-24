@@ -23,7 +23,7 @@ public class Order implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
-    private Long orderId;
+    private Integer orderId;
 
     @ManyToOne
     @JoinColumn(name = "customer_id", referencedColumnName = "id")
@@ -42,7 +42,7 @@ public class Order implements Serializable {
     private String paymentMethod;
 
     @Column(name = "total_amount")
-    private Double totalAmount;
+    private Float totalAmount;
 
     @Column(name = "order_status", length = 50)
     private String orderStatus;

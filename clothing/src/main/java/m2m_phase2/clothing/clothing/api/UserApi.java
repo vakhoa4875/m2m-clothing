@@ -3,6 +3,9 @@ package m2m_phase2.clothing.clothing.api;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
+import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
+import m2m_phase2.clothing.clothing.data.dto.VoucherDto;
+import m2m_phase2.clothing.clothing.data.entity.VoucherE;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.service.UserService;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -47,6 +50,22 @@ public class UserApi {
             user = userService.getUserByUsernameAndEmail(userDto);
         } catch (SQLException e) {
             System.out.println("Call API Failed: /api-public/users/getUserByUsernameAndEmail");
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/getListUserByVoucherID")
+    public ResponseEntity<?> doGetListUserByVoucherID(@RequestParam("voucherID") Integer voucherID) {
+        List<UserM> user;
+        try {
+            VoucherDetailsDto voucherDetailsDto = new VoucherDetailsDto();
+            VoucherE voucherE = new VoucherE();
+            voucherE.setVoucherID(voucherID);
+            voucherDetailsDto.setVoucher(voucherE);
+            user = userService.findUserNotInVoucher(voucherDetailsDto);
+        } catch (SQLException e) {
+            System.out.println("Call API Failed: /api-public/users/getListUserByVoucherID");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(user);

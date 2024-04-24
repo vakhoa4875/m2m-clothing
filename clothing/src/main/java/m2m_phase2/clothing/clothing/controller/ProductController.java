@@ -25,7 +25,6 @@ public class ProductController {
 	@Autowired
 	private CategoryImpl category;
 
-	
 	@GetMapping("/categoryType")
 	public String getcategoryType(@RequestParam Integer categoryId ,Model model) {
 		List<Product> products	= productServiceImpl.findBycategory(categoryId);
@@ -38,6 +37,7 @@ public class ProductController {
 	public String getAllcategory(Model model) {
 		List<Product> products	= productServiceImpl.findAll();
 		model.addAttribute("listProduct",products);
+		model.addAttribute("active",7); // hiện bản cateory ở trạng thái trọn All
 		return "swappa/assests/html/productAll";
 	}
 
