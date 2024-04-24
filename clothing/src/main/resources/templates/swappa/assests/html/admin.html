@@ -10,6 +10,7 @@
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script th:src="@{/assests/js/UserManagement.js}"></script>
+    <script th:src="@{/assests/js/productManagement.js}"></script>
 
     <style>
         .max-width-col {
@@ -51,12 +52,14 @@
 
     <script>
         const services = new UserManagement();
+        const productservices = new productManagement();
     </script>
 
     <script type="text/javascript">
         $(document).ready(function () {
             console.log("Test kinda done")
             services.loadInit();
+            productservices.loadInit();
         })
     </script>
 </head>
@@ -236,37 +239,8 @@
                                         <th scope="col"></th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td class="max-width-column">
-                                            <div class="d-flex py-1 justify-content-center">
-                                                <div>
-                                                    <!--Hình của sản phầm... 1 hình avatar product-->
-                                                    <img src="" class="avatar avatar-sm border-radius-lg" alt="">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <div class="d-flex w-100 flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Sản phẩm 1</h6>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">20$</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">199999</span>
-                                        </td>
-
-                                        <td class="align-middle text-center">
-                                            <button class="btn border-0 rounded btn-outline-info"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalUpdateProduct">
-                                                <i class="fa-solid fa-pen-to-square"></i></button>
-                                            <button class="border border-0 rounded btn-outline-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalDeleteProduct">
-                                                <i class="fa-solid fa-trash"></i></button>
-                                        </td>
-                                    </tr>
+                                    <tbody id="listproduct">
+<!--                                    fill all product-->
                                     </tbody>
                                 </table>
                             </div>
@@ -281,7 +255,7 @@
                                 <h5 class="text-black ps-3 d-flex align-items-center mb-0">VOUCHER ACCOUNT
                                 </h5>
                                 <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
-                                        data-bs-target="#exampleModalToggleVoucher" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalToggleVoucher" data-bs-toggle="modal" id="newInsButtonAccount"
                                         style="padding: 7px 12px 7px 12px;">
                                     <i class="fa-solid fa-plus " aria-hidden="true"></i>
                                 </button>
@@ -294,54 +268,14 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                     <tr class="text-center">
-                                        <th scope="col" class="max-width-column"></th>
-                                        <th scope="col">Name Voucher</th>
-                                        <th scope="col">Giá giảm</th>
-                                        <th scope="col">Ngày bắt đầu</th>
-                                        <th scope="col">Ngày kết thúc</th>
-                                        <th scope="col">Số lượng Voucher</th>
+                                        <th scope="col">Voucher Name</th>
+                                        <th scope="col">Reduce</th>
+                                        <th scope="col">Start Day</th>
+                                        <th scope="col">End Day</th>
                                         <th scope="col"></th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr>
-                                        <td class="max-width-column">
-                                            <div class="d-flex py-1 justify-content-center">
-                                                <div>
-                                                    <!--Hình của sản phầm... 1 hình avatar product-->
-                                                    <img src="" class="avatar avatar-sm border-radius-lg" alt="">
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <div class="d-flex w-100 flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">Voucher 1</h6>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">-20%</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">5-3-2024</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">20-4-2024</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">500</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <button class="btn border-0 rounded btn-outline-info"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalVoucherSendAcount">
-                                                <i class="fa-solid fa-ticket"></i></button>
-                                            <button class="btn border-0 rounded btn-outline-info"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalUpdateVoucher">
-                                                <i class="fa-solid fa-pen-to-square"></i></button>
-                                            <button class="border border-0 rounded btn-outline-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalDeleteVoucher">
-                                                <i class="fa-solid fa-trash"></i></button>
-                                        </td>
-                                    </tr>
+                                    <tbody id="voucherTableBody">
                                     </tbody>
                                 </table>
                             </div>
@@ -464,53 +398,89 @@
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="insertProductModal">SALE AND PRODUCT MANAGEMENT</h1>
-                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-            </div>
-            <div class="modal-body" id="insertProductModalBody">
-                <div class="row">
-                    <div class="col-8">
-                        <div class="mb-2 ">
-                            <label for="insNameProduct" class="form-label">Name</label>
-                            <input type="text" class="form-control ps-3" id="insNameProduct"
-                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                        </div>
-                        <div class="mb-2 ">
-                            <label for="insPriceProduct" class="form-label">Price</label>
-                            <input type="text" class="form-control ps-3" id="insPriceProduct"
-                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                        </div>
-                        <div class="mb-2 ">
-                            <label for="insQuantityProduct" class="form-label">Quantity</label>
-                            <input type="text" class="form-control ps-3" id="insQuantityProduct"
-                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                        </div>
-                        <div class="mb-2">
-                            <label for="inDescriptionProduct" class="form-label">Description</label>
-                            <textarea class="form-control" id="inDescriptionProduct" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="container " style="">
-                            <div class="d-flex justify-content-center">
-                                <img src="" class="avatar me-3 border-radius-lg"
-                                     id="previewImage" alt="Ảnh đã chọn">
+            <form id="productForm" enctype="multipart/form-data" action="">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="insertProductModal">SALE AND PRODUCT MANAGEMENT</h1>
+                    <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                            class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                </div>
+                <div class="modal-body" id="insertProductModalBody">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-2 ">
+                                <label for="insNameProduct" class="form-label">Name</label>
+                                <input type="text" class="form-control ps-3" id="insNameProduct"
+                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                             </div>
-                            <div class="text-center my-3" style="margin-right: 10px;">
-                                <input type="file" class="form-control" id="fileInput" accept="" onchange="">
-                                <label class="custom-file-label" for="fileInput">Chọn ảnh từ local</label>
+                            <div class="mb-2 ">
+                                <label for="insPriceProduct" class="form-label">Price</label>
+                                <input type="text" class="form-control ps-3" id="insPriceProduct"
+                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            </div>
+                            <div class="mb-2 ">
+                                <label for="insQuantityProduct" class="form-label">Quantity</label>
+                                <input type="text" class="form-control ps-3" id="insQuantityProduct"
+                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            </div>
+                            <div class="mb-2">
+                                <label for="inDescriptionProduct" class="form-label">Description</label>
+                                <textarea class="form-control" id="inDescriptionProduct" rows="3"></textarea>
+                            </div>
+                            <div class="mb-2">
+                                <div class="container " style="">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="d-flex justify-content-center">
+                                                <img src="" class="avatar me-3 border-radius-lg"
+                                                     id="previewImage1" alt="Chọn ảnh">
+                                            </div>
+                                            <div class="text-center my-3" style="margin-right: 10px;">
+                                                <input type="file" class="form-control" id="fileInput1" accept="image/*"
+                                                       onchange="productservices.previewImage(event, 'previewImage1')">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="d-flex justify-content-center">
+                                                <img src="" class="avatar me-3 border-radius-lg"
+                                                     id="previewImage2" alt="Chọn ảnh">
+                                            </div>
+                                            <div class="text-center my-3" style="margin-right: 10px;">
+                                                <input type="file" class="form-control" id="fileInput2" accept="image/*"
+                                                       onchange="productservices.previewImage(event, 'previewImage2')">
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="d-flex justify-content-center">
+                                                <img src="" class="avatar me-3 border-radius-lg"
+                                                     id="previewImage3" alt="Chọn ảnh">
+                                            </div>
+                                            <div class="text-center my-3" style="margin-right: 10px;">
+                                                <input type="file" class="form-control" id="fileInput3" accept="image/*"
+                                                       onchange="productservices.previewImage(event, 'previewImage3')">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
+                                    <video  id="previewVideo" class="embed-responsive-item" alt="Chọn video">  <source src=""> </video>
+                                </div>
+                                <div class="col-4">
+                                    <div class="text-center my-3" style="margin-right: 10px;">
+                                        <input type="file" class="form-control" id="fileInput4" accept="video/*" onchange="productservices.previewVideo(event)">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">
-                    Add new Product
-                </button>
-            </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="productservices.inSertProduct();">
+                        Add new Product
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
@@ -518,52 +488,19 @@
 <div class="modal fade modal-lg" id="exampleModalUpdateProduct" aria-hidden="true"
      aria-labelledby="exampleModalToggleLabel"
      tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered ">
         <div class="modal-content">
             <div class="modal-header">
+<!--                mơi vcat ne-->
                 <h1 class="modal-title fs-5" id="updateProductModal">Product</h1>
                 <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
                         class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
             </div>
             <div class="modal-body" id="updateProductModalBody">
-                <div class="row">
-                    <div class="col-8">
-                        <div class="mb-2 ">
-                            <label for="insNameProduct" class="form-label">Name</label>
-                            <input type="text" class="form-control ps-3" id="updateNameProduct"
-                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                        </div>
-                        <div class="mb-2 ">
-                            <label for="insPriceProduct" class="form-label">Price</label>
-                            <input type="text" class="form-control ps-3" id="updatePriceProduct"
-                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                        </div>
-                        <div class="mb-2 ">
-                            <label for="insQuantityProduct" class="form-label">Quantity</label>
-                            <input type="text" class="form-control ps-3" id="updateQuantityProduct"
-                                   aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                        </div>
-                        <div class="mb-2">
-                            <label for="inDescriptionProduct" class="form-label">Description</label>
-                            <textarea class="form-control" id="updateDescriptionProduct" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <div class="container " style="">
-                            <div class="d-flex justify-content-center">
-                                <img src="" class="avatar me-3 border-radius-lg"
-                                     id="previewImage1" alt="Ảnh đã chọn">
-                            </div>
-                            <div class="text-center my-3" style="margin-right: 10px;">
-                                <input type="file" class="form-control" id="fileInput1" accept="" onchange="">
-                                <label class="custom-file-label" for="fileInput1">Chọn ảnh từ local</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <!--getproductfindbyid-->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="productservices.updateProduct();">
                     Save changes
                 </button>
             </div>
@@ -607,10 +544,27 @@
                     <input type="text" class="form-control ps-3" id="insNameVoucher"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
+                <div class="mb-2 ">
+                    <label for="insReduce" class="form-label">Reduce</label>
+                    <input type="number" min="1" max="100" class="form-control ps-3" id="insReduce"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+                <div class="mb-2 ">
+                    <label for="insStartDay" class="form-label">Start Day</label>
+                    <input type="date" class="form-control ps-3" id="insStartDay"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+                <div class="mb-2 ">
+                    <label for="insEndDay" class="form-label">End Day</label>
+                    <input type="date" class="form-control ps-3" id="insEndDay"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+                <div class="" role="alert" id="alertMessVoucher">
+                </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal">
-                    Add new Product
+                <button type="button" class="btn btn-success"  id="insButtonVoucher">
+                    Add New Voucher
                 </button>
             </div>
         </div>
@@ -629,14 +583,28 @@
             </div>
             <div class="modal-body" id="updateVoucherModalBody">
                 <div class="mb-2 ">
-                    <label for="insNameProduct" class="form-label">Name Voucher</label>
+                    <label for="updateIDVoucher" class="form-label">ID Voucher</label>
+                    <input type="text" class="form-control ps-3" id="updateIDVoucher" disabled
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" >
+                    <label for="updateNameVoucher" class="form-label">Name Voucher</label>
                     <input type="text" class="form-control ps-3" id="updateNameVoucher"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                    <label for="updateReduceVoucher" class="form-label">Reduce</label>
+                    <input type="number" min="0" max="100" class="form-control ps-3" id="updateReduceVoucher"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                    <label for="updateStartDayVoucher" class="form-label">Start Day</label>
+                    <input type="date" class="form-control ps-3" id="updateStartDayVoucher"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                    <label for="updateEndDayVoucher" class="form-label">Name Voucher</label>
+                    <input type="date" class="form-control ps-3" id="updateEndDayVoucher"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                    <div class="" role="alert" id="alertMessVoucherUpdate">
+                    </div>
                 </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="">
+                <button type="button" class="btn btn-primary" id="buttonUpdateVoucher">
                     Save changes
                 </button>
             </div>
@@ -770,6 +738,8 @@
 <script src="/node_modules/angular/angular.route.min.js"></script>
 <script src="/assests/js/app_admin.js"></script>
 <script src="/assests/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 
 
 <!--đọc ảnh cho insert product-->
@@ -821,6 +791,191 @@
             }
         });
     });
+</script>
+<script>
+
+    $(document).ready(function () {
+        function getAllVoucher() {
+            $.ajax({
+                url: '/api-public/vouchers/getAllVouchers',
+                type: 'GET',
+                success: function (data) {
+                    console.log(data);
+                    $('#voucherTableBody').empty();
+                    // Định dạng ngày bằng Moment.js
+
+                    $.each(data,function (index,voucher){
+                        var formattedStartDate = moment(voucher.startDay).format('DD-MM-YYYY');
+                        var formattedEndDate = moment(voucher.endDay).format('DD-MM-YYYY');
+                        var newRow = `
+                            <tr>
+                                <td class="align-middle text-center text-sm">
+                                            <div class="d-flex w-100 flex-column justify-content-center">
+                                                <h6 class="mb-0 text-sm">${voucher.voucherName}</h6>
+                                            </div>
+                                </td>
+                                <td class="align-middle text-center text-sm">
+                                            <span class="text-secondary text-xs font-weight-bold">${voucher.reduce}%</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">${formattedStartDate}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                            <span class="text-secondary text-xs font-weight-bold">${formattedEndDate}</span>
+                                </td>
+                                <td class="align-middle text-center">
+                                    <button class="btn border-0 rounded btn-outline-info"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalVoucherSendAcount">
+                                                <i class="fa-solid fa-ticket"></i></button>
+                                    <button class="btn border-0 rounded btn-outline-info" id="updateVoucherButton" data-voucher-id="${voucher.voucherID}"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalUpdateVoucher">
+                                                <i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button class="border border-0 rounded btn-outline-danger"
+                                                    data-bs-toggle="modal" data-bs-target="#exampleModalDeleteVoucher">
+                                        <i class="fa-solid fa-trash"></i></button>
+                                </td>
+                            </tr>
+                            `;
+                        $('#voucherTableBody').append(newRow);
+                    });
+
+                },
+                error: function (xhr, status, error) {
+                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                }
+            });
+        }
+        $('#v-pills-home-voucher').click(function () {
+            getAllVoucher(); // Gọi hàm updateUser() khi nhấn vào nút "Submit"
+        });
+
+        function saveVoucher() {
+            var voucherName = $('#insNameVoucher').val();
+            var reduce = $('#insReduce').val();
+            var startDay = $('#insStartDay').val();
+            var endDay = $('#insEndDay').val();
+            var startDate = new Date(startDay);
+            var endDate = new Date(endDay);
+            if(voucherName === '' || reduce === '' || startDay === '' || endDay === ''){
+                $('#alertMessVoucher').text("Vui lòng nhập đâỳ đủ các trường").addClass("mb-2 alert alert-danger");
+                return;
+            }
+            else if (startDate > endDate) {
+                // startDay lớn hơn endDay
+                $('#alertMessVoucher').text("Vui lòng nhập Start Day bé hơn End Day").addClass("mb-2 alert alert-danger");
+                return;
+            }
+            // Nếu không có lỗi, loại bỏ lớp CSS alert-danger nếu có
+            $('#alertMessVoucher').text("").removeClass("mb-2 alert alert-danger");
+
+            let voucherData = {
+                voucherName: voucherName,
+                reduce: reduce,
+                startDay: startDay,
+                endDay: endDay,
+            };
+
+            $.ajax({
+                url: '/api-public/vouchers/saveVoucher',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(voucherData),
+                success: function (response) {
+                    console.log(response === 1 ? 'Thêm thành công' : 'Thêm thất bại');
+                    getAllVoucher();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                }
+            });
+        }
+        $('#insButtonVoucher').click(function () {
+            saveVoucher();
+        });
+        $('#newInsButtonAccount').click(function () {
+            $('#insNameVoucher').val('');
+            $('#insReduce').val('');
+            $('#insStartDay').val('');
+            $('#insEndDay').val('');
+        });
+
+
+        function getVoucherByID(voucherID) {
+            $.ajax({
+                url: '/api-public/vouchers/getVoucherByID',
+                type: 'GET',
+                data: {
+                    "voucherID": voucherID
+                },
+                success: function (data) {
+                    $('#updateNameVoucher').val(data.voucherName);
+                    $('#updateReduceVoucher').val(data.reduce);
+                    $('#updateStartDayVoucher').val(data.startDay);
+                    $('#updateEndDayVoucher').val(data.endDay);
+                    $('#updateIDVoucher').val(data.voucherID);
+                },
+                error: function (xhr, status, error) {
+                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                }
+            });
+        }
+        $(document).on('click', '#updateVoucherButton', function() {
+            var voucherID = $(this).attr('data-voucher-id');
+            getVoucherByID(voucherID);
+        });
+
+
+        function updateVoucher() {
+            var voucherID = $('#updateIDVoucher').val();
+            var voucherName = $('#updateNameVoucher').val();
+            var reduce = $('#updateReduceVoucher').val();
+            var startDay = $('#updateStartDayVoucher').val();
+            var endDay = $('#updateEndDayVoucher').val();
+            var startDate = new Date(startDay);
+            var endDate = new Date(endDay);
+            if(voucherName === '' || reduce === '' || startDay === '' || endDay === ''){
+                $('#alertMessVoucherUpdate').text("Vui lòng nhập đâỳ đủ các trường").addClass("mb-2 alert alert-danger");
+                return;
+            }
+            else if (startDate > endDate) {
+                // startDay lớn hơn endDay
+                $('#alertMessVoucherUpdate').text("Vui lòng nhập Start Day bé hơn End Day").addClass("mb-2 alert alert-danger");
+                return;
+            }
+            // Nếu không có lỗi, loại bỏ lớp CSS alert-danger nếu có
+            $('#alertMessVoucherUpdate').text("").removeClass("mb-2 alert alert-danger");
+
+            let voucherData = {
+                voucherID: voucherID,
+                voucherName: voucherName,
+                reduce: reduce,
+                startDay: startDay,
+                endDay: endDay,
+            };
+
+            $.ajax({
+                url: '/api-public/vouchers/updateVoucher',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(voucherData),
+                success: function (response) {
+                    console.log(response === 1 ? 'Cập nhật thành công' : 'Cập nhật thất bại');
+                    getAllVoucher();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                }
+            });
+        }
+        $('#buttonUpdateVoucher').click(function () {
+            updateVoucher();
+        });
+
+
+
+
+    });
+
 </script>
 
 </body>

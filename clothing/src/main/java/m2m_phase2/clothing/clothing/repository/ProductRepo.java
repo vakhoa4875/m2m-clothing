@@ -2,9 +2,12 @@ package m2m_phase2.clothing.clothing.repository;
 
 import java.util.List;
 
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import m2m_phase2.clothing.clothing.data.entity.Category;
@@ -15,6 +18,8 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 	List<Product> findAll();
 	
 	Product findByslugUrl(String slugUrl);
+
+    Product findByproductId(int productId);
 	
     @Query("SELECT c  FROM Product p JOIN p.category c WHERE p.productId = :productId")
     Category findCategoryNameByProductId(Integer productId);
@@ -26,4 +31,29 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 
     @Query("SELECT p FROM Product p WHERE p.category.category_id = :categoryId")
     List<Product> findBycategory(Integer categoryId);
+
+    @Modifying
+    @Transactional
+    @Query(value = "INSERT INTO Product (product_name, price, quantity, description, pictures, videos,average_rate, rate_count, sold, slug_url ) " +
+            "VALUES (:name, :price, :quantity, :description, :pictures, :videos, 0 ,0 ,0 ,:slug)",
+            nativeQuery = true)
+    void insertProdudct(@Param("name")String name,
+                        @Param("price") double price,
+                        @Param("quantity") int quantity,
+                        @Param("description") String description,
+                        @Param("pictures") String pictures,
+                        @Param("videos") String vieods,
+                        @Param("slug") String slug);
+
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE Product SET product_name = :name, price = :price, quantity = :quantity, description = :description, pictures = :pictures, videos = :videos WHERE id = :id", nativeQuery = true)
+    void updateProduct(
+                        @Param("name") String name,
+                        @Param("price") double price,
+                        @Param("quantity") int quantity,
+                        @Param("description") String description,
+                        @Param("pictures") String pictures,
+                        @Param("videos") String videos,
+                        @Param("id") int id);
 }
