@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface CardRepo extends JpaRepository<Card, Integer> {
     List<Card> findAll();
-//    Card findByID(Integer id);
+    Card findByid(Integer id);
 }

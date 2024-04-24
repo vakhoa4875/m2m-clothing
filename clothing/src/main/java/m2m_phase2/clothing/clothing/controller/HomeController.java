@@ -9,6 +9,7 @@ import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
 import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
 import m2m_phase2.clothing.clothing.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.Banner;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -58,8 +59,16 @@ public class HomeController {
     }
 
     @GetMapping("/thanhtoan")
-    public String getThanhToan() {
-        return "swappa/assests/html/payment";
+    public String getThanhToan(HttpSession session, Model model) throws SQLException {
+        if (accountServiceImpl.isLoggedIn(session)){
+            UserDto userDto = new UserDto();
+            userDto.setEmail(session.getAttribute("loggedInUser") + "");
+            UserM userM = userService.getUserByEmail(userDto);
+            model.addAttribute("user",userM);
+            return "swappa/assests/html/payment";
+        }else {
+            return "redirect:/userprofile";
+        }
     }
 
     @GetMapping("/login")
