@@ -3,6 +3,7 @@ package m2m_phase2.clothing.clothing.data.model;
 import lombok.*;
 import m2m_phase2.clothing.clothing.data.entity.PaymentE;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,7 +13,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Builder
 public class PaymentM {
-    private Integer sysPaymentId;
+    private int sysPaymentId;
     private String paymentId;
     private String payerId;
     private Float totalAmount;
@@ -20,7 +21,10 @@ public class PaymentM {
     private String method;
     private String intent;
     private String description;
-    private Integer orderId;
+    private String paymentStatus;
+    private Date dateCreated;
+    private Date dateUpdated;
+    private Long orderId;
 
     public static PaymentM convertPaymentEToPaymentM(PaymentE paymentE) {
         return PaymentM.builder()
@@ -32,6 +36,9 @@ public class PaymentM {
                 .method(paymentE.getMethod())
                 .intent(paymentE.getIntent())
                 .description(paymentE.getDescription())
+                .paymentStatus(paymentE.getPaymentStatus())
+                .dateCreated(paymentE.getDateCreated())
+                .dateUpdated(paymentE.getDateUpdated())
                 .orderId(paymentE.getOrder().getOrderId())
                 .build();
     }
