@@ -118,6 +118,7 @@ function truSoLuong(key) {
 
 function capNhatTienTong() {
     var tongTien = 0;
+    var tienCanTra = 0;
     if (localStorage.length > 0) {
         // Duyệt qua tất cả các phần tử trong local storage
         for (var i = 0; i < localStorage.length; i++) {
@@ -127,17 +128,27 @@ function capNhatTienTong() {
             var object = JSON.parse(value);
 
             tongTien += object.soLuong * object.gia;
+            tienCanTra += object.soLuong * object.gia;
             // Áp dụng giảm giá từ voucher nếu có
             if (appliedVoucher) {
                 var reduceAmount = tongTien * (appliedVoucher.voucherReducePercent / 100);
-                console.log(reduceAmount)
                 tongTien -= reduceAmount;
                 // Cập nhật giá trị của thẻ HTML mới
+                var cacPhanTuTienGiam = document.querySelectorAll(".tiengiam");
+                // phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
+                cacPhanTuTienGiam.forEach(function (element) {
+                    element.textContent = "$" + reduceAmount.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
+                });
+            }else{
                 var phanTuTienGiam = document.querySelector(".tiengiam");
-                phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
-                console.log(phanTuTienGiam0);
+                phanTuTienGiam.textContent = "$" + 0;
             }
         }
+        var cacPhanTuTienCanTra = document.querySelectorAll(".tienCanTra");
+        // Lặp qua từng phần tử và cập nhật giá trị mới
+        cacPhanTuTienCanTra.forEach(function (element) {
+            element.textContent = "$" + tienCanTra.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
+        });
         var cacPhanTu = document.querySelectorAll(".tienThanhToan");
         // Lặp qua từng phần tử và cập nhật giá trị mới
         cacPhanTu.forEach(function (element) {

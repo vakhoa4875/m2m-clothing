@@ -26,7 +26,13 @@ public class VoucherDetailsApi {
         byte totalRowsEffected = 0;
         try {
             for (VoucherDetailsDto voucherDetailsDto : voucherDetailsDtoList) {
-                totalRowsEffected += voucherDetailsService.saveVoucherDetails(voucherDetailsDto);
+                boolean checkExist = voucherDetailsService.isVoucherDetailsExist(voucherDetailsDto);
+                System.out.println(checkExist);
+                if(checkExist){
+                    totalRowsEffected += voucherDetailsService.deleteVoucherDetails(voucherDetailsDto);
+                }else{
+                    totalRowsEffected += voucherDetailsService.saveVoucherDetails(voucherDetailsDto);
+                }
             }
         } catch (Exception e) {
             System.out.println("Gọi API thất bại: /api-public/vouchers-details/saveVoucherDetailsList");
