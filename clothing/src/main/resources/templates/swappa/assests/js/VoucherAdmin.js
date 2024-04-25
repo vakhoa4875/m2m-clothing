@@ -229,20 +229,16 @@ $(document).ready(function () {
 
                 $('.classgetIDUser').change(function() {
                     var userID = $(this).data('id');
-                    if($(this).is(":checked")) {
-                        // Nếu ô checkbox được kiểm tra, thêm ID của người dùng vào mảng nếu chưa tồn tại
-                        if(selectedUserIDs.indexOf(userID) === -1) {
-                            console.log(userID)
-                            selectedUserIDs.push(userID);
-                            console.log(selectedUserIDs);
-                        }
+                    // Thêm ID của người dùng vào mảng mỗi khi ô checkbox thay đổi trạng thái
+                    if (selectedUserIDs.indexOf(userID) === -1) {
+                        selectedUserIDs.push(userID);
                     } else {
-                        // Nếu ô checkbox không được kiểm tra, loại bỏ ID của người dùng khỏi mảng nếu tồn tại
                         var index = selectedUserIDs.indexOf(userID);
-                        if(index !== -1) {
+                        if (index !== -1) {
                             selectedUserIDs.splice(index, 1);
                         }
                     }
+                    console.log(selectedUserIDs);
                 });
             },
             error: function (xhr, status, error) {
@@ -286,10 +282,6 @@ $(document).ready(function () {
 
             if (checkboxElement.length > 0) { // Kiểm tra xem phần tử có tồn tại hay không
                 checkboxElement.prop('checked', !found); // Đánh dấu checkbox dựa trên kết quả tìm kiếm
-                if (checkboxElement.prop('checked')) {
-                    // Vô hiệu hóa checkbox nếu đã được chọn
-                    checkboxElement.prop('disabled', true);
-                }
             } else {
                 console.warn("Không tìm thấy phần tử checkbox cho người dùng:", user.username);
             }
@@ -326,11 +318,7 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(voucherDetailsData),
             success: function (response) {
-                // Vô hiệu hóa checkbox tương ứng với ID đã thêm thành công
-                selectedUserIDs.forEach(function(userID) {
-                    $('#flexCheckCheckedVoucher_' + userID).prop('disabled', true);
-                });
-                console.log(response >= 1 ? 'Thêm thành công' : 'Thêm thất bại');
+                console.log(response >= 1 ? 'Thành công' : 'Thất bại');
             },
             error: function (xhr, status, error) {
                 console.error("Đã xảy ra lỗi khi gọi API: " + error);
