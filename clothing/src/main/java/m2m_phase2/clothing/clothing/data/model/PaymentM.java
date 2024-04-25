@@ -16,7 +16,7 @@ public class PaymentM {
     private int sysPaymentId;
     private String paymentId;
     private String payerId;
-    private Float totalAmount;
+    private double totalAmount;
     private String currency;
     private String method;
     private String intent;
@@ -24,7 +24,7 @@ public class PaymentM {
     private String paymentStatus;
     private Date dateCreated;
     private Date dateUpdated;
-    private Long orderId;
+    private Integer orderId;
 
     public static PaymentM convertPaymentEToPaymentM(PaymentE paymentE) {
         return PaymentM.builder()

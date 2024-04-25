@@ -19,13 +19,9 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
     @Query("SELECT o.orderId, u.username, o.orderDate, o.phoneNumber, o.deliveryAddress, o.paymentMethod, o.totalAmount, o.orderStatus " +
             "FROM Order o JOIN o.customer u WHERE u.email = :email")
     List<Object[]> findOrdersWithUsernameByEmail(@Param("email") String email);
-    @Modifying
-    @Transactional
-    @Query(value = "update [Order] " +
-            "set order_status = :orderStatus " +
-            "where order_id = :orderId", nativeQuery = true)
 
-    byte updatePaymentStatusByOrderId(@Param("paymentStatus") String paymentStatus, @Param("orderId") Integer orderId);
+
+//    byte updatePaymentStatusByOrderId(@Param("paymentStatus") String paymentStatus, @Param("orderId") Integer orderId);
 
     @Modifying
     @Transactional
@@ -35,12 +31,15 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
     void inserOder(@Param("customer_id") Integer customer_id, @Param("phone_number") String phone_number,
                    @Param("delivery_address") String delivery_address, @Param("payment_method") String payment_method, @Param("total_amount") float total_amount,
                    @Param("order_status") String order_status);
+    @Modifying
+    @Transactional
+    @Query(value = "update [Order] " +
+            "set order_status = :orderStatus " +
+            "where order_id = :orderId", nativeQuery = true)
+    int updateOrderStatus(@Param("orderId") Integer orderId, @Param("orderStatus") String orderStatus);
 
-    int updateOrderStatus(@Param("orderId") Long orderId, @Param("orderStatus") String orderStatus);
-
-    @Override
-    Optional<Order> findById(Long id);
-
+//    @Override
+    Optional<Order> findById(Integer id);
 
 
 }
