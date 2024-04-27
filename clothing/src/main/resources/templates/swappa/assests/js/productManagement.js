@@ -169,38 +169,44 @@ class productManagement{
         }
     }
 
+    fileImg3;
+    fileImg2;
+    fileImg1;
+    previewImage = async (event, imageId) => {
+        var reader = new FileReader();
+        console.log(imageId);
+        var self = this;
+        var inputId = imageId.replace('previewImage', 'fileInput'); // Tạo id của input tương ứng với hình ảnh
 
-    fileImg1 = null;
-    fileImg2 = null;
-    fileImg3 = null;
-    previewImage  =  (event, imageId) => {
+        // Lấy file từ input tương ứng
+        var file = document.getElementById(inputId).files[0];
 
-        var reader = new FileReader()
-        console.log(imageId)
+        // Kiểm tra xem có file được chọn không
+        if (file) {
+            reader.onload = function() {
+                var output = document.getElementById(imageId);
+                output.src = reader.result;
 
-        reader.onload = function() {
-            var output = document.getElementById(imageId);
-            output.src = reader.result;
+                // var labelId = imageId.replace('previewImage', 'nameImage');
+                // var label = document.getElementById(labelId);
+                // label.textContent = file.name; // Sử dụng file.name thay vì event.target.files[0].name
 
-            var labelId = imageId.replace('updfileInput','nameImage');
-            var label = document.getElementById(labelId);
-            label.textContent = event.target.files[0].name;
+                if (imageId === 'previewImage1') {
+                    self.fileImg1 = reader.result;
+                } else if (imageId === 'previewImage2') {
+                    self.fileImg2 = reader.result;
+                } else if (imageId === 'previewImage3') {
+                    self.fileImg3 = reader.result;
+                }
+                console.log(self.fileImg1);
+                console.log(self.fileImg2);
+                console.log(self.fileImg3);
+            };
 
-            if (imageId === 'previewImage1' || imageId === 'updfileInput1') {
-                this.fileImg1 = reader.result;
-            }else if (imageId === 'previewImage2' || imageId === 'updfileInput2') {
-                this.fileImg2 = reader.result;
-            }else if (imageId === 'previewImage3' || imageId === 'updfileInput3') {
-                this.fileImg3 = reader.result;
-            }
-            console.log(this.fileImg1);
-            console.log(this.fileImg2);
-            console.log(this.fileImg3);
-
+            reader.readAsDataURL(file);
         }
+    };
 
-        reader.readAsDataURL(event.target.files[0]);
-    }
     previewVideo = (event, videoId) => {
         var reader = new FileReader();
         reader.onload = function() {
