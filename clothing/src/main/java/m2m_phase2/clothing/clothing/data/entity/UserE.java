@@ -70,7 +70,9 @@ public class UserE {
     @JsonIgnore
     List<CommentE> comments;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    List<Card> card;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    List<VoucherE> vouchers;
+    List<VoucherDetailsE> voucherDetailsES;
 }

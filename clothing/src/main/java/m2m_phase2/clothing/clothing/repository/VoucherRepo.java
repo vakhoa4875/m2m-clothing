@@ -1,7 +1,6 @@
 package m2m_phase2.clothing.clothing.repository;
 
 import jakarta.transaction.Transactional;
-import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.data.entity.VoucherE;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -22,13 +21,12 @@ public interface VoucherRepo extends JpaRepository<VoucherE, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "insert into Voucher (voucher_name, reduce, start_day, end_day, user_id) " +
-            "values (:voucherName, :reduce, :startDay, :endDay, :userID)", nativeQuery = true)
+    @Query(value = "insert into Voucher (voucher_name, reduce, start_day, end_day) " +
+            "values (:voucherName, :reduce, :startDay, :endDay)", nativeQuery = true)
     void insertVoucher(@Param("voucherName")String voucherName,
                        @Param("reduce")Integer reduce,
                        @Param("startDay")Date startDay,
-                       @Param("endDay") Date endDay,
-                       @Param("userID")Integer userID);
+                       @Param("endDay") Date endDay);
 
     @Modifying
     @Transactional
@@ -43,4 +41,16 @@ public interface VoucherRepo extends JpaRepository<VoucherE, Integer> {
                         @Param("startDay")Date startDay,
                         @Param("endDay")Date endDay,
                         @Param("voucherID")Integer voucherID);
+
+    @Query(value = "select v.voucher_id," +
+            "              v.voucher_name," +
+            "              v.reduce," +
+            "              v.start_day," +
+            "              v.end_day from Voucher v " +
+            "       join VoucherDetails vd on v.voucher_id = vd.voucher_id " +
+            "       join [user] u on u.id = vd.user_id"+
+            "       where u.email = :email", nativeQuery = true)
+    List<VoucherE> findVouchersInfoByEmail(@Param("email") String email);
+
+
 }
