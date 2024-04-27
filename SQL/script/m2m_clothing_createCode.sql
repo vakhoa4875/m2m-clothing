@@ -263,6 +263,7 @@ CREATE TABLE [Order] (
     payment_method nvarchar(50),
     total_amount float,
     order_status nvarchar(50),
+    count_sp int ,
     CONSTRAINT FK_Customer_User FOREIGN KEY (customer_id) REFERENCES [user] (id)
 );
 
@@ -273,6 +274,9 @@ Create table [OrderDetail](
     toal_product float
 )
 
+
+
+go
 create or alter trigger trigger_after_create_Order
     on [Order]
     after INSERT
@@ -285,7 +289,6 @@ create or alter trigger trigger_after_create_Order
         insert into OrderDetail (order_id_detail) values (@id)
     end
 go
-
 
 
 

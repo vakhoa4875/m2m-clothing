@@ -313,16 +313,16 @@
                                             <div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" value="PayPal" name="flexRadioDefault"
-                                                        id="flexRadioDefault1">
-                                                    <label class="form-check-label" for="flexRadioDefault1">
-                                                        PayPal
+                                                        >
+                                                    <label class="form-check-label" >
+                                                        PayPal (thanh toán bằng ngân hàng)
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" value="Cod" name="flexRadioDefault"
-                                                         checked>
+                                                         >
                                                     <label class="form-check-label" >
-                                                        Cod
+                                                        Cod (thanh toán bằng tiền mặt)
                                                     </label>
                                                 </div>
                                             </div>
@@ -423,11 +423,13 @@
     <script src="/assests/js/jsAll.js"></script>
     <script>
         $(document).ready(function (){
+            var ptthanhtoan = "";
             function Finalpayment (){
                 var productList = document.getElementById("thanhtoan");
                 productList.innerHTML = '';
                 if (localStorage.length > 0) {
                     // Duyệt qua tất cả các phần tử trong local storage
+                    var soluongton = 0;
                     for (var i = 0; i < localStorage.length; i++) {
                         var key = localStorage.key(i);
                         var value = localStorage.getItem(key);
@@ -455,7 +457,7 @@
                                     </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs text-secondary mb-0" >
-                                            $${object.gia}</p>
+                                            $${object.gia.toFixed(2)}</p>
                                     </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs text-secondary mb-0" id="${object.soLuong},${i}">
@@ -463,7 +465,7 @@
                                     </td>
                                     <td class="align-middle text-center">
                                         <p class="text-xs text-secondary mb-0" id="${(object.soLuong * object.gia)},${i}">
-                                            $${(object.soLuong * object.gia)}</p>
+                                            $${(object.soLuong * object.gia).toFixed(2)}</p>
                                     </td>
 
                                 </tr>
@@ -472,10 +474,12 @@
                         var sdt = $('#sdt').text();
                         var diachi = $('#diachi').text();
                         var id = $('#id').text();
-                        var thanhtoan = $('input[name="flexRadioDefault"]:checked').val()
-                        getInfoCard(object.tensp, object.soLuong,(object.soLuong * object.gia),tennguoidung, sdt, diachi,id, thanhtoan);
                         document.getElementById("thanhtoan").appendChild(tr);
                         capNhatTienTong();
+                        var tongThanhToanID = $('#TongThanhToan').text();
+                        var tongThanhToan = parseFloat(tongThanhToanID.substring(1)).toFixed(2) //tiền tổng thanh toán
+                        soluongton += object.soLuong;
+                        getInfoCard(object.tensp, soluongton,(object.soLuong * object.gia).toFixed(2),tennguoidung, sdt, diachi,id, ptthanhtoan, tongThanhToan);
                     }
                 }
             }
@@ -496,12 +500,12 @@
                     var cacPhanTu = document.querySelectorAll(".tienThanhToan");
                     // Lặp qua từng phần tử và cập nhật giá trị mới
                     cacPhanTu.forEach(function (element) {
-                        element.textContent = "$" + tongTien; // Cập nhật giá trị mới, ở đây là tổng tiền
+                        element.textContent = "$" + tongTien.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
                     });
 
                     var tongthanhtoan = document.getElementById("TongThanhToan");
 
-                    tongthanhtoan.textContent = "$" + (parseFloat(tongTien) + parseFloat(2));
+                    tongthanhtoan.textContent = "$" + (parseFloat(tongTien.toFixed(2)) + parseFloat(2));
 
 
                 }
@@ -511,32 +515,27 @@
 
 
             var objsp =[];
-            function getInfoCard(name, soluong,tien, tennguoidung, sdt, diachi, id, thanhtoan){
-                var tongThanhToanID = $('#TongThanhToan').text();
-                var tongThanhToan = parseFloat(tongThanhToanID.substring(1)) //tiền tổng thanh toán
-
-
+            function getInfoCard(name, soluongton,tien, tennguoidung, sdt, diachi, id, ptthanhtoan, tongThanhToan){
                 var sp ={
                     orderId : id,
                     phoneNumber : sdt,
                     deliveryAddress : diachi,
-                    paymentMethod : thanhtoan,
+                    paymentMethod : ptthanhtoan,
                     totalAmount : tongThanhToan,
-                    orderStatus : "Wait for confirmation",
+                    orderStatus : "Need approved",
+                    soluong : soluongton
                 };
 
                 objsp.push(sp);
             }
 
+            console.log(objsp)
 
-
-
-            window.onload = Finalpayment;
 
             function thanhtoan(){
                 Swal.fire({
                     title: 'Thông Báo từ hệ thống',
-                    text: 'Cảm ơn bạn đã thanh toán hóa đơn!, vùi lòng xác nhận đơn hàng',
+                    text: 'Cảm ơn bạn đã thanh toán hóa đơn!, Vui lòng chờ đơn hàng được xác nhận!',
                     icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
                     confirmButtonText: 'Xác nhận',
                     allowOutsideClick: false,
@@ -549,22 +548,53 @@
                             contentType: 'application/json',
                             data: JSON.stringify(objsp[objsp.length -1]),
                             success: (redirectURL) => {
-                                // Xác nhận đã được nhấn
-                                localStorage.clear();
-                                window.location.href = "/userprofile"; // Chuyển hướng trang ngược lại trang hiện tại
+                                console.log("lưu thành công")
                             },
                             error: (xhr, status, error) => {
                                 console.error("Đã xảy ra lỗi khi gọi API: " + error);
                             }
                         });
+                        setTimeout(function() {
+                            console.log("chuẩn bị cập nhật bên order detail")
+                            $.ajax({
+                                url: '/api-product/insertOderdetail',
+                                type: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify(objsp[objsp.length -1]),
+                                success: (redirectURL) => {
+                                    // Xác nhận đã được nhấn
+                                    localStorage.clear();
+                                    window.location.href = "/userprofile"; // Chuyển hướng trang ngược lại trang hiện tại
+                                },
+                                error: (xhr, status, error) => {
+                                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                                }
+                            });
+                        }, 1200);
                     }
-
                 });
             }
 
             $('#submitBtn').click(function () {
+                if (!$('input[type="radio"][name="flexRadioDefault"]').is(':checked')) {
+                    Swal.fire({
+                        title: 'Thông Báo từ hệ thống',
+                        text: 'Vui lòng chọn phương thức thanh toán',
+                        icon: 'error', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                        confirmButtonText: 'Xác nhận',
+                        allowOutsideClick: false,
+                    })
+                    return false;
+                }
                 thanhtoan();
             });
+
+            $('input[type="radio"][name="flexRadioDefault"]').change(function() {
+                ptthanhtoan = $(this).val();
+                // Gọi lại hàm Finalpayment() để cập nhật lại giá trị của biến thanhtoan
+                Finalpayment();
+            });
+            window.onload = Finalpayment;
         })
     </script>
 </body>

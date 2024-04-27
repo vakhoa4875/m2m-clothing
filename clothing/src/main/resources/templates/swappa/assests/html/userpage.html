@@ -552,27 +552,27 @@
                     var orderDateFormatted = new Date(order.orderDate);
                     var formattedDate = `${orderDateFormatted.getDate()}/${orderDateFormatted.getMonth() + 1}/${orderDateFormatted.getFullYear()}`;
                     $('#TableStatusUser tbody').append(`
-                    <tr class="align-middle">
+                   <tr class="align-middle">
                         <td class="text-center">${order.orderId}</td>
                         <td class="text-center">${order.username}</td>
                         <td class="text-center">${formattedDate}</td>
                         <td class="text-center">${order.phoneNumber}</td>
                         <td class="text-center">${order.deliveryAddress}</td>
                         <td class="badge text-bg-secondary text-center" style="vertical-align: middle; text-align: center;">${order.paymentMethod}</td>
-                        <td class="text-center">$${order.totalAmount}</td>
-                        <td class="${order.orderStatus == 'Confirmed successfully' ? 'badge text-bg-success' : 'badge text-bg-warning'} text-center">${order.orderStatus}</td>
+                        <td class="text-center">${order.totalAmount}</td>
+                        <td class="${order.orderStatus == 'Approved' ? 'badge text-bg-success' : 'badge text-bg-warning'} text-center">${order.orderStatus}</td>
                         <td class="text-center"><button class="btn btn-success" ${
                         (() => {
                             switch (true) {
-                                case ((order.paymentMethod === 'Cod' && (order.orderStatus ==='Confirmed successfully' || order.orderStatus ==='Wait for confirmation'))):
+                                case ((order.paymentMethod === 'Cod' && (order.orderStatus ==='Approved' || order.orderStatus ==='Need approved'))):
                                     return 'disabled';
-                                case ((order.paymentMethod === 'PayPal' && order.orderStatus ==='Wait for confirmation')):
+                                case ((order.paymentMethod === 'Paypal' || order.orderStatus ==='Need approved')):
                                     return 'disabled';
-                                case ((order.paymentMethod === 'PayPal' && order.orderStatus ==='Confirmed successfully')):
+                                case ((order.paymentMethod === 'Paypal' && order.orderStatus ==='Approved')):
                                     return "";
                             }
                         })()
-                        }
+                    }
                         onclick="payWithPaypal(${order.totalAmount}, ${order.orderId})">Pay with paypal</button></td>
 
                     </tr>
