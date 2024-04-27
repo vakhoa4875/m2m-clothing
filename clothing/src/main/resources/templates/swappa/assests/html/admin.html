@@ -435,7 +435,7 @@
                                                      id="previewImage1" alt="Chọn ảnh">
                                             </div>
                                             <div class="text-center my-3" style="margin-right: 10px;">
-                                                <input type="file" class="form-control" id="fileInput1" accept="image/*"
+                                                <input type="file" class="form-control" id="fileInput11" accept="image/*"
                                                        onchange="productservices.previewImage(event, 'previewImage1')">
                                             </div>
                                         </div>
@@ -445,7 +445,7 @@
                                                      id="previewImage2" alt="Chọn ảnh">
                                             </div>
                                             <div class="text-center my-3" style="margin-right: 10px;">
-                                                <input type="file" class="form-control" id="fileInput2" accept="image/*"
+                                                <input type="file" class="form-control" id="fileInput22" accept="image/*"
                                                        onchange="productservices.previewImage(event, 'previewImage2')">
                                             </div>
                                         </div>
@@ -455,7 +455,7 @@
                                                      id="previewImage3" alt="Chọn ảnh">
                                             </div>
                                             <div class="text-center my-3" style="margin-right: 10px;">
-                                                <input type="file" class="form-control" id="fileInput3" accept="image/*"
+                                                <input type="file" class="form-control" id="fileInput33" accept="image/*"
                                                        onchange="productservices.previewImage(event, 'previewImage3')">
                                             </div>
                                         </div>
@@ -464,13 +464,22 @@
                             </div>
                             <div class="mb-2">
                                 <div class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
-                                    <video  id="previewVideo" class="embed-responsive-item" alt="Chọn video">  <source src=""> </video>
+                                    <video  id="previewVideoIns" class="embed-responsive-item" alt="Chọn video">  <source src=""> </video>
                                 </div>
                                 <div class="col-4">
                                     <div class="text-center my-3" style="margin-right: 10px;">
-                                        <input type="file" class="form-control" id="fileInput4" accept="video/*" onchange="productservices.previewVideo(event)">
+                                        <input type="file" class="form-control" id="fileInput4" accept="video/*" onchange="productservices.previewVideo(event,'previewVideoIns')">
+                                        <label id="nameVideo" style="display: none "></label>
                                     </div>
                                 </div>
+                                <select class="form-selectIns w-auto" aria-label="Default select example" id="formSelectIns">
+                                    <option value="1" selected>Outerwear</option>
+                                    <option value="2">Tops</option>
+                                    <option value="3">Bottoms</option>
+                                    <option value="4">Jewels & Accessories</option>
+                                    <option value="5">Headwear</option>
+                                    <option value="6">Footwear</option>
+                                </select>
                             </div>
                         </div>
                     </div>

@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.entity.Account;
 import m2m_phase2.clothing.clothing.data.entity.Product;
+import m2m_phase2.clothing.clothing.data.model.ProductM;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
 import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
@@ -32,14 +33,14 @@ public class HomeController {
 
     @GetMapping("/")
     public String defaultPage(Model model) {
-        List<Product> list = productServiceImpl.findAll();
+        List<ProductM> list = productServiceImpl.findAll();
         model.addAttribute("products", list);
         return "swappa/assests/html/trangchu";
     }
 
     @GetMapping("/trangchu")
     public String getTrangchu(Model model) {
-        List<Product> list = productServiceImpl.findAll();
+        List<ProductM> list = productServiceImpl.findAll();
         model.addAttribute("products", list);
         return "swappa/assests/html/trangchu";
     }
@@ -52,7 +53,7 @@ public class HomeController {
 
     @GetMapping("/giohang")
     public String getGioHang(Model model) {
-        List<Product> list = productServiceImpl.findAll();
+        List<ProductM> list = productServiceImpl.findAll();
         model.addAttribute("listSp", list);
         return "swappa/assests/html/card";
     }

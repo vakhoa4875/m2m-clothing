@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 
 import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
+import m2m_phase2.clothing.clothing.data.model.ProductM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -26,13 +27,13 @@ public class ProductServiceImpl implements ProductService {
 	private ProductRepo repo;
 	
 	@Override
-	public List<Product> findAll() {
-		return repo.findAll();
+	public List<ProductM> findAll(){
+		return ProductM.converListProductEToListProductM(repo.findAll());
 	}
 
 	@Override
-	public Product findByslug_url(String slugUrl) {
-		return repo.findByslugUrl( slugUrl);
+	public ProductM findByslug_url(String slugUrl) {
+		return ProductM.convertProductEToProductM(repo.findByslugUrl( slugUrl));
 	}
 	
 	@Override
@@ -58,15 +59,17 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public void insertProduct(ProductDTO productDTO) {
-		repo.insertProdudct(
-				productDTO.getName(),
-				productDTO.getPrice(),
-				productDTO.getQuantity(),
-				productDTO.getDescription(),
-				productDTO.getPictures(),
-				productDTO.getVideos(),
-				productDTO.getSlug());
-		System.out.println("insert");
+		System.out.println(productDTO.toString());
+//		repo.insertProdudct(
+//			productDTO.getName(),
+//			productDTO.getPrice(),
+//			productDTO.getQuantity(),
+//			productDTO.getDescription(),
+//			productDTO.getPictures(),
+//			productDTO.getVideos(),
+//			productDTO.getSlug(),
+//			productDTO.getCategory());
+//		System.out.println("insert");
 	}
 
 	@Override
@@ -78,6 +81,7 @@ public class ProductServiceImpl implements ProductService {
 				productDTO.getDescription(),
 				productDTO.getPictures(),
 				productDTO.getVideos(),
+				productDTO.getCategory(),
 				productDTO.getProductId());
 		System.out.println("update");
 	}

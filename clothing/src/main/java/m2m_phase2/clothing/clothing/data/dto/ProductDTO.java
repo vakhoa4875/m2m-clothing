@@ -2,6 +2,8 @@ package m2m_phase2.clothing.clothing.data.dto;
 
 import lombok.Data;
 
+import java.io.File;
+
 @Data
 
 public class ProductDTO {
@@ -13,6 +15,11 @@ public class ProductDTO {
     private String videos;
     private String slug;
     private int productId;
+    private int category;
+    private String fileimg1;
+    private String fileimg2;
+    private String fileimg3;
+    private String filevideo;
 
 
 }

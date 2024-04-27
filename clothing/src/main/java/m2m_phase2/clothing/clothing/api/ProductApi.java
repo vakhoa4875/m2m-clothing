@@ -4,6 +4,7 @@ package m2m_phase2.clothing.clothing.api;
 import java.util.List;
 
 import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
+import m2m_phase2.clothing.clothing.data.model.ProductM;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,12 +26,12 @@ public class ProductApi {
 	private CategoryImpl categoryimpl;
 	
 	@GetMapping("/allproductapi")
-	public List<Product> getAllProduct() {
+	public List<ProductM> getAllProduct() {
 		return productserviceimpl.findAll();
 	}
 	
 	@GetMapping("/findbyproductidapi")
-	public Product getfindbyproductid(@RequestParam String slug_url) {
+	public ProductM getfindbyproductid(@RequestParam String slug_url) {
 		return productserviceimpl.findByslug_url(slug_url);
 	}
 	
@@ -59,22 +60,22 @@ public class ProductApi {
 	public ResponseEntity<?> insertProduct(@RequestBody ProductDTO productDTO){
 		try {
 			productserviceimpl.insertProduct(productDTO);
-			return ResponseEntity.ok("Product inserted successfully.");
 		} catch (Exception e) {
 			System.out.println("Call API Failed: /insertProduct");
 			throw new RuntimeException(e);
-
 		}
+		return ResponseEntity.ok("Product inserted successfully.");
+
 	}
 
 	@PostMapping("/updateProduct")
 	public ResponseEntity<?> updateProduct(@RequestBody ProductDTO productDTO){
 		try {
 			productserviceimpl.updateProduct(productDTO);
-			return ResponseEntity.ok("Product update successfully.");
 		} catch (Exception e) {
 			System.out.println("Call API Failed: /update");
 			throw new RuntimeException(e);
 		}
+		return ResponseEntity.ok("Product update successfully.");
 	}
 }

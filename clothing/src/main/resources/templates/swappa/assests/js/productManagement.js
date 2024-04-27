@@ -2,11 +2,10 @@ class productManagement{
 
     constructor() {
         this.self = this;
-    }
 
+    }
     loadInit = async () => {
         await this.callAllUsers()
-        // await this.getProductById();
     }
     callAllUsers = async () =>{
         await $.ajax({
@@ -28,7 +27,7 @@ class productManagement{
                             </td>
                             <td class="align-middle text-center text-sm">
                                 <div class="d-flex w-100 flex-column justify-content-center">
-                                    <h6 class="mb-0 text-sm">${item.productName}</h6>
+                                    <h6 class="mb-0 text-sm">${item.name}</h6>
                                 </div>
                             </td>
                             <td class="align-middle text-center text-sm">
@@ -40,7 +39,7 @@ class productManagement{
         
                             <td class="align-middle text-center">
                                 <button class="btn border-0 rounded btn-outline-info"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModalUpdateProduct" onclick="productservices.getProductById('${item.slugUrl}')">
+                                        data-bs-toggle="modal" data-bs-target="#exampleModalUpdateProduct" onclick="productservices.getProductById('${item.slug}')">
                                     <i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="border border-0 rounded btn-outline-danger"
                                         data-bs-toggle="modal" data-bs-target="#exampleModalDeleteProduct">
@@ -66,11 +65,10 @@ class productManagement{
             },
             success: function (data) {
                 let imagesString = data.pictures;
-                let imagesArray = imagesString.split(",");
                 let modelProduct = $('#updateProductModalBody');
+                console.log(data)
                 modelProduct.empty();
                 let html = '';
-            // language=HTML format=false
                 html += `
                     <div class="row">
                         <div class="col-12">
@@ -82,7 +80,7 @@ class productManagement{
                             <div class="mb-2 ">
                                 <label for="updNameProduct" class="form-label">Name</label>
                                 <input type="text" class="form-control ps-3" id="updNameProduct"
-                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" value="${data.productName}">
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" value="${data.name}">
                             </div>
                             <div class="mb-2 ">
                                 <label for="updPriceProduct" class="form-label">Price</label>
@@ -107,18 +105,35 @@ class productManagement{
                             </div>
                             <div class="mb-2 ">
                                 <div class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
-                                    <video  id="previewVideo" class="embed-responsive-item">  <source src="../media/${data.videos}"> </video>
+                                    <video  id="previewVideoUpd" class="embed-responsive-item">  <source src="../media/${data.videos}"> </video>
                                 </div>
                                 <div class="col-4">
                                     <div class="text-center my-3" style="margin-right: 10px;">
-                                        <input type="file" class="form-control" id="previewVideo1" accept="video/*" onchange="productservices.previewVideo(event)">
+                                        <input type="file" class="form-control" id="previewVideo1" accept="video/*" onchange="productservices.previewVideo(event,'previewVideoUpd')">
+                                        <label id="nameVideo" style="display: none ">${data.videos}</label>
                                     </div>
                                 </div>
+                                <select class="form-select w-auto" aria-label="Default select example" id="formSelect">
+                                    <option class="form-select" value="1">Outerwear</option>
+                                    <option class="form-select" value="2">Tops</option>
+                                    <option class="form-select" value="3">Bottoms</option>
+                                    <option class="form-select" value="4">Jewels & Accessories</option>
+                                    <option class="form-select" value="5">Headwear</option>
+                                    <option class="form-select" value="6">Footwear</option>
+                                </select>
                             </div>
                         </div>
                     </div>
                 `
+                let categoryid = data.category;
                 modelProduct.append(html);
+                document.querySelectorAll('.form-select').forEach(option =>{
+                    if(option.value === categoryid.toString()){
+                        option.selected = true;
+                    }else{
+                        option.selected = false;
+                    }
+                })
                 productservices.forImages(imagesString);
             },
             error: (error) => {
@@ -144,7 +159,8 @@ class productManagement{
                         </div>
                         <!--  file input ảnh -->
                         <div class="text-center my-3" style="margin-right: 10px;">
-                            <input type="file" class="form-control fileInputClass" id="fileInput${i + 1}" accept="image/*" onchange="productservices.previewImage(event, 'updfileInput${i + 1}')">
+                            <input type="file" class="form-control " id="fileInput${i + 1}" accept="image/*" onchange="productservices.previewImage(event, 'updfileInput${i + 1}')">
+                            <label id="nameImage${i + 1}" style="display: none">${imagesArray[i]}</label>
                         </div>
                     </div>
                 `
@@ -153,25 +169,56 @@ class productManagement{
         }
     }
 
-    previewImage = (event, imageId) => {
-        var reader = new FileReader();
+
+    fileImg1 = null;
+    fileImg2 = null;
+    fileImg3 = null;
+    previewImage  =  (event, imageId) => {
+
+        var reader = new FileReader()
+        console.log(imageId)
+
         reader.onload = function() {
-        var output = document.getElementById(imageId);
-        output.src = reader.result;
-    }
+            var output = document.getElementById(imageId);
+            output.src = reader.result;
+
+            var labelId = imageId.replace('updfileInput','nameImage');
+            var label = document.getElementById(labelId);
+            label.textContent = event.target.files[0].name;
+
+            if (imageId === 'previewImage1' || imageId === 'updfileInput1') {
+                this.fileImg1 = reader.result;
+            }else if (imageId === 'previewImage2' || imageId === 'updfileInput2') {
+                this.fileImg2 = reader.result;
+            }else if (imageId === 'previewImage3' || imageId === 'updfileInput3') {
+                this.fileImg3 = reader.result;
+            }
+            console.log(this.fileImg1);
+            console.log(this.fileImg2);
+            console.log(this.fileImg3);
+
+        }
+
         reader.readAsDataURL(event.target.files[0]);
     }
-
-    previewVideo = (event) => {
+    previewVideo = (event, videoId) => {
         var reader = new FileReader();
         reader.onload = function() {
-        var video = document.getElementById('previewVideo');
-        video.src = reader.result;
-    }
+            var video = document.getElementById(videoId);
+            video.src = reader.result;
+
+            var labelId = 'nameVideo';
+            var label = document.getElementById(labelId);
+            label.textContent = event.target.files[0].name;
+
+            this.fileVideo = reader.result
+            console.log(this.fileVideo)
+        }
         reader.readAsDataURL(event.target.files[0]);
     }
     inSertProduct = async () => {
         let product = this.createProductObject();
+        console.log(product)
         await $.ajax({
             type: 'POST',
             contentType: 'application/json',
@@ -190,7 +237,7 @@ class productManagement{
                 alert("Đã xảy ra lỗi khi thêm sản phẩm.");
             }
         })
-        location.reload();
+        // location.reload();
     }
     getFileNameFromPath = (path) => {
         let parts = path.split("\\");
@@ -201,10 +248,11 @@ class productManagement{
         let price = $('#insPriceProduct').val();
         let quantity = $('#insQuantityProduct').val();
         let description = $('#inDescriptionProduct').val();
-        let img1 = $('#fileInput1').val()
-        let img2 = $('#fileInput2').val();
-        let img3 = $('#fileInput3').val();
+        let img1 = $('#fileInput11').val()
+        let img2 = $('#fileInput22').val();
+        let img3 = $('#fileInput33').val();
         let videos = $('#fileInput4').val();
+
 
         let fileName1 = this.getFileNameFromPath(img1);
         let fileName2 = this.getFileNameFromPath(img2);
@@ -212,8 +260,18 @@ class productManagement{
         let fileNameVideo = this.getFileNameFromPath(videos)
 
         // Gộp các tên tệp lại thành một chuỗi
-        let imagesString = [fileName1,fileName2,fileName3].join(",");
+        const fileNames = [fileName1, fileName2, fileName3];
+        const validFileNames = fileNames.filter(fileName => fileName);
+        const imagesString = validFileNames.join(",");
         let slug = this.convertToSlug(name);
+        var selectedValue = $('#formSelectIns option:selected').val();
+
+        console.log(selectedValue);
+
+        console.log(fileImg1);
+        console.log(fileImg2);
+        console.log(fileImg3);
+
 
         let product = {
             "name": name,
@@ -222,7 +280,12 @@ class productManagement{
             "description": description,
             "pictures": imagesString,
             "videos": fileNameVideo,
-            "slug": slug
+            "slug": slug,
+            "category":selectedValue,
+            "fileimg1": productManagementInstance.fileImg1,
+            "fileimg2": productManagementInstance.fileImg2,
+            "fileimg3": productManagementInstance.fileImg3,
+            "filevideo": productManagementInstance.fileVideo
         }
         return product;
     }
@@ -234,66 +297,57 @@ class productManagement{
     updateProduct = async  () => {
         let productUpdate = this.createProductObjectUpdate();
         console.log(productUpdate)
-        // await $.ajax({
-        //     type: 'POST',
-        //     contentType: 'application/json',
-        //     url: 'http://localhost:8083/updateProduct',
-        //     data: JSON.stringify(product),
-        //     dataType: 'text',
-        //     processData: false,
-        //     success: function (data) {
-        //         console.log(data)
-        //         alert("update product success");
-        //     },
-        //     error: function (xhr, status, error) {
-        //         console.log(xhr.responseText);
-        //         console.log(status);
-        //         console.log(error);
-        //         alert("Đã xảy ra lỗi khi sua sản phẩm.");
-        //     }
-        // })
-        // location.reload();
+        await $.ajax({
+            type: 'POST',
+            contentType: 'application/json',
+            url: 'http://localhost:8083/updateProduct',
+            data: JSON.stringify(productUpdate),
+            success: function (data) {
+                console.log(data)
+                alert("update product success");
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+                console.log(status);
+                console.log(error);
+                alert("Đã xảy ra lỗi khi sua sản phẩm.");
+            }
+        })
     }
-    createProductObjectUpdate = async () => {
+    createProductObjectUpdate =  () => {
         let name = $('#updNameProduct').val();
         let price = $('#updPriceProduct').val();
         let quantity = $('#updQuantityProduct').val();
         let description = $('#updDescriptionProduct').val();
-        let img1 = $('#fileInput1').val()
-        let img2 = $('#fileInput2').val();
-        let img3 = $('#fileInput3').val();
+        let img1 = $('#fileInput11').val()
+        let img2 = $('#fileInput22').val();
+        let img3 = $('#fileInput33').val();
         let videos = $('#previewVideo1').val();
         let id = $('#updID').val();
 
-        console.log(img1);
-        console.log(img2);
-        console.log(img3);
+        let nameimge = $('#nameImage1').text();
+        let nameimge1 = $('#nameImage2').text();
+        let nameimge2 = $('#nameImage3').text();
+        let nameVideo = $('#nameVideo').text();
 
-        let fileName1 = this.getFileNameFromPath(img1);
-        let fileName2 = this.getFileNameFromPath(img2);
-        let fileName3 = this.getFileNameFromPath(img3);
-        let fileNameVideo = this.getFileNameFromPath(videos)
-
-        // Gộp các tên tệp lại thành một chuỗi
-        let imagesString = [fileName1,fileName2,fileName3].join(",");
         let slug = this.convertToSlug(name);
+        const fileNames = [nameimge, nameimge1, nameimge2];
+        const validFileNames = fileNames.filter(fileName => fileName);
+        const imagesString = validFileNames.join(",");
+        var selectedValue = $('#formSelect option:selected').val();
 
-        let imagesString1 = "";
-        $(document).on('change', '.fileInputClass', function () { // Thêm class cho input
-            let img1 = $(this).val();
-            let fileName1 = this.getFileNameFromPath(img1);
-            imagesString += fileName1 + ",";
-        });
+        console.log(selectedValue);
 
-        let product = {
+        let productupdate = {
             "name": name,
             "price": price,
             "quantity": quantity,
             "description": description,
             "pictures": imagesString,
-            "videos": fileNameVideo,
-            "id": id
+            "videos": nameVideo,
+            "category":selectedValue,
+            "productId": id
         }
-        return product;
+        return productupdate;
     }
 }
