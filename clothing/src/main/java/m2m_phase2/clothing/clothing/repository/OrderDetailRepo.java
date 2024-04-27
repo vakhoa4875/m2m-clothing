@@ -1,15 +1,12 @@
 package m2m_phase2.clothing.clothing.repository;
 
 import jakarta.transaction.Transactional;
-import m2m_phase2.clothing.clothing.data.dto.OrderDto;
 import m2m_phase2.clothing.clothing.data.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.Iterator;
 
 @Repository
 public interface OrderDetailRepo extends JpaRepository<Order, Integer> {
