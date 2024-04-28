@@ -678,18 +678,6 @@ VALUES
 select * from [user] u where u.id not in (select distinct v.user_id from VoucherDetails v where v.voucher_id = 1)
 
 
---    select * from Comment
-
- -- Chèn dữ liệu vào bảng [Order]
-INSERT INTO [Order] (customer_id,order_date, phone_number, delivery_address, payment_method, total_amount, order_status)
-VALUES 
-    (4, '2024-04-21', '0327789477', '123 Main Street', 'Cod', 100.50, 'Wait for confirmation'),
-    (4,'2024-04-19', '0327789100', '456 Oak Avenue', 'Cod', 75.25, 'Confirmed successfully'),
-	(4, '2024-04-11','1', '123123 Oak Avenue', 'PayPal', 75.25, 'Confirmed successfully'),
-	(4, '2024-04-05','1', '645 Oak Avenue', 'PayPal', 75.25, 'Wait for confirmation'),
-	(2, '2024-04-03','1', '123124343 Oak Avenue', 'PayPal', 75.25, 'Confirmed successfully');
-
-
 
 
 

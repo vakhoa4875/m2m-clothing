@@ -1,16 +1,12 @@
 
 package m2m_phase2.clothing.clothing.data.entity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
 import lombok.*;
+
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "[Order]")
@@ -46,4 +42,7 @@ public class Order implements Serializable {
 
     @Column(name = "order_status", length = 50)
     private String orderStatus;
+
+    @OneToMany(mappedBy = "orderDetail", fetch = FetchType.LAZY)
+    List<OrderDetailE> listOrder;
 }

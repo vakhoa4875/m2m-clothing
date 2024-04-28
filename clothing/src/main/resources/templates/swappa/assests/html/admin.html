@@ -42,12 +42,12 @@
             margin-top: 20px;
         }
 
-        #previewImage1 {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            margin-top: 20px;
-        }
+        /*#previewImage1 {*/
+        /*    width: 200px;*/
+        /*    height: 200px;*/
+        /*    object-fit: cover;*/
+        /*    margin-top: 20px;*/
+        /*}*/
     </style>
 
     <script>
@@ -321,35 +321,7 @@
                                     </tr>
                                     </thead>
                                     <tbody id="TableStatusUser">
-                                    <tr>
-                                        <td class="align-middle text-center text-sm">
-                                            <div class="d-flex w-100 flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">PS29018</h6>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">Nguyễn hồ phát</span>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">09xxxxxxxx</span>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-<!--                                            <span class="text-secondary text-xs font-weight-bold">Pay</span>-->
-                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-secondary">Cod</span></span>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">6</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-<!--                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-success">Confirmed successfully</span></span>-->
-                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-warning">Wait for confirmation</span></span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <button class="btn border-0 rounded btn-outline-info"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalVoucherSendAcount">
-                                                <i class="fa-regular fa-circle-check"></i></button>
-                                        </td>
-                                    </tr>
+
                                     </tbody>
                                 </table>
                             </div>
@@ -566,7 +538,7 @@
                                                      id="previewImage1" alt="Chọn ảnh">
                                             </div>
                                             <div class="text-center my-3" style="margin-right: 10px;">
-                                                <input type="file" class="form-control" id="fileInput11" accept="image/*"
+                                                <input type="file" class="form-control" id="fileInput1" accept="image/*"
                                                        onchange="productservices.previewImage(event, 'previewImage1')">
                                             </div>
                                         </div>
@@ -576,7 +548,7 @@
                                                      id="previewImage2" alt="Chọn ảnh">
                                             </div>
                                             <div class="text-center my-3" style="margin-right: 10px;">
-                                                <input type="file" class="form-control" id="fileInput22" accept="image/*"
+                                                <input type="file" class="form-control" id="fileInput2" accept="image/*"
                                                        onchange="productservices.previewImage(event, 'previewImage2')">
                                             </div>
                                         </div>
@@ -586,7 +558,7 @@
                                                      id="previewImage3" alt="Chọn ảnh">
                                             </div>
                                             <div class="text-center my-3" style="margin-right: 10px;">
-                                                <input type="file" class="form-control" id="fileInput33" accept="image/*"
+                                                <input type="file" class="form-control" id="fileInput3" accept="image/*"
                                                        onchange="productservices.previewImage(event, 'previewImage3')">
                                             </div>
                                         </div>
@@ -809,19 +781,27 @@
 </div>
 <!--===========================================accpect product for admin=======================================================-->
 <!-- Modal accpect product-->
-<div class="modal fade" id="exampleModalAccpectProduct" tabindex="-1" aria-labelledby="exampleModalXoa"
+<div class="modal fade" id="exampleModalAccpectProduct" tabindex="-1" aria-labelledby="exampleModalAccpectProduct"
      aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content w-100">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="">Confirm delete Voucher?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <h1 class="modal-title fs-5" id="..">Xác nhận đơn hàng cho khách</h1>
             </div>
-            <div class="modal-body">Are your sure to delete this user out of your system?</div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <h3>
+                        Bạn có chắc là số lượng đơn hàng đã đủ cho mã đơn hàng "<span id="idProduct" class="fw-bolder"></span>" <br>
+                        <span class="badge text-bg-warning">Nhấn xác nhận,nếu đã chắc</span>
+                    </h3>
+                </div>
+            </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="">
-                    I'm sure!
+                <button type="submit" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close"v>
+                    Close
+                </button>
+                <button type="submit" class="btn btn-outline-danger" data-bs-dismiss="modal" id="updateStatusProduct">
+                    Xác nhận
                 </button>
             </div>
         </div>
@@ -968,244 +948,7 @@
 <script src="/assests/js/script.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="/assests/js/VoucherAdmin.js"></script>
-
-
-
-<!--đọc ảnh cho insert product-->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Lắng nghe sự kiện khi người dùng chọn file
-        document.getElementById("fileInput").addEventListener("change", function () {
-            // Lấy ra đối tượng file đã chọn
-            var file = this.files[0];
-
-            // Kiểm tra xem file có tồn tại không
-            if (file) {
-                // Tạo một đối tượng FileReader để đọc file
-                var reader = new FileReader();
-
-                // Lắng nghe sự kiện khi FileReader đã đọc xong file
-                reader.onload = function (e) {
-                    // Hiển thị ảnh đã chọn lên giao diện
-                    document.getElementById("previewImage").src = e.target.result;
-                };
-
-                // Đọc file như một đường dẫn URL dạng Data URL
-                reader.readAsDataURL(file);
-            }
-        });
-    });
-</script>
-<!--đọc ảnh cho update product-->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Lắng nghe sự kiện khi người dùng chọn file
-        document.getElementById("fileInput1").addEventListener("change", function () {
-            // Lấy ra đối tượng file đã chọn
-            var file = this.files[0];
-
-            // Kiểm tra xem file có tồn tại không
-            if (file) {
-                // Tạo một đối tượng FileReader để đọc file
-                var reader = new FileReader();
-
-                // Lắng nghe sự kiện khi FileReader đã đọc xong file
-                reader.onload = function (e) {
-                    // Hiển thị ảnh đã chọn lên giao diện
-                    document.getElementById("previewImage1").src = e.target.result;
-                };
-
-                // Đọc file như một đường dẫn URL dạng Data URL
-                reader.readAsDataURL(file);
-            }
-        });
-    });
-</script>
-<script>
-
-    $(document).ready(function () {
-        function getAllVoucher() {
-            $.ajax({
-                url: '/api-public/vouchers/getAllVouchers',
-                type: 'GET',
-                success: function (data) {
-                    console.log(data);
-                    $('#voucherTableBody').empty();
-                    // Định dạng ngày bằng Moment.js
-
-                    $.each(data,function (index,voucher){
-                        var formattedStartDate = moment(voucher.startDay).format('DD-MM-YYYY');
-                        var formattedEndDate = moment(voucher.endDay).format('DD-MM-YYYY');
-                        var newRow = `
-                            <tr>
-                                <td class="align-middle text-center text-sm">
-                                            <div class="d-flex w-100 flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm">${voucher.voucherName}</h6>
-                                            </div>
-                                </td>
-                                <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">${voucher.reduce}%</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">${formattedStartDate}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold">${formattedEndDate}</span>
-                                </td>
-                                <td class="align-middle text-center">
-                                    <button class="btn border-0 rounded btn-outline-info"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalVoucherSendAcount">
-                                                <i class="fa-solid fa-ticket"></i></button>
-                                    <button class="btn border-0 rounded btn-outline-info" id="updateVoucherButton" data-voucher-id="${voucher.voucherID}"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalUpdateVoucher">
-                                                <i class="fa-solid fa-pen-to-square"></i></button>
-                                    <button class="border border-0 rounded btn-outline-danger"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalDeleteVoucher">
-                                        <i class="fa-solid fa-trash"></i></button>
-                                </td>
-                            </tr>
-                            `;
-                        $('#voucherTableBody').append(newRow);
-                    });
-
-                },
-                error: function (xhr, status, error) {
-                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
-                }
-            });
-        }
-        $('#v-pills-home-voucher').click(function () {
-            getAllVoucher(); // Gọi hàm updateUser() khi nhấn vào nút "Submit"
-        });
-
-        function saveVoucher() {
-            var voucherName = $('#insNameVoucher').val();
-            var reduce = $('#insReduce').val();
-            var startDay = $('#insStartDay').val();
-            var endDay = $('#insEndDay').val();
-            var startDate = new Date(startDay);
-            var endDate = new Date(endDay);
-            if(voucherName === '' || reduce === '' || startDay === '' || endDay === ''){
-                $('#alertMessVoucher').text("Vui lòng nhập đâỳ đủ các trường").addClass("mb-2 alert alert-danger");
-                return;
-            }
-            else if (startDate > endDate) {
-                // startDay lớn hơn endDay
-                $('#alertMessVoucher').text("Vui lòng nhập Start Day bé hơn End Day").addClass("mb-2 alert alert-danger");
-                return;
-            }
-            // Nếu không có lỗi, loại bỏ lớp CSS alert-danger nếu có
-            $('#alertMessVoucher').text("").removeClass("mb-2 alert alert-danger");
-
-            let voucherData = {
-                voucherName: voucherName,
-                reduce: reduce,
-                startDay: startDay,
-                endDay: endDay,
-            };
-
-            $.ajax({
-                url: '/api-public/vouchers/saveVoucher',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(voucherData),
-                success: function (response) {
-                    console.log(response === 1 ? 'Thêm thành công' : 'Thêm thất bại');
-                    getAllVoucher();
-                },
-                error: function (xhr, status, error) {
-                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
-                }
-            });
-        }
-        $('#insButtonVoucher').click(function () {
-            saveVoucher();
-        });
-        $('#newInsButtonAccount').click(function () {
-            $('#insNameVoucher').val('');
-            $('#insReduce').val('');
-            $('#insStartDay').val('');
-            $('#insEndDay').val('');
-        });
-
-
-        function getVoucherByID(voucherID) {
-            $.ajax({
-                url: '/api-public/vouchers/getVoucherByID',
-                type: 'GET',
-                data: {
-                    "voucherID": voucherID
-                },
-                success: function (data) {
-                    $('#updateNameVoucher').val(data.voucherName);
-                    $('#updateReduceVoucher').val(data.reduce);
-                    $('#updateStartDayVoucher').val(data.startDay);
-                    $('#updateEndDayVoucher').val(data.endDay);
-                    $('#updateIDVoucher').val(data.voucherID);
-                },
-                error: function (xhr, status, error) {
-                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
-                }
-            });
-        }
-        $(document).on('click', '#updateVoucherButton', function() {
-            var voucherID = $(this).attr('data-voucher-id');
-            getVoucherByID(voucherID);
-        });
-
-
-        function updateVoucher() {
-            var voucherID = $('#updateIDVoucher').val();
-            var voucherName = $('#updateNameVoucher').val();
-            var reduce = $('#updateReduceVoucher').val();
-            var startDay = $('#updateStartDayVoucher').val();
-            var endDay = $('#updateEndDayVoucher').val();
-            var startDate = new Date(startDay);
-            var endDate = new Date(endDay);
-            if(voucherName === '' || reduce === '' || startDay === '' || endDay === ''){
-                $('#alertMessVoucherUpdate').text("Vui lòng nhập đâỳ đủ các trường").addClass("mb-2 alert alert-danger");
-                return;
-            }
-            else if (startDate > endDate) {
-                // startDay lớn hơn endDay
-                $('#alertMessVoucherUpdate').text("Vui lòng nhập Start Day bé hơn End Day").addClass("mb-2 alert alert-danger");
-                return;
-            }
-            // Nếu không có lỗi, loại bỏ lớp CSS alert-danger nếu có
-            $('#alertMessVoucherUpdate').text("").removeClass("mb-2 alert alert-danger");
-
-            let voucherData = {
-                voucherID: voucherID,
-                voucherName: voucherName,
-                reduce: reduce,
-                startDay: startDay,
-                endDay: endDay,
-            };
-
-            $.ajax({
-                url: '/api-public/vouchers/updateVoucher',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(voucherData),
-                success: function (response) {
-                    console.log(response === 1 ? 'Cập nhật thành công' : 'Cập nhật thất bại');
-                    getAllVoucher();
-                },
-                error: function (xhr, status, error) {
-                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
-                }
-            });
-        }
-        $('#buttonUpdateVoucher').click(function () {
-            updateVoucher();
-        });
-
-
-
-
-    });
-
-</script>
+<script src="/assests/js/StatusProduct.js"></script>
 
 </body>
 
