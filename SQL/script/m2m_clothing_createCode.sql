@@ -254,6 +254,7 @@ go
 -- select * from Comment where product_id = 1;
 
 -- select * from [user]
+
 CREATE TABLE [Order] (
     order_id int IDENTITY(1,1) PRIMARY KEY,
     customer_id int NOT NULL,
