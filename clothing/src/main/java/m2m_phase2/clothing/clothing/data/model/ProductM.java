@@ -2,7 +2,9 @@ package m2m_phase2.clothing.clothing.data.model;
 
 import lombok.Builder;
 import lombok.Data;
+import m2m_phase2.clothing.clothing.data.entity.Category;
 import m2m_phase2.clothing.clothing.data.entity.Product;
+import m2m_phase2.clothing.clothing.data.entity.Sale;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,6 +12,7 @@ import java.util.stream.Collectors;
 @Data
 @Builder
 public class ProductM {
+    private int productId;
     private String name;
     private Float price;
     private int quantity;
@@ -17,8 +20,9 @@ public class ProductM {
     private String pictures;
     private String videos;
     private String slug;
-    private int productId;
-    private int category;
+    private Category category;
+    private Sale sale;
+
 
     public static ProductM convertProductEToProductM(Product productE){
         return ProductM.builder()
@@ -30,7 +34,8 @@ public class ProductM {
                 .videos(productE.getVideos())
                 .slug(productE.getSlugUrl())
                 .productId(productE.getProductId())
-                .category(productE.getCategory().getCategory_id())
+                .category(productE.getCategory())
+                .sale(productE.getSale())
                 .build();
     }
 

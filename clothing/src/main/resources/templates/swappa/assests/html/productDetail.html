@@ -154,9 +154,9 @@
                         </div>
                         <div class="card text-start mt-2">
                             <div class="card-header d-flex align-items-center justify-content-center">
-                                <span class="fs-4 fw-bolder" th:text="${listProduct.productName}" id="productName"></span>
+                                <span class="fs-4 fw-bolder" th:text="${listProduct.getName()}" id="productName"></span>
                                 <span class="fs-4 fw-bolder">------ Rate : </span>
-                                <span class="fs-4 fw-bolder" style="color: #c24444" th:text="'$'+ ${(listProduct.getSale() != null ? #numbers.formatDecimal(listProduct.getPrice.intValue() - (listProduct.getSale.getSalePercent() / 100.00 * listProduct.getPrice().intValue()), 1, 'DEFAULT', 2,'DEFAULT') : listProduct.getPrice())}" id="productPrice"></span>
+                                <span class="fs-4 fw-bolder" style="color: #c24444" th:text="'$'+ ${(listProduct.getSale() != null ? #numbers.formatDecimal(listProduct.getPrice().intValue() - (listProduct.getSale.getSalePercent() / 100.00 * listProduct.getPrice().intValue()), 1, 'DEFAULT', 2,'DEFAULT') : listProduct.getPrice())}" id="productPrice"></span>
                             </div>
                             <div>
                                 <ul class="small-ul">
