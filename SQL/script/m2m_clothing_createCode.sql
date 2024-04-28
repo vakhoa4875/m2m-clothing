@@ -254,6 +254,7 @@ go
 -- select * from Comment where product_id = 1;
 
 -- select * from [user]
+
 CREATE TABLE [Order] (
     order_id int IDENTITY(1,1) PRIMARY KEY,
     customer_id int NOT NULL,
@@ -272,7 +273,7 @@ Create table [OrderDetail](
     quatity int,
     toal_product float
 )
-
+go
 create or alter trigger trigger_after_create_Order
     on [Order]
     after INSERT
