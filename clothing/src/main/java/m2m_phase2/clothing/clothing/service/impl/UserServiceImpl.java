@@ -49,11 +49,11 @@ public class UserServiceImpl implements UserService {
                     userDto.getAvatar());
             return 1;
         }
-        return  0;
+        return 0;
     }
 
     @Override
-    public boolean isUserExist(UserDto userDto) throws SQLException{
+    public boolean isUserExist(UserDto userDto) throws SQLException {
         var user = userRepo.getUserByUsernameAndEmail(userDto.getUsername(), userDto.getEmail());
         return Objects.nonNull(user);
     }
@@ -130,6 +130,7 @@ public class UserServiceImpl implements UserService {
             session.removeAttribute("adminToken");
         }
     }
+
     //M2M- 010 TanLoc Begin
     @Override
     public void saveUserGG(UserE userE) {
@@ -140,6 +141,13 @@ public class UserServiceImpl implements UserService {
     public List<UserM> findUserNotInVoucher(VoucherDetailsDto voucherDetailsDto) {
         return UserM.converListUserEToListUserM(userRepo.findUserNotInVoucher(voucherDetailsDto.getVoucher().getVoucherID()));
     }
+
+    @Override
+    public UserM getUserByUniqueField(UserDto userDto) throws SQLException {
+        var loginUser = userRepo.findByEmailOrUsername(userDto.getEmail(), userDto.getUsername());
+        return (Objects.nonNull(loginUser) ? UserM.convertUserEToUserM(loginUser) : null);
+    }
+
     //M2M- 010 TanLoc End
 //    @Override
 //    public List<UserM> getUserByDto(UserDto userDto) throws SQLException {

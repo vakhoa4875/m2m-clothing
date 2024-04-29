@@ -201,7 +201,7 @@
                                     data-bs-toggle="pill" data-bs-target="#v-pills-AllVoucher" type="button" role="tab"
                                     aria-controls="v-pills-AllVoucher" aria-selected="false">Sale
                             </button>
-                            <a class="nav-link mt-1 text-black" href="">Log Out</a>
+                            <a class="nav-link mt-1 text-black" href="#" onclick="logout()">Log Out</a>
                         </div>
                     </div>
                 </div>
@@ -612,6 +612,13 @@
             });
         } catch (error) {
             console.error('>>error:', error);
+        }
+    }
+
+    const logout = () => {
+        let agreed = confirm("Logout from M2M-Clothing?");
+        if (agreed) {
+            window.location.href = "/account/logout"
         }
     }
 

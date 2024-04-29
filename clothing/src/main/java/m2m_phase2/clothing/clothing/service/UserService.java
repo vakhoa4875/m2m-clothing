@@ -39,4 +39,6 @@ public interface UserService {
 
     //voucher
     List<UserM> findUserNotInVoucher(VoucherDetailsDto voucherDetailsDto) throws SQLException;
+    // new login
+    UserM getUserByUniqueField(UserDto userDto) throws SQLException;
 }

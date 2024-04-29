@@ -1,6 +1,12 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
 import java.security.SecureRandom;
+import java.sql.SQLException;
+
+import lombok.RequiredArgsConstructor;
+import m2m_phase2.clothing.clothing.data.dto.UserDto;
+import m2m_phase2.clothing.clothing.data.model.UserM;
+import m2m_phase2.clothing.clothing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -15,6 +21,7 @@ import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
@@ -23,6 +30,7 @@ public class AccountServiceImpl implements AccountService {
     private JavaMailSender emailSender;
     @Autowired
     private HttpSession session;
+    private final UserService userService;
 
     @Override
     public Account saveAccount(Account account) {
@@ -161,21 +169,26 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    public String submitLogin(Account accountRequest, Model model, HttpSession session) {
-        String email = accountRequest.getEmail();
-        String password = accountRequest.getHashedPassword();
-        Account existingAccount = findByemail(email);
+    public String submitLogin(Account accountRequest, Model model, HttpSession session) throws SQLException {
+        var loginUserDto = new UserDto();
+        loginUserDto.setEmail(accountRequest.getEmail());
+        loginUserDto.setUsername(accountRequest.getUsername());
+        loginUserDto.setPassword(accountRequest.getHashedPassword());
+//        String email = accountRequest.getEmail();
+//        String password = accountRequest.getHashedPassword();
+
+        UserM existingAccount = userService.getUserByUniqueField(loginUserDto);
         if (existingAccount == null) {
             model.addAttribute("error", "Tài khoản không tồn tại");
             return "swappa/assests/html/acc_login";
         }
-        boolean passwordMatch = PasswordEncoderUtil.verifyPassword(password, existingAccount.getHashedPassword());
+        boolean passwordMatch = PasswordEncoderUtil.verifyPassword(loginUserDto.getPassword(), existingAccount.getHashedPassword());
         if (!passwordMatch) {
             model.addAttribute("error", "Mật khẩu không đúng");
             return "swappa/assests/html/acc_login";
         }
         // Kiểm tra xem tài khoản có bị vô hiệu hóa không
-        if (isDisable(existingAccount)) {
+        if (existingAccount.isDisable()) {
             model.addAttribute("error", "Tài khoản của bạn tạm thời bị vô hiệu hóa");
             return "swappa/assests/html/acc_login";
         }

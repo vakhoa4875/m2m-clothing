@@ -177,7 +177,7 @@ create or alter trigger trigger_after_insert_into_user
                 -- set processed to 1
                 update [user]
                 set processed = 1
-                where id = (select i.id from inserted i);
+                where id in (select i.id from inserted i);
 --             IF @@TRANCOUNT > 0
 --             begin
 --                 print ('end transaction');

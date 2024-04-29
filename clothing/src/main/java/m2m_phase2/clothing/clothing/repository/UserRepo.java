@@ -100,4 +100,6 @@ public interface UserRepo extends JpaRepository<UserE, Integer> {
 
     @Query(value = "select * from [user] u where u.id not in (select distinct v.user_id from VoucherDetails v where v.voucher_id = :voucherID)", nativeQuery = true)
     List<UserE> findUserNotInVoucher(@Param("voucherID")Integer voucherID);
+
+    UserE findByEmailOrUsername(@Param("email")String email, @Param("username")String username);
 }

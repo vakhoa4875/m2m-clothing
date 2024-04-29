@@ -80,7 +80,7 @@ public class HomeController {
     }
 
     @PostMapping("/submitLogin")
-    public String submitLogin(@ModelAttribute("accountlog") Account accountRequest, Model model) {
+    public String submitLogin(@ModelAttribute("accountlog") Account accountRequest, Model model) throws SQLException {
         return accountServiceImpl.submitLogin(accountRequest, model, session);
     }
 
@@ -98,5 +98,11 @@ public class HomeController {
             // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
             return "swappa/assests/html/acc_login";
         }
+    }
+
+    @GetMapping("/account/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();
+        return "redirect:/";
     }
 }
