@@ -41,21 +41,29 @@ class productManagement{
                                 <button class="btn border-0 rounded btn-outline-info"
                                         data-bs-toggle="modal" data-bs-target="#exampleModalUpdateProduct" onclick="productservices.getProductById('${item.slug}')">
                                     <i class="fa-solid fa-pen-to-square"></i></button>
-                                <button class="border border-0 rounded btn-outline-danger"
-                                        data-bs-toggle="modal" data-bs-target="#exampleModalDeleteProduct">
+                                <button class="border border-0 rounded btn-outline-danger " 
+                                        data-bs-toggle="modal" data-bs-target="#exampleModalDeleteProduct" onclick="productservices.getIdProduct('${item.productId}')">
                                     <i class="fa-solid fa-trash"></i></button>
                             </td>
                         </tr>
                     `;
                 });
-                list.append(htmlString);
+                list.html(htmlString);
             },
             error: function (xhr, status, error) {
                 console.log(error);
             }
         });
     }
-
+    idProduct;
+    getIdProduct = (product_id) =>{
+        var self = this
+        self.idProduct = product_id
+    }
+    callFuntionDelete = () => {
+        var self = this
+        productservices.deleteProduct(self.idProduct)
+    }
     getProductById = (slug_url_product) => {
         $.ajax({
             url: 'http://localhost:8083/findbyproductidapi',
@@ -105,12 +113,14 @@ class productManagement{
                             </div>
                             <div class="mb-2 ">
                                 <div class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
-                                    <video  id="previewVideoUpd" class="embed-responsive-item">  <source src="../media/${data.videos}"> </video>
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <video  id="previewVideoUpd" class="embed-responsive-item">  <source src="../media/${data.videos}"> </video>
+                                    </div>
                                 </div>
                                 <div class="col-4">
                                     <div class="text-center my-3" style="margin-right: 10px;">
-                                        <input type="file" class="form-control" id="previewVideo1" accept="video/*" onchange="productservices.previewVideo(event,'previewVideoUpd')">
-                                        <label id="nameVideo" style="display: none ">${data.videos}</label>
+                                        <input type="file" class="form-control" id="previewVideo1" accept="video/*" onchange="productservices.previewVideo(event,'previewVideoUpd','nameVideoUpd')">
+                                        <label id="nameVideoUpd" style="display: none ">${data.videos}</label>
                                     </div>
                                 </div>
                                 <select class="form-select w-auto" aria-label="Default select example" id="formSelect">
@@ -159,8 +169,9 @@ class productManagement{
                         </div>
                         <!--  file input ảnh -->
                         <div class="text-center my-3" style="margin-right: 10px;">
-                            <input type="file" class="form-control " id="fileInput${i + 1}" accept="image/*" onchange="productservices.previewImage(event, 'updfileInput${i + 1}')">
-                            <label id="nameImage${i + 1}" style="display: none">${imagesArray[i]}</label>
+                            <input type="file" class="form-control " id="fileInputUpd${i + 1}" accept="image/*" 
+                            onchange="productservices.previewImage(event, 'updfileInput${i + 1}','updfileInput','fileInputUpd','nameImageUpd')">
+                            <label id="nameImageUpd${i + 1}" style="display: none">${imagesArray[i]}</label>
                         </div>
                     </div>
                 `
@@ -169,14 +180,57 @@ class productManagement{
         }
     }
 
-    fileImg3;
-    fileImg2;
-    fileImg1;
-    previewImage = async (event, imageId) => {
+    createProductObjectUpdate =  () => {
+        var self = this
+        let name = $('#updNameProduct').val();
+        let price = $('#updPriceProduct').val();
+        let quantity = $('#updQuantityProduct').val();
+        let description = $('#updDescriptionProduct').val();
+        let img1 = $('#fileInput11').val()
+        let img2 = $('#fileInput22').val();
+        let img3 = $('#fileInput33').val();
+        let videos = $('#previewVideo1').val();
+        let id = $('#updID').val();
+
+        let nameimge = $('#nameImageUpd1').text();
+        let nameimge1 = $('#nameImageUpd2').text();
+        let nameimge2 = $('#nameImageUpd3').text();
+        let nameVideo = $('#nameVideoUpd').text();
+
+        let slug = this.convertToSlug(name);
+        const fileNames = [nameimge, nameimge1, nameimge2];
+        const validFileNames = fileNames.filter(fileName => fileName);
+        const imagesString = validFileNames.join(",");
+        var selectedValue = $('#formSelect option:selected').val();
+
+        console.log(selectedValue);
+
+        let productupdate = {
+            "name": name,
+            "price": price,
+            "quantity": quantity,
+            "description": description,
+            "pictures": imagesString,
+            "videos": nameVideo,
+            "category":selectedValue,
+            "productId": id,
+            "fileimg1": self.fileImg1,
+            "fileimg2": self.fileImg2,
+            "fileimg3": self.fileImg3,
+            "filevideo":self.fileVideo
+        }
+        return productupdate;
+    }
+
+
+    fileImg1 = null;
+    fileImg2 = null;
+    fileImg3 = null;
+    fileVideo = null;
+    previewImage = async (event, imageId ,idFileInput,imageIdReplace,nameLable) => {
         var reader = new FileReader();
-        console.log(imageId);
         var self = this;
-        var inputId = imageId.replace('previewImage', 'fileInput'); // Tạo id của input tương ứng với hình ảnh
+        var inputId = imageId.replace(idFileInput, imageIdReplace); // Tạo id của input tương ứng với hình ảnh
 
         // Lấy file từ input tương ứng
         var file = document.getElementById(inputId).files[0];
@@ -187,38 +241,37 @@ class productManagement{
                 var output = document.getElementById(imageId);
                 output.src = reader.result;
 
-                // var labelId = imageId.replace('previewImage', 'nameImage');
-                // var label = document.getElementById(labelId);
-                // label.textContent = file.name; // Sử dụng file.name thay vì event.target.files[0].name
+                var labelId = imageId.replace(idFileInput, nameLable);
+                var label = document.getElementById(labelId);
+                label.textContent = file.name; // Sử dụng file.name thay vì event.target.files[0].name
 
-                if (imageId === 'previewImage1') {
+                if (imageId === 'previewImage1'|| imageId === 'updfileInput1') {
                     self.fileImg1 = reader.result;
-                } else if (imageId === 'previewImage2') {
+                } else if (imageId === 'previewImage2' || imageId === 'updfileInput2') {
                     self.fileImg2 = reader.result;
-                } else if (imageId === 'previewImage3') {
+                } else if (imageId === 'previewImage3' || imageId === 'updfileInput3') {
                     self.fileImg3 = reader.result;
                 }
-                console.log(self.fileImg1);
-                console.log(self.fileImg2);
-                console.log(self.fileImg3);
+
             };
 
             reader.readAsDataURL(file);
         }
     };
 
-    previewVideo = (event, videoId) => {
+
+
+    previewVideo = (event, videoId,nameLable) => {
+        var self = this
         var reader = new FileReader();
         reader.onload = function() {
             var video = document.getElementById(videoId);
             video.src = reader.result;
 
-            var labelId = 'nameVideo';
+            var labelId = nameLable;
             var label = document.getElementById(labelId);
             label.textContent = event.target.files[0].name;
-
-            this.fileVideo = reader.result
-            console.log(this.fileVideo)
+            self.fileVideo = reader.result
         }
         reader.readAsDataURL(event.target.files[0]);
     }
@@ -250,15 +303,24 @@ class productManagement{
         return parts[parts.length - 1].trim();
     }
     createProductObject = () => {
+        var self = this;
         let name = $('#insNameProduct').val();
         let price = $('#insPriceProduct').val();
         let quantity = $('#insQuantityProduct').val();
         let description = $('#inDescriptionProduct').val();
-        let img1 = $('#fileInput11').val()
-        let img2 = $('#fileInput22').val();
-        let img3 = $('#fileInput33').val();
+        let img1 = $('#fileInput1').val()
+        let img2 = $('#fileInput2').val();
+        let img3 = $('#fileInput3').val();
         let videos = $('#fileInput4').val();
 
+        console.log(img1);
+        console.log(img2);
+        console.log(img3);
+
+        console.log(self.fileImg1);
+        console.log(self.fileImg2);
+        console.log(self.fileImg3);
+        console.log(self.fileVideo);
 
         let fileName1 = this.getFileNameFromPath(img1);
         let fileName2 = this.getFileNameFromPath(img2);
@@ -274,10 +336,6 @@ class productManagement{
 
         console.log(selectedValue);
 
-        console.log(fileImg1);
-        console.log(fileImg2);
-        console.log(fileImg3);
-
 
         let product = {
             "name": name,
@@ -288,10 +346,10 @@ class productManagement{
             "videos": fileNameVideo,
             "slug": slug,
             "category":selectedValue,
-            "fileimg1": productManagementInstance.fileImg1,
-            "fileimg2": productManagementInstance.fileImg2,
-            "fileimg3": productManagementInstance.fileImg3,
-            "filevideo": productManagementInstance.fileVideo
+            "fileimg1": self.fileImg1,
+            "fileimg2": self.fileImg2,
+            "fileimg3": self.fileImg3,
+            "filevideo":self.fileVideo
         }
         return product;
     }
@@ -320,40 +378,21 @@ class productManagement{
             }
         })
     }
-    createProductObjectUpdate =  () => {
-        let name = $('#updNameProduct').val();
-        let price = $('#updPriceProduct').val();
-        let quantity = $('#updQuantityProduct').val();
-        let description = $('#updDescriptionProduct').val();
-        let img1 = $('#fileInput11').val()
-        let img2 = $('#fileInput22').val();
-        let img3 = $('#fileInput33').val();
-        let videos = $('#previewVideo1').val();
-        let id = $('#updID').val();
 
-        let nameimge = $('#nameImage1').text();
-        let nameimge1 = $('#nameImage2').text();
-        let nameimge2 = $('#nameImage3').text();
-        let nameVideo = $('#nameVideo').text();
-
-        let slug = this.convertToSlug(name);
-        const fileNames = [nameimge, nameimge1, nameimge2];
-        const validFileNames = fileNames.filter(fileName => fileName);
-        const imagesString = validFileNames.join(",");
-        var selectedValue = $('#formSelect option:selected').val();
-
-        console.log(selectedValue);
-
-        let productupdate = {
-            "name": name,
-            "price": price,
-            "quantity": quantity,
-            "description": description,
-            "pictures": imagesString,
-            "videos": nameVideo,
-            "category":selectedValue,
-            "productId": id
-        }
-        return productupdate;
+    deleteProduct(productId) {
+        $.ajax({
+            url: '/products/' + productId,
+            type: 'DELETE',
+            success: function(response) {
+                console.log('Xóa sản phẩm thành công.');
+            },
+            error: function (xhr, status, error) {
+                console.log(xhr.responseText);
+                console.log(status);
+                console.log(error);
+                alert("Đã xảy ra lỗi khi xoa sản phẩm.");
+            }
+        });
     }
+
 }
