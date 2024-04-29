@@ -1,5 +1,6 @@
 package m2m_phase2.clothing.clothing.service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
@@ -18,4 +19,6 @@ public interface ProductService {
 	List<Product> findBycategory(Integer categoryId);
 	void insertProduct(ProductDTO productDTO);
 	void updateProduct(ProductDTO productDTO);
+	void saveImgAndVideo(ProductDTO productDTO);
+	void deleteByProductId(int product_id) ;
 }

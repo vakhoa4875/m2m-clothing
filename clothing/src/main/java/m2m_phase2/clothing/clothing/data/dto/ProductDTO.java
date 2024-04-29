@@ -1,11 +1,14 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.File;
 
 @Data
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class ProductDTO {
     private String name;
     private Double price;
@@ -20,6 +23,4 @@ public class ProductDTO {
     private String fileimg2;
     private String fileimg3;
     private String filevideo;
-
-
 }

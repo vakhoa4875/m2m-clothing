@@ -58,4 +58,6 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
                         @Param("videos") String videos,
                         @Param("category_id") int category_id,
                         @Param("productId") int product_id);
+    @Transactional
+    void deleteByProductId(int product_id);
 }

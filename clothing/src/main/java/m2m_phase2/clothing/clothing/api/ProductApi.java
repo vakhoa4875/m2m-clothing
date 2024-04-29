@@ -60,6 +60,7 @@ public class ProductApi {
 	public ResponseEntity<?> insertProduct(@RequestBody ProductDTO productDTO){
 		try {
 			productserviceimpl.insertProduct(productDTO);
+			productserviceimpl.saveImgAndVideo(productDTO);
 		} catch (Exception e) {
 			System.out.println("Call API Failed: /insertProduct");
 			throw new RuntimeException(e);
@@ -72,10 +73,16 @@ public class ProductApi {
 	public ResponseEntity<?> updateProduct(@RequestBody ProductDTO productDTO){
 		try {
 			productserviceimpl.updateProduct(productDTO);
+			productserviceimpl.saveImgAndVideo(productDTO);
 		} catch (Exception e) {
 			System.out.println("Call API Failed: /update");
 			throw new RuntimeException(e);
 		}
 		return ResponseEntity.ok("Product update successfully.");
+	}
+
+	@DeleteMapping("/products/{product_id}")
+	public void deleteProductById(@PathVariable("product_id") int productId) {
+		productserviceimpl.deleteByProductId(productId);
 	}
 }
