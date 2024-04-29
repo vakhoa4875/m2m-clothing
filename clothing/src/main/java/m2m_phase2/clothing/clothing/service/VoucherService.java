@@ -19,4 +19,6 @@ public interface VoucherService {
     byte updateVoucher(VoucherDto voucherDto) throws SQLException;
 
     List<VoucherM> findVouchersInfoByEmail(String email) throws SQLException;
+
+    byte deleteVoucherByDay(VoucherDto voucherDto) throws SQLException;
 }

@@ -1,9 +1,8 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
+import m2m_phase2.clothing.clothing.data.model.ProductM;
 
 import java.util.Date;
 
@@ -17,8 +16,7 @@ public class CommentDTO {
     private int commentId;
     private String comment;
     private UserE user;
-    private Product product;
+    private ProductM product;
     private Date createDate;
-
 
 }

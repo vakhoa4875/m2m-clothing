@@ -290,6 +290,22 @@ create or alter trigger trigger_after_create_Order
         insert into OrderDetail (order_id_detail) values (@id)
     end
 go
+CREATE OR ALTER TRIGGER trigger_before_delete_voucher
+ON Voucher
+INSTEAD OF DELETE
+AS
+BEGIN
+    BEGIN TRANSACTION;
+    BEGIN TRY
+        DELETE FROM VoucherDetails WHERE voucher_id IN (SELECT voucher_id FROM deleted);
+        DELETE FROM Voucher WHERE voucher_id IN (SELECT voucher_id FROM deleted);
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+    END CATCH;
+END;
+go
 
 
 
