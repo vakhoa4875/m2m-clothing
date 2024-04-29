@@ -32,4 +32,10 @@ public interface SaleRepo extends JpaRepository<Sale,Integer> {
             @Param("saleStart") Date saleStart,
             @Param("saleEnd") Date saleEnd,
             @Param("saleId") int saleId);
-    }
+
+    @Modifying
+    @Transactional
+    @Query(value = "update [Product] set sale_ID = :sale_ID where product_id = :product_id", nativeQuery = true)
+    void updateProductSaleFromSale(@Param("sale_ID") Integer sale_ID, @Param("product_id") Integer product_id);
+
+}

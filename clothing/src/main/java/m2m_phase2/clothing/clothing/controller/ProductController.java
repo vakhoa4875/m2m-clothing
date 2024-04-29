@@ -49,7 +49,7 @@ public class ProductController {
 		CommentDTO  commentDTO =  new CommentDTO();
 		commentDTO.setProduct(productServiceImpl.findByslug_url(slug_url));
 		List<CommentM>  commentM = commentServiceImpl.findByProductId(commentDTO);
-		model.addAttribute("listProduct", product);	
+		model.addAttribute("listProduct", product);
 		model.addAttribute("commentM", commentM);
 		return "swappa/assests/html/productDetail";
 	}
