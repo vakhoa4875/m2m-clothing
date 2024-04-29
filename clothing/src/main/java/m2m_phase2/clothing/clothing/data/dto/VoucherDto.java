@@ -11,4 +11,5 @@ public class VoucherDto {
     private int reduce;
     private Date startDay;
     private Date endDay;
+    private Date toDay;
 }

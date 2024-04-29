@@ -52,5 +52,10 @@ public interface VoucherRepo extends JpaRepository<VoucherE, Integer> {
             "       where u.email = :email", nativeQuery = true)
     List<VoucherE> findVouchersInfoByEmail(@Param("email") String email);
 
+    @Modifying
+    @Transactional
+    @Query(value = "delete from Voucher WHERE :toDay > end_day", nativeQuery = true)
+    void deleteVoucherByDay(@Param("toDay")Date toDay);
+
 
 }

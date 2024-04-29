@@ -129,20 +129,25 @@ function capNhatTienTong() {
 
             tongTien += object.soLuong * object.gia;
             tienCanTra += object.soLuong * object.gia;
-            // Áp dụng giảm giá từ voucher nếu có
-            if (appliedVoucher) {
-                var reduceAmount = tongTien * (appliedVoucher.voucherReducePercent / 100);
-                tongTien -= reduceAmount;
-                // Cập nhật giá trị của thẻ HTML mới
-                var cacPhanTuTienGiam = document.querySelectorAll(".tiengiam");
-                // phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
-                cacPhanTuTienGiam.forEach(function (element) {
-                    element.textContent = "$" + reduceAmount.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
-                });
-            }else{
-                var phanTuTienGiam = document.querySelector(".tiengiam");
-                phanTuTienGiam.textContent = "$" + 0;
-            }
+
+        }
+        // Áp dụng giảm giá từ voucher nếu có
+        if (appliedVoucher) {
+            var reduceAmount = tongTien * (appliedVoucher.voucherReducePercent / 100);
+
+            tongTien -= reduceAmount;
+            // Cập nhật giá trị của thẻ HTML mới
+            var cacPhanTuTienGiam = document.querySelectorAll(".tiengiam");
+            // phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
+            cacPhanTuTienGiam.forEach(function (element) {
+                element.textContent = "$" + reduceAmount.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
+            });
+        }else{
+            var cacPhanTuTienGiam = document.querySelectorAll(".tiengiam");
+            // phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
+            cacPhanTuTienGiam.forEach(function (element) {
+                element.textContent = "$" + 0;
+            });
         }
         var cacPhanTuTienCanTra = document.querySelectorAll(".tienCanTra");
         // Lặp qua từng phần tử và cập nhật giá trị mới
@@ -364,7 +369,7 @@ $(document).ready(function () {
 
                     // console.log(appliedVoucher)
 
-                    $('#addVoucherText').text('Bạn đã thêm voucher ' + voucherName + ' vào giỏ hàng.');
+                    $('#addVoucherText').text('Bạn đã thêm ' + voucherName + ' vào giỏ hàng.');
                     $('#addVoucherText').removeClass('d-none').addClass('d-block');
                     capNhatTienTong();
                 });
