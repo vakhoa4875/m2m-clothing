@@ -57,4 +57,9 @@ public class SaleServiceImpl implements SaleService {
     public void deleteSale(int saleId) {
         saleRepo.deleteBySaleId(saleId);
     }
+
+    @Override
+    public void updateProductSaleFromSale(Integer sale_ID, Integer product_id) {
+        saleRepo.updateProductSaleFromSale(sale_ID, product_id);
+    }
 }

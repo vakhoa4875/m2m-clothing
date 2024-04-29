@@ -291,6 +291,22 @@ create or alter trigger trigger_after_create_Order
     end
 go
 
+create or alter trigger trigger_after_delete_Sale
+    on [Sale]
+    instead of DELETE
+    as
+    begin
+         -- Xóa các bản ghi liên quan trong bảng Product
+        update Product
+        set sale_id = null
+        where sale_id in (select deleted.sale_ID from deleted)
+
+        -- Tiếp tục xóa bản ghi Sale chính
+        delete from Sale
+        where Sale.sale_ID in (select deleted.sale_ID from deleted)
+    end
+go
+
 
 
 

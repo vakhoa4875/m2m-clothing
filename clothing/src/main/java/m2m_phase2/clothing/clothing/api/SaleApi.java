@@ -14,12 +14,12 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/admin/api/sales")
+    @RequestMapping("/admin/api/sales")
 public class SaleApi {
     @Autowired
     private SaleService saleService;
 
-    @GetMapping
+    @GetMapping("/getAllSale")
     public ResponseEntity<?> getAllSales() {
         try {
             List<SaleM> sales = saleService.getAllSales();
@@ -45,7 +45,7 @@ public class SaleApi {
         }
     }
 
-    @PostMapping
+    @PostMapping("/createSale")
     public ResponseEntity<?> createSale(@RequestBody SaleDTO saleDTO) {
         try {
             SaleM createdSale = saleService.createSale(saleDTO);
@@ -80,5 +80,15 @@ public class SaleApi {
             log.error("Failed to delete sale with ID: {}", saleId, e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @PostMapping("/updateProducctFromSale")
+    public ResponseEntity<?> updateProductSale(@RequestParam int sale_ID, @RequestParam int product_id) {
+        try {
+            saleService.updateProductSaleFromSale(sale_ID, product_id);
+        } catch (Exception e) {
+            log.error("Failed to create sale", e);
+        }
+        return ResponseEntity.ok("cập nhật thành công");
     }
 }
