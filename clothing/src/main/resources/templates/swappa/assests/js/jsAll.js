@@ -318,6 +318,9 @@ $(document).ready(function () {
         });
     }
     //hàm phatteacher
+    var appliedVoucherID = null; // Biến để lưu trữ ID của voucher được áp dụng gần đây nhất
+
+// Hàm gọi API để lấy danh sách voucher
     function getAllVoucherByUserEmail() {
         $.ajax({
             url: '/api-public/vouchers/getCartVouchersByEmail',
@@ -325,53 +328,75 @@ $(document).ready(function () {
             success: function (data) {
                 console.log(data);
                 $('#modalBodyVoucherInCart').empty();
-                // Định dạng ngày bằng Moment.js
 
-                $.each(data,function (index,voucher){
+                // Lưu trữ ID của voucher đã được chọn trước đó (nếu có)
+                var selectedVoucherID = appliedVoucherID;
+
+                // Định dạng ngày bằng Moment.js và tạo các phần tử voucher
+                $.each(data, function (index, voucher) {
                     var formattedStartDate = moment(voucher.startDay).format('DD-MM-YYYY');
                     var formattedEndDate = moment(voucher.endDay).format('DD-MM-YYYY');
                     var newRow = `
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="card mb-3" >
-                                            <div class="row g-0">
-                                                <div class="col-md-4">
-                                                    <img src="/assests/images/logoVoucher.jpg" class="img-fluid rounded-start" alt="...">
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="card-body">
-                                                        <h5 class="card-title">${voucher.voucherName}</h5>
-                                                        <p class="card-text">Reduce: ${voucher.reduce}%</p>
-                                                        <p class="card-text">End day: ${formattedEndDate}</p>
-                                                        <button class="btn btn-primary" data-voucher-id="${voucher.voucherID}" id="addVoucherBtn_${voucher.voucherID}">Add Voucher</button>
-                                                    </div>
-                                                </div>
-                                            </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-3">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="/assests/images/logoVoucher.jpg" class="img-fluid rounded-start" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${voucher.voucherName}</h5>
+                                            <p class="card-text">Reduce: ${voucher.reduce}%</p>
+                                            <p class="card-text">End day: ${formattedEndDate}</p>
+                                            <button class="btn btn-primary" data-voucher-id="${voucher.voucherID}" id="addVoucherBtn_${voucher.voucherID}">Add Voucher</button>
                                         </div>
                                     </div>
                                 </div>
-                                `;
+                            </div>
+                        </div>
+                    </div>
+                `;
                     $('#modalBodyVoucherInCart').append(newRow);
                 });
-                // Xử lý sự kiện khi nút "Add Voucher" được nhấn
 
-                $('[id^="addVoucherBtn_"]').click(function() {
+                // Áp dụng trạng thái vô hiệu hóa cho các nút voucher dựa trên ID
+                $('[id^="addVoucherBtn_"]').each(function () {
                     var voucherID = $(this).data('voucher-id');
-                    var voucherName = $(this).closest('.card-body').find('.card-title').text();
-                    var voucherReducePercent = parseFloat($(this).siblings('.card-text').text().split(":")[1]);
+                    if (voucherID === selectedVoucherID) {
+                        // Nếu voucher đã được chọn trước đó, vô hiệu hóa nút
+                        $(this).prop("disabled", true);
+                    }
+                });
 
-                    // Lưu thông tin voucher vào biến appliedVoucher
-                    appliedVoucher = {
-                        voucherID: voucherID,
-                        voucherName: voucherName,
-                        voucherReducePercent: voucherReducePercent
-                    };
+                // Xử lý sự kiện khi nút "Add Voucher" được nhấn
+                $('[id^="addVoucherBtn_"]').click(function () {
+                    var newVoucherID = $(this).data('voucher-id');
+                    if (appliedVoucherID !== newVoucherID) {
+                        // Kiểm tra xem đã chọn voucher mới chưa
+                        if (appliedVoucherID !== null) {
+                            // Nếu đã chọn voucher mới, kích hoạt lại nút của voucher cũ (nếu có)
+                            $('#addVoucherBtn_' + appliedVoucherID).prop("disabled", false);
+                        }
 
-                    // console.log(appliedVoucher)
+                        // Lưu ID của voucher mới và vô hiệu hóa nút
+                        appliedVoucherID = newVoucherID;
+                        $(this).prop("disabled", true);
 
-                    $('#addVoucherText').text('Bạn đã thêm ' + voucherName + ' vào giỏ hàng.');
-                    $('#addVoucherText').removeClass('d-none').addClass('d-block');
-                    capNhatTienTong();
+                        // Tiến hành các thao tác khác như lưu thông tin voucher và cập nhật tổng tiền
+                        var voucherName = $(this).closest('.card-body').find('.card-title').text();
+                        var voucherReducePercent = parseFloat($(this).siblings('.card-text').text().split(":")[1]);
+
+                        appliedVoucher = {
+                            voucherID: newVoucherID,
+                            voucherName: voucherName,
+                            voucherReducePercent: voucherReducePercent
+                        };
+
+                        $('#addVoucherText').text('Bạn đã thêm ' + voucherName + ' vào giỏ hàng.');
+                        $('#addVoucherText').removeClass('d-none').addClass('d-block');
+                        capNhatTienTong();
+                    }
                 });
             },
             error: function (xhr, status, error) {
@@ -379,6 +404,7 @@ $(document).ready(function () {
             }
         });
     }
+
     $('#btnvoucherModal').click(function () {
         getAllVoucherByUserEmail(); // Gọi hàm updateUser() khi nhấn vào nút "Submit"
     });
