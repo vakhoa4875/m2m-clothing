@@ -64,7 +64,7 @@ public class UserServiceImpl implements UserService {
             userRepo.updateUser(userDto.getUsername(),
                     userDto.getEmail(),
                     userDto.getFullname(),
-                    userDto.getHashedPassword(),
+//                    userDto.getHashedPassword(),
                     userDto.getGender(),
                     userDto.getRoleId(),
                     userDto.getRoleName(),
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
         if (Objects.equals(userM.getRoleId(), 3)) {
             return 0;
         }
-        if (!PasswordEncoderUtil.verifyPassword(userDto.getPassword(), userM.getHashedPassword())) {
+        if (!PasswordEncoderUtil.verifyPassword(userDto.getPassword(), userM.getEmail())) {
             return 2;
         }
         return 1;

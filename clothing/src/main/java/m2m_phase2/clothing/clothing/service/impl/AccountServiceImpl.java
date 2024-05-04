@@ -170,19 +170,19 @@ public class AccountServiceImpl implements AccountService {
 
 
     public String submitLogin(Account accountRequest, Model model, HttpSession session) throws SQLException {
-        var loginUserDto = new UserDto();
-        loginUserDto.setEmail(accountRequest.getEmail());
-        loginUserDto.setUsername(accountRequest.getUsername());
-        loginUserDto.setPassword(accountRequest.getHashedPassword());
-//        String email = accountRequest.getEmail();
-//        String password = accountRequest.getHashedPassword();
+//        var loginUserDto = new UserDto();
+//        loginUserDto.setEmail(accountRequest.getEmail());
+//        loginUserDto.setUsername(accountRequest.getUsername());
+//        loginUserDto.setPassword(accountRequest.getHashedPassword());
+        String email = accountRequest.getEmail();
+        String password = accountRequest.getHashedPassword();
 
-        UserM existingAccount = userService.getUserByUniqueField(loginUserDto);
+        Account existingAccount = repo.findByemail(email);
         if (existingAccount == null) {
             model.addAttribute("error", "Tài khoản không tồn tại");
             return "swappa/assests/html/acc_login";
         }
-        boolean passwordMatch = PasswordEncoderUtil.verifyPassword(loginUserDto.getPassword(), existingAccount.getHashedPassword());
+        boolean passwordMatch = PasswordEncoderUtil.verifyPassword(password, existingAccount.getHashedPassword());
         if (!passwordMatch) {
             model.addAttribute("error", "Mật khẩu không đúng");
             return "swappa/assests/html/acc_login";

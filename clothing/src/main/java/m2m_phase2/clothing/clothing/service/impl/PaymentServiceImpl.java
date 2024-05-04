@@ -56,7 +56,9 @@ public class PaymentServiceImpl implements PaymentService {
         var order = orderService.findOrderByOrderId(paymentDto.getOrderId());
         String href = "http://localhost:8083/payment/paypal/error";
         if (!order.getOrderStatus()
-                .equals(OrderStatus.NEED_PAYMENT.getValue())) {
+                .equals(OrderStatus.NEED_PAYMENT.getValue()) &&
+                !order.getOrderStatus()
+                        .equals(OrderStatus.APPROVED.getValue())) {
             return href;
         }
         String cancelUrl = "http://localhost:8083/payment/paypal/cancel";

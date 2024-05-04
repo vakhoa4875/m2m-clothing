@@ -142,7 +142,7 @@ class UserManagement {
                         <div class="mb-2 ">
                             <label for="upPass" class="form-label">Password</label>
                             <input type="text" class="form-control ps-3" id="upPass" aria-describedby=""
-                                   style="border: 1px solid #d2d6da;" value="${services.self.user.hashedPassword}">
+                                   style="border: 1px solid #d2d6da;" value="${services.self.user.hashedPassword}" disabled>
                         </div>
                         <div class="mb-2 ">
                             <label for="upFullname" class="form-label">Fullname</label>

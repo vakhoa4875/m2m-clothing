@@ -24,15 +24,15 @@ public class UserE {
     @Column(name = "email", nullable = false, unique = true, length = 63)
     private String email;
 
-    @Column(name = "gg_token", length = 255)
-    private String ggToken;
-
-    @Column(name = "hashed_pass", nullable = false, length = 255)
-    private String hashedPassword;
-
-    @Column(name = "is_admin")
-    private boolean isAdmin = false;
-
+//    @Column(name = "gg_token", length = 255)
+//    private String ggToken;
+//
+//    @Column(name = "hashed_pass", nullable = false, length = 255)
+//    private String hashedPassword;
+//
+//    @Column(name = "is_admin")
+//    private boolean isAdmin = false;
+//
     @Column(name = "is_disable")
     private boolean isDisable = false;
 
@@ -65,6 +65,9 @@ public class UserE {
 
     @Column(name = "sdt" , length = 15)
     private String sdt;
+
+    @Column(name = "address", length = 255)
+    private String address;
 
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore

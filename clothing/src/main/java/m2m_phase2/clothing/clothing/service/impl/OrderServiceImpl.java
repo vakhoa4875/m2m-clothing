@@ -50,7 +50,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void paidOrder(Integer orderId) {
-        String orderStatus = OrderStatus.PAID.getValue();
+        String orderStatus = OrderStatus.DELIVERING.getValue();
         var rowsEffected = repo.updateOrderStatus(orderId, orderStatus);
         System.out.println(">> paid order row effected: " + rowsEffected);
     }

@@ -65,9 +65,9 @@ public class AuthenticationSuccessEventListener implements ApplicationListener<A
         String encodedPassword = passwordEncoder.encodePassword(password);
             user.setFullname((String) attributes.get("name"));
             user.setEmail((String) attributes.get("email"));
-            user.setGgToken((String) attributes.get("sub"));
+//            user.setGgToken((String) attributes.get("sub"));
             user.setUsername((String) attributes.get("sub"));
-            user.setHashedPassword(encodedPassword);
+//            user.setHashedPassword(encodedPassword);
         userService.saveUserGG(user);
     }
 }
