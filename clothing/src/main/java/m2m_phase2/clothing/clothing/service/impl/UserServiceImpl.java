@@ -1,12 +1,14 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDto;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.repository.UserRepo;
+import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.service.UserService;
 import m2m_phase2.clothing.clothing.utils.DateUtils;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
@@ -18,9 +20,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepo userRepo;
+    private final AccountService accountService;
 
     @Override
     public List<UserM> getAllUser() throws SQLException {
@@ -100,11 +104,11 @@ public class UserServiceImpl implements UserService {
         if (!this.isUserExist(userDto)) {
             return 3;
         }
-        var userM = this.getUserByUsernameAndEmail(userDto);
-        if (Objects.equals(userM.getRoleId(), 3)) {
+        var account = accountService.findByemail(userDto.getEmail());
+        if (!account.isAdmin()) {
             return 0;
         }
-        if (!PasswordEncoderUtil.verifyPassword(userDto.getPassword(), userM.getEmail())) {
+        if (!PasswordEncoderUtil.verifyPassword(userDto.getPassword(), account.getHashedPassword())) {
             return 2;
         }
         return 1;

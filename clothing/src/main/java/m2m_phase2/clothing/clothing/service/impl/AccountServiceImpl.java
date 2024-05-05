@@ -2,8 +2,11 @@ package m2m_phase2.clothing.clothing.service.impl;
 
 import java.security.SecureRandom;
 import java.sql.SQLException;
+import java.util.Objects;
 
 import lombok.RequiredArgsConstructor;
+import m2m_phase2.clothing.clothing.constant.AccountEnum;
+import m2m_phase2.clothing.clothing.data.dto.AccountDto;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.service.UserService;
@@ -30,7 +33,7 @@ public class AccountServiceImpl implements AccountService {
     private JavaMailSender emailSender;
     @Autowired
     private HttpSession session;
-    private final UserService userService;
+//    private final UserService userService;
 
     @Override
     public Account saveAccount(Account account) {
@@ -195,15 +198,30 @@ public class AccountServiceImpl implements AccountService {
         // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
         session.setAttribute("loggedInUser", accountRequest.getEmail());
 
-		return "swappa/assests/html/trangchu";
+        return "swappa/assests/html/trangchu";
     }
-	@Override
-	public Account findByUsernameAndEmail(String username, String email){
-		return repo.findByUsernameAndEmail(username,email);
-	}
 
-	public boolean isLoggedIn(HttpSession session) {
-		// Kiểm tra xem session có chứa thông tin người dùng hay không
-		return session.getAttribute("loggedInUser") != null;
-	}
+    @Override
+    public Account findByUsernameAndEmail(String username, String email) {
+        return repo.findByUsernameAndEmail(username, email);
+    }
+
+    @Override
+    public String createAccount(AccountDto accountDto)
+            throws SQLException, NullPointerException {
+        if (!accountDto.getPassword()
+                .equals(accountDto.getConfirmPassword()))
+            return AccountEnum.not_matched.getValue();
+        var account = repo.findByUsernameOrEmail(accountDto.getUsername(), accountDto.getEmail());
+        if (Objects.nonNull(account)) {
+            return AccountEnum.existed.getValue();
+        }
+        var createdAccount = repo.save(AccountDto.convertAccountDtoToAccount(accountDto));
+        return AccountEnum.succeed.getValue();
+    }
+
+    public boolean isLoggedIn(HttpSession session) {
+        // Kiểm tra xem session có chứa thông tin người dùng hay không
+        return session.getAttribute("loggedInUser") != null;
+    }
 }

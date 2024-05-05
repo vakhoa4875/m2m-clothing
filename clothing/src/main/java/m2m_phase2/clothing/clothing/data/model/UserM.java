@@ -18,7 +18,7 @@ public class UserM {
     private String email;
 //    private String ggToken;
 //    private String hashedPassword;
-//    private boolean isAdmin;
+    private boolean isAdmin;
     private boolean isDisable;
     private String fullname;
     private String gender;
@@ -39,7 +39,7 @@ public class UserM {
                 .email(userE.getEmail())
 //                .ggToken(userE.getGgToken())
 //                .hashedPassword(userE.getHashedPassword())
-//                .isAdmin(userE.isAdmin())
+                .isAdmin(userE.isAdmin())
                 .isDisable(userE.isDisable())
                 .fullname(userE.getFullname())
                 .gender(userE.getGender())

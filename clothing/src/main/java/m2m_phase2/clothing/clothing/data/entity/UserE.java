@@ -30,9 +30,9 @@ public class UserE {
 //    @Column(name = "hashed_pass", nullable = false, length = 255)
 //    private String hashedPassword;
 //
-//    @Column(name = "is_admin")
-//    private boolean isAdmin = false;
-//
+    @Column(name = "is_admin")
+    private boolean isAdmin = false;
+
     @Column(name = "is_disable")
     private boolean isDisable = false;
 
@@ -78,4 +78,9 @@ public class UserE {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     List<VoucherDetailsE> voucherDetailsES;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "account_id", referencedColumnName = "user_id")
+    private Account account;
 }
