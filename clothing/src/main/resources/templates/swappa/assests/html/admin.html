@@ -207,11 +207,11 @@
                             </button>
                             <button class="nav-link mt-1 text-black" id="v-pills-home-status-product"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-status" type="button" role="tab"
-                                    aria-controls="v-pills-home-status" aria-selected="false">Status Product
+                                    aria-controls="v-pills-home-status" aria-selected="false">STATUS PRODUCT
                             </button>
                             <button class="nav-link mt-1 text-black" id="v-pills-home-status-productSale"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-statusProductSale" type="button" role="tab"
-                                    aria-controls="v-pills-home-statusProductSale" aria-selected="false">Sale
+                                    aria-controls="v-pills-home-statusProductSale" aria-selected="false">SALE
                             </button>
                             <a class="nav-link mt-1 text-black" href="/admin/logout">Log Out
                             </a>
@@ -228,7 +228,7 @@
                         <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                             <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">SYSTEM'S USERS
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Account Information
                                 </h5>
                                 <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
@@ -271,7 +271,7 @@
                     <div class="card my-4">
                         <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">SALE AND PRODUCT MANAGEMENT
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">SALE AND PRODUCT
                                 </h5>
                                 <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleProduct" data-bs-toggle="modal"
@@ -342,7 +342,7 @@
                     <div class="card my-4">
                         <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Status Product
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">STATUS PRODUCT
                                 </h5>
 <!--                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"-->
 <!--                                        data-bs-target="#exampleModalAccpectProduct" data-bs-toggle="modal"-->
@@ -358,12 +358,12 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                     <tr class="text-center">
-                                        <th scope="col">Mã đơn hàng</th>
-                                        <th scope="col">Tên người dùng</th>
-                                        <th scope="col">Số điện thoại</th>
-                                        <th scope="col">Hình thức thanh toán</th>
-                                        <th scope="col">Số lượng sản phẩm</th>
-                                        <th scope="col">Trạng thái đơn hàng</th>
+                                        <th scope="col">Order number</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Payment method</th>
+                                        <th scope="col">Quantity of products</th>
+                                        <th scope="col">Payment status</th>
                                         <th scope="col"></th>
                                     </tr>
                                     </thead>
@@ -380,7 +380,7 @@
                     <div class="card my-4">
                         <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Sale </h5>
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Se </h5>
                                 <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleSaleProduct" data-bs-toggle="modal" id="newInsButtonSale"
                                         style="padding: 7px 12px 7px 12px;">
@@ -403,8 +403,8 @@
                                         <thead>
                                         <!-- Tabs content -->
                                         <tr class="text-center">
-                                            <th scope="col">Thứ tự</th>
-                                            <th scope="col">Tên sale</th>
+                                            <th scope="col">Order</th>
+                                            <th scope="col">Name sale</th>
                                             <th scope="col">% Sale</th>
                                             <th scope="col">Start Day</th>
                                             <th scope="col">End Day</th>
@@ -423,11 +423,11 @@
                                         <thead>
                                         <!-- Tabs content -->
                                         <tr class="text-center">
-                                            <th scope="col">Thứ tự</th>
-                                            <th scope="col">Tên Product</th>
-                                            <th scope="col">Giá tiền</th>
-                                            <th scope="col">Thể Loại</th>
-                                            <th scope="col">Tên giảm giá</th>
+                                            <th scope="col">Order</th>
+                                            <th scope="col">Name product</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Name sale</th>
                                             <th scope="col"></th>
                                         </tr>
                                         </thead>
@@ -876,7 +876,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="insertedSaleProductModal">Sale</h1>
+                <h1 class="modal-title fs-5" id="insertedSaleProductModal">SALE</h1>
                 <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
                         class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
             </div>
@@ -887,17 +887,17 @@
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="inSalename" class="form-label">Sale Percent</label>
+                    <label for="inSalename" class="form-label">Sale percent</label>
                     <input type="text" class="form-control ps-3" id="inSalePercent"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="StartDate" class="form-label">Ngày bắt đầu</label>
+                    <label for="StartDate" class="form-label">Start day</label>
                     <input type="date" class="form-control ps-3" id="StartDate"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="EndDate" class="form-label">Ngày Kết thúc</label>
+                    <label for="EndDate" class="form-label">End day</label>
                     <input type="date" class="form-control ps-3" id="EndDate"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
@@ -924,7 +924,7 @@
             </div>
             <div class="modal-body" id="updateSaleProductModalBody">
                 <div class="mb-2 ">
-                    <label for="upSalename" class="form-label">Thứ tự</label>
+                    <label for="upSalename" class="form-label">Order</label>
                     <input type="text" class="form-control ps-3" id="upid"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" disabled>
                 </div>
@@ -939,12 +939,12 @@
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="upStartDate" class="form-label">Ngày bắt đầu</label>
+                    <label for="upStartDate" class="form-label">Start day</label>
                     <input type="date" class="form-control ps-3" id="upStartDate"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="upEndDate" class="form-label">Ngày Kết thúc</label>
+                    <label for="upEndDate" class="form-label">End day</label>
                     <input type="date" class="form-control ps-3" id="upEndDate"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
