@@ -1,8 +1,7 @@
 -- insert into [user] (username, email, hashed_pass)
 -- values ('username11', 'email@gmail.com', '123')
 
-alter table [user]
-add sdt varchar(15);
+
 
 create table [Payment] (
     sys_payment_id          int             primary key identity ,
@@ -42,3 +41,9 @@ create table [Payment] (
 --         set date_updated = getdate()
 --         where sys_payment_id = (select i.sys_payment_id from inserted i)
 --     end
+go
+-- ALTER TABLE [user]
+-- DROP COLUMN gg_token, hashed_pass;
+-- ALTER TABLE [user]
+-- ADD is_disable bit default 0;
+

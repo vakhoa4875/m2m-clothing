@@ -36,7 +36,8 @@ public interface UserRepo extends JpaRepository<UserE, Integer> {
     @Modifying
     @Transactional
     @Query(value =  "update [user] " +
-                    "set hashed_pass = :hashedPassword," +
+                    "set " +
+//                    "hashed_pass = :hashedPassword," +
                     "fullname = :fullname," +
                     "gender = :gender," +
                     "role_id = :roleId," +
@@ -49,7 +50,7 @@ public interface UserRepo extends JpaRepository<UserE, Integer> {
     void updateUser(@Param("username")String username,
                    @Param("email")String email,
                    @Param("fullname")String fullname,
-                   @Param("hashedPassword")String hashedPassword,
+//                   @Param("hashedPassword")String hashedPassword,
                    @Param("gender")String gender,
                    @Param("roleId")Integer roleId,
                    @Param("roleName")String roleName,
@@ -81,8 +82,9 @@ public interface UserRepo extends JpaRepository<UserE, Integer> {
     @Query( value =
             "select * " +
                     "from [user] u " +
-                    "where (:email is null or u.email = :email) " +
-                    "and (u.is_disable <> 1)", nativeQuery = true)
+                    "where (:email is null or u.email = :email) "
+                    + "and (u.is_disable <> 1)"
+            , nativeQuery = true)
     UserE getUserByEmail(@Param("email")String email);
 
     @Modifying

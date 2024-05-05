@@ -21,6 +21,7 @@ public class UserDto {
     private String HashedPassword;
     //M2M- 010 TanLoc End
     private String sdt;
+    private String address;
 
     public String getHashedPassword() {
         return PasswordEncoderUtil.encodePassword(this.password);

@@ -91,7 +91,9 @@ public class HomeController {
             // Nếu đã đăng nhập, chuyển hướng đến trang profile của người dùng
             UserDto userDto = new UserDto();
             userDto.setEmail(session.getAttribute("loggedInUser") + "");
+            System.out.println(">>session: "+session.getAttribute("loggedInUser"));
             UserM userM = userService.getUserByEmail(userDto);
+            System.out.println(">>current user: " + userM.toString());
             model.addAttribute("userM", userM);
             return "swappa/assests/html/userpage";
         } else {

@@ -108,17 +108,12 @@ class UserManagement {
     }
     doGetUserByUsernameAndEmail = async (username, email) => {
         await $.ajax({
-            url: '/api-public/users/getUserByUsernameAndEmail',
-            method: 'GET',
-            data: {
-                "username": username,
-                "email": email
-            },
-            success: function (apiResult) {
+            url: '/api-public/users/getUserByUsernameAndEmail', method: 'GET', data: {
+                "username": username, "email": email
+            }, success: function (apiResult) {
                 this.user = apiResult;
                 console.log(this.user)
-            }.bind(this),
-            error: (error) => {
+            }.bind(this), error: (error) => {
                 console.error("Error:", error);
             }
 
@@ -138,12 +133,13 @@ class UserManagement {
                             <label for="upEmail" class="form-label">Email</label>
                             <p class="form-control" id="upEmail">${services.self.user.email}</p>
                         </div>
-
+<!--
                         <div class="mb-2 ">
                             <label for="upPass" class="form-label">Password</label>
                             <input type="text" class="form-control ps-3" id="upPass" aria-describedby=""
-                                   style="border: 1px solid #d2d6da;" value="${services.self.user.hashedPassword}">
+                                   style="border: 1px solid #d2d6da;" value="${services.self.user.hashedPassword}" disabled>
                         </div>
+-->
                         <div class="mb-2 ">
                             <label for="upFullname" class="form-label">Fullname</label>
                             <input type="text" class="form-control ps-3" id="upFullname" value="${services.self.user.fullname}"
@@ -201,7 +197,7 @@ class UserManagement {
     updateUser = async () => {
         let username = $('#upUsername').text();
         let email = $('#upEmail').text();
-        let password = $('#upPass').val();
+        // let password = $('#upPass').val();
         let fullname = $('#upFullname').val();
         let dob = $('#upBirth').val();
         let gender = $('input[name="gender"]:checked').val();
@@ -213,7 +209,7 @@ class UserManagement {
 
         console.log('Username:', username);
         console.log('Email:', email);
-        console.log('Password:', password);
+        // console.log('Password:', password);
         console.log('Fullname:', fullname);
         console.log('Date of Birth:', dob);
         console.log('Gender:', gender);
@@ -225,16 +221,14 @@ class UserManagement {
 
         let userData = {
             username: username,
-            email: email,
-            password: password,
+            email: email, // password: password,
             fullname: fullname,
             dob: dob,
             gender: gender,
             roleId: roleId,
             roleName: roleName,
             jobTitle: jobTitle,
-            description: description,
-            // avatar: avatar
+            description: description, // avatar: avatar
         };
 
 
@@ -245,6 +239,13 @@ class UserManagement {
             contentType: 'application/json',
             success: function (updateStatus) {
                 console.log(updateStatus === 1 ? 'update succeed' : 'update failed')
+                Swal.fire({
+                    title: 'System Announcement',
+                    text: 'Update user information successfully!',
+                    icon: 'success',
+                    confirmButtonText: 'Confirm',
+                    allowOutsideClick: true
+                });
             }.bind(this),
             error: (error) => {
                 console.error("Error:", error);
@@ -256,43 +257,54 @@ class UserManagement {
     insertNewUser = async () => {
 
         let username = $('#inUsername').val();
-        let fullname = $('#inFullname').val();
+        // let fullname = $('#inFullname').val();
         let email = $('#inEmail').val();
         let password = $('#inPass').val();
+        let confirmPassword = $('#inConfirmPass').val();
         // let gender = $('input[name="inGender"]:checked').val();
         let roleId = $('#inRole').val();
-        let roleName = $('#inRole option:selected').text();
-        let description = $('#upDescription').text();
+        // let roleName = $('#inRole option:selected').text();
+        // let description = $('#upDescription').text();
 
-        let userData= {
+        let userData = {
             "username": username,
             "email": email,
             "password": password,
-            "fullname": fullname,
-            "roleId": roleId,
-            "roleName": roleName,
-            "description": description
+            "confirmPassword": confirmPassword, // "fullname": fullname,
+            "isAdmin": roleId
+            // "roleName": roleName,
+            // "description": description
         };
 
         await $.ajax({
-            url: '/api-public/users/saveUser',
+            url: '/api-admin/postCreateAccount',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(userData),
             success: (insertStatus) => {
                 console.log(insertStatus);
+                var icon =
+                    insertStatus.includes('success') ? 'success'
+                        : insertStatus.includes('error') ? 'error'
+                            : 'info';
+                Swal.fire({
+                    title: 'System Announcement',
+                    text: insertStatus,
+                    icon: icon,
+                    confirmButtonText: 'Confirm',
+                    allowOutsideClick: true
+                });
             },
             error: (error) => {
                 console.error('>>Error: ' + error);
             }
         });
-        location.reload();
+        // location.reload();
     }
 
     initUserIdentifier = (username, email) => {
         this.userIdentifier = {
-            "username": username,
-            "email": email
+            "username": username, "email": email
         }
     }
 // Disable user
