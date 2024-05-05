@@ -21,7 +21,7 @@ function compareData() {
                                         <th scope="row">
                                             <li style="overflow: hidden" height="auto" width="136px" class="d-flex align-items-center ms-4">
                                                 <input class="form-check-input me-2" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." >
-                                                <img src="${object.linkanh}" alt="" width="auto" style="display: block; max-width: 150px; max-height: 150px; width: auto; height: auto;">
+                                                <img src="${object.linkanh}" alt="" style="display: block; width: 150px; height: 150px; object-fit: contain;">
                                                 <span class="ms-3">${object.tensp}</span>
                                             </li>
                                         </th>

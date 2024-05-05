@@ -405,7 +405,7 @@
                                                             <div class="d-flex justify-content-around">
                                                                 <div th:if="${product.sale}" class="d-flex justify-content-around w-100">
                                                                     <del th:text="${product.price}"></del>
-                                                                    <span style="color:#c07d4b; font-weight: bolder" th:text="${(product.price.intValue()) - (product.sale.salePercent.intValue() / 100.0 * product.price.intValue())}"></span>
+                                                                    <span style="color:#c07d4b; font-weight: bolder"  th:text="${(product.getSale() != null ?   #numbers.formatDecimal(product.getPrice().intValue() - (product.getSale.getSalePercent() / 100.00 * product.getPrice().intValue()), 1, 'DEFAULT', 2,'DEFAULT') : product.getPrice())}"></span>
                                                                 </div>
                                                                 <div th:unless="${product.sale}" th:text="${product.price}"></div>
                                                             </div>
