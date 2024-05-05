@@ -27,7 +27,7 @@ $(document).ready(function () {
                                         <td class="align-middle text-center">
                                             <span class="text-secondary text-xs font-weight-bold">${formattedEndDate}</span>
                                         </td>
-                                        <td class="align-middle text-center">
+                                        <td class="align-middle text-center d-flexa">
                                             <button class="btn border-0 rounded btn-outline-info"
                                                     data-bs-toggle="modal" data-bs-target="#exampleModalUpSaleProduct" onclick="getSaleFromID(${sale.saleId})">
                                                 <i class="fa-solid fa-pen-to-square"></i></button>

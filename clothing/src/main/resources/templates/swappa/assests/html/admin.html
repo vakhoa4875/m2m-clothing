@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <link rel="stylesheet" href="/assests/css/admin-css.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script th:src="@{/assests/js/UserManagement.js}"></script>
     <script th:src="@{/assests/js/productManagement.js}"></script>
@@ -17,43 +18,7 @@
             max-width: 128px;
         }
 
-        #tableProductSaleContainerProduct {
-            max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
-            overflow-y: auto; /* Hiển thị thanh cuộn dọc */
-        }
 
-        #tableProductSaleContainerProduct thead tr {
-            /*display: block; !* Hiển thị dòng tiêu đề bảng dưới dạng block *!*/
-        }
-
-        #tableProductSaleContainerProduct tbody {
-            /*display: block; !* Hiển thị nội dung bảng dưới dạng block *!*/
-            overflow-y: auto; /* Hiển thị thanh cuộn dọc */
-        }
-
-        #tableProductSaleContainerProduct tbody tr {
-            width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
-        }
-
-        #tableProductSaleContainerProduct thead th:nth-child(1) {
-            width: 5%; /* Đặt chiều rộng của cột "Thứ tự" bằng 5% */
-        }
-
-        #tableProductSaleContainerProduct thead th:nth-child(2) {
-            width: 64%; /* Đặt chiều rộng của cột "Tên Product" bằng 25% */
-        }
-
-        #tableProductSaleContainerProduct thead th:nth-child(3) {
-            width: 6%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
-        }
-
-        #tableProductSaleContainerProduct thead th:nth-child(4) {
-            width: 12%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
-        }
-
-        #tableProductSaleContainerProduct thead th:nth-child(5) {
-            width: 10%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
-        }
 
     </style>
 
@@ -88,13 +53,6 @@
              max-height: 150px; /* Kích thước tối đa của ảnh */
          }
 
-
-        /*#previewImage1 {*/
-        /*    width: 200px;*/
-        /*    height: 200px;*/
-        /*    object-fit: cover;*/
-        /*    margin-top: 20px;*/
-        /*}*/
     </style>
 
     <script>
@@ -193,10 +151,6 @@
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab"
                                     aria-controls="v-pills-home" aria-selected="true">Account Information
                             </button>
-                            <button class="nav-link mt-1 text-black" id="v-pills-home-product"
-                                    data-bs-toggle="pill" data-bs-target="#v-pills-product" type="button" role="tab"
-                                    aria-controls="v-pills-product" aria-selected="false">ACCESS PRODUCT
-                            </button>
                             <button class="nav-link mt-1 text-black" id="v-pills-home-sale"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-sale" type="button" role="tab"
                                     aria-controls="v-pills-sale" aria-selected="false">SALE AND PRODUCT
@@ -239,28 +193,6 @@
                         </div>
                         <div class="card-body px-0 mx-3 pb-2">
                             <div class="table-responsive p-0" id="tableUserContainer">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="v-pills-product" role="tabpanel"
-                     aria-labelledby="v-pills-home-product" tabindex="0">
-                    <div class="card my-4">
-                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
-                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">ACCESS PRODUCT
-                                </h5>
-                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
-                                        data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
-                                        style="padding: 7px 12px 7px 12px;">
-                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body px-0 mx-3 pb-2">
-
-                            <!--viết body vào đây-->
-                            <div class="table-responsive p-0" id="tableAccessProductContainer">
 
                             </div>
                         </div>
@@ -380,7 +312,7 @@
                     <div class="card my-4">
                         <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Se </h5>
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Sale</h5>
                                 <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleSaleProduct" data-bs-toggle="modal" id="newInsButtonSale"
                                         style="padding: 7px 12px 7px 12px;">
