@@ -12,7 +12,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 
-<body class="bg-black">
+<body>
     <!-- mobileNav -->
     <div>
         <!-- mobileNav -->
@@ -96,7 +96,7 @@
 
     <!-- body -->
 
-    <div class="container-fluid bg-semiBlack">
+    <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div id="tooltip-bar" class="row row-cols-2 row-cols-md-4 text-center mt-2">
@@ -152,7 +152,7 @@
             </div>
         </main>
     </div>
-    <div class="container-fluid bg-semiBlack">
+    <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div class="row">
@@ -167,11 +167,11 @@
                                 <tr>
 <!--                                    nếu có update vui lòng không đổi tên id tránh bị lỗi do call api-->
                                     <th id="name" th:text="${user.getEmail()}"></th>
-                                    <td id="id" th:text="${user.getId()}"></td>
+                                    <td id="id" th:text="${user.getFullname()}"></td>
                                     <td id="sdt" th:text="${user.getSdt()}"></td>
                                     <td id="diachi">Cà Phê Phố Hiến, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh</td>
                                     <td>
-                                        <a href="">Edit</a>
+                                        <a onclick="editAddress()">Edit</a>
                                     </td>
                                 </tr>
                             </tbody>
@@ -182,7 +182,7 @@
         </main>
     </div>
 
-    <div class="container-fluid bg-semiBlack">
+    <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div class="row">
@@ -279,7 +279,7 @@
         </main>
     </div>
 
-    <div class="container-fluid bg-semiBlack">
+    <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div class="row">
@@ -337,7 +337,7 @@
         </main>
     </div>
 
-    <div class="container-fluid bg-semiBlack">
+    <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-2 mb-2" style="background-color: white !important;">
                 <div class="row">
@@ -596,6 +596,40 @@
             });
             window.onload = Finalpayment;
         })
+    </script>
+    <script>
+        function editAddress() {
+            // Lấy nội dung hiện tại của ô chứa địa chỉ
+            var currentAddress = document.getElementById('diachi').textContent;
+
+            // Tạo một ô input để người dùng nhập địa chỉ mới
+            var inputElement = document.createElement('input');
+            inputElement.setAttribute('type', 'text');
+            inputElement.setAttribute('class', 'form-control');
+            inputElement.setAttribute('id', 'newAddress');
+            inputElement.value = currentAddress;
+
+            // Thay thế ô chứa địa chỉ bằng ô input
+            document.getElementById('diachi').innerHTML = '';
+            document.getElementById('diachi').appendChild(inputElement);
+
+            // Tạo một nút Save để lưu thay đổi
+            var saveButton = document.createElement('button');
+            saveButton.setAttribute('class', 'btn btn-primary');
+            saveButton.textContent = 'Save';
+            saveButton.onclick = function() {
+                // Lấy địa chỉ mới từ ô input
+                var newAddress = document.getElementById('newAddress').value;
+
+                // Thay đổi nội dung của ô chứa địa chỉ
+                document.getElementById('diachi').textContent = newAddress;
+            };
+
+            // Thêm nút Save vào ô tiếp theo của hàng
+            var tdElement = document.createElement('td');
+            tdElement.appendChild(saveButton);
+            document.getElementById('diachi').parentNode.nextElementSibling.appendChild(tdElement);
+        }
     </script>
 </body>
 

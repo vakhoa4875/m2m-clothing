@@ -8,7 +8,7 @@
 }
 
 .nav-link:hover{
-    background-color: rgb(18,17,13) !important;
+    background-color: yellow !important;
 }
 
 header i:hover{
@@ -348,6 +348,5 @@ footer i {
 
 }
 .nav-link:hover{
-    background-color: #707474;
     color: aliceblue;
 }
