@@ -203,18 +203,22 @@
 
 <!-- main -->
 
-<div class="container-fluid  bg-body-secondary" style="height: 800px;">
+<div class="container-fluid bg-body-secondary" style="height: 800px;">
     <div class="row">
-        <div class="col-xl-3 col-lg-12 mt-4">
+        <div class="col-xl-3 col-lg-12 mt-1 p-0 border border-0">
             <div class="card">
                 <div class="card-header bg-black text-center">
                     <a class="text-white bg-gradient-primary">
-                        <h5 class="m-0"><strong>USER PROFILE</strong></h5>
+                        <h5 class="m-0">
+                            <strong th:object="${userM}">
+                                <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i> <span class="d-inline-block text-truncate" style="max-width: 110px;" th:text="*{username}"></span>
+                            </strong>
+                        </h5>
                     </a>
                 </div>
-                <div class="card-body pt-2">
+                <div class="card-body p-1">
                     <div class="align-items-start">
-                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                              aria-orientation="vertical">
                             <button class="nav-link mt-1 text-black active" id="v-pills-home-tab"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab"
@@ -234,20 +238,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-9 col-lg-12">
+        <div class="col-xl-9 col-lg-12 mt-1 p-0 border border-0">
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                      aria-labelledby="v-pills-home-tab" tabindex="0">
-                    <div class="card my-4">
-                        <div class="card-body px-0 mx-3 pb-2">
+                    <div class="card ">
+                        <div class="card-body p-0 mx-3 pb-2">
                             <div class="table-responsive p-0" id="tableUserContainer">
-                                <div class="header mt-3">
+                                <div class="header mt-1 mb-1">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item bg-body-secondary">
+                                        <li class="list-group-item bg-body-secondary rounded-3">
                                             <h3>My profile</h3>
                                             <span>Manage profile information for account security</span>
                                         </li>
-                                        <li class="list-group-item bg-body-secondary"></li>
                                     </ul>
                                 </div>
                                 <div class="row" th:object="${userM}">
@@ -317,38 +320,38 @@
                 </div>
                 <div class="tab-pane" id="v-pills-status" role="tabpanel"
                      aria-labelledby="v-pills-home-status" tabindex="0">
-                    <div class="card my-4">
-                        <div class="card-body px-0 mx-3 pb-2">
+                    <div class="card">
+                        <div class="card-body p-0 mx-3 pb-2">
                             <div class="table-responsive p-0" id="TableStatusUser">
                                 <!-- Bắt đầu trạng thái đơn hàng-->
-                                <div class="header mt-3">
+                                <div class="header mt-1 mb-1">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item bg-body-secondary">
+                                        <li class="list-group-item bg-body-secondary rounded-3">
                                             <h3>Order status</h3>
                                             <span>Manage customer orders</span>
                                         </li>
-                                        <li class="list-group-item bg-body-secondary"></li>
                                     </ul>
                                 </div>
+                                <div class="table-responsive p-0">
+                                    <table class="table align-items-center mb-0">
+                                        <thead>
+                                        <tr class="text-center">
+                                            <th scope="col" >Order ID</th>
+                                            <th scope="col" >Customer</th>
+                                            <th scope="col" >Date created</th>
+                                            <th scope="col" >Phone</th>
+                                            <th scope="col" >Shipping address</th>
+                                            <th scope="col" >Payment method</th>
+                                            <th scope="col" >Total amount</th>
+                                            <th scope="col" >Order status</th>
+                                            <th scope="col" ></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
 
-                                <table class="table table-bordered table-hover text-center">
-                                    <thead class="table-dark">
-                                    <tr>
-                                        <th>Mã đơn đặt hàng</th>
-                                        <th>Khách hàng</th>
-                                        <th>Ngày lập</th>
-                                        <th>Phone</th>
-                                        <th>Nơi giao</th>
-                                        <th>Hình thức thanh toán</th>
-                                        <th>Tổng thành tiền</th>
-                                        <th>Trạng thái đơn hàng</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
 
                                 <!-- Kết thúc trạng thái đơn hàng-->
                             </div>
@@ -357,40 +360,22 @@
                 </div>
                 <div class="tab-pane" id="v-pills-AllVoucher" role="tabpanel"
                      aria-labelledby="v-pills-home-status" tabindex="0">
-                    <div class="card my-4">
+                    <div class="card ">
 
-                        <div class="card-body px-0 mx-3 pb-2">
-
+                        <div class="card-body p-0 mx-3 pb-2">
                             <!--viết body vào đây Cao Trọng Lễ-->
                             <div class="table-responsive p-0" id="TableAllVoucher">
-                                <div class="header my-3">
+                                <div class="header mt-1 mb-1">
                                     <ul class="list-group list-group-flush">
-                                        <li class="list-group-item bg-body-secondary">
-                                            <h3>Sale</h3>
+                                        <li class="list-group-item bg-body-secondary rounded-3">
+                                            <h3 class="m-0">Sale</h3>
                                             <!--                                            <span>Manage profile information for account security</span>-->
                                         </li>
-                                        <li class="list-group-item bg-body-secondary"></li>
                                     </ul>
                                 </div>
                                 <div class="container">
                                     <div class="row">
-                                        <div id="voucherList" class="row"></div>
-                                        <!--                                       <div class="col-xl-6 col-lg-12">-->
-                                        <!--                                           <div class="card mb-3">-->
-                                        <!--                                               <div class="row g-0">-->
-                                        <!--                                                   <div class="col-md-4">-->
-                                        <!--                                                       <img src="/assests/images/logoVoucher.jpg" class="img-fluid rounded-start" alt="...">-->
-                                        <!--                                                   </div>-->
-                                        <!--                                                   <div class="col-md-8">-->
-                                        <!--                                                       <div class="card-body py-0 mt-3">-->
-                                        <!--                                                           <h5 class="card-title">Card title</h5>-->
-                                        <!--                                                           <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-                                        <!--                                                           <p class="card-text"><small class="text-body-secondary">Last updated 3 mins ago</small></p>-->
-                                        <!--                                                       </div>-->
-                                        <!--                                                   </div>-->
-                                        <!--                                               </div>-->
-                                        <!--                                           </div>-->
-                                        <!--                                       </div>-->
+                                        <div id="voucherList" class="p-0"></div>
                                     </div>
                                 </div>
                             </div>
@@ -399,6 +384,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 <!-- payment modal -->
