@@ -1,12 +1,11 @@
 package m2m_phase2.clothing.clothing.service;
 
-import java.sql.SQLException;
-import java.util.List;
-
 import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
 import m2m_phase2.clothing.clothing.data.entity.Category;
 import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
+
+import java.util.List;
 
 public interface ProductService {
 	
@@ -16,7 +15,7 @@ public interface ProductService {
 	List<Product> findTop6ByOrderByGiaBanDesc();
 
 	List<Product> findProductsWithSaleInfo();
-	List<Product> findBycategory(Integer categoryId);
+	List<ProductM> findBycategory(Integer categoryId);
 	void insertProduct(ProductDTO productDTO);
 	void updateProduct(ProductDTO productDTO);
 	void saveImgAndVideo(ProductDTO productDTO);
