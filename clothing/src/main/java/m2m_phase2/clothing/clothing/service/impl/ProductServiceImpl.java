@@ -1,29 +1,21 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.sql.SQLException;
-import java.util.List;
-import java.util.Objects;
-
 import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
+import m2m_phase2.clothing.clothing.data.entity.Category;
+import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
+import m2m_phase2.clothing.clothing.repository.ProductRepo;
+import m2m_phase2.clothing.clothing.service.ProductService;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import m2m_phase2.clothing.clothing.data.entity.Category;
-import m2m_phase2.clothing.clothing.data.entity.Product;
-import m2m_phase2.clothing.clothing.repository.ProductRepo;
-import m2m_phase2.clothing.clothing.service.ProductService;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.List;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -38,7 +30,7 @@ public class ProductServiceImpl implements ProductService {
 
 	@Override
 	public ProductM findByslug_url(String slugUrl) {
-		return ProductM.convertProductEToProductM(repo.findByslugUrl( slugUrl));
+		return ProductM.convertProductEToProductM(repo.findByslugUrl(slugUrl));
 	}
 	
 	@Override
@@ -58,8 +50,8 @@ public class ProductServiceImpl implements ProductService {
   }
 
 	@Override
-	public List<Product> findBycategory(Integer categoryId) {
-		return repo.findBycategory(categoryId);
+	public List<ProductM> findBycategory(Integer categoryId) {
+		return ProductM.converListProductEToListProductM(repo.findBycategory(categoryId));
 	}
 
 	@Override

@@ -60,18 +60,30 @@ $(document).ready(function () {
         var endDay = $('#insEndDay').val();
         var startDate = new Date(startDay);
         var endDate = new Date(endDay);
+        var today = new Date();
         if(voucherName === '' || reduce === '' || startDay === '' || endDay === ''){
-            $('#alertMessVoucher').text("Vui lòng nhập đâỳ đủ các trường").addClass("mb-2 alert alert-danger");
+            $('#alertMessVoucher').text("Please enter complete information").addClass("mb-2 alert alert-danger");
+            return;
+        }
+        else if(reduce <= 0 || reduce > 100){
+            $('#alertMessVoucher').text("Please enter reduce must be > 0 and <= 100").addClass("mb-2 alert alert-danger");
             return;
         }
         else if (startDate > endDate) {
-            // startDay lớn hơn endDay
-            $('#alertMessVoucher').text("Vui lòng nhập Start Day bé hơn End Day").addClass("mb-2 alert alert-danger");
+            $('#alertMessVoucher').text("Please enter Start Day which is less than End Day").addClass("mb-2 alert alert-danger");
             return;
         }
-        // Nếu không có lỗi, loại bỏ lớp CSS alert-danger nếu có
+        else if (startDate < today) {
+            $('#alertMessVoucher').text("Please enter a Start Day greater than the current date").addClass("mb-2 alert alert-danger");
+            return;
+        }
+        else if (endDate < today) {
+            $('#alertMessVoucher').text("Please enter a End Day greater than the current date").addClass("mb-2 alert alert-danger");
+            return;
+        }
+        // Nếu không có lỗi, loại bỏ lớp CSS alert-danger nếu có và đóng modal
         $('#alertMessVoucher').text("").removeClass("mb-2 alert alert-danger");
-
+        $('#exampleModalToggleVoucher').modal('hide');
         let voucherData = {
             voucherName: voucherName,
             reduce: reduce,
@@ -86,6 +98,12 @@ $(document).ready(function () {
             data: JSON.stringify(voucherData),
             success: function (response) {
                 console.log(response === 1 ? 'Thêm thành công' : 'Thêm thất bại');
+                Swal.fire({
+                    title: 'Notifications',
+                    text: "Voucher added successfully",
+                    icon: 'success',
+                    allowOutsideClick: true,
+                })
                 getAllVoucher();
             },
             error: function (xhr, status, error) {
@@ -135,18 +153,31 @@ $(document).ready(function () {
         var endDay = $('#updateEndDayVoucher').val();
         var startDate = new Date(startDay);
         var endDate = new Date(endDay);
+        var today = new Date();
         if(voucherName === '' || reduce === '' || startDay === '' || endDay === ''){
-            $('#alertMessVoucherUpdate').text("Vui lòng nhập đâỳ đủ các trường").addClass("mb-2 alert alert-danger");
+            $('#alertMessVoucherUpdate').text("Please enter complete information").addClass("mb-2 alert alert-danger");
+            return;
+        }
+        else if(reduce <= 0 || reduce > 100){
+            $('#alertMessVoucherUpdate').text("Please enter reduce must be > 0 and <= 100").addClass("mb-2 alert alert-danger");
+            return;
+        }
+        else if (startDate < today) {
+            $('#alertMessVoucherUpdate').text("Please enter a Start Day greater than the current date").addClass("mb-2 alert alert-danger");
+            return;
+        }
+        else if (endDate < today) {
+            $('#alertMessVoucherUpdate').text("Please enter a End Day greater than the current date").addClass("mb-2 alert alert-danger");
             return;
         }
         else if (startDate > endDate) {
             // startDay lớn hơn endDay
-            $('#alertMessVoucherUpdate').text("Vui lòng nhập Start Day bé hơn End Day").addClass("mb-2 alert alert-danger");
+            $('#alertMessVoucherUpdate').text("Please enter Start Day which is less than End Day").addClass("mb-2 alert alert-danger");
             return;
         }
         // Nếu không có lỗi, loại bỏ lớp CSS alert-danger nếu có
         $('#alertMessVoucherUpdate').text("").removeClass("mb-2 alert alert-danger");
-
+        $('#exampleModalUpdateVoucher').modal('hide');
         let voucherData = {
             voucherID: voucherID,
             voucherName: voucherName,
@@ -162,6 +193,12 @@ $(document).ready(function () {
             data: JSON.stringify(voucherData),
             success: function (response) {
                 console.log(response === 1 ? 'Cập nhật thành công' : 'Cập nhật thất bại');
+                Swal.fire({
+                    title: 'Notifications',
+                    text: "Voucher update successfully",
+                    icon: 'success',
+                    allowOutsideClick: true,
+                })
                 getAllVoucher();
             },
             error: function (xhr, status, error) {
@@ -318,6 +355,13 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(voucherDetailsData),
             success: function (response) {
+                $('#exampleModalVoucherSendAcount').modal('hide');
+                Swal.fire({
+                    title: 'Notifications',
+                    text: "Save the voucher for the user successfully",
+                    icon: 'success',
+                    allowOutsideClick: true,
+                })
                 console.log(response >= 1 ? 'Thành công' : 'Thất bại');
             },
             error: function (xhr, status, error) {

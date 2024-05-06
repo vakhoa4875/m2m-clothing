@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <link rel="stylesheet" href="/assests/css/admin-css.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script th:src="@{/assests/js/UserManagement.js}"></script>
     <script th:src="@{/assests/js/productManagement.js}"></script>
@@ -17,43 +18,7 @@
             max-width: 128px;
         }
 
-        #tableProductSaleContainerProduct {
-            max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
-            overflow-y: auto; /* Hiển thị thanh cuộn dọc */
-        }
 
-        #tableProductSaleContainerProduct thead tr {
-            /*display: block; !* Hiển thị dòng tiêu đề bảng dưới dạng block *!*/
-        }
-
-        #tableProductSaleContainerProduct tbody {
-            /*display: block; !* Hiển thị nội dung bảng dưới dạng block *!*/
-            overflow-y: auto; /* Hiển thị thanh cuộn dọc */
-        }
-
-        #tableProductSaleContainerProduct tbody tr {
-            width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
-        }
-
-        #tableProductSaleContainerProduct thead th:nth-child(1) {
-            width: 5%; /* Đặt chiều rộng của cột "Thứ tự" bằng 5% */
-        }
-
-        #tableProductSaleContainerProduct thead th:nth-child(2) {
-            width: 64%; /* Đặt chiều rộng của cột "Tên Product" bằng 25% */
-        }
-
-        #tableProductSaleContainerProduct thead th:nth-child(3) {
-            width: 6%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
-        }
-
-        #tableProductSaleContainerProduct thead th:nth-child(4) {
-            width: 12%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
-        }
-
-        #tableProductSaleContainerProduct thead th:nth-child(5) {
-            width: 10%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
-        }
 
     </style>
 
@@ -88,13 +53,6 @@
              max-height: 150px; /* Kích thước tối đa của ảnh */
          }
 
-
-        /*#previewImage1 {*/
-        /*    width: 200px;*/
-        /*    height: 200px;*/
-        /*    object-fit: cover;*/
-        /*    margin-top: 20px;*/
-        /*}*/
     </style>
 
     <script>
@@ -178,24 +136,20 @@
 
 <div class="container-fluid  bg-body-secondary" style="height: 800px;">
     <div class="row">
-        <div class="col-xl-3 col-lg-12 mt-4">
+        <div class="col-xl-3 col-lg-12 mt-1 p-0">
             <div class="card">
                 <div class="card-header bg-black text-center">
                     <a class="text-white bg-gradient-primary" href="../pages/tables.html">
                         <h5 class="m-0"><strong>USERS MANAGEMENT</strong></h5>
                     </a>
                 </div>
-                <div class="card-body pt-2">
+                <div class="card-body p-1">
                     <div class="align-items-start">
-                        <div class="nav flex-column nav-pills me-3" id="v-pills-tab" role="tablist"
+                        <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist"
                              aria-orientation="vertical">
                             <button class="nav-link mt-1 text-black active" id="v-pills-home-tab"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab"
                                     aria-controls="v-pills-home" aria-selected="true">Account Information
-                            </button>
-                            <button class="nav-link mt-1 text-black" id="v-pills-home-product"
-                                    data-bs-toggle="pill" data-bs-target="#v-pills-product" type="button" role="tab"
-                                    aria-controls="v-pills-product" aria-selected="false">ACCESS PRODUCT
                             </button>
                             <button class="nav-link mt-1 text-black" id="v-pills-home-sale"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-sale" type="button" role="tab"
@@ -207,11 +161,11 @@
                             </button>
                             <button class="nav-link mt-1 text-black" id="v-pills-home-status-product"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-status" type="button" role="tab"
-                                    aria-controls="v-pills-home-status" aria-selected="false">Status Product
+                                    aria-controls="v-pills-home-status" aria-selected="false">STATUS PRODUCT
                             </button>
                             <button class="nav-link mt-1 text-black" id="v-pills-home-status-productSale"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-statusProductSale" type="button" role="tab"
-                                    aria-controls="v-pills-home-statusProductSale" aria-selected="false">Sale
+                                    aria-controls="v-pills-home-statusProductSale" aria-selected="false">SALE
                             </button>
                             <a class="nav-link mt-1 text-black" href="/admin/logout">Log Out
                             </a>
@@ -220,15 +174,15 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-9 col-lg-12">
+        <div class="col-xl-9 col-lg-12 p-0">
             <div class="tab-content" id="v-pills-tabContent">
                 <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
                      aria-labelledby="v-pills-home-tab" tabindex="0">
-                    <div class="card my-4">
+                    <div class="card my-1">
                         <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                             <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">SYSTEM'S USERS
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Account Information
                                 </h5>
                                 <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
@@ -237,30 +191,8 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="card-body px-0 mx-3 pb-2">
+                        <div class="card-body p-0 mx-3 pb-2">
                             <div class="table-responsive p-0" id="tableUserContainer">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="v-pills-product" role="tabpanel"
-                     aria-labelledby="v-pills-home-product" tabindex="0">
-                    <div class="card my-4">
-                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
-                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">ACCESS PRODUCT
-                                </h5>
-                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
-                                        data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
-                                        style="padding: 7px 12px 7px 12px;">
-                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <div class="card-body px-0 mx-3 pb-2">
-
-                            <!--viết body vào đây-->
-                            <div class="table-responsive p-0" id="tableAccessProductContainer">
 
                             </div>
                         </div>
@@ -268,10 +200,10 @@
                 </div>
                 <div class="tab-pane" id="v-pills-sale" role="tabpanel"
                      aria-labelledby="v-pills-home-sale" tabindex="0">
-                    <div class="card my-4">
+                    <div class="card my-1">
                         <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">SALE AND PRODUCT MANAGEMENT
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">SALE AND PRODUCT
                                 </h5>
                                 <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleProduct" data-bs-toggle="modal"
@@ -280,7 +212,7 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="card-body px-0 mx-3 pb-2">
+                        <div class="card-body p-0 mx-3 pb-2">
 
                             <!--viết body vào đây Lộc-->
                             <div class="table-responsive p-0" id="tableSaleContainer">
@@ -304,8 +236,8 @@
                 </div>
                 <div class="tab-pane" id="v-pills-voucher" role="tabpanel"
                      aria-labelledby="v-pills-home-voucher" tabindex="0">
-                    <div class="card my-4">
-                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                    <div class="card my-1">
+                        <div class="card-header p-0 bg-dark-subtle mt-2 mx-3 position-relative z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
                                 <h5 class="text-black ps-3 d-flex align-items-center mb-0">VOUCHER ACCOUNT
                                 </h5>
@@ -316,11 +248,11 @@
                                 </button>
                             </div>
                         </div>
-                        <div class="card-body px-0 mx-3 pb-2">
+                        <div class="card-body p-0">
 
                             <!--viết body vào đây VOUCHER ACCOUNT-->
-                            <div class="table-responsive p-0" id="tableVoucherContainer">
-                                <table class="table align-items-center mb-0">
+                            <div class="table-responsive p-0 mt-1 rounded" id="tableVoucherContainer">
+                                <table class="table align-items-center mb-0 table-hover">
                                     <thead>
                                     <tr class="text-center">
                                         <th scope="col">Voucher Name</th>
@@ -339,10 +271,10 @@
                 </div>
                 <div class="tab-pane" id="v-pills-home-status" role="tabpanel"
                      aria-labelledby="v-pills-home-product" tabindex="0">
-                    <div class="card my-4">
+                    <div class="card my-1">
                         <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Status Product
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">STATUS PRODUCT
                                 </h5>
 <!--                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"-->
 <!--                                        data-bs-target="#exampleModalAccpectProduct" data-bs-toggle="modal"-->
@@ -351,19 +283,19 @@
 <!--                                </button>-->
                             </div>
                         </div>
-                        <div class="card-body px-0 mx-3 pb-2">
+                        <div class="card-body p-0 mx-3 pb-2">
 
                             <!--viết body vào đây-->
                             <div class="table-responsive p-0" id="tableStatusProductContainer">
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                     <tr class="text-center">
-                                        <th scope="col">Mã đơn hàng</th>
-                                        <th scope="col">Tên người dùng</th>
-                                        <th scope="col">Số điện thoại</th>
-                                        <th scope="col">Hình thức thanh toán</th>
-                                        <th scope="col">Số lượng sản phẩm</th>
-                                        <th scope="col">Trạng thái đơn hàng</th>
+                                        <th scope="col">Order number</th>
+                                        <th scope="col">Username</th>
+                                        <th scope="col">Phone</th>
+                                        <th scope="col">Payment method</th>
+                                        <th scope="col">Quantity of products</th>
+                                        <th scope="col">Payment status</th>
                                         <th scope="col"></th>
                                     </tr>
                                     </thead>
@@ -377,10 +309,10 @@
                 </div>
                 <div class="tab-pane" id="v-pills-home-statusProductSale" role="tabpanel"
                      aria-labelledby="v-pills-home-voucher" tabindex="0">
-                    <div class="card my-4">
+                    <div class="card my-1">
                         <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Sale </h5>
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Sale</h5>
                                 <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleSaleProduct" data-bs-toggle="modal" id="newInsButtonSale"
                                         style="padding: 7px 12px 7px 12px;">
@@ -403,8 +335,8 @@
                                         <thead>
                                         <!-- Tabs content -->
                                         <tr class="text-center">
-                                            <th scope="col">Thứ tự</th>
-                                            <th scope="col">Tên sale</th>
+                                            <th scope="col">Order</th>
+                                            <th scope="col">Name sale</th>
                                             <th scope="col">% Sale</th>
                                             <th scope="col">Start Day</th>
                                             <th scope="col">End Day</th>
@@ -423,11 +355,11 @@
                                         <thead>
                                         <!-- Tabs content -->
                                         <tr class="text-center">
-                                            <th scope="col">Thứ tự</th>
-                                            <th scope="col">Tên Product</th>
-                                            <th scope="col">Giá tiền</th>
-                                            <th scope="col">Thể Loại</th>
-                                            <th scope="col">Tên giảm giá</th>
+                                            <th scope="col">Order</th>
+                                            <th scope="col">Name product</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Category</th>
+                                            <th scope="col">Name sale</th>
                                             <th scope="col"></th>
                                         </tr>
                                         </thead>
@@ -707,7 +639,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="insertVoucherModal">VOUCHER ACOUNT</h1>
+                <h1 class="modal-title fs-5" id="insertVoucherModal">VOUCHER ACCOUNT</h1>
                 <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
                         class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
             </div>
@@ -736,7 +668,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success"  id="insButtonVoucher">
+                <button type="button" class="btn btn-success" id="insButtonVoucher">
                     Add New Voucher
                 </button>
             </div>
@@ -876,7 +808,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="insertedSaleProductModal">Sale</h1>
+                <h1 class="modal-title fs-5" id="insertedSaleProductModal">SALE</h1>
                 <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
                         class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
             </div>
@@ -887,17 +819,17 @@
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="inSalename" class="form-label">Sale Percent</label>
+                    <label for="inSalename" class="form-label">Sale percent</label>
                     <input type="text" class="form-control ps-3" id="inSalePercent"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="StartDate" class="form-label">Ngày bắt đầu</label>
+                    <label for="StartDate" class="form-label">Start day</label>
                     <input type="date" class="form-control ps-3" id="StartDate"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="EndDate" class="form-label">Ngày Kết thúc</label>
+                    <label for="EndDate" class="form-label">End day</label>
                     <input type="date" class="form-control ps-3" id="EndDate"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
@@ -924,7 +856,7 @@
             </div>
             <div class="modal-body" id="updateSaleProductModalBody">
                 <div class="mb-2 ">
-                    <label for="upSalename" class="form-label">Thứ tự</label>
+                    <label for="upSalename" class="form-label">Order</label>
                     <input type="text" class="form-control ps-3" id="upid"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" disabled>
                 </div>
@@ -939,12 +871,12 @@
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="upStartDate" class="form-label">Ngày bắt đầu</label>
+                    <label for="upStartDate" class="form-label">Start day</label>
                     <input type="date" class="form-control ps-3" id="upStartDate"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
-                    <label for="upEndDate" class="form-label">Ngày Kết thúc</label>
+                    <label for="upEndDate" class="form-label">End day</label>
                     <input type="date" class="form-control ps-3" id="upEndDate"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
