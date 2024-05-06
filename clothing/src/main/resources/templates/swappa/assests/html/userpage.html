@@ -665,40 +665,72 @@
 
     // Mở một cửa sổ pop-up mới và chuyển hướng đến liên kết
     const openInNewPopup = (url, orderId) => {
-        if (isValidURL(url)) {
-            // Cấu hình các thuộc tính của cửa sổ pop-up
-            var popupConfig = 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=800, height=1000, top=100, left=100';
+        // Trong trang web của bạn
 
-            // Mở cửa sổ pop-up
-            var newPopup = window.open(url, '_blank', popupConfig);
-            if (newPopup) {
-                console.log('x');
-                newPopup.focus();
-                console.log('y');
-                window.addEventListener('message', function (event) {
-                    console.log('a');
-                    // Kiểm tra xem thông điệp có phải từ cửa sổ pop-up PayPal không
-                    if (event.source === popupWindow) {
-                        console.log('b');
-                        // Thực hiện các hành động khi thanh toán thành công
-                        // Lấy URL của cửa sổ pop-up
-                        var popupUrl = popupWindow.location.href;
-                        if (popupUrl.contains('/payment/paypal/')) {
-                            console.log('c');
-                            var status = url.substring(url.lastIndexOf("/") + 1)
-                            popupWindow.close();
-                            window.location.href = '/userprofile?tab=order&paymentId=' + orderId + '&status=' + status;
-                        }
-
-                        // Đóng cửa sổ pop-up
+        window.addEventListener('message', function(event) {
+            if (event.origin === 'https://www.paypal.com') {
+                var data = JSON.parse(event.data);
+                if (data.type === 'payment_status') {
+                    if (data.status === 'success') {
+                        console.log('Thanh toán thành công!');
+                        // Thực hiện các hành động sau khi thanh toán thành công
+                    } else {
+                        console.log('Thanh toán thất bại!');
+                        // Thực hiện các hành động sau khi thanh toán thất bại
                     }
-                });
-            } else {
-                alert('Trình duyệt của bạn đã chặn cửa sổ pop-up. Vui lòng tắt chặn pop-up và thử lại.');
+                }
             }
+        });
+
+        var paypalWindow = window.open(url, '_blank');
+
+// Trong cửa sổ PayPal
+        if (paymentSuccessful) {
+            window.opener.postMessage({
+                type: 'payment_status',
+                status: 'success'
+            }, '/'); // Thay thế `https://www.yourdomain.com` bằng URL trang web của bạn
         } else {
-            alert('Đây không phải là một URL hợp lệ.');
+            window.opener.postMessage({
+                type: 'payment_status',
+                status: 'failed'
+            }, '/'); // Thay thế `https://www.yourdomain.com` bằng URL trang web của bạn
         }
+
+        // if (isValidURL(url)) {
+        //     // Cấu hình các thuộc tính của cửa sổ pop-up
+        //     var popupConfig = 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=800, height=1000, top=100, left=100';
+        //
+        //     // Mở cửa sổ pop-up
+        //     var newPopup = window.open(url, '_blank', popupConfig);
+        //     if (newPopup) {
+        //         console.log('x');
+        //         newPopup.focus();
+        //         console.log('y');
+        //         window.addEventListener('message', function (event) {
+        //             console.log('a');
+        //             // Kiểm tra xem thông điệp có phải từ cửa sổ pop-up PayPal không
+        //             if (event.source === popupWindow) {
+        //                 console.log('b');
+        //                 // Thực hiện các hành động khi thanh toán thành công
+        //                 // Lấy URL của cửa sổ pop-up
+        //                 var popupUrl = popupWindow.location.href;
+        //                 if (popupUrl.contains('/payment/paypal/')) {
+        //                     console.log('c');
+        //                     var status = url.substring(url.lastIndexOf("/") + 1)
+        //                     popupWindow.close();
+        //                     window.location.href = '/userprofile?tab=order&paymentId=' + orderId + '&status=' + status;
+        //                 }
+        //
+        //                 // Đóng cửa sổ pop-up
+        //             }
+        //         });
+        //     } else {
+        //         alert('Trình duyệt của bạn đã chặn cửa sổ pop-up. Vui lòng tắt chặn pop-up và thử lại.');
+        //     }
+        // } else {
+        //     alert('Đây không phải là một URL hợp lệ.');
+        // }
     }
 
 

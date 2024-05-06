@@ -253,7 +253,7 @@ class UserManagement {
         });
         location.reload();
     }
-//Insert new user withd data from Insert modal
+//Insert new user with data from Insert modal
     insertNewUser = async () => {
 
         let username = $('#inUsername').val();
@@ -262,8 +262,8 @@ class UserManagement {
         let password = $('#inPass').val();
         let confirmPassword = $('#inConfirmPass').val();
         // let gender = $('input[name="inGender"]:checked').val();
-        let roleId = $('#inRole').val();
-        // let roleName = $('#inRole option:selected').text();
+        let isAdmin = $('#inRole').val() === "true";
+        // let roleName = $('#inRole option:selected').val();
         // let description = $('#upDescription').text();
 
         let userData = {
@@ -271,10 +271,12 @@ class UserManagement {
             "email": email,
             "password": password,
             "confirmPassword": confirmPassword, // "fullname": fullname,
-            "isAdmin": roleId
+            "isAdmin": isAdmin
             // "roleName": roleName,
             // "description": description
         };
+
+        console.log(userData);
 
         await $.ajax({
             url: '/api-admin/postCreateAccount',

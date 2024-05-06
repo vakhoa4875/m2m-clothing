@@ -13,7 +13,18 @@ public class AccountDto {
     private String email;
     private String password;
     private String confirmPassword;
-    private boolean isAdmin;
+    private String isAdmin;
+
+    @Override
+    public String toString() {
+        return "AccountDto{" +
+                "username='" + username + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", confirmPassword='" + confirmPassword + '\'' +
+                ", isAdmin=" + isAdmin +
+                '}';
+    }
 
     public static Account convertAccountDtoToAccount(AccountDto accountDto) {
         return Account.builder()
@@ -21,7 +32,7 @@ public class AccountDto {
                 .email(accountDto.getEmail())
 //                .ggToken(userE.getGgToken())
                 .hashedPassword(PasswordEncoderUtil.encodePassword(accountDto.getPassword()))
-                .isAdmin(accountDto.isAdmin())
+                .isAdmin(Boolean.parseBoolean(accountDto.getIsAdmin()))
                 .isDisable(false)
                 .build();
     }

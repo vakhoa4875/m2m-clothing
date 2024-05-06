@@ -346,7 +346,7 @@ go
 
 create or alter trigger trigger_after_insert_account
     on [Account]
-    for insert
+    after insert
     as
     begin
         insert into [user] (username, email, is_admin, is_disable, role_id, role_name, account_id)
@@ -359,44 +359,5 @@ create or alter trigger trigger_after_insert_account
                 i.user_id
         from inserted i
     end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -27,6 +27,7 @@ public class AccountApi {
     }
     @PostMapping("/api-admin/postCreateAccount")
     public ResponseEntity<?> doPostCreateAccount(@RequestBody AccountDto accountDto){
+        System.out.println(">>accountDto: " + accountDto.toString());
         String insertStatus;
         try {
             insertStatus = accountImpl.createAccount(accountDto);
