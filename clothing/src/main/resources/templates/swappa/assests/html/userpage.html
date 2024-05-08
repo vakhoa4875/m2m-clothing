@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <style>
+        .centered {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
         #fileInput {
             display: none;
         }
@@ -566,30 +572,36 @@
                     var orderDateFormatted = new Date(order.orderDate);
                     var formattedDate = `${orderDateFormatted.getDate()}/${orderDateFormatted.getMonth() + 1}/${orderDateFormatted.getFullYear()}`;
                     $('#TableStatusUser tbody').append(`
-                   <tr class="align-middle">
+                    <tr class="align-middle">
                         <td class="text-center">${order.orderId}</td>
                         <td class="text-center">${order.username}</td>
                         <td class="text-center">${formattedDate}</td>
                         <td class="text-center">${order.phoneNumber}</td>
                         <td class="text-center">${order.deliveryAddress}</td>
-                        <td class="badge text-bg-secondary text-center" style="vertical-align: middle; text-align: center;">${order.paymentMethod}</td>
-                        <td class="text-center">${order.totalAmount}</td>
-                        <td class="${order.orderStatus == 'Approved' ? 'badge text-bg-success' : 'badge text-bg-warning'} text-center">${order.orderStatus}</td>
-                        <td class="text-center"><button class="btn btn-success" ${
-                        (() => {
-                            switch (true) {
-                                case ((order.paymentMethod === 'Cod' && (order.orderStatus === 'Approved' || order.orderStatus === 'Need approved'))):
-                                    return 'disabled';
-                                case ((order.paymentMethod === 'Paypal' || order.orderStatus === 'Need approved')):
-                                    return 'disabled';
-                                case ((order.paymentMethod === 'Paypal' && order.orderStatus === 'Approved')):
-                                    return "";
-                            }
-                        })()
-                    }
-                        onclick="payWithPaypal(${order.totalAmount}, ${order.orderId})">Pay with paypal</button></td>
-
+                        <td class="text-center">
+                            <div class="badge text-bg-secondary">${order.paymentMethod}</div>
+                        </td>
+                        <td class="text-center">$${order.totalAmount}</td>
+                        <td class="text-center">
+                            <div class="${order.orderStatus == 'Approved'     ? 'badge text-bg-success' : 'badge text-bg-warning'} ">${order.orderStatus}</div>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-success" ${
+                                            (() => {
+                                                switch (true) {
+                                                    case ((order.paymentMethod === 'Cod' && (order.orderStatus === 'Approved' || order.orderStatus === 'Need approved'))):
+                                                        return 'disabled';
+                                                    case ((order.paymentMethod === 'Paypal' || order.orderStatus === 'Need approved')):
+                                                        return 'disabled';
+                                                    case ((order.paymentMethod === 'Paypal' && order.orderStatus === 'Approved')):
+                                                        return "";
+                                                }
+                                            })()
+                                        }
+                            onclick="payWithPaypal(${order.totalAmount}, ${order.orderId})">Pay with paypal</button>
+                        </td>
                     </tr>
+
                 `);
                 });
             },

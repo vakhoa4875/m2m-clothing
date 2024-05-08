@@ -16,6 +16,12 @@ header i:hover{
     color: white !important;
 }
 
+/* thanh đổi boder của ô chọn phương thức thanh toán */
+.form-check-input:not(:checked) {
+    background-color: #ffffff; /* Màu nền của ô radio khi chưa được nhấn */
+    border-color: #6c757d; /* Màu viền của ô radio khi chưa được nhấn */
+}
+
 
 .max-width-column {
     max-width: 100px; /* Đây là giá trị max-width bạn muốn */
