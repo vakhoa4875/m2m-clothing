@@ -485,7 +485,7 @@
                     `;
                         var tennguoidung = $('#name').text();
                         var sdt = $('#sdt').text();
-                        var diachi = $('#diachi').text();
+                        var diachi = $('#diachi').val();
                         var id = $('#id').text();
                         document.getElementById("thanhtoan").appendChild(tr);
                         capNhatTienTong();
@@ -624,7 +624,6 @@
                 text.textContent  = "Save";
             } else {
                 input.disabled = true; // Kích hoạt disabled nếu chưa có
-                console.log("tắt")
                 Swal.fire({
                     title: 'Thông Báo từ hệ thống',
                     text: "Bạn có chắc muốn địa chỉ đã sửa?",
