@@ -3,9 +3,10 @@
 
 //giỏ hàng
 function compareData() {
-
     var productList = document.getElementById("productList");
+    var div = document.getElementById("thanhtoan");
     productList.innerHTML = '';
+    div.innerHTML ='';
     // Kiểm tra xem local storage có dữ liệu không
     if (localStorage.length > 0) {
         // Duyệt qua tất cả các phần tử trong local storage
@@ -56,7 +57,11 @@ function compareData() {
             this.capNhatTienTong();
             layTongSoLuong();
         }
-
+        var div = document.createElement("a");
+            div.innerHTML = `
+             <a href="/thanhtoan" class="btn btn-outline-danger"  id="creategiohang" >Thành toán hóa đơn</a>
+            `;
+        document.getElementById("thanhtoan").appendChild(div);
     } else {
         Swal.fire({
             title: 'Thông Báo từ hệ thống',
@@ -64,21 +69,28 @@ function compareData() {
             icon: 'info', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
             confirmButtonText: 'Xác nhận',
             allowOutsideClick: false
-        });
-        var tr = document.createElement("tr");
-        tr.innerHTML = `
+        })
+            var tr = document.createElement("tr");
+            tr.innerHTML = `
                     <td colspan="6" class="text-center">
                         <div class="alert alert-info" role="alert">
                             Giỏ hàng không có gì!
                         </div>
                     </td>
                 `;
-        document.getElementById("productList").appendChild(tr);
+            document.getElementById("productList").appendChild(tr);
+
+            var div = document.createElement("a");
+            div.innerHTML = `
+                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
+            `;
+            document.getElementById("thanhtoan").appendChild(div);
+
         capNhatTienTong();
         layTongSoLuong();
     }
-
 }
+
 
 function layTongSoLuong() {
     var tongsp = document.getElementById("tongSoLuongSP");
@@ -119,6 +131,7 @@ function truSoLuong(key) {
 function capNhatTienTong() {
     var tongTien = 0;
     var tienCanTra = 0;
+    var tienGiamDiscount = 0;
     if (localStorage.length > 0) {
         // Duyệt qua tất cả các phần tử trong local storage
         for (var i = 0; i < localStorage.length; i++) {
@@ -126,7 +139,7 @@ function capNhatTienTong() {
             var value = localStorage.getItem(key);
 
             var object = JSON.parse(value);
-
+            // tienGiamDiscount = object.discount; // lấy discount của ma giam gia
             tongTien += object.soLuong * object.gia;
             tienCanTra += object.soLuong * object.gia;
 
@@ -141,6 +154,13 @@ function capNhatTienTong() {
             // phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
             cacPhanTuTienGiam.forEach(function (element) {
                 element.textContent = "$" + reduceAmount.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
+
+                //cập nhật lại discount trong localstorage
+                var key = localStorage.key(0);
+                var value = localStorage.getItem(key);
+                var object = JSON.parse(value);
+                object.discount = reduceAmount.toFixed(2); // lấy tien giam rồi sửa lại trong obj của js
+                localStorage.setItem(key, JSON.stringify(object)); // sau đó
             });
         }else{
             var cacPhanTuTienGiam = document.querySelectorAll(".tiengiam");
@@ -435,6 +455,7 @@ var srcAnh = anh.getAttribute("src");
 let btnCart = document.getElementById("soLuong");
 // Khởi tạo biến để đếm số lượng
 var soLuong = 0;
+var discount = 0;
 // Thêm sự kiện click cho nút button
 btnCart.addEventListener("click", function() {
     // Tăng số lượng sản phẩm lên 1
@@ -461,7 +482,8 @@ btnCart.addEventListener("click", function() {
             gia: giaSo,
             tensp: tensp.textContent,
             linkanh: srcAnh,
-            soLuong: 1
+            soLuong: 1,
+            discount : 0
         };
 
         // Chuyển đối tượng thành chuỗi JSON và lưu vào local storage
@@ -497,7 +519,8 @@ btnBuyNow.addEventListener("click",function (){
             gia: giaSo,
             tensp: tensp.textContent,
             linkanh: srcAnh,
-            soLuong: soLuong
+            soLuong: soLuong,
+            discount : 0
         };
 
         // Lưu đối tượng mới vào local storage
@@ -507,8 +530,3 @@ btnBuyNow.addEventListener("click",function (){
         window.location.href = "/giohang";
     }
 })
-
-// $(document).ready(function () {
-//
-//
-// });
