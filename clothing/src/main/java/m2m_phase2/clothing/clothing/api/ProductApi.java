@@ -6,9 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
+import m2m_phase2.clothing.clothing.data.entity.Category;
+import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
+import m2m_phase2.clothing.clothing.service.impl.CategoryImpl;
+import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
@@ -17,10 +20,7 @@ import org.springframework.security.oauth2.client.registration.ClientRegistratio
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.web.bind.annotation.*;
 
-import m2m_phase2.clothing.clothing.data.entity.Category;
-import m2m_phase2.clothing.clothing.data.entity.Product;
-import m2m_phase2.clothing.clothing.service.impl.CategoryImpl;
-import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
+import java.util.List;
 
 
 @RestController

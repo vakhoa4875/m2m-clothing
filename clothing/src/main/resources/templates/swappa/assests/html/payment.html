@@ -10,9 +10,10 @@
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 </head>
 
-<body class="bg-black">
+<body>
     <!-- mobileNav -->
     <div>
         <!-- mobileNav -->
@@ -96,7 +97,7 @@
 
     <!-- body -->
 
-    <div class="container-fluid bg-semiBlack">
+    <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div id="tooltip-bar" class="row row-cols-2 row-cols-md-4 text-center mt-2">
@@ -152,13 +153,14 @@
             </div>
         </main>
     </div>
-    <div class="container-fluid bg-semiBlack">
+    <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div class="row">
                     <div class="col-12">
                         <i class="fa-solid fa-location-dot fa-beat-fade ms-5 me-2" style="color: #fb7b04;"></i>
                         <span><strong>Delivery Address</strong></span>
+                        <span id="id" style="color: white" th:text="${user.getId()}"></span>
                     </div>
                     <div class="col-12">
                         <table class="table">
@@ -166,12 +168,23 @@
                             <tbody>
                                 <tr>
 <!--                                    nếu có update vui lòng không đổi tên id tránh bị lỗi do call api-->
-                                    <th id="name" th:text="${user.getEmail()}"></th>
-                                    <td id="id" th:text="${user.getId()}"></td>
-                                    <td id="sdt" th:text="${user.getSdt()}"></td>
-                                    <td id="diachi">Cà Phê Phố Hiến, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh</td>
+
+                                    <th>
+                                        <div id="name" class="d-flex justify-content-center align-items-center" th:text="${user.getEmail()}"></div>
+                                    </th>
                                     <td>
-                                        <a href="">Edit</a>
+                                        <div class="d-flex justify-content-center align-items-center"  th:text="${user.getFullname()}"></div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-center align-items-center" id="sdt" th:text="${user.getSdt()}"></div>
+                                    </td>
+                                    <td class="input-group ">
+                                        <input type="text" class="form-control" disabled style="width: 90%" id="diachi" value="Cà Phê Phố Hiến, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh">
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <a id="text" style="cursor: pointer" onclick="editAddress()">Edit</a>
+                                        </div>
                                     </td>
                                 </tr>
                             </tbody>
@@ -182,7 +195,7 @@
         </main>
     </div>
 
-    <div class="container-fluid bg-semiBlack">
+    <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div class="row">
@@ -251,7 +264,7 @@
                                         <div class="p-2 flex-fill"> <strong>Shipping Unit</strong></div>
                                         <div class="p-2 me-5 flex-fill align-middle text-center">Fast</div>
                                         <div class="p-2 me-4 flex-fill align-middle text-center">
-                                            <a href="" class="text-danger">Edit</a>
+                                            <a href="" class="text-danger pointeredit" >Edit</a>
                                         </div>
                                         <div class="p-2 me-4 flex-fill align-middle text-center">$2</div>
                                     </li>
@@ -279,29 +292,29 @@
         </main>
     </div>
 
-    <div class="container-fluid bg-semiBlack">
+    <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div class="row">
                     <div class="col-12">
                         <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <div class="container">
-                                    <div class="d-flex">
-                                        <div class="p-2 w-100">
-                                            <div>
-                                                <i class="fa-solid fa-ticket"></i>
-                                                <span>Voucher</span>
-                                            </div>
-                                        </div>
-                                        <div class="p-2  ms-auto ">
-                                            <a href="" class="text-primary">
-                                                <span>Select</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+<!--                            <li class="list-group-item">-->
+<!--                                <div class="container">-->
+<!--                                    <div class="d-flex">-->
+<!--                                        <div class="p-2 w-100">-->
+<!--                                            <div>-->
+<!--                                                <i class="fa-solid fa-ticket"></i>-->
+<!--                                                <span>Voucher</span>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="p-2  ms-auto ">-->
+<!--                                            <a href="" class="text-primary">-->
+<!--                                                <span>Select</span>-->
+<!--                                            </a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </li>-->
                             <li class="list-group-item">
                                 <div class="container">
                                     <div class="d-flex">
@@ -337,7 +350,7 @@
         </main>
     </div>
 
-    <div class="container-fluid bg-semiBlack">
+    <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-2 mb-2" style="background-color: white !important;">
                 <div class="row">
@@ -355,7 +368,7 @@
                                     <div class="col-6">
                                         <div class="tienThanhToan"></div>
                                         <div>$2</div>
-                                        <div>$0</div>
+                                        <div id="discount">$0</div>
                                         <div id="TongThanhToan"></div>
                                     </div>
                                 </div>
@@ -442,10 +455,10 @@
                                     <td>
                                         <div class="d-flex px-2 py-1">
 
-                                            <div>
+                                            <div style="overflow: hidden" height="auto" width="136px">
                                                 <img src="${object.linkanh}"
                                                     class="avatar avatar-sm me-3 border-radius-lg" alt="user1"
-                                                    id="thongtin" style="display: block; max-width: 150px; max-height: 150px; width: auto; height: auto;">
+                                                        id="thongtin" style="display: block; width: 150px; height: 150px; object-fit: contain;">
                                             </div>
                                             <div class="w-100 d-flex align-items-center">
                                                 <p class="text-xs text-secondary mb-0" id="${object.tensp},${i}">
@@ -486,6 +499,7 @@
 
             function capNhatTienTong() {
                 var tongTien = 0;
+                var discount = 0;
                 if (localStorage.length > 0) {
                     // Duyệt qua tất cả các phần tử trong local storage
                     for (var i = 0; i < localStorage.length; i++) {
@@ -495,6 +509,7 @@
                         var object = JSON.parse(value);
 
                         tongTien += object.soLuong * object.gia;
+                        discount = object.discount;
                     }
 
                     var cacPhanTu = document.querySelectorAll(".tienThanhToan");
@@ -502,11 +517,12 @@
                     cacPhanTu.forEach(function (element) {
                         element.textContent = "$" + tongTien.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
                     });
+                    var discountthtml = document.getElementById("discount");
+                    discountthtml.textContent = "$" + discount; // giam gia trong localStorage
 
                     var tongthanhtoan = document.getElementById("TongThanhToan");
 
-                    tongthanhtoan.textContent = "$" + (parseFloat(tongTien.toFixed(2)) + parseFloat(2));
-
+                    tongthanhtoan.textContent = "$" + ((parseFloat(tongTien.toFixed(2)) + parseFloat(2) - discount));
 
                 }
             }
@@ -596,6 +612,61 @@
             });
             window.onload = Finalpayment;
         })
+    </script>
+    <script>
+        function editAddress() {
+
+            var input = document.getElementById("diachi");
+            var text = document.getElementById("text");
+            if (input.disabled) {
+                input.disabled = false; // Bỏ disabled nếu đã có
+                console.log("mở")
+                text.textContent  = "Save";
+            } else {
+                input.disabled = true; // Kích hoạt disabled nếu chưa có
+                console.log("tắt")
+                Swal.fire({
+                    title: 'Thông Báo từ hệ thống',
+                    text: "Bạn có chắc muốn địa chỉ đã sửa?",
+                    icon: 'success',
+                    confirmButtonText: 'Xác nhận',
+                    allowOutsideClick: false,
+                }).then((result) => {
+                    text.textContent  = "Edit";
+                })
+            }
+
+            // // Lấy nội dung hiện tại của ô chứa địa chỉ
+            // var currentAddress = document.getElementById('diachi').textContent;
+            //
+            // // Tạo một ô input để người dùng nhập địa chỉ mới
+            // var inputElement = document.createElement('input');
+            // inputElement.setAttribute('type', 'text');
+            // inputElement.setAttribute('class', 'form-control');
+            // inputElement.setAttribute('id', 'newAddress');
+            // inputElement.value = currentAddress;
+            //
+            // // Thay thế ô chứa địa chỉ bằng ô input
+            // document.getElementById('diachi').innerHTML = '';
+            // document.getElementById('diachi').appendChild(inputElement);
+            //
+            // // Tạo một nút Save để lưu thay đổi
+            // var saveButton = document.createElement('button');
+            // saveButton.setAttribute('class', 'btn btn-primary');
+            // saveButton.textContent = 'Save';
+            // saveButton.onclick = function() {
+            //     // Lấy địa chỉ mới từ ô input
+            //     var newAddress = document.getElementById('newAddress').value;
+            //
+            //     // Thay đổi nội dung của ô chứa địa chỉ
+            //     document.getElementById('diachi').textContent = newAddress;
+            // };
+            //
+            // // Thêm nút Save vào ô tiếp theo của hàng
+            // var tdElement = document.createElement('td');
+            // tdElement.appendChild(saveButton);
+            // document.getElementById('diachi').parentNode.nextElementSibling.appendChild(tdElement);
+        }
     </script>
 </body>
 

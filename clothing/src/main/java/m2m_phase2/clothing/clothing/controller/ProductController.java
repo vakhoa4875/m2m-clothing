@@ -1,7 +1,6 @@
 package m2m_phase2.clothing.clothing.controller;
 
 import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
-import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.model.CommentM;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
 import m2m_phase2.clothing.clothing.service.impl.CategoryImpl;
@@ -27,7 +26,7 @@ public class ProductController {
 
 	@GetMapping("/categoryType")
 	public String getcategoryType(@RequestParam Integer categoryId ,Model model) {
-		List<Product> products	= productServiceImpl.findBycategory(categoryId);
+		List<ProductM> products	= productServiceImpl.findBycategory(categoryId);
 		model.addAttribute("listProduct",products);
 		model.addAttribute("active",categoryId);
 		return "swappa/assests/html/productAll";
