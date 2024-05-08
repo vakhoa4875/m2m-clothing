@@ -21,6 +21,7 @@ CREATE TABLE Account
     is_admin        bit
 );
 
+
 CREATE TABLE Category
 (
     category_id   int IDENTITY (1,1) PRIMARY KEY,
@@ -89,6 +90,19 @@ create table [user]
     processed   bit                   default 0
 );
 
+CREATE TABLE AccountGG
+(
+    user_id_gg         int IDENTITY (1,1) PRIMARY KEY,
+    access_token_gg    varchar(225) NOT NULL,
+    sub_gg             varchar(225) NOT NULL unique,
+    username_gg        nvarchar(63) NOT NULL unique,
+    email_gg           varchar(255) NOT NULL unique,
+    is_disable_gg      bit default 0,
+    is_admin_gg        bit default 0
+)
+INSERT INTO AccountGG (access_token_gg, sub_gg, username_gg, email_gg)
+VALUES ('abc123xyz', 'sub123', N'ten_nguoi_dung', 'example@email.com');
+
 
 create table [Cart]
 (
@@ -137,7 +151,8 @@ ADD address nvarchar(255);
 ALTER TABLE [user]
 ADD account_id int null foreign key references Account(user_id);
 --     ,gg_account_id int null foreign key;
-
+ALTER TABLE [user]
+ADD account_id_gg int null foreign key references AccountGG(user_id_gg);
 go
 --trigger insert into user after insert into Account
 -- create or alter trigger trigger_after_insert_into_UserInfo
@@ -359,9 +374,22 @@ create or alter trigger trigger_after_insert_account
                 i.user_id
         from inserted i
     end
-
-
-
+go
+create or alter trigger trigger_after_insert_accountgg
+    on [AccountGG]
+    for insert
+    as
+    begin
+        insert into [user] (username, email, is_admin, is_disable, role_id, role_name, account_id_gg)
+        select  i.username_gg,
+                i.email_gg,
+                i.is_admin_gg,
+                i.is_disable_gg,
+                iif(i.is_admin_gg = 1, 1, 3),
+                iif(i.is_admin_gg = 1, 'Admin', 'User'),
+                i.user_id_gg
+        from inserted i
+    end
 
 
 

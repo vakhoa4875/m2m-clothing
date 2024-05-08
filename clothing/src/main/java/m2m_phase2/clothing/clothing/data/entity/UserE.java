@@ -83,4 +83,8 @@ public class UserE {
     @JsonIgnore
     @JoinColumn(name = "account_id", referencedColumnName = "user_id")
     private Account account;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "account_id_gg", referencedColumnName = "user_id_gg")
+    private AccountGGE accountgge;
 }
