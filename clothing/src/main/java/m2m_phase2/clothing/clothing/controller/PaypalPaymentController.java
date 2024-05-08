@@ -61,6 +61,11 @@ public class PaypalPaymentController {
         return "swappa/assests/html/paypal/paymentError";
     }
 
+    @GetMapping("/test")
+    public String paymentTest() {
+        return "swappa/assests/html/paypal/testPaypal";
+    }
+
     @PostMapping("/create-payment")
     public ResponseEntity<?> createPayment(
             @RequestBody PaymentDto paymentDto
