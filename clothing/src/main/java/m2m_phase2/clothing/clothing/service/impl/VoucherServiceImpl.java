@@ -36,13 +36,13 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     public byte saveVoucher(VoucherDto voucherDto) throws SQLException {
-        voucherRepo.insertVoucher(voucherDto.getVoucherName(),voucherDto.getReduce(),voucherDto.getStartDay(),voucherDto.getEndDay());
+        voucherRepo.insertVoucher(voucherDto.getVoucherName(),voucherDto.getReduce(),voucherDto.getQuantity(),voucherDto.getStartDay(),voucherDto.getEndDay());
         return 1;
     }
 
     @Override
     public byte updateVoucher(VoucherDto voucherDto) throws SQLException {
-        voucherRepo.updateVoucher(voucherDto.getVoucherName(),voucherDto.getReduce(),voucherDto.getStartDay(),voucherDto.getEndDay(),voucherDto.getVoucherID());
+        voucherRepo.updateVoucher(voucherDto.getVoucherName(),voucherDto.getReduce(),voucherDto.getQuantity(),voucherDto.getStartDay(),voucherDto.getEndDay(),voucherDto.getVoucherID());
         return 1;
     }
 
@@ -57,19 +57,19 @@ public class VoucherServiceImpl implements VoucherService {
         return 1;
     }
 
-    @Scheduled(cron = "0 0 0 * * *")
-    public void useDeleteVoucherByDay() throws SQLException, ParseException {
-        VoucherDto voucherDto = new VoucherDto();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date today = new Date();
-        String formattedDate = sdf.format(today);
-        Date toDay = sdf.parse(formattedDate);
-        voucherDto.setToDay(toDay);
-        byte rowEffected = deleteVoucherByDay(voucherDto);
-        if(rowEffected != 1) {
-            System.out.println("Voucher deletion failed");
-        }else{
-            System.out.println("Voucher deleted");
-        }
-    }
+//    @Scheduled(cron = "0 0 0 * * *")
+//    public void useDeleteVoucherByDay() throws SQLException, ParseException {
+//        VoucherDto voucherDto = new VoucherDto();
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date today = new Date();
+//        String formattedDate = sdf.format(today);
+//        Date toDay = sdf.parse(formattedDate);
+//        voucherDto.setToDay(toDay);
+//        byte rowEffected = deleteVoucherByDay(voucherDto);
+//        if(rowEffected != 1) {
+//            System.out.println("Voucher deletion failed");
+//        }else{
+//            System.out.println("Voucher deleted");
+//        }
+//    }
 }

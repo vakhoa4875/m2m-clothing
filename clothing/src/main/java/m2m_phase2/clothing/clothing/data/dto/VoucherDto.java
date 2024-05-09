@@ -9,6 +9,7 @@ public class VoucherDto {
     private int voucherID;
     private String voucherName;
     private int reduce;
+    private int quantity;
     private Date startDay;
     private Date endDay;
     private Date toDay;

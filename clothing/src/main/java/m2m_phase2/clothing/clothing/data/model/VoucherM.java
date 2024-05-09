@@ -18,6 +18,7 @@ public class VoucherM {
     private int voucherID;
     private String voucherName;
     private int reduce;
+    private int quantity;
     private Date startDay;
     private Date endDay;
 
@@ -25,6 +26,7 @@ public class VoucherM {
         return VoucherM.builder()
                 .voucherID(voucherE.getVoucherID())
                 .voucherName(voucherE.getVoucherName())
+                .quantity(voucherE.getQuantity())
                 .reduce(voucherE.getReduce())
                 .startDay(voucherE.getStartDay())
                 .endDay(voucherE.getEndDay())
