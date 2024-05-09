@@ -10,11 +10,49 @@
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <style>
-        .centered {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+        /* Order status */
+        #orderstatus {
+            max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
+            overflow-y: auto; /* Hiển thị thanh cuộn dọc */
         }
+        #orderstatus tbody{
+            overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+        }
+        #orderstatus tbody tr {
+            width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
+        }
+        #orderstatus thead th:nth-child(1) {
+            width: 5%;
+        }
+
+        #orderstatus thead th:nth-child(2) {
+            width: 15%;
+        }
+
+        #orderstatus thead th:nth-child(3) {
+            width: 8%;
+        }
+
+        #orderstatus thead th:nth-child(4) {
+            width: 35%;
+        }
+
+        #orderstatus thead th:nth-child(5) {
+            width: 8%;
+        }
+
+        #orderstatus thead th:nth-child(6) {
+            width: 5%;
+        }
+
+        #orderstatus thead th:nth-child(7) {
+            width: 12%;
+        }
+        #orderstatus thead th:nth-child(8) {
+            width: 20%;
+        }
+
 
         #fileInput {
             display: none;
@@ -328,7 +366,7 @@
                      aria-labelledby="v-pills-home-status" tabindex="0">
                     <div class="card">
                         <div class="card-body p-0 mx-3 pb-2">
-                            <div class="table-responsive p-0" id="TableStatusUser">
+                            <div class="table-responsive p-0" >
                                 <!-- Bắt đầu trạng thái đơn hàng-->
                                 <div class="header mt-1 mb-1">
                                     <ul class="list-group list-group-flush">
@@ -338,11 +376,11 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="table-responsive p-0">
+                                <div class="table-responsive p-0" id=orderstatus>
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                         <tr class="text-center">
-                                            <th scope="col" >Order ID</th>
+<!--                                            <th scope="col" >Order ID</th>-->
                                             <th scope="col" >Customer</th>
                                             <th scope="col" >Date created</th>
                                             <th scope="col" >Phone</th>
@@ -353,7 +391,7 @@
                                             <th scope="col" ></th>
                                         </tr>
                                         </thead>
-                                        <tbody>
+                                        <tbody id="TableStatusUser">
 
                                         </tbody>
                                     </table>
@@ -571,9 +609,9 @@
                 data.forEach(function (order) {
                     var orderDateFormatted = new Date(order.orderDate);
                     var formattedDate = `${orderDateFormatted.getDate()}/${orderDateFormatted.getMonth() + 1}/${orderDateFormatted.getFullYear()}`;
-                    $('#TableStatusUser tbody').append(`
-                    <tr class="align-middle">
-                        <td class="text-center">${order.orderId}</td>
+                    $('#TableStatusUser').append(`
+                        <tr class="align-middle">
+<!--                        <td class="text-center">${order.orderId}</td>-->
                         <td class="text-center">${order.username}</td>
                         <td class="text-center">${formattedDate}</td>
                         <td class="text-center">${order.phoneNumber}</td>
