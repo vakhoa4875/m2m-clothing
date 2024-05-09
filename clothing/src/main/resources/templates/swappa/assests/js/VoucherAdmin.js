@@ -21,6 +21,9 @@ $(document).ready(function () {
                                 <td class="align-middle text-center text-sm">
                                             <span class="text-secondary text-xs font-weight-bold">${voucher.reduce}%</span>
                                 </td>
+                                <td class="align-middle text-center text-sm">
+                                            <span class="text-secondary text-xs font-weight-bold">${voucher.quantity}</span>
+                                </td>
                                 <td class="align-middle text-center">
                                             <span class="text-secondary text-xs font-weight-bold">${formattedStartDate}</span>
                                 </td>
@@ -56,17 +59,22 @@ $(document).ready(function () {
     function saveVoucher() {
         var voucherName = $('#insNameVoucher').val();
         var reduce = $('#insReduce').val();
+        var quantity = $('#insQuantity').val();
         var startDay = $('#insStartDay').val();
         var endDay = $('#insEndDay').val();
         var startDate = new Date(startDay);
         var endDate = new Date(endDay);
         var today = new Date();
-        if(voucherName === '' || reduce === '' || startDay === '' || endDay === ''){
+        if(voucherName === '' || reduce === '' || quantity === '' || startDay === '' || endDay === ''){
             $('#alertMessVoucher').text("Please enter complete information").addClass("mb-2 alert alert-danger");
             return;
         }
         else if(reduce <= 0 || reduce > 100){
             $('#alertMessVoucher').text("Please enter reduce must be > 0 and <= 100").addClass("mb-2 alert alert-danger");
+            return;
+        }
+        else if(reduce <= 0){
+            $('#alertMessVoucher').text("Please enter quantity must be > 0").addClass("mb-2 alert alert-danger");
             return;
         }
         else if (startDate > endDate) {
@@ -87,6 +95,7 @@ $(document).ready(function () {
         let voucherData = {
             voucherName: voucherName,
             reduce: reduce,
+            quantity: quantity,
             startDay: startDay,
             endDay: endDay,
         };
@@ -117,8 +126,10 @@ $(document).ready(function () {
     $('#newInsButtonAccount').click(function () {
         $('#insNameVoucher').val('');
         $('#insReduce').val('');
+        $('#insQuantity').val('');
         $('#insStartDay').val('');
         $('#insEndDay').val('');
+        $('#alertMessVoucher').text("").removeClass("mb-2 alert alert-danger");
     });
     function getVoucherByID(voucherID) {
         $.ajax({
@@ -130,6 +141,7 @@ $(document).ready(function () {
             success: function (data) {
                 $('#updateNameVoucher').val(data.voucherName);
                 $('#updateReduceVoucher').val(data.reduce);
+                $('#updateQuantityVoucher').val(data.quantity);
                 $('#updateStartDayVoucher').val(data.startDay);
                 $('#updateEndDayVoucher').val(data.endDay);
                 $('#updateIDVoucher').val(data.voucherID);
@@ -140,6 +152,7 @@ $(document).ready(function () {
         });
     }
     $(document).on('click', '#updateVoucherButton', function() {
+        $('#alertMessVoucherUpdate').text("").removeClass("mb-2 alert alert-danger");
         var voucherID = $(this).attr('data-voucher-id');
         getVoucherByID(voucherID);
     });
@@ -149,6 +162,7 @@ $(document).ready(function () {
         var voucherID = $('#updateIDVoucher').val();
         var voucherName = $('#updateNameVoucher').val();
         var reduce = $('#updateReduceVoucher').val();
+        var quantity = $('#updateQuantityVoucher').val();
         var startDay = $('#updateStartDayVoucher').val();
         var endDay = $('#updateEndDayVoucher').val();
         var startDate = new Date(startDay);
@@ -160,6 +174,10 @@ $(document).ready(function () {
         }
         else if(reduce <= 0 || reduce > 100){
             $('#alertMessVoucherUpdate').text("Please enter reduce must be > 0 and <= 100").addClass("mb-2 alert alert-danger");
+            return;
+        }
+        else if(quantity <= 0){
+            $('#alertMessVoucherUpdate').text("Please enter quantity must be > 0").addClass("mb-2 alert alert-danger");
             return;
         }
         else if (startDate < today) {
@@ -182,6 +200,7 @@ $(document).ready(function () {
             voucherID: voucherID,
             voucherName: voucherName,
             reduce: reduce,
+            quantity: quantity,
             startDay: startDay,
             endDay: endDay,
         };

@@ -257,6 +257,7 @@
                                     <tr class="text-center">
                                         <th scope="col">Voucher Name</th>
                                         <th scope="col">Reduce</th>
+                                        <th scope="col">Quantity</th>
                                         <th scope="col">Start Day</th>
                                         <th scope="col">End Day</th>
                                         <th scope="col"></th>
@@ -655,6 +656,11 @@
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
                 <div class="mb-2 ">
+                    <label for="insQuantity" class="form-label">Quantity</label>
+                    <input type="number" min="1" class="form-control ps-3" id="insQuantity"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                </div>
+                <div class="mb-2 ">
                     <label for="insStartDay" class="form-label">Start Day</label>
                     <input type="date" class="form-control ps-3" id="insStartDay"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
@@ -696,6 +702,9 @@
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                     <label for="updateReduceVoucher" class="form-label">Reduce</label>
                     <input type="number" min="0" max="100" class="form-control ps-3" id="updateReduceVoucher"
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                    <label for="updateQuantityVoucher" class="form-label">Quantity</label>
+                    <input type="number" min="0" class="form-control ps-3" id="updateQuantityVoucher"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                     <label for="updateStartDayVoucher" class="form-label">Start Day</label>
                     <input type="date" class="form-control ps-3" id="updateStartDayVoucher"

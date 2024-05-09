@@ -21,10 +21,11 @@ public interface VoucherRepo extends JpaRepository<VoucherE, Integer> {
 
     @Modifying
     @Transactional
-    @Query(value = "insert into Voucher (voucher_name, reduce, start_day, end_day) " +
-            "values (:voucherName, :reduce, :startDay, :endDay)", nativeQuery = true)
+    @Query(value = "insert into Voucher (voucher_name, reduce,quantity, start_day, end_day) " +
+            "values (:voucherName, :reduce, :quantity, :startDay, :endDay)", nativeQuery = true)
     void insertVoucher(@Param("voucherName")String voucherName,
                        @Param("reduce")Integer reduce,
+                       @Param("quantity")Integer quantity,
                        @Param("startDay")Date startDay,
                        @Param("endDay") Date endDay);
 
@@ -33,11 +34,13 @@ public interface VoucherRepo extends JpaRepository<VoucherE, Integer> {
     @Query(value =  "update Voucher set "+
             "voucher_name = :voucherName," +
             "reduce = :reduce, " +
+            "quantity = :quantity, " +
             "start_day = :startDay, " +
             "end_day = :endDay " +
             "where voucher_id = :voucherID", nativeQuery = true)
     void updateVoucher(@Param("voucherName")String voucherName,
                         @Param("reduce")Integer reduce,
+                        @Param("quantity")Integer quantity,
                         @Param("startDay")Date startDay,
                         @Param("endDay")Date endDay,
                         @Param("voucherID")Integer voucherID);
@@ -49,7 +52,7 @@ public interface VoucherRepo extends JpaRepository<VoucherE, Integer> {
             "              v.end_day from Voucher v " +
             "       join VoucherDetails vd on v.voucher_id = vd.voucher_id " +
             "       join [user] u on u.id = vd.user_id"+
-            "       where u.email = :email", nativeQuery = true)
+            "       where u.email = :email AND v.end_day > GETDATE()", nativeQuery = true)
     List<VoucherE> findVouchersInfoByEmail(@Param("email") String email);
 
     @Modifying
