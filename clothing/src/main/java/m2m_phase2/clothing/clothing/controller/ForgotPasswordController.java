@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import m2m_phase2.clothing.clothing.entity.Account;
+import m2m_phase2.clothing.clothing.data.entity.Account;
 import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
 import m2m_phase2.clothing.clothing.service.impl.UserServiceImpl;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;

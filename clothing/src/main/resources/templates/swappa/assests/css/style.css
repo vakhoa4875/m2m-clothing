@@ -8,11 +8,18 @@
 }
 
 .nav-link:hover{
-    background-color: rgb(18,17,13) !important;
+    background-color: #707474 !important;
+    color: white !important;
 }
 
 header i:hover{
     color: white !important;
+}
+
+/* thanh đổi boder của ô chọn phương thức thanh toán */
+.form-check-input:not(:checked) {
+    background-color: #ffffff; /* Màu nền của ô radio khi chưa được nhấn */
+    border-color: #6c757d; /* Màu viền của ô radio khi chưa được nhấn */
 }
 
 
@@ -344,10 +351,9 @@ footer i {
 
 #v-pills-tab .active{
     background-color: #707474;
-    color: aliceblue;
-
+    color: white !important;
+    font-weight: bolder;
 }
 .nav-link:hover{
-    background-color: #707474;
     color: aliceblue;
 }

@@ -1,19 +1,12 @@
 package m2m_phase2.clothing.clothing.data.entity;
 import java.util.Date;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import m2m_phase2.clothing.clothing.data.dto.UserDto;
-import m2m_phase2.clothing.clothing.utils.DateUtils;
-import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Table(name = "[user]")
 @Entity
@@ -31,12 +24,12 @@ public class UserE {
     @Column(name = "email", nullable = false, unique = true, length = 63)
     private String email;
 
-    @Column(name = "gg_token", length = 255)
-    private String ggToken;
-
-    @Column(name = "hashed_pass", nullable = false, length = 255)
-    private String hashedPassword;
-
+//    @Column(name = "gg_token", length = 255)
+//    private String ggToken;
+//
+//    @Column(name = "hashed_pass", nullable = false, length = 255)
+//    private String hashedPassword;
+//
     @Column(name = "is_admin")
     private boolean isAdmin = false;
 
@@ -69,4 +62,25 @@ public class UserE {
 
     @Column(name = "processed")
     private boolean processed = false;
+
+    @Column(name = "sdt" , length = 15)
+    private String sdt;
+
+    @Column(name = "address", length = 255)
+    private String address;
+
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<CommentE> comments;
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    List<Card> card;
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<VoucherDetailsE> voucherDetailsES;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "account_id", referencedColumnName = "user_id")
+    private Account account;
 }

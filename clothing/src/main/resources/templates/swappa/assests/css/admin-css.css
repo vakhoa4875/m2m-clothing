@@ -1,0 +1,168 @@
+/* Đây là css của Sale */
+/* phần của product   */
+#tableProductSaleContainerProduct {
+    max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+
+#tableProductSaleContainerProduct tbody {
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+
+#tableProductSaleContainerProduct tbody tr {
+    width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
+}
+
+#tableProductSaleContainerProduct thead th:nth-child(1) {
+    width: 5%; /* Đặt chiều rộng của cột "Thứ tự" bằng 5% */
+}
+
+#tableProductSaleContainerProduct thead th:nth-child(2) {
+    width: 64%; /* Đặt chiều rộng của cột "Tên Product" bằng 25% */
+}
+
+#tableProductSaleContainerProduct thead th:nth-child(3) {
+    width: 6%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
+}
+
+#tableProductSaleContainerProduct thead th:nth-child(4) {
+    width: 12%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
+}
+
+#tableProductSaleContainerProduct thead th:nth-child(5) {
+    width: 10%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
+}
+
+/*phần này là của sale*/
+#tableProductSaleContainer {
+    max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+#tableProductSaleContainer tbody{
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+#tableProductSaleContainer tbody tr {
+    width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
+}
+#tableProductSaleContainer thead th:nth-child(1) {
+    width: 5%;
+}
+
+#tableProductSaleContainer thead th:nth-child(2) {
+    width: 55%;
+}
+
+#tableProductSaleContainer thead th:nth-child(3) {
+    width: 7%;
+}
+
+#tableProductSaleContainer thead th:nth-child(4) {
+    width: 12%;
+}
+
+#tableProductSaleContainer thead th:nth-child(5) {
+    width: 10%;
+}
+
+
+
+/* Account Information */
+#tableUserContainer {
+    max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+#tableUserContainer tbody{
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+#tableUserContainer tbody tr {
+    width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
+}
+#tableUserContainer thead th:nth-child(1) {
+    width: 0%;
+}
+
+#tableUserContainer thead th:nth-child(2) {
+    width: 55%;
+}
+
+
+
+
+/* SALE AND PRODUCT */
+#tableSaleContainer {
+    max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+#tableSaleContainer tbody{
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+#tableSaleContainer tbody tr {
+    width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
+}
+#tableSaleContainer thead th:nth-child(1) {
+    width: 0%;
+}
+
+#tableSaleContainer thead th:nth-child(2) {
+    width: 75%;
+}
+
+
+
+/* VOUCHER ACCOUNT */
+#tableVoucherContainer {
+    max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+#tableVoucherContainer tbody{
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+#tableVoucherContainer tbody tr {
+    width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
+}
+#tableVoucherContainer thead th:nth-child(1) {
+    width: 30%;
+}
+
+#tableVoucherContainer thead th:nth-child(2) {
+    width: 30%;
+}
+
+
+/* STATUS PRODUCT */
+#tableStatusProductContainer {
+    max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+#tableStatusProductContainer tbody{
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+#tableStatusProductContainer tbody tr {
+    width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
+}
+#tableStatusProductContainer thead th:nth-child(1) {
+    width: 5%;
+}
+
+#tableStatusProductContainer thead th:nth-child(2) {
+    width: 15%;
+}
+
+#tableStatusProductContainer thead th:nth-child(3) {
+    width: 15%;
+}
+
+#tableStatusProductContainer thead th:nth-child(4) {
+    width: 40%;
+}
+
+#tableStatusProductContainer thead th:nth-child(5) {
+    width: 10%;
+}
+
+#tableStatusProductContainer thead th:nth-child(6) {
+    width: 12%;
+}
+
+
+

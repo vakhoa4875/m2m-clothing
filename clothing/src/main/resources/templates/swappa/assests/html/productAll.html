@@ -164,10 +164,32 @@
                         <!-- breadcrumb-bar -->
                         <div id="breadcrumb-bar" class="ms-3 mt-3">
                             <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb mb-2">
-                                  <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                                  <li class="breadcrumb-item"><a href="#">Tất cả sản phẩm</a></li>
-                                </ol>
+                                <ul class="breadcrumb mb-2" th:switch="${active}">
+                                    <span th:case="1" class="d-flex">
+                                      <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                                      <li class="breadcrumb-item"><a href="/categoryType?categoryId=1">Outerwear</a></li>
+                                    </span>
+                                    <div th:case="2" class="d-flex">
+                                        <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="/categoryType?categoryId=2">Tops</a></li>
+                                    </div>
+                                    <div th:case="3" class="d-flex">
+                                        <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="/categoryType?categoryId=3" >Bottoms</a></li>
+                                    </div>
+                                    <div th:case="4" class="d-flex">
+                                        <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="/categoryType?categoryId=4" >Jewels & Accessories</a></li>
+                                    </div>
+                                    <div th:case="5" class="d-flex">
+                                        <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="/categoryType?categoryId=5" >Headwear</a></li>
+                                    </div>
+                                    <div th:case="6" class="d-flex">
+                                        <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                                        <li class="breadcrumb-item"><a href="/categoryType?categoryId=6" >Footwear</a></li>
+                                    </div>
+                                </ul>
                               </nav>
                         </div>
                 
@@ -180,9 +202,31 @@
                                     <div class="shadow-sm bg-body-tertiary" style="background-color: rgba(128, 128, 128, 0.085);">
                                         <div class="list-group">
                                             <div href="#" class="list-group-item list-group-item-action text-bg-dark text-center rounded-0" aria-current="true">
-                                              Danh sách sản phẩm
+                                                LIST OF PRODUCTS
                                             </div>
                                             <div>
+                                                <div th:if="${menu}">
+                                                    <ul>
+                                                        <li class="pt-1 pb-1" >
+                                                            <a href="/categoryType?categoryId=1" class=""> Outerwear </a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=2" class=""> Tops </a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=3">Bottoms</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=4">Jewels & Accessories</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=5">Headwear</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=6">Footwear</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                                 <ul th:switch="${active}">
                                                     <div th:case="1">
                                                         <li class="pt-1 pb-1" >
@@ -310,6 +354,27 @@
                                                         </li>
                                                     </div>
 
+                                                    <div th:case="7">
+                                                        <li class="pt-1 pb-1" >
+                                                            <a href="/categoryType?categoryId=1" class=""> Outerwear </a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=2" class=""> Tops </a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=3">Bottoms</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=4">Jewels & Accessories</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=5">Headwear</a>
+                                                        </li>
+                                                        <li class="pt-1 pb-1">
+                                                            <a href="/categoryType?categoryId=6">Footwear</a>
+                                                        </li>
+                                                    </div>
+
                                                 </ul>
                                             </div>
                                           </div>
@@ -318,7 +383,7 @@
                                     <div class="shadow-sm bg-body-tertiary" style="background-color: rgba(128, 128, 128, 0.085);">
                                         <div class="list-group">
                                             <div href="#" class="list-group-item list-group-item-action text-bg-dark text-center rounded-0" aria-current="true">
-                                              Kích thước
+                                                SIZE
                                             </div>
                                             <div>
                                                 <ul>
@@ -347,24 +412,24 @@
                                             <!-- Vòng lặp Thymeleaf để duyệt qua từng sản phẩm -->
                                             <div class="col-lg-2 col-md-3 col-sm-4" th:each="product : ${listProduct}">
                                                 <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                                                    <a th:href="@{'/product?slug_url=' + ${product.slugUrl}}" class="stretched-link">
+                                                    <a th:href="@{'/product?slug_url=' + ${product.slug}}" class="stretched-link">
                                                         <!-- Hiển thị thông tin sản phẩm -->
-                                                        <div th:if="${product.sale}" style="position: absolute">
+                                                        <div th:if="${product.getSale()}" style="position: absolute">
                                                             <span class="badge text-bg-danger" th:text="${product.sale.salePercent + '%'}"></span>
                                                         </div>
                                                         <div class="img-container">
                                                             <img th:src="@{'../media/' + ${product.pictures.split(',')[0]}}" class="img-fluid mt-2 mb-3" alt="">
                                                         </div>
                                                         <div class="w-100">
-                                                            <span class="d-inline-block text-truncate" style="max-width: 90%;" th:text="${product.productName}"></span>
+                                                            <span class="d-inline-block text-truncate" style="max-width: 90%;" th:text="${product.name}"></span>
                                                         </div>
                                                         <div class="w-100">
                                                             <div class="d-flex justify-content-around">
-                                                                <div th:if="${product.sale}" class="d-flex justify-content-around w-100">
+                                                                <div th:if="${product.getSale}" class="d-flex justify-content-around w-100">
                                                                     <del th:text="${product.price}"></del>
-                                                                    <span style="color:#c07d4b; font-weight: bolder" th:text="${(product.price.intValue()) - (product.sale.salePercent.intValue() / 100.0 * product.price.intValue())}"></span>
+                                                                    <span style="color:#c07d4b; font-weight: bolder"  th:text="${(product.getSale() != null ?   #numbers.formatDecimal(product.getPrice().intValue() - (product.getSale.getSalePercent() / 100.00 * product.getPrice().intValue()), 1, 'DEFAULT', 2,'DEFAULT') : product.getPrice())}"></span>
                                                                 </div>
-                                                                <div th:unless="${product.sale}" th:text="${product.price}"></div>
+                                                                <div th:unless="${product.getSale() }" th:text="${product.getPrice()}"></div>
                                                             </div>
                                                             <div class="">
                                                                 <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">

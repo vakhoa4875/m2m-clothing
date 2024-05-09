@@ -1,17 +1,23 @@
 package m2m_phase2.clothing.clothing.service;
 
-import java.util.List;
+import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
+import m2m_phase2.clothing.clothing.data.entity.Category;
+import m2m_phase2.clothing.clothing.data.entity.Product;
+import m2m_phase2.clothing.clothing.data.model.ProductM;
 
-import m2m_phase2.clothing.clothing.entity.Category;
-import m2m_phase2.clothing.clothing.entity.Product;
+import java.util.List;
 
 public interface ProductService {
 	
-	List<Product> findAll();
-	Product findByslug_url(String slug_url);
+	List<ProductM> findAll();
+	ProductM findByslug_url(String slug_url);
 	Category findCategoryNameByProductId (Integer productId);
 	List<Product> findTop6ByOrderByGiaBanDesc();
 
 	List<Product> findProductsWithSaleInfo();
-	List<Product> findBycategory(Integer categoryId);
+	List<ProductM> findBycategory(Integer categoryId);
+	void insertProduct(ProductDTO productDTO);
+	void updateProduct(ProductDTO productDTO);
+	void saveImgAndVideo(ProductDTO productDTO);
+	void deleteByProductId(int product_id) ;
 }

@@ -16,8 +16,8 @@ public class UserM {
     private Long id;
     private String username;
     private String email;
-    private String ggToken;
-    private String hashedPassword;
+//    private String ggToken;
+//    private String hashedPassword;
     private boolean isAdmin;
     private boolean isDisable;
     private String fullname;
@@ -29,14 +29,16 @@ public class UserM {
     private int roleId;
     private String roleName;
     private boolean processed;
+    private String sdt;
+    private String address;
 
     public static UserM convertUserEToUserM(UserE userE) {
         return UserM.builder()
                 .id(userE.getId())
                 .username(userE.getUsername())
                 .email(userE.getEmail())
-                .ggToken(userE.getGgToken())
-                .hashedPassword(userE.getHashedPassword())
+//                .ggToken(userE.getGgToken())
+//                .hashedPassword(userE.getHashedPassword())
                 .isAdmin(userE.isAdmin())
                 .isDisable(userE.isDisable())
                 .fullname(userE.getFullname())
@@ -48,6 +50,8 @@ public class UserM {
                 .roleId(userE.getRoleId())
                 .roleName(userE.getRoleName())
                 .processed(userE.isProcessed())
+                .sdt(userE.getSdt())
+                .address(userE.getAddress())
                 .build();
     }
 

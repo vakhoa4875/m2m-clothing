@@ -1,6 +1,15 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
 import java.security.SecureRandom;
+import java.sql.SQLException;
+import java.util.Objects;
+
+import lombok.RequiredArgsConstructor;
+import m2m_phase2.clothing.clothing.constant.AccountEnum;
+import m2m_phase2.clothing.clothing.data.dto.AccountDto;
+import m2m_phase2.clothing.clothing.data.dto.UserDto;
+import m2m_phase2.clothing.clothing.data.model.UserM;
+import m2m_phase2.clothing.clothing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -9,12 +18,13 @@ import org.springframework.ui.Model;
 
 import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpSession;
-import m2m_phase2.clothing.clothing.entity.Account;
+import m2m_phase2.clothing.clothing.data.entity.Account;
 import m2m_phase2.clothing.clothing.repository.AccountRepo;
 import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 @Service
+@RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
 
     @Autowired
@@ -23,6 +33,7 @@ public class AccountServiceImpl implements AccountService {
     private JavaMailSender emailSender;
     @Autowired
     private HttpSession session;
+//    private final UserService userService;
 
     @Override
     public Account saveAccount(Account account) {
@@ -161,10 +172,15 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    public String submitLogin(Account accountRequest, Model model, HttpSession session) {
+    public String submitLogin(Account accountRequest, Model model, HttpSession session) throws SQLException {
+//        var loginUserDto = new UserDto();
+//        loginUserDto.setEmail(accountRequest.getEmail());
+//        loginUserDto.setUsername(accountRequest.getUsername());
+//        loginUserDto.setPassword(accountRequest.getHashedPassword());
         String email = accountRequest.getEmail();
         String password = accountRequest.getHashedPassword();
-        Account existingAccount = findByemail(email);
+
+        Account existingAccount = repo.findByemail(email);
         if (existingAccount == null) {
             model.addAttribute("error", "Tài khoản không tồn tại");
             return "swappa/assests/html/acc_login";
@@ -175,23 +191,37 @@ public class AccountServiceImpl implements AccountService {
             return "swappa/assests/html/acc_login";
         }
         // Kiểm tra xem tài khoản có bị vô hiệu hóa không
-        if (isDisable(existingAccount)) {
+        if (existingAccount.isDisable()) {
             model.addAttribute("error", "Tài khoản của bạn tạm thời bị vô hiệu hóa");
             return "swappa/assests/html/acc_login";
         }
         // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
         session.setAttribute("loggedInUser", accountRequest.getEmail());
-		session.setAttribute("loggedInPassword", accountRequest.getHashedPassword());
 
-		return "swappa/assests/html/trangchu";
+        return "swappa/assests/html/trangchu";
     }
-	@Override
-	public Account findByUsernameAndEmail(String username, String email){
-		return repo.findByUsernameAndEmail(username,email);
-	}
 
-	public boolean isLoggedIn(HttpSession session) {
-		// Kiểm tra xem session có chứa thông tin người dùng hay không
-		return session.getAttribute("loggedInUser") != null && session.getAttribute("loggedInPassword") != null;
-	}
+    @Override
+    public Account findByUsernameAndEmail(String username, String email) {
+        return repo.findByUsernameAndEmail(username, email);
+    }
+
+    @Override
+    public String createAccount(AccountDto accountDto)
+            throws SQLException, NullPointerException {
+        if (!accountDto.getPassword()
+                .equals(accountDto.getConfirmPassword()))
+            return AccountEnum.not_matched.getValue();
+        var account = repo.findByUsernameOrEmail(accountDto.getUsername(), accountDto.getEmail());
+        if (Objects.nonNull(account)) {
+            return AccountEnum.existed.getValue();
+        }
+        var createdAccount = repo.save(AccountDto.convertAccountDtoToAccount(accountDto));
+        return AccountEnum.succeed.getValue();
+    }
+
+    public boolean isLoggedIn(HttpSession session) {
+        // Kiểm tra xem session có chứa thông tin người dùng hay không
+        return session.getAttribute("loggedInUser") != null;
+    }
 }

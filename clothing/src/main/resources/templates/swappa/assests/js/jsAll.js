@@ -3,9 +3,10 @@
 
 //giỏ hàng
 function compareData() {
-
     var productList = document.getElementById("productList");
+    var div = document.getElementById("thanhtoan");
     productList.innerHTML = '';
+    div.innerHTML ='';
     // Kiểm tra xem local storage có dữ liệu không
     if (localStorage.length > 0) {
         // Duyệt qua tất cả các phần tử trong local storage
@@ -21,11 +22,11 @@ function compareData() {
                                         <th scope="row">
                                             <li style="overflow: hidden" height="auto" width="136px" class="d-flex align-items-center ms-4">
                                                 <input class="form-check-input me-2" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." >
-                                                <img src="${object.linkanh}" alt="" width="auto" style="display: block; max-width: 150px; max-height: 150px; width: auto; height: auto;">
+                                                <img src="${object.linkanh}" alt="" style="display: block; width: 150px; height: 150px; object-fit: contain;">
                                                 <span class="ms-3">${object.tensp}</span>
                                             </li>
                                         </th>
-                                        <td class="align-middle">$${object.gia}</td>
+                                        <td class="align-middle">$${object.gia.toFixed(2)}</td>
                                         <td class="align-middle">
                                             <div>
                                                 <nav aria-label="Page navigation example">
@@ -47,7 +48,7 @@ function compareData() {
                                                   </nav>
                                             </div>
                                         </td>
-                                        <td class="align-middle fw-bold" >$${(object.soLuong * object.gia)}</td>
+                                        <td class="align-middle fw-bold" >$${(object.soLuong * object.gia).toFixed(2)}</td>
                                         <td class="align-middle">
                                             <button class="btn btn-close" onclick="xoamSoLuong('${key}')"></button>
                                         </td>
@@ -56,7 +57,11 @@ function compareData() {
             this.capNhatTienTong();
             layTongSoLuong();
         }
-
+        var div = document.createElement("a");
+            div.innerHTML = `
+             <a href="/thanhtoan" class="btn btn-outline-danger"  id="creategiohang" >Thành toán hóa đơn</a>
+            `;
+        document.getElementById("thanhtoan").appendChild(div);
     } else {
         Swal.fire({
             title: 'Thông Báo từ hệ thống',
@@ -64,21 +69,28 @@ function compareData() {
             icon: 'info', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
             confirmButtonText: 'Xác nhận',
             allowOutsideClick: false
-        });
-        var tr = document.createElement("tr");
-        tr.innerHTML = `
+        })
+            var tr = document.createElement("tr");
+            tr.innerHTML = `
                     <td colspan="6" class="text-center">
                         <div class="alert alert-info" role="alert">
                             Giỏ hàng không có gì!
                         </div>
                     </td>
                 `;
-        document.getElementById("productList").appendChild(tr);
+            document.getElementById("productList").appendChild(tr);
+
+            var div = document.createElement("a");
+            div.innerHTML = `
+                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
+            `;
+            document.getElementById("thanhtoan").appendChild(div);
+
         capNhatTienTong();
         layTongSoLuong();
     }
-
 }
+
 
 function layTongSoLuong() {
     var tongsp = document.getElementById("tongSoLuongSP");
@@ -118,6 +130,8 @@ function truSoLuong(key) {
 
 function capNhatTienTong() {
     var tongTien = 0;
+    var tienCanTra = 0;
+    var tienGiamDiscount = 0;
     if (localStorage.length > 0) {
         // Duyệt qua tất cả các phần tử trong local storage
         for (var i = 0; i < localStorage.length; i++) {
@@ -125,13 +139,45 @@ function capNhatTienTong() {
             var value = localStorage.getItem(key);
 
             var object = JSON.parse(value);
-
+            // tienGiamDiscount = object.discount; // lấy discount của ma giam gia
             tongTien += object.soLuong * object.gia;
+            tienCanTra += object.soLuong * object.gia;
+
         }
+        // Áp dụng giảm giá từ voucher nếu có
+        if (appliedVoucher) {
+            var reduceAmount = tongTien * (appliedVoucher.voucherReducePercent / 100);
+
+            tongTien -= reduceAmount;
+            // Cập nhật giá trị của thẻ HTML mới
+            var cacPhanTuTienGiam = document.querySelectorAll(".tiengiam");
+            // phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
+            cacPhanTuTienGiam.forEach(function (element) {
+                element.textContent = "$" + reduceAmount.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
+
+                //cập nhật lại discount trong localstorage
+                var key = localStorage.key(0);
+                var value = localStorage.getItem(key);
+                var object = JSON.parse(value);
+                object.discount = reduceAmount.toFixed(2); // lấy tien giam rồi sửa lại trong obj của js
+                localStorage.setItem(key, JSON.stringify(object)); // sau đó
+            });
+        }else{
+            var cacPhanTuTienGiam = document.querySelectorAll(".tiengiam");
+            // phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
+            cacPhanTuTienGiam.forEach(function (element) {
+                element.textContent = "$" + 0;
+            });
+        }
+        var cacPhanTuTienCanTra = document.querySelectorAll(".tienCanTra");
+        // Lặp qua từng phần tử và cập nhật giá trị mới
+        cacPhanTuTienCanTra.forEach(function (element) {
+            element.textContent = "$" + tienCanTra.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
+        });
         var cacPhanTu = document.querySelectorAll(".tienThanhToan");
         // Lặp qua từng phần tử và cập nhật giá trị mới
         cacPhanTu.forEach(function (element) {
-            element.textContent = "$" + tongTien; // Cập nhật giá trị mới, ở đây là tổng tiền
+            element.textContent = "$" + tongTien.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
         });
 
     } else {
@@ -176,7 +222,7 @@ window.onload = compareData;
 
 
 
-
+var appliedVoucher = null; // Biến để lưu trữ thông tin voucher được áp dụng
 $(document).ready(function () {
     let selectedCategoryId = null;
 
@@ -272,7 +318,7 @@ $(document).ready(function () {
                                             <div class="d-flex justify-content-around">
                                                 ${item.sale ? `
                                                        <span> <del> ${item.price} </del> </span>
-                                                       <span style="color:#c07d4b; font-weight: bolder">${((item.price) - (item.sale.salePercent / 100 * item.price)).toFixed(2)}</span>
+                                                       <span style="color:#c07d4b; font-weight: bolder">${((item.price) - (item.sale.salePercent / 100.00 * item.price)).toFixed(2)}</span>
                                                 ` : `
                                                         <span> ${item.price}</span>
                                                 `}
@@ -291,9 +337,97 @@ $(document).ready(function () {
             layTongSoLuong();
         });
     }
+    //hàm phatteacher
+    var appliedVoucherID = null; // Biến để lưu trữ ID của voucher được áp dụng gần đây nhất
 
+// Hàm gọi API để lấy danh sách voucher
+    function getAllVoucherByUserEmail() {
+        $.ajax({
+            url: '/api-public/vouchers/getCartVouchersByEmail',
+            type: 'GET',
+            success: function (data) {
+                console.log(data);
+                $('#modalBodyVoucherInCart').empty();
 
+                // Lưu trữ ID của voucher đã được chọn trước đó (nếu có)
+                var selectedVoucherID = appliedVoucherID;
 
+                // Định dạng ngày bằng Moment.js và tạo các phần tử voucher
+                $.each(data, function (index, voucher) {
+                    var formattedStartDate = moment(voucher.startDay).format('DD-MM-YYYY');
+                    var formattedEndDate = moment(voucher.endDay).format('DD-MM-YYYY');
+                    var newRow = `
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card mb-3">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="/assests/images/logoVoucher.jpg" class="img-fluid rounded-start" alt="...">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${voucher.voucherName}</h5>
+                                            <p class="card-text">Reduce: ${voucher.reduce}%</p>
+                                            <p class="card-text">End day: ${formattedEndDate}</p>
+                                            <button class="btn btn-primary" data-voucher-id="${voucher.voucherID}" id="addVoucherBtn_${voucher.voucherID}">Add Voucher</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                    $('#modalBodyVoucherInCart').append(newRow);
+                });
+
+                // Áp dụng trạng thái vô hiệu hóa cho các nút voucher dựa trên ID
+                $('[id^="addVoucherBtn_"]').each(function () {
+                    var voucherID = $(this).data('voucher-id');
+                    if (voucherID === selectedVoucherID) {
+                        // Nếu voucher đã được chọn trước đó, vô hiệu hóa nút
+                        $(this).prop("disabled", true);
+                    }
+                });
+
+                // Xử lý sự kiện khi nút "Add Voucher" được nhấn
+                $('[id^="addVoucherBtn_"]').click(function () {
+                    var newVoucherID = $(this).data('voucher-id');
+                    if (appliedVoucherID !== newVoucherID) {
+                        // Kiểm tra xem đã chọn voucher mới chưa
+                        if (appliedVoucherID !== null) {
+                            // Nếu đã chọn voucher mới, kích hoạt lại nút của voucher cũ (nếu có)
+                            $('#addVoucherBtn_' + appliedVoucherID).prop("disabled", false);
+                        }
+
+                        // Lưu ID của voucher mới và vô hiệu hóa nút
+                        appliedVoucherID = newVoucherID;
+                        $(this).prop("disabled", true);
+
+                        // Tiến hành các thao tác khác như lưu thông tin voucher và cập nhật tổng tiền
+                        var voucherName = $(this).closest('.card-body').find('.card-title').text();
+                        var voucherReducePercent = parseFloat($(this).siblings('.card-text').text().split(":")[1]);
+
+                        appliedVoucher = {
+                            voucherID: newVoucherID,
+                            voucherName: voucherName,
+                            voucherReducePercent: voucherReducePercent
+                        };
+
+                        $('#addVoucherText').text('Bạn đã thêm ' + voucherName + ' vào giỏ hàng.');
+                        $('#addVoucherText').removeClass('d-none').addClass('d-block');
+                        capNhatTienTong();
+                    }
+                });
+            },
+            error: function (xhr, status, error) {
+                console.error("Đã xảy ra lỗi khi gọi API: " + error);
+            }
+        });
+    }
+
+    $('#btnvoucherModal').click(function () {
+        getAllVoucherByUserEmail(); // Gọi hàm updateUser() khi nhấn vào nút "Submit"
+    });
 
 
 
@@ -311,7 +445,8 @@ $(document).ready(function () {
 //chi tiết sản phẩm
 var gia = document.getElementById("productPrice");
 var giaString = gia.textContent;
-var giaSo = parseInt(giaString.replace("$", ""));
+// Thay thế dấu phẩy bằng dấu chấm
+var giaSo = parseFloat(giaString.replace("$", "").replace(",", "."));
 
 var tensp = document.getElementById("productName");
 var anh = document.getElementById("productAnh");
@@ -320,6 +455,7 @@ var srcAnh = anh.getAttribute("src");
 let btnCart = document.getElementById("soLuong");
 // Khởi tạo biến để đếm số lượng
 var soLuong = 0;
+var discount = 0;
 // Thêm sự kiện click cho nút button
 btnCart.addEventListener("click", function() {
     // Tăng số lượng sản phẩm lên 1
@@ -340,12 +476,14 @@ btnCart.addEventListener("click", function() {
         localStorage.setItem(tensp.textContent, JSON.stringify(sanPham));
         layTongSoLuong();
     } else {
+        console.log(giaSo)
         // Nếu dữ liệu chưa tồn tại, tạo mới đối tượng sản phẩm và lưu vào local storage
         var sanPhamMoi = {
             gia: giaSo,
             tensp: tensp.textContent,
             linkanh: srcAnh,
-            soLuong: 1
+            soLuong: 1,
+            discount : 0
         };
 
         // Chuyển đối tượng thành chuỗi JSON và lưu vào local storage
@@ -381,7 +519,8 @@ btnBuyNow.addEventListener("click",function (){
             gia: giaSo,
             tensp: tensp.textContent,
             linkanh: srcAnh,
-            soLuong: soLuong
+            soLuong: soLuong,
+            discount : 0
         };
 
         // Lưu đối tượng mới vào local storage

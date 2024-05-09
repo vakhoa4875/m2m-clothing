@@ -1,10 +1,14 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
+import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
+import m2m_phase2.clothing.clothing.data.dto.VoucherDto;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.repository.UserRepo;
+import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.service.UserService;
 import m2m_phase2.clothing.clothing.utils.DateUtils;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
@@ -16,9 +20,11 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepo userRepo;
+    private final AccountService accountService;
 
     @Override
     public List<UserM> getAllUser() throws SQLException {
@@ -32,7 +38,26 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean isUserExist(UserDto userDto) throws SQLException{
+    public UserM getUserByEmail(UserDto userDto) throws SQLException {
+        if (!this.isUserExist(userDto)) return null;
+        return UserM.convertUserEToUserM(userRepo.getUserByEmail(userDto.getEmail()));
+    }
+
+    @Override
+    public byte updateUserInfo(UserDto userDto) throws SQLException {
+        if (this.isUserExist(userDto)) {
+            userRepo.updateUserInfo(userDto.getUsername(),
+                    userDto.getEmail(),
+                    userDto.getFullname(),
+                    userDto.getSdt(),
+                    userDto.getAvatar());
+            return 1;
+        }
+        return 0;
+    }
+
+    @Override
+    public boolean isUserExist(UserDto userDto) throws SQLException {
         var user = userRepo.getUserByUsernameAndEmail(userDto.getUsername(), userDto.getEmail());
         return Objects.nonNull(user);
     }
@@ -43,7 +68,7 @@ public class UserServiceImpl implements UserService {
             userRepo.updateUser(userDto.getUsername(),
                     userDto.getEmail(),
                     userDto.getFullname(),
-                    userDto.getHashedPassword(),
+//                    userDto.getHashedPassword(),
                     userDto.getGender(),
                     userDto.getRoleId(),
                     userDto.getRoleName(),
@@ -79,11 +104,11 @@ public class UserServiceImpl implements UserService {
         if (!this.isUserExist(userDto)) {
             return 3;
         }
-        var userM = this.getUserByUsernameAndEmail(userDto);
-        if (Objects.equals(userM.getRoleId(), 3)) {
+        var account = accountService.findByemail(userDto.getEmail());
+        if (!account.isAdmin()) {
             return 0;
         }
-        if (!PasswordEncoderUtil.verifyPassword(userDto.getPassword(), userM.getHashedPassword())) {
+        if (!PasswordEncoderUtil.verifyPassword(userDto.getPassword(), account.getHashedPassword())) {
             return 2;
         }
         return 1;
@@ -110,6 +135,24 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    //M2M- 010 TanLoc Begin
+    @Override
+    public void saveUserGG(UserE userE) {
+        userRepo.save(userE);
+    }
+
+    @Override
+    public List<UserM> findUserNotInVoucher(VoucherDetailsDto voucherDetailsDto) {
+        return UserM.converListUserEToListUserM(userRepo.findUserNotInVoucher(voucherDetailsDto.getVoucher().getVoucherID()));
+    }
+
+    @Override
+    public UserM getUserByUniqueField(UserDto userDto) throws SQLException {
+        var loginUser = userRepo.findByEmailOrUsername(userDto.getEmail(), userDto.getUsername());
+        return (Objects.nonNull(loginUser) ? UserM.convertUserEToUserM(loginUser) : null);
+    }
+
+    //M2M- 010 TanLoc End
 //    @Override
 //    public List<UserM> getUserByDto(UserDto userDto) throws SQLException {
 //        return UserM.converListUserEToListUserM(userRepo.getUserByDto(userDto));

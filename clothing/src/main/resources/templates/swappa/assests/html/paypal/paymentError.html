@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="java">
+<head>
+    <meta charset="UTF-8">
+    <title>Paypal Integration</title>
+
+    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/css/style.css">
+    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <style>
+        body {
+            /*font-family: Arial, sans-serif;*/
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            color: #f15600;
+        }
+
+        p {
+            color: #333;
+        }
+
+        a {
+            color: blue;
+        }
+
+        .img-300 {
+            width: 300px;
+            height: auto;
+            margin: auto;
+        }
+    </style>
+    <!--    <script type="text/javascript">-->
+    <!--        $(document).ready(async function() {-->
+    <!--            $('.modal-body').html(-->
+    <!--                -->
+    <!--            );-->
+    <!--        })-->
+    <!--    </script>-->
+</head>
+<body>
+<div class="container">
+    <img src="/assests/images/dizzy-robot.png" class="img-300">
+    <h1>Error!</h1>
+    <p>An error is occurred during the payment processing!</p>
+    <p><a href="/" class="btn btn-primary">Return home</a></p>
+</div>
+
+<script>
+    const loadPaymentDetails = (state) => {
+        let modal = document.querySelector('#exampleModal');
+        modal.style.display = state;
+    }
+</script>
+</body>
+</html>
