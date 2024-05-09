@@ -131,7 +131,6 @@ function truSoLuong(key) {
 function capNhatTienTong() {
     var tongTien = 0;
     var tienCanTra = 0;
-    var tienGiamDiscount = 0;
     if (localStorage.length > 0) {
         // Duyệt qua tất cả các phần tử trong local storage
         for (var i = 0; i < localStorage.length; i++) {
@@ -163,6 +162,7 @@ function capNhatTienTong() {
                 localStorage.setItem(key, JSON.stringify(object)); // sau đó
             });
         }else{
+
             var cacPhanTuTienGiam = document.querySelectorAll(".tiengiam");
             // phanTuTienGiam.textContent = "$" + reduceAmount.toFixed(2);
             cacPhanTuTienGiam.forEach(function (element) {
@@ -208,6 +208,11 @@ function themSoLuong(key) {
 function xoamSoLuong(key) {
     localStorage.removeItem(key);
     compareData();
+    var cacPhanTuTienCanTra = document.querySelectorAll(".tienCanTra");
+    // Lặp qua từng phần tử và cập nhật giá trị mới
+    cacPhanTuTienCanTra.forEach(function (element) {
+        element.textContent = "$" + 0; // Cập nhật giá trị mới, ở đây là tổng tiền
+    });
     capNhatTienTong();
 }
 
