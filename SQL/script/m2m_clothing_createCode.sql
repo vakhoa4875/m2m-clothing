@@ -130,6 +130,7 @@ create table Voucher
     voucher_id   int IDENTITY (1,1) primary key,
     voucher_name nvarchar(255),
     reduce       int,
+    quantity     int,
     start_day    date,
     end_day      date
 )
