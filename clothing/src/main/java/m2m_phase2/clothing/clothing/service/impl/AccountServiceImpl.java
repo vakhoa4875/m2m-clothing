@@ -1,27 +1,23 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
-import java.security.SecureRandom;
-import java.sql.SQLException;
-import java.util.Objects;
-
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.constant.AccountEnum;
 import m2m_phase2.clothing.clothing.data.dto.AccountDto;
-import m2m_phase2.clothing.clothing.data.dto.UserDto;
-import m2m_phase2.clothing.clothing.data.model.UserM;
-import m2m_phase2.clothing.clothing.service.UserService;
+import m2m_phase2.clothing.clothing.data.entity.Account;
+import m2m_phase2.clothing.clothing.repository.AccountRepo;
+import m2m_phase2.clothing.clothing.service.AccountService;
+import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import jakarta.mail.internet.MimeMessage;
-import jakarta.servlet.http.HttpSession;
-import m2m_phase2.clothing.clothing.data.entity.Account;
-import m2m_phase2.clothing.clothing.repository.AccountRepo;
-import m2m_phase2.clothing.clothing.service.AccountService;
-import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
+import java.security.SecureRandom;
+import java.sql.SQLException;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
