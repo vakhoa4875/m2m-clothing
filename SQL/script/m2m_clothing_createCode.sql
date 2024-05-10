@@ -102,7 +102,7 @@ create table [Cart]
 create table Comment
 (
     comment_id  int IDENTITY (1,1) PRIMARY KEY,
-    comment     varchar(255),
+    comment     nvarchar(255),
     product_id  int,
     user_id     int,
     create_date date,

@@ -15,7 +15,7 @@
 <div>
     <!-- mobileNav -->
     <div class="d-block d-lg-none">
-        <div id="mobileNav"  style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
+        <div id="mobileNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
             <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
                 <div class="container-sm">
 
@@ -30,7 +30,8 @@
                              alt="Swappa Logo">
                     </a>
 
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_search"
+                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                            data-bs-target="#slide_search"
                             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
                         <i class="fa-solid fa-search" aria-hidden="true"></i>
                     </button>
@@ -42,7 +43,7 @@
     <!-- mainNav -->
     <div class="d-none d-lg-block">
         <!-- first-nav -->
-        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
+        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
             <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
                 <div class="container d-block">
                     <div class="d-flex gap-3">
@@ -73,9 +74,12 @@
                                 </div>
                             </li>
                             <li class="ms-3 d-flex align-items-center justify-content-center">
-                                <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
-                                    <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
+                                <a href="/giohang" class="border border-0 position-relative"
+                                   style="background-color: rgb(18,17,13) !important;">
+                                    <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;"
+                                       aria-hidden="true"></i>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                          id="tongSoLuongSP">
                                       0
                                     </span>
                                 </a>
@@ -92,21 +96,21 @@
     </div>
 </div>
 
-    <!-- body -->
+<!-- body -->
 <div class="container-fluid bg-semiBlack">
     <main class="flex-shrink-0">
         <div id="main_container" class="container text-bg-cf pt-1 pb-2">
             <!-- content-top -->
             <!-- tooltip-bar -->
-            
+
             <div id="message-block" class="text-center ">
                 <div id="breadcrumb-bar" class="ms-3 mt-3">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb mb-2">
-                          <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
-                          <li class="breadcrumb-item"><a href="#" th:text="${listProduct.getName()}"></a></li>
+                            <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#" th:text="${listProduct.getName()}"></a></li>
                         </ol>
-                      </nav>
+                    </nav>
                 </div>
             </div>
             <!-- <section class="mb-5 text-center">
@@ -115,21 +119,26 @@
             <section class="justify-content-center">`
                 <div class="row mt-3">
                     <div class="col-12 col-md-12 col-lg-12">
-                        <div id="myCarousel" class="carousel slide d-flex justify-content-center" data-bs-ride="carousel" th:with="chuoiAnh=${listProduct.getPictures()}">
+                        <div id="myCarousel" class="carousel slide d-flex justify-content-center"
+                             data-bs-ride="carousel" th:with="chuoiAnh=${listProduct.getPictures()}">
                             <!-- Carousel indicators -->
                             <!-- Wrapper for carousel items -->
-                            <div class="carousel-inner h-50 w-50" th:with="mangAnh=${#strings.arraySplit(chuoiAnh, ',')}">
-                                <div class="carousel-item active" >
-                                    <img th:src="@{'../media/'+${mangAnh[0]}}"  class="d-block w-100" alt="Slide 1" id="productAnh" style="object-fit: contain; width: 340px; height: 420px;">
+                            <div class="carousel-inner h-50 w-50"
+                                 th:with="mangAnh=${#strings.arraySplit(chuoiAnh, ',')}">
+                                <div class="carousel-item active">
+                                    <img th:src="@{'../media/'+${mangAnh[0]}}" class="d-block w-100" alt="Slide 1"
+                                         id="productAnh" style="object-fit: contain; width: 340px; height: 420px;">
                                 </div>
                                 <div class="carousel-item" th:if="${mangAnh.length  > 1}">
-                                    <img th:src="@{'../media/'+${mangAnh[1]}}"  class="d-block w-100" alt="Slide 2" style="object-fit: contain; width: 340px; height: 420px;">
+                                    <img th:src="@{'../media/'+${mangAnh[1]}}" class="d-block w-100" alt="Slide 2"
+                                         style="object-fit: contain; width: 340px; height: 420px;">
                                 </div>
                                 <div class="carousel-item" th:if="${mangAnh.length  > 2}">
-                                    <img th:src="@{'../media/'+${mangAnh[2]}}" class="d-block w-100" alt="Slide 3"  style="object-fit: contain; width: 340px; height: 420px;">
+                                    <img th:src="@{'../media/'+${mangAnh[2]}}" class="d-block w-100" alt="Slide 3"
+                                         style="object-fit: contain; width: 340px; height: 420px;">
                                 </div>
                             </div>
-                    
+
                             <!-- Carousel controls -->
                             <a class="carousel-control-prev" href="#myCarousel" data-bs-slide="prev">
                                 <i class="fa-solid fa-chevron-left" style="color: #000000; font-size: 40px;"></i></span>
@@ -140,15 +149,16 @@
                         </div>
 
                         <div class="card mt-2">
-                            <div class="h1 text-success text-center mt-2" >
+                            <div class="h1 text-success text-center mt-2">
 
                             </div>
                             <div class="d-flex justify-content-center gap-3 m-0 mt-1 mb-3 p-0">
-                                <button class="btn border btn-outline-success fw-bolder" id="buynow" type="button" style="width: 10rem;">
+                                <button class="btn border btn-outline-success fw-bolder" id="buynow" type="button"
+                                        style="width: 10rem;">
                                     BuyNow
                                 </button>
                                 <button class="btn border btn-outline-success" type="button" id="soLuong"
-                                    ><i class="fa-solid fa-cart-plus"></i>
+                                ><i class="fa-solid fa-cart-plus"></i>
                                 </button>
                             </div>
                         </div>
@@ -156,7 +166,9 @@
                             <div class="card-header d-flex align-items-center justify-content-center">
                                 <span class="fs-4 fw-bolder" th:text="${listProduct.getName()}" id="productName"></span>
                                 <span class="fs-4 fw-bolder">------ Rate : </span>
-                                <span class="fs-4 fw-bolder" style="color: #c24444" th:text="'$'+ ${(listProduct.getSale() != null ? #numbers.formatDecimal(listProduct.getPrice().intValue() - (listProduct.getSale.getSalePercent() / 100.00 * listProduct.getPrice().intValue()), 1, 'DEFAULT', 2,'DEFAULT') : listProduct.getPrice())}" id="productPrice"></span>
+                                <span class="fs-4 fw-bolder" style="color: #c24444"
+                                      th:text="'$'+ ${(listProduct.getSale() != null ? #numbers.formatDecimal(listProduct.getPrice().intValue() - (listProduct.getSale.getSalePercent() / 100.00 * listProduct.getPrice().intValue()), 1, 'DEFAULT', 2,'DEFAULT') : listProduct.getPrice())}"
+                                      id="productPrice"></span>
                             </div>
                             <div>
                                 <ul class="small-ul">
@@ -168,11 +180,11 @@
                         </div>
 
                         <div class="card text-start mt-4">
-                            
+
                             <div class="p-2 d-flex justify-content-center align-items-centerW">
                                 <video controls class="w-100" style="max-width: 1098px; max-height: 549px;">
                                     <source th:src="@{'../media/'+${listProduct.videos}}">
-                                  </video>
+                                </video>
                             </div>
                             <div class="">
                                 <ul class="small-ul border-start ps-2 ms-3 fw-lighter fs-18">
@@ -196,8 +208,8 @@
                             </div>
                             <div class="card-footer text-end border-top-0" style="background-color: rgb(56, 56, 56);">
                                 <a href="" class="fw-light fs-14 text-white"><em><i
-                                            class="fa-regular fa-calendar-check"></i> Last
-                                        updated: Jan 12, 2024</em></a>
+                                        class="fa-regular fa-calendar-check"></i> Last
+                                    updated: Jan 12, 2024</em></a>
                             </div>
                         </div>
 
@@ -205,62 +217,73 @@
 
                             <div class="row d-flex justify-content-center">
                                 <div class="col-md-8 col-lg-6 w-100">
-                                  <div class="card shadow-0 border" style="background-color: #f0f2f5;">
-                                    <div class="card-body p-2">
-                                      <div class="form-outline mb-4">
-                                        <div class="input-group mb-3">
-                                            <textarea placeholder="Nhập nhận xét của bạn về sản phẩm" class="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
-                                            <button class="btn btn-outline-secondary" type="button" id="button-addon2">Nhận xét</button>
-                                          </div>
-                                      </div>
-
-
-
-                                      <div class="card mb-4"  th:each="comment : ${commentM}">
-                                        <div class="card-body">
-                                          <h5  th:text="${comment.getComment()}"></h5>
-
-                                          <div class="d-flex justify-content-between">
-                                            <div class="d-flex flex-row align-items-center">
-                                              <img th:src="@{'/assests/imagesUser/' + ${comment.getUser().getAvatar()}}" alt="avatar" width="50"
-                                                height="50" />
-                                              <p class="small mb-0 ms-2" th:text="${comment.getUser().getFullname()}"></p>
+                                    <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+                                        <div class="card-body p-2">
+                                            <div class="form-outline mb-4">
+                                                <div class="input-group mb-3">
+                                                    <textarea placeholder="Nhập nhận xét của bạn về sản phẩm"
+                                                              class="form-control" id="commentText" rows="1"></textarea>
+                                                    <button class="btn btn-outline-secondary" type="button"
+                                                            id="submitButtonNhanXet">Nhận xét
+                                                    </button>
+                                                </div>
+                                                <div id="commentMessage" class="text-danger"></div>
+                                                <!-- Placeholder for error/success message -->
                                             </div>
-                                            <div class="d-flex flex-row align-items-center">
-                                              <p class="small text-muted mb-0">Upvote?</p>
-                                              <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
-                                              <p class="small text-muted mb-0"th:text="${#dates.format(comment.getCreateDate(), 'dd-MM-yyyy')}"></p>
+
+
+                                            <div class="card mb-4" th:each="comment : ${commentM}">
+                                                <div class="card-body">
+                                                    <h5 th:text="${comment.getComment()}"></h5>
+
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="d-flex flex-row align-items-center">
+                                                            <img th:src="@{'/assests/imagesUser/' + ${comment.getUser().getAvatar()}}"
+                                                                 alt="avatar" width="50"
+                                                                 height="50"/>
+                                                            <p class="small mb-0 ms-2"
+                                                               th:text="${comment.getUser().getFullname()}"></p>
+                                                        </div>
+                                                        <div class="d-flex flex-row align-items-center">
+                                                            <p class="small text-muted mb-0">Upvote?</p>
+                                                            <i class="far fa-thumbs-up mx-2 fa-xs text-black"
+                                                               style="margin-top: -0.16rem;"></i>
+                                                            <p class="small text-muted mb-0"
+                                                               th:text="${#dates.format(comment.getCreateDate(), 'dd-MM-yyyy')}"></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                          </div>
+
+
+                                            <div class="d-flex justify-content-center ">
+                                                <nav aria-label="Page navigation example">
+                                                    <ul class="pagination">
+                                                        <li class="page-item">
+                                                            <a class="page-link text-dark" href="#"
+                                                               aria-label="Previous">
+                                                                <span aria-hidden="true">&laquo;</span>
+                                                            </a>
+                                                        </li>
+                                                        <li class="page-item "><a class="page-link text-dark"
+                                                                                  href="#">1</a></li>
+                                                        <li class="page-item"><a class="page-link text-dark"
+                                                                                 href="#">2</a></li>
+                                                        <li class="page-item"><a class="page-link text-dark"
+                                                                                 href="#">3</a></li>
+                                                        <li class="page-item">
+                                                            <a class="page-link text-dark" href="#" aria-label="Next">
+                                                                <span aria-hidden="true">&raquo;</span>
+                                                            </a>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+
                                         </div>
-                                      </div>
-                              
-                              
-                                      
-                                    <div class="d-flex justify-content-center ">
-                                        <nav aria-label="Page navigation example">
-                                            <ul class="pagination">
-                                              <li class="page-item">
-                                                <a class="page-link text-dark" href="#" aria-label="Previous">
-                                                  <span aria-hidden="true">&laquo;</span>
-                                                </a>
-                                              </li>
-                                              <li class="page-item "><a class="page-link text-dark" href="#">1</a></li>
-                                              <li class="page-item"><a class="page-link text-dark" href="#">2</a></li>
-                                              <li class="page-item"><a class="page-link text-dark" href="#">3</a></li>
-                                              <li class="page-item">
-                                                <a class="page-link text-dark" href="#" aria-label="Next">
-                                                  <span aria-hidden="true">&raquo;</span>
-                                                </a>
-                                              </li>
-                                            </ul>
-                                          </nav>
                                     </div>
-                                      
-                                    </div>
-                                  </div>
                                 </div>
-                              </div>
+                            </div>
 
                         </div>
                         <div class="card text-start mt-4">
@@ -277,25 +300,32 @@
                                     <tr>
                                         <td rowspan="4" class="text-center fs-5 border-0">
                                             <i class="fa-solid fa-dolly"></i>
-                                                <br>
+                                            <br>
                                             <span>Standard Shipping</span>
-                                                <br>
+                                            <br>
                                             <b>Free</b>
                                         </td>
                                         <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
-                                                style="color: #00bd16;"></i> Ships from Chesapeake, VA</td>
+                                                                              style="color: #00bd16;"></i> Ships from
+                                            Chesapeake, VA
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
-                                                style="color: #00bd16;"></i> Ships with Tracking & Insurance</td>
+                                                                              style="color: #00bd16;"></i> Ships with
+                                            Tracking & Insurance
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
-                                                style="color: #00bd16;"></i> Ships in 2 business days or less</td>
+                                                                              style="color: #00bd16;"></i> Ships in 2
+                                            business days or less
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
-                                                style="color: #00bd16;"></i> Seller not required to ship internationally
+                                                                              style="color: #00bd16;"></i> Seller not
+                                            required to ship internationally
                                         </td>
                                     </tr>
                                 </table>
@@ -335,56 +365,107 @@
 </div>
 
 
-    <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-        <div class="container pt-2 pb-2">
-            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+    <div class="container pt-2 pb-2">
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
 
+        </div>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col d-flex justify-content-center align-items-center">
+                <div class=" text-white">
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-facebook fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-instagram fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-youtube fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-linkedin fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-reddit fs-1"></i>
+                    </a>
+                </div>
             </div>
-            <div class="row row-cols-1 row-cols-md-3">
-                <div class="col d-flex justify-content-center align-items-center">
-                    <div class=" text-white">
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-facebook fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-instagram fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-youtube fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-linkedin fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-reddit fs-1"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col text-center ">
-                    <a href="./index.html"><img
-                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
-                            alt=""></a>
-                </div>
-                <div class="col text-center text-white d-flex justify-content-center align-items-center">
-                    <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
-                </div>
+            <div class="col text-center ">
+                <a href="./index.html"><img
+                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
+                        alt=""></a>
+            </div>
+            <div class="col text-center text-white d-flex justify-content-center align-items-center">
+                <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 </body>
-    <script src="/node_modules/angular/angular.min.js"></script>
-    <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
-    <script src="/node_modules/angular/angular.route.min.js"></script>
-    <script src="/assests/js/app.js"></script>
-    <script src="/assests/js/script.js"></script>
-    <script src="/assests/js/jsAll.js"/></script>
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+<script src="/node_modules/angular/angular.route.min.js"></script>
+<script src="/assests/js/app.js"></script>
+<script src="/assests/js/script.js"></script>
+<script src="/assests/js/jsAll.js"/>
+</script>
 
-    <script th:inline="javascript">
-        /* Định nghĩa hàm formatNumber để format số thành chuỗi với số lượng chữ số thập phân cho trước */
-        function formatNumber(number) {
-            return number.toFixed(2);
-        }
-    </script>
+<script th:inline="javascript">
+    /* Định nghĩa hàm formatNumber để format số thành chuỗi với số lượng chữ số thập phân cho trước */
+    function formatNumber(number) {
+        return number.toFixed(2);
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $("#submitButtonNhanXet").click(function () {
+            // Lấy nội dung của nhận xét
+            var commentText = $("#commentText").val();
+
+            // Lấy slugUrl từ URL hiện tại
+            var urlString = window.location.href;
+            // Phân tách URL để lấy phần query string
+            var urlParts = urlString.split('?');
+            // Lấy query string
+            var queryString = urlParts[1];
+            // Phân tách query string để lấy phần sau dấu bằng
+            var queryParams = queryString.split('=');
+            // Lấy giá trị sau dấu bằng
+            var slugUrl = queryParams[1];
+
+            console.log(slugUrl);
+
+            // Tạo ngày hiện tại
+            var currentDate = new Date();
+
+            // Tạo một đối tượng CommentDTO
+            var commentDTO = {
+                comment: commentText,
+                slugUrl: slugUrl, // Sửa từ slug_url thành slugUrl để trùng với tên trường trong DTO
+                createDate: currentDate
+            };
+
+            // Thực hiện AJAX request để tạo nhận xét
+            $.ajax({
+                url: "/createComment",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(commentDTO),
+                success: function (response) {
+                    console.log("Nhận xét được tạo thành công.", response)
+                    $("#commentText").val("");
+                    location.reload();
+                },
+                error: function (xhr, status, error) {
+                    console.error("Lỗi khi tạo nhận xét:", error);
+                    // Tùy chọn, bạn có thể hiển thị thông báo lỗi cho người dùng
+                }
+            });
+        });
+    });
+</script>
+
+
 
 </html>
