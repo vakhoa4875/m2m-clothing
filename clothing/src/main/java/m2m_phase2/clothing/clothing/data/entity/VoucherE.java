@@ -27,6 +27,9 @@ public class VoucherE {
     @Column(name = "reduce")
     private int reduce;
 
+    @Column(name = "quantity")
+    private int quantity;
+
     @Temporal(TemporalType.DATE)
     @Column(name = "start_day")
     private Date startDay;

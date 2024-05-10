@@ -27,7 +27,6 @@ public class VoucherDetailsApi {
         try {
             for (VoucherDetailsDto voucherDetailsDto : voucherDetailsDtoList) {
                 boolean checkExist = voucherDetailsService.isVoucherDetailsExist(voucherDetailsDto);
-                System.out.println(checkExist);
                 if(checkExist){
                     totalRowsEffected += voucherDetailsService.deleteVoucherDetails(voucherDetailsDto);
                 }else{

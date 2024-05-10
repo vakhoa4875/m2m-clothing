@@ -37,7 +37,7 @@ class productManagement{
                                 <span class="text-secondary text-xs font-weight-bold">${item.quantity}</span>
                             </td>
         
-                            <td class="align-middle text-center">
+                            <td class="align-middle text-center d-flex">
                                 <button class="btn border-0 rounded btn-outline-info"
                                         data-bs-toggle="modal" data-bs-target="#exampleModalUpdateProduct" onclick="productservices.getProductById('${item.slug}')">
                                     <i class="fa-solid fa-pen-to-square"></i></button>

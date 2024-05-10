@@ -660,13 +660,13 @@ go
     (N'So beautiful', 2 , 2, N'2024-04-15')
 
 
-INSERT INTO Voucher (voucher_name, reduce, start_day, end_day)
+INSERT INTO Voucher (voucher_name, reduce,quantity, start_day, end_day)
 VALUES
-    (N'Mã giảm giá Xuân', 15, '2024-03-01', '2024-03-31'),
-    (N'Mã giảm giá Hạ', 10, '2024-06-01', '2024-08-31'),
-    (N'Mã giảm giá Thu', 20, '2024-09-01', '2024-11-30'),
-    (N'Mã giảm giá Đông', 25, '2024-12-01', '2025-02-28'),
-    (N'Mã giảm giá Tết', 30, '2025-01-01', '2025-01-31');
+    (N'Mã giảm giá Xuân', 15,15, '2024-03-01', '2024-03-31'),
+    (N'Mã giảm giá Hạ', 10,15, '2024-06-01', '2024-08-31'),
+    (N'Mã giảm giá Thu', 20,15, '2024-09-01', '2024-11-30'),
+    (N'Mã giảm giá Đông', 25,15, '2024-12-01', '2025-02-28'),
+    (N'Mã giảm giá Tết', 30,15, '2025-01-01', '2025-01-31');
 
 INSERT INTO VoucherDetails
 VALUES
