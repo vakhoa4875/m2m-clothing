@@ -59,4 +59,7 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
                         @Param("productId") int product_id);
     @Transactional
     void deleteByProductId(int product_id);
+
+    @Query("SELECT COUNT(p) FROM Product p WHERE p.category.category_id = :categoryId")
+    Long countByCategory(@Param("categoryId") Integer categoryId);
 }

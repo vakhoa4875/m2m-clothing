@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.constant.AccountEnum;
 import m2m_phase2.clothing.clothing.data.dto.AccountDto;
 import m2m_phase2.clothing.clothing.data.entity.Account;
+import m2m_phase2.clothing.clothing.repository.AccountGGRepo;
 import m2m_phase2.clothing.clothing.repository.AccountRepo;
 import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
@@ -25,6 +26,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountRepo repo;
+    @Autowired
+    private AccountGGRepo accountGGRepo;
     @Autowired
     private JavaMailSender emailSender;
     @Autowired
@@ -214,6 +217,25 @@ public class AccountServiceImpl implements AccountService {
         }
         var createdAccount = repo.save(AccountDto.convertAccountDtoToAccount(accountDto));
         return AccountEnum.succeed.getValue();
+    }
+
+    @Override
+    public long getTotalAccounts() {
+        long totalAccountsFromAccount = repo.count();
+        long totalAccountsFromAccountGG = accountGGRepo.count();
+        return totalAccountsFromAccount + totalAccountsFromAccountGG;
+    }
+
+    @Override
+    public long getGGAccount() {
+        long totalAccountsFromAccountGG = accountGGRepo.count();
+        return totalAccountsFromAccountGG;
+    }
+
+    @Override
+    public long getDKAccount() {
+        long totalAccountsFromAccount = repo.count();
+        return totalAccountsFromAccount;
     }
 
     public boolean isLoggedIn(HttpSession session) {
