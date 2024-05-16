@@ -12,9 +12,6 @@ import m2m_phase2.clothing.clothing.service.OrderService;
 import m2m_phase2.clothing.clothing.service.PaymentService;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Service
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {

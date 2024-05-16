@@ -2,8 +2,7 @@ package m2m_phase2.clothing.clothing.api;
 
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
-import m2m_phase2.clothing.clothing.data.dto.VoucherDto;
-import m2m_phase2.clothing.clothing.service.VoucherDetailsService;
+import m2m_phase2.clothing.clothing.service.NotificationService;
 import m2m_phase2.clothing.clothing.service.impl.VoucherDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +19,9 @@ import java.util.List;
 public class VoucherDetailsApi {
     @Autowired
     private VoucherDetailsServiceImpl voucherDetailsService;
+
+    @Autowired
+    private NotificationService notificationService;
 
     @PostMapping("/saveVoucherDetailsList")
     public ResponseEntity<?> doPostSaveVoucherDetailsList(@RequestBody List<VoucherDetailsDto> voucherDetailsDtoList) {

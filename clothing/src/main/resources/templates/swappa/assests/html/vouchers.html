@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/css/style.css">
+    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        .img-container {
+            height: 200px;
+            /* Điều chỉnh chiều cao tùy theo nhu cầu */
+            display: flex;
+            /* Sử dụng flexbox để căn chỉnh hình ảnh */
+            align-items: center;
+            /* Căn chỉnh hình ảnh theo trục dọc */
+            justify-content: center;
+            /* Căn chỉnh hình ảnh theo trục ngang */
+            overflow: hidden;
+            /* Đảm bảo ảnh không bị tràn ra ngoài */
+        }
+
+        .img-container img {
+            max-height: 100%;
+            /* Đảm bảo chiều cao của ảnh không vượt quá container */
+            width: auto;
+            /* Chiều rộng tự động điều chỉnh để duy trì tỷ lệ khung hình */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- header -->
+    <div>
+        <!-- mobileNav -->
+        <div class="d-block d-lg-none">
+            <div id="mobileNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+                <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
+                    <div class="container-sm">
+
+                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                            data-bs-target="#slide_menu" aria-controls="navbarSupportedContent" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+
+                        <a href="/trangchu" class="navbar-brand" title="Swappa">
+                            <img class="img-fluid"
+                                src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                alt="Swappa Logo">
+                        </a>
+
+                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                            data-bs-target="#slide_search" aria-controls="navbarSupportedContent" aria-expanded="false"
+                            aria-label="Search">
+                            <i class="fa-solid fa-search" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+
+        </div>
+        <!-- mainNav -->
+        <div class="d-none d-lg-block">
+            <!-- first-nav -->
+            <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+                <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
+                    <div class="container d-block">
+                        <div class="d-flex gap-3">
+                            <ul class="navbar-nav" role="presentation">
+                                <li class="nav-item">
+                                    <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
+                                        <img class="img-fluid"
+                                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                            width="167px" height="35px" alt="Bootstrap">
+                                    </a>
+                                </li>
+                            </ul>
+                            <div class="flex-grow-1">
+                                <form action="" class="d-flex align-items-center position-relative h-100">
+                                    <!-- {{keyword}} -->
+                                    <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
+                                    <input type="search" class="form-control rounded-0" id="navbar_search_input"
+                                        name="q" ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
+                                    <!-- </a> -->
+                                </form>
+                            </div>
+                            <ul class="navbar-nav" role="presentation">
+                                <li class="d-flex align-items-center justify-content-center">
+                                    <a href="/vouchers">
+                                        <i class="fa-solid fa-ticket fs-4 text-white"></i>
+                                    </a>
+                                </li>
+                                <li class="ms-3 d-flex align-items-center justify-content-center">
+                                    <div class="">
+                                        <a href="/userprofile">
+                                            <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                                <li class="ms-3 d-flex align-items-center justify-content-center">
+                                    <a href="/giohang" class="border border-0 position-relative"
+                                        style="background-color: rgb(18,17,13) !important;">
+                                        <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;"
+                                            aria-hidden="true"></i>
+                                        <span
+                                            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                            id="tongSoLuongSP">
+
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <!-- second-nav -->
+        </div>
+    </div>
+
+    <!-- main -->
+    <div>
+        <div class="container-fluid bg-semiBlack min-main-container-height">
+            <div class="py-2">
+                <div id="tooltip-bar">
+                </div>
+                <div id="breadscrum-bar">
+
+                </div>
+                <div id="message-block">
+
+                </div><!-- content-top -->
+
+                <section class="p-4 mb-2 text-center container text-bg-cf position-relative" id="voucher-section">
+                    <div class="voucher-banner">
+                        <div class="row">
+                            <img src="/assests/images/vouchers-category-banner-1440x421-01.jpeg" alt="">
+                        </div>
+                    </div>
+                    <div class="voucher-displayer mt-3">
+                        <div class="container">
+                            <div class="row overflow-x-auto flex-nowrap px-0">
+                                <div class="col-md-4">
+                                    <div class="card" style="background-color: #DAC0A3 !important;">
+                                        <div class="text-right p-2 voucher-provider"> <img
+                                                src="https://i.imgur.com/w68MQc4.png" width="120">
+                                        </div>
+                                        <div class="text-center"> <small class="text-uppercase flat">Voucher
+                                                name</small> </div>
+                                        <div class="d-flex justify-content-center px-2">
+                                            <div class="d-flex flex-row">
+                                                <span class="mt-0 off fw-bold">50% OFF</span> <sup
+                                                    class="mt-2 text-primary star">*</sup>
+                                            </div>
+                                        </div>
+                                        <div class="line">
+                                            <hr>
+                                        </div>
+                                        <div class="text-center mb-2">
+                                            <p class="text-uppercase">Valid till 23th August</p>
+                                            <button class="btn btn-coffee">Claim now!</button>
+                                            <!-- <button class="btn btn-coffee" disabled>Claimed</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card" style="background-color: #DAC0A3 !important;">
+                                        <div class="text-right p-2 voucher-provider"> <img
+                                                src="https://i.imgur.com/w68MQc4.png" width="120">
+                                        </div>
+                                        <div class="text-center"> <small class="text-uppercase flat">Voucher
+                                                name</small> </div>
+                                        <div class="d-flex justify-content-center px-2">
+                                            <div class="d-flex flex-row">
+                                                <span class="mt-0 off fw-bold">50% OFF</span> <sup
+                                                    class="mt-2 text-primary star">*</sup>
+                                            </div>
+                                        </div>
+                                        <div class="line">
+                                            <hr>
+                                        </div>
+                                        <div class="text-center mb-2">
+                                            <p class="text-uppercase">Valid till 23th August</p>
+                                            <button class="btn btn-coffee">Claim now!</button>
+                                            <!-- <button class="btn btn-coffee" disabled>Claimed</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card" style="background-color: #DAC0A3 !important;">
+                                        <div class="text-right p-2 voucher-provider"> <img
+                                                src="https://i.imgur.com/w68MQc4.png" width="120">
+                                        </div>
+                                        <div class="text-center"> <small class="text-uppercase flat">Voucher
+                                                name</small> </div>
+                                        <div class="d-flex justify-content-center px-2">
+                                            <div class="d-flex flex-row">
+                                                <span class="mt-0 off fw-bold">50% OFF</span> <sup
+                                                    class="mt-2 text-primary star">*</sup>
+                                            </div>
+                                        </div>
+                                        <div class="line">
+                                            <hr>
+                                        </div>
+                                        <div class="text-center mb-2">
+                                            <p class="text-uppercase">Valid till 23th August</p>
+                                            <button class="btn btn-coffee">Claim now!</button>
+                                            <!-- <button class="btn btn-coffee" disabled>Claimed</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="card" style="background-color: #DAC0A3 !important;">
+                                        <div class="text-right p-2 voucher-provider"> <img
+                                                src="https://i.imgur.com/w68MQc4.png" width="120">
+                                        </div>
+                                        <div class="text-center"> <small class="text-uppercase flat">Voucher
+                                                name</small> </div>
+                                        <div class="d-flex justify-content-center px-2">
+                                            <div class="d-flex flex-row">
+                                                <span class="mt-0 off fw-bold">50% OFF</span> <sup
+                                                    class="mt-2 text-primary star">*</sup>
+                                            </div>
+                                        </div>
+                                        <div class="line">
+                                            <hr>
+                                        </div>
+                                        <div class="text-center mb-2">
+                                            <p class="text-uppercase">Valid till 23th August</p>
+                                            <button class="btn btn-coffee">Claim now!</button>
+                                            <!-- <button class="btn btn-coffee" disabled>Claimed</button> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);" class="sticky-bottom">
+        <div class="container pt-2 pb-2">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+
+            </div>
+            <div class="row row-cols-1 row-cols-md-3">
+                <div class="col d-flex justify-content-center align-items-center">
+                    <div class=" text-white">
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-facebook fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-instagram fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-youtube fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-linkedin fs-1"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                            <i class="fa-brands fa-square-reddit fs-1"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="col text-center ">
+                    <a href="./index.html"><img
+                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
+                            class="img-fluid" alt=""></a>
+                </div>
+                <div class="col text-center text-white d-flex justify-content-center align-items-center">
+                    <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+</script>
+
+</html>

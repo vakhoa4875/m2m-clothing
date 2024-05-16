@@ -1,29 +1,24 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
-import java.security.SecureRandom;
-import java.sql.SQLException;
-import java.util.Objects;
-
-import jakarta.servlet.http.HttpServletRequest;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.constant.AccountEnum;
 import m2m_phase2.clothing.clothing.data.dto.AccountDto;
-import m2m_phase2.clothing.clothing.data.dto.UserDto;
-import m2m_phase2.clothing.clothing.data.model.UserM;
-import m2m_phase2.clothing.clothing.data.variable.StaticVariable;
-import m2m_phase2.clothing.clothing.service.UserService;
+import m2m_phase2.clothing.clothing.data.entity.Account;
+import m2m_phase2.clothing.clothing.repository.AccountGGRepo;
+import m2m_phase2.clothing.clothing.repository.AccountRepo;
+import m2m_phase2.clothing.clothing.service.AccountService;
+import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import jakarta.mail.internet.MimeMessage;
-import jakarta.servlet.http.HttpSession;
-import m2m_phase2.clothing.clothing.data.entity.Account;
-import m2m_phase2.clothing.clothing.repository.AccountRepo;
-import m2m_phase2.clothing.clothing.service.AccountService;
-import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
+import java.security.SecureRandom;
+import java.sql.SQLException;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -31,6 +26,8 @@ public class AccountServiceImpl implements AccountService {
 
     @Autowired
     private AccountRepo repo;
+    @Autowired
+    private AccountGGRepo accountGGRepo;
     @Autowired
     private JavaMailSender emailSender;
     @Autowired
@@ -199,8 +196,8 @@ public class AccountServiceImpl implements AccountService {
         }
         // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
         session.setAttribute("loggedInUser", accountRequest.getEmail());
-        StaticVariable.sessionEmail = accountRequest.getEmail();
-
+        model.addAttribute("iduser",existingAccount.getUserId());
+        session.setAttribute("iduser", existingAccount.getUserId());
         return "swappa/assests/html/trangchu";
     }
 
@@ -221,6 +218,25 @@ public class AccountServiceImpl implements AccountService {
         }
         var createdAccount = repo.save(AccountDto.convertAccountDtoToAccount(accountDto));
         return AccountEnum.succeed.getValue();
+    }
+
+    @Override
+    public long getTotalAccounts() {
+        long totalAccountsFromAccount = repo.count();
+        long totalAccountsFromAccountGG = accountGGRepo.count();
+        return totalAccountsFromAccount + totalAccountsFromAccountGG;
+    }
+
+    @Override
+    public long getGGAccount() {
+        long totalAccountsFromAccountGG = accountGGRepo.count();
+        return totalAccountsFromAccountGG;
+    }
+
+    @Override
+    public long getDKAccount() {
+        long totalAccountsFromAccount = repo.count();
+        return totalAccountsFromAccount;
     }
 
     public boolean isLoggedIn(HttpSession session) {

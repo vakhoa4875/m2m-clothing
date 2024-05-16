@@ -274,7 +274,7 @@ begin
     COMMIT TRANSACTION;
 end
 go
---CREATE OR ALTER TRIGGER gen_user_info 
+--CREATE OR ALTER TRIGGER gen_user_info
 --ON Account
 --AFTER INSERT
 --AS
@@ -311,7 +311,6 @@ Create table [OrderDetail]
     quatity         int,
     toal_product    float
 )
-
 
 go
 create or alter trigger trigger_after_create_Order
@@ -376,6 +375,13 @@ create or alter trigger trigger_after_insert_account
         from inserted i
     end
 go
+
+create table Notification
+(
+    user_id INT,
+    namenotification nvarchar(255),
+)
+go
 create or alter trigger trigger_after_insert_accountgg
     on [AccountGG]
     for insert
@@ -391,9 +397,34 @@ create or alter trigger trigger_after_insert_accountgg
                 i.user_id_gg
         from inserted i
     end
+go
+   CREATE OR ALTER TRIGGER trigger_after_insert_voucherdetails
+    ON VoucherDetails
+    for INSERT
+    AS
+    BEGIN
+        INSERT INTO Notification (user_id, namenotification)
+        SELECT i.user_id,null
+        FROM inserted i;
+    END;
 
 
 
+
+	SELECT COUNT(*) AS total_accounts FROM
+(
+    SELECT user_id FROM Account
+    UNION ALL
+    SELECT user_id_gg FROM AccountGG
+) AS combined_accounts;
+
+SELECT COUNT(*) AS total_accounts_account FROM Account;
+SELECT COUNT(*) AS total_accounts_accountgg FROM AccountGG;
+SELECT COUNT(*) AS so_loai_san_pham FROM Category;
+SELECT c.category_name, COUNT(p.product_id) AS so_san_pham
+FROM Category c
+LEFT JOIN Product p ON c.category_id = p.category_id
+GROUP BY c.category_name;
 
 
 

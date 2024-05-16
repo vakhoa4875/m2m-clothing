@@ -18,7 +18,7 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 	
 	Product findByslugUrl(String slugUrl);
 
-    Product findByproductId(int productId);
+    Product findByProductId(int productId);
 	
     @Query("SELECT c  FROM Product p JOIN p.category c WHERE p.productId = :productId")
     Category findCategoryNameByProductId(Integer productId);
@@ -59,4 +59,7 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
                         @Param("productId") int product_id);
     @Transactional
     void deleteByProductId(int product_id);
+
+    @Query("SELECT COUNT(p) FROM Product p WHERE p.category.category_id = :categoryId")
+    Long countByCategory(@Param("categoryId") Integer categoryId);
 }

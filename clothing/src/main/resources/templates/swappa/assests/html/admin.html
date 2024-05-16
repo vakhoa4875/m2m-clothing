@@ -19,7 +19,6 @@
         }
 
 
-
     </style>
 
     <style>
@@ -46,12 +45,36 @@
             margin-top: 20px;
         }
 
-         .avatar {
-             width: 100%; /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của ô chứa */
-             height: auto; /* Đảm bảo tỉ lệ khung hình được bảo toàn */
-             max-width: 150px; /* Kích thước tối đa của ảnh */
-             max-height: 150px; /* Kích thước tối đa của ảnh */
-         }
+        .avatar {
+            width: 100%; /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của ô chứa */
+            height: auto; /* Đảm bảo tỉ lệ khung hình được bảo toàn */
+            max-width: 150px; /* Kích thước tối đa của ảnh */
+            max-height: 150px; /* Kích thước tối đa của ảnh */
+        }
+        /* Tùy chỉnh kích thước của các ô */
+        .col {
+            width: 33.33%;
+            /* Chia đều không gian cho 3 ô */
+        }
+        /* Tùy chỉnh các thuộc tính */
+        .custom-bg-color {
+            background-color: #f0f0f0; /* Màu nền */
+        }
+
+        .custom-border {
+            border: 1px solid #ccc; /* Viền */
+        }
+
+        .custom-shadow {
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng */
+        }
+
+        /* Đảm bảo các ô chiếm không gian chính xác */
+        .col {
+            margin: 10px;
+            width: 33.33%;
+            padding: 50px; /* Khoảng cách bên trong ô */
+        }
 
     </style>
 
@@ -164,8 +187,14 @@
                                     aria-controls="v-pills-home-status" aria-selected="false">STATUS PRODUCT
                             </button>
                             <button class="nav-link mt-1 text-black" id="v-pills-home-status-productSale"
-                                    data-bs-toggle="pill" data-bs-target="#v-pills-home-statusProductSale" type="button" role="tab"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-home-statusProductSale" type="button"
+                                    role="tab"
                                     aria-controls="v-pills-home-statusProductSale" aria-selected="false">SALE
+                            </button>
+                            <button class="nav-link mt-1 text-black" id="v-pills-home-status-statistical"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-home-statistical" type="button"
+                                    role="tab"
+                                    aria-controls="v-pills-home-statistical" aria-selected="false">STATISTICAL
                             </button>
                             <a class="nav-link mt-1 text-black" href="/admin/logout">Log Out
                             </a>
@@ -227,7 +256,7 @@
                                     </tr>
                                     </thead>
                                     <tbody id="listproduct">
-<!--                                    fill all product-->
+                                    <!--                                    fill all product-->
                                     </tbody>
                                 </table>
                             </div>
@@ -242,7 +271,8 @@
                                 <h5 class="text-black ps-3 d-flex align-items-center mb-0">VOUCHER ACCOUNT
                                 </h5>
                                 <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
-                                        data-bs-target="#exampleModalToggleVoucher" data-bs-toggle="modal" id="newInsButtonAccount"
+                                        data-bs-target="#exampleModalToggleVoucher" data-bs-toggle="modal"
+                                        id="newInsButtonAccount"
                                         style="padding: 7px 12px 7px 12px;">
                                     <i class="fa-solid fa-plus " aria-hidden="true"></i>
                                 </button>
@@ -277,11 +307,11 @@
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
                                 <h5 class="text-black ps-3 d-flex align-items-center mb-0">STATUS PRODUCT
                                 </h5>
-<!--                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"-->
-<!--                                        data-bs-target="#exampleModalAccpectProduct" data-bs-toggle="modal"-->
-<!--                                        style="padding: 7px 12px 7px 12px;">-->
-<!--                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>-->
-<!--                                </button>-->
+                                <!--                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"-->
+                                <!--                                        data-bs-target="#exampleModalAccpectProduct" data-bs-toggle="modal"-->
+                                <!--                                        style="padding: 7px 12px 7px 12px;">-->
+                                <!--                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>-->
+                                <!--                                </button>-->
                             </div>
                         </div>
                         <div class="card-body p-0 mx-3 pb-2">
@@ -315,7 +345,8 @@
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
                                 <h5 class="text-black ps-3 d-flex align-items-center mb-0">Sale</h5>
                                 <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
-                                        data-bs-target="#exampleModalToggleSaleProduct" data-bs-toggle="modal" id="newInsButtonSale"
+                                        data-bs-target="#exampleModalToggleSaleProduct" data-bs-toggle="modal"
+                                        id="newInsButtonSale"
                                         style="padding: 7px 12px 7px 12px;">
                                     <i class="fa-solid fa-plus " aria-hidden="true"></i>
                                 </button>
@@ -323,10 +354,15 @@
                         </div>
                         <ul class="nav nav-tabs mx-3 mt-1" id="myTab" role="tablist">
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="sale-tab" data-bs-toggle="tab" data-bs-target="#sale" type="button" role="tab" aria-controls="sale" aria-selected="true">Sale</button>
+                                <button class="nav-link active" id="sale-tab" data-bs-toggle="tab"
+                                        data-bs-target="#sale" type="button" role="tab" aria-controls="sale"
+                                        aria-selected="true">Sale
+                                </button>
                             </li>
                             <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="product-tab" data-bs-toggle="tab" data-bs-target="#product" type="button" role="tab" aria-controls="product" aria-selected="false">Product</button>
+                                <button class="nav-link" id="product-tab" data-bs-toggle="tab" data-bs-target="#product"
+                                        type="button" role="tab" aria-controls="product" aria-selected="false">Product
+                                </button>
                             </li>
                         </ul>
                         <div class="tab-content mx-3" id="myTabContent">
@@ -373,6 +409,70 @@
                         </div>
                     </div>
                 </div>
+                <!--                Bắt đầu thống kê-->
+                <div class="tab-pane" id="v-pills-home-statistical" role="tabpanel" aria-labelledby="v-pills-home-product"
+                     tabindex="0">
+                    <div class="card my-1">
+                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                            <div
+                                    class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Statistical</h5>
+                            </div>
+                        </div>
+                        <ul class="nav nav-tabs mx-3 mt-1" id="myTab-ThongKe" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="thongKe-tab" data-bs-toggle="tab"
+                                        data-bs-target="#thongKeUser" type="button" role="tab" aria-controls="thongKe"
+                                        aria-selected="true">Statistical
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="product-tab-thongKe" data-bs-toggle="tab"
+                                        data-bs-target="#thongKeProduct" type="button" role="tab" aria-controls="product"
+                                        aria-selected="false">Thống kê sản phẩm
+                                </button>
+                            </li>
+                        </ul>
+                        <div class="tab-content mx-3" id="myTabContent2">
+                            <div class="tab-pane fade show active" id="thongKeUser" role="tabpanel"
+                                 aria-labelledby="thongKe-tab">
+                                <script src="https://www.gstatic.com/charts/loader.js"></script>
+                                <!-- Phần của bản 1 -->
+                                <div class="table-responsive p-0 " id="tableThongKeUser">
+                                    <div  class=" container-fluid">
+                                        <div class="row">
+                                            <a href="#"  class="col custom-bg-color custom-border custom-shadow bg-success rounded-2 text-decoration-none text-white"><div>Number of accounts: <span id="totalAccountsSpan"> </span></div></a>
+                                            <a href="#"  class="col custom-bg-color custom-border custom-shadow bg-warning rounded-2 text-decoration-none text-white"><div >Total product quantity: <span id="totalProductSpan"></span></div></a>
+                                            <a href="#"  class="col custom-bg-color custom-border custom-shadow bg-info rounded-2 text-decoration-none text-white"><div >Product Type: <span id="totalCategorySpan"></span></div></a>
+                                        </div>
+
+
+                                        <div class="row mt-3 ">
+                                            <div class="col-xxl-6">
+                                                <div id="myChart1" style="width:99%; max-width:99%; height:99%;"></div>
+                                            </div>
+                                            <div class="col-xxl-6 border-danger border-1">
+                                                <div id="myChart2" style="width:99%; max-width:99%; height:99%;"></div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                                <!-- Kết thúc phần bản 1 -->
+                            </div>
+                            <div class="tab-pane fade" id="thongKeProduct" role="tabpanel"
+                                 aria-labelledby="product-tab-thongKe">
+                                <!-- Phần của bản 2 -->
+                                <div class="table-responsive p-0" id="tableThongKeProduct">
+                                    <h1>bảng 2</h1>
+                                </div>
+                                <!-- Kết thúc phần bản 2 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--                Kết thúc thống kê-->
             </div>
         </div>
     </div>
@@ -396,11 +496,11 @@
                     <input type="text" class="form-control ps-3" id="inUsername"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                 </div>
-<!--                <div class="mb-2 ">-->
-<!--                    <label for="inFullname" class="form-label">Fullname</label>-->
-<!--                    <input type="text" class="form-control ps-3" id="inFullname"-->
-<!--                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">-->
-<!--                </div>-->
+                <!--                <div class="mb-2 ">-->
+                <!--                    <label for="inFullname" class="form-label">Fullname</label>-->
+                <!--                    <input type="text" class="form-control ps-3" id="inFullname"-->
+                <!--                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">-->
+                <!--                </div>-->
                 <div class="mb-2 ">
                     <label for="inEmail" class="form-label">Email</label>
                     <input type="email" class="form-control ps-3" id="inEmail"
@@ -422,14 +522,14 @@
                     <label for="inRole" class="form-label me-3 m-0">Role</label>
                     <select class="form-select" id="inRole" aria-label="Default select example">
                         <option value="true">Admin</option>
-<!--                        <option value="2">Manager</option>-->
+                        <!--                        <option value="2">Manager</option>-->
                         <option value="false">User</option>
                     </select>
                 </div>
-<!--                <div class="mb-2">-->
-<!--                    <label for="inDescription" class="form-label">Description</label>-->
-<!--                    <textarea class="form-control" id="inDescription" rows="3"></textarea>-->
-<!--                </div>-->
+                <!--                <div class="mb-2">-->
+                <!--                    <label for="inDescription" class="form-label">Description</label>-->
+                <!--                    <textarea class="form-control" id="inDescription" rows="3"></textarea>-->
+                <!--                </div>-->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-success" data-bs-dismiss="modal"
@@ -559,16 +659,20 @@
                             <div class="mb-2">
                                 <div class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
                                     <div class="embed-responsive embed-responsive-16by9">
-                                        <video  id="previewVideoIns" class="embed-responsive-item" alt="Chọn video">  <source src=""> </video>
+                                        <video id="previewVideoIns" class="embed-responsive-item" alt="Chọn video">
+                                            <source src="">
+                                        </video>
                                     </div>
-                                    </div>
+                                </div>
                                 <div class="col-4">
                                     <div class="text-center my-3" style="margin-right: 10px;">
-                                        <input type="file" class="form-control" id="fileInput4" accept="video/*" onchange="productservices.previewVideo(event,'previewVideoIns','nameVideoIns')">
+                                        <input type="file" class="form-control" id="fileInput4" accept="video/*"
+                                               onchange="productservices.previewVideo(event,'previewVideoIns','nameVideoIns')">
                                         <label id="nameVideoIns" style="display: none "></label>
                                     </div>
                                 </div>
-                                <select class="form-select w-auto" aria-label="Default select example" id="formSelectIns">
+                                <select class="form-select w-auto" aria-label="Default select example"
+                                        id="formSelectIns">
                                     <option value="1">Outerwear</option>
                                     <option value="2">Tops</option>
                                     <option value="3">Bottoms</option>
@@ -581,7 +685,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="productservices.inSertProduct();">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                            onclick="productservices.inSertProduct();">
                         Add new Product
                     </button>
                 </div>
@@ -596,16 +701,17 @@
     <div class="modal-dialog modal-dialog-centered ">
         <div class="modal-content">
             <div class="modal-header">
-<!--                mơi vcat ne-->
+                <!--                mơi vcat ne-->
                 <h1 class="modal-title fs-5" id="updateProductModal">Product</h1>
                 <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
                         class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
             </div>
             <div class="modal-body" id="updateProductModalBody">
-            <!--getproductfindbyid-->
+                <!--getproductfindbyid-->
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="productservices.updateProduct();">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                        onclick="productservices.updateProduct();">
                     Save changes
                 </button>
             </div>
@@ -625,7 +731,8 @@
             <div class="modal-body">Are your sure to delete this user out of your system?</div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="productservices.callFuntionDelete()">
+                <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                        onclick="productservices.callFuntionDelete()">
                     I'm sure!
                 </button>
             </div>
@@ -696,7 +803,7 @@
                 <div class="mb-2 ">
                     <label for="updateIDVoucher" class="form-label">ID Voucher</label>
                     <input type="text" class="form-control ps-3" id="updateIDVoucher" disabled
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" >
+                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                     <label for="updateNameVoucher" class="form-label">Name Voucher</label>
                     <input type="text" class="form-control ps-3" id="updateNameVoucher"
                            aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
@@ -793,13 +900,14 @@
             <div class="modal-body">
                 <div class="text-center">
                     <h3>
-                        Bạn có chắc là số lượng đơn hàng đã đủ cho mã đơn hàng "<span id="idProduct" class="fw-bolder"></span>" <br>
+                        Bạn có chắc là số lượng đơn hàng đã đủ cho mã đơn hàng "<span id="idProduct"
+                                                                                      class="fw-bolder"></span>" <br>
                         <span class="badge text-bg-warning">Nhấn xác nhận,nếu đã chắc</span>
                     </h3>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close"v>
+                <button type="submit" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close" v>
                     Close
                 </button>
                 <button type="submit" class="btn btn-outline-danger" data-bs-dismiss="modal" id="updateStatusProduct">
@@ -812,7 +920,8 @@
 
 <!--==================================================MODAL SALE==============================================-->
 <!--insert modal Sale-->
-<div class="modal fade modal-lg" id="exampleModalToggleSaleProduct" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+<div class="modal fade modal-lg" id="exampleModalToggleSaleProduct" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel"
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -854,7 +963,8 @@
 
 
 <!-- modal sửa Account Information-->
-<div class="modal fade modal-lg" id="exampleModalUpSaleProduct" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+<div class="modal fade modal-lg" id="exampleModalUpSaleProduct" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel"
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -900,24 +1010,26 @@
     </div>
 </div>
 
-<div class="modal fade modal-lg" id="exampleModalUpSaleProductFormSale" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
+<div class="modal fade modal-lg" id="exampleModalUpSaleProductFormSale" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel"
      tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" >Sale Infomation</h1>
+                <h1 class="modal-title fs-5">Sale Infomation</h1>
                 <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
                         class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
             </div>
             <div class="modal-body">
                 <div class="mb-2">
-                    <select class="form-select form-select-sm" style="height: 36px;" aria-label=".form-select-sm example" id="productSale">
+                    <select class="form-select form-select-sm" style="height: 36px;"
+                            aria-label=".form-select-sm example" id="productSale">
                         <option selected>Vui lòng chọn sale cho mặt hảng của bạn</option>
                     </select>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="saveSaleProduct" >
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="saveSaleProduct">
                     Save changes sale from Product
                 </button>
             </div>
@@ -1002,5 +1114,126 @@
 <!--        }-->
 <!--    });-->
 <!--</script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(fetchDataAndDrawChart);
 
+    function fetchDataAndDrawChart() {
+        // Gửi yêu cầu AJAX để nhận dữ liệu từ endpoint API và vẽ biểu đồ sau khi nhận được dữ liệu
+        $.when(
+            $.ajax({
+                url: '/api/postAccountDK',
+                method: 'POST'
+            }),
+            $.ajax({
+                url: '/api/postAccountGG',
+                method: 'POST'
+            })
+        ).done(function(responseDK, responseGG) {
+            // Xây dựng mảng dữ liệu từ phản hồi nhận được
+            const data = google.visualization.arrayToDataTable([
+                ['Country', 'Mhl'],
+                ['Registered account', responseDK[0]],
+                ['Google Account', responseGG[0]]
+            ]);
+
+            // Cài đặt các tùy chọn cho biểu đồ
+            const options = {
+                title: 'User statistics',
+                is3D: true
+            };
+
+            // Vẽ biểu đồ
+            const chart = new google.visualization.PieChart(document.getElementById('myChart1'));
+            chart.draw(data, options);
+        });
+    }
+</script>
+<script>
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        // Gọi API để lấy dữ liệu số lượng sản phẩm cho mỗi loại sản phẩm
+        fetch('/api/getProductCountPerCategory')
+            .then(response => response.json())
+            .then(data => {
+                    // Chuyển dữ liệu sang định dạng array để sử dụng trong biểu đồ
+                    const chartData = Object.entries(data);
+
+                    // Thêm tiêu đề cột
+                    chartData.unshift(['Product type', 'Products']);
+                    const dataTable = google.visualization.arrayToDataTable(chartData); // Chuyển dữ liệu sang định dạng DataTable của Google Charts
+                const options = {
+                    title: 'Product statistics by type',
+                    chartArea: { width: 'auto' },
+                    hAxis: {
+                        title: 'Quantity',
+                        minValue: 0
+                    },
+                    is3D: true,
+                    pieSliceText: 'percentage' // Hiển thị phần trăm trên biểu đồ bánh
+                };
+
+                    const chart = new google.visualization.PieChart(document.getElementById('myChart2')); // Vẽ biểu đồ cột
+                    chart.draw(dataTable, options);
+                })
+                .catch(error => console.error('Lỗi khi tải dữ liệu:', error));
+        }
+    </script>
+
+<script>
+    // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
+    function updateTotalAccounts() {
+        fetch('/api/getAccountData')
+            .then(response => response.json())
+            .then(data => {
+                const totalAccounts = data; // Biến chứa tổng số tài khoản nhận được từ API
+                const spanElement = document.getElementById('totalAccountsSpan');
+                if (spanElement) {
+                    spanElement.textContent = totalAccounts;
+                }
+            })
+            .catch(error => console.error('Error fetching total accounts:', error));
+    }
+
+    // Gọi hàm để cập nhật tổng số tài khoản khi trang được tải
+    window.addEventListener('DOMContentLoaded', updateTotalAccounts);
+</script>
+<script>
+    // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
+    function updateTotalAccounts() {
+        fetch('/api/getProduct')
+            .then(response => response.json())
+            .then(data => {
+                const totalProduct = data; // Biến chứa tổng số tài khoản nhận được từ API
+                const spanElement = document.getElementById('totalProductSpan');
+                if (spanElement) {
+                    spanElement.textContent = totalProduct;
+                }
+            })
+            .catch(error => console.error('Error fetching total accounts:', error));
+    }
+    // Gọi hàm để cập nhật tổng số tài khoản khi trang được tải
+    window.addEventListener('DOMContentLoaded', updateTotalAccounts);
+</script>
+
+<script>
+    // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
+    function updateTotalAccounts() {
+        fetch('/api/getCategory')
+            .then(response => response.json())
+            .then(data => {
+                const getCategory = data; // Biến chứa tổng số tài khoản nhận được từ API
+                const spanElement = document.getElementById('totalCategorySpan');
+                if (spanElement) {
+                    spanElement.textContent = getCategory;
+                }
+            })
+            .catch(error => console.error('Error fetching total accounts:', error));
+    }
+    // Gọi hàm để cập nhật tổng số tài khoản khi trang được tải
+    window.addEventListener('DOMContentLoaded', updateTotalAccounts);
+</script>
 </html>
