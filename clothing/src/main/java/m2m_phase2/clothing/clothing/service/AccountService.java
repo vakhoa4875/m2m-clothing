@@ -24,4 +24,8 @@ public interface AccountService {
 
     // create new account from admin
     String createAccount(AccountDto accountDto) throws SQLException, NullPointerException;
+
+    public long getTotalAccounts();
+    public long getGGAccount();
+    public long getDKAccount();
 }
