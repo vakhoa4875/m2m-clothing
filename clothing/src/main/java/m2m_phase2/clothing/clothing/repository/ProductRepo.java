@@ -18,7 +18,7 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 	
 	Product findByslugUrl(String slugUrl);
 
-    Product findByproductId(int productId);
+    Product findByProductId(int productId);
 	
     @Query("SELECT c  FROM Product p JOIN p.category c WHERE p.productId = :productId")
     Category findCategoryNameByProductId(Integer productId);
