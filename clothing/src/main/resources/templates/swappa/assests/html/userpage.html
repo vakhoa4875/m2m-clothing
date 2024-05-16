@@ -9,6 +9,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <!-- Tải thư viện Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <style>
 
         /* Order status */
@@ -134,6 +136,13 @@
             height: auto;
             margin: auto;
         }
+
+        .dropdown-item:hover {
+            background-color: #b7b6b6; /* Màu nền khi hover */
+            color: white;
+            cursor: pointer;
+        }
+
     </style>
     <script type="text/javascript">
         $(document).ready(function () {
@@ -233,6 +242,29 @@
                                         </span>
                                 </a>
                             </li>
+                            <li class="ms-3 d-flex align-items-center justify-content-center dropdown">
+                                <a href="" class="border border-0 position-relative" data-toggle="dropdown"
+                                   style="background-color: rgb(18,17,13) !important;">
+                                    <i class="fa-regular fa-bell" style="color: white"></i>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="soluongthongbao">
+                                            1
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu" style="top: 35px">
+                                    <div id="thongbao">
+<!--                                        <div class="dropdown-item" >-->
+<!--                                           <div>Thông báo từ admin</div>-->
+<!--                                        </div>-->
+                                    </div>
+                                    <div class="dropdown-item">
+                                        <div class="text-center">
+                                            <a href="" id="xoathongbao">
+                                                <i class="fa-solid fa-trash"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
                         </ul>
                     </div>
                     <div class="d-flex justify-content-around pb-1" id="userListCategory">
@@ -306,6 +338,7 @@
                                                 <div class="col-xl-10 col-lg-12">
                                                     <input type="text" readonly class="form-control-plaintext"
                                                            id="staticName" th:value="*{username}" disabled>
+
                                                 </div>
                                             </div>
                                             <div class="mb-3 row">
@@ -335,6 +368,7 @@
                                                 </div>
 
                                             </div>
+                                            <p id="iduser" th:text="${userM.getId()}" style="position: absolute; top: 95px; left: 11px; color: white"></p>
                                             <div class="mb-3 row alert alert-success" id="updateSuccess"></div>
                                             <div class="mb-3 row my-3 alert alert-danger" id="updateError"></div>
                                         </div>
@@ -738,6 +772,53 @@
     }
 
 
+</script>
+<script >
+    $(document).ready(function () {
+
+        $('#xoathongbao').click(function () {
+            var id = $('#iduser').text();
+            xoathongbao(id);
+        });
+
+        var soluong = 0;
+
+        var id = $('#iduser').text();
+        $.ajax({
+            url: '/finduseridwitchNotification?id='+id,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
+                soluong = data.length;
+                $('#soluongthongbao').text(soluong)
+                // Hiển thị dữ liệu trong bảng
+                data.forEach(function (order) {
+                    $('#thongbao').append(`
+                        <div class="dropdown-item">
+                              <div>Có mã giảm giá mới!</div>
+                        </div>
+                `);
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error:', errorThrown);
+            }
+        });
+
+        function xoathongbao(id){
+            $.ajax({
+                url: '/deleteNotification?id='+id,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log("xóa thành công")
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        }
+    });
 </script>
 
 
