@@ -25,4 +25,9 @@ public class StatisticServiceImpl implements StatisticService {
         }
         return top10;
     }
+
+    @Override
+    public ArrayList<String> getActiveMonths() {
+        return null;
+    }
 }

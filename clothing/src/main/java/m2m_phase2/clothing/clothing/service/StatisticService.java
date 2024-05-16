@@ -4,4 +4,5 @@ import java.util.ArrayList;
 
 public interface StatisticService {
     ArrayList<Object[]> getTop10SoldProductByMonthAndYear(int month, int year);
+    ArrayList<String> getActiveMonths();
 }

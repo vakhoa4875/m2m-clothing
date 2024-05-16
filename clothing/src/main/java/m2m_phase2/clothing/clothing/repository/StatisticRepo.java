@@ -12,4 +12,7 @@ import java.util.ArrayList;
 public interface StatisticRepo extends JpaRepository<Product, Integer> {
     @Query(nativeQuery = true, value = "exec dbo.getTop10SoldProduct :month, :year")
     ArrayList<Object[]> getTop10SoldProductByMonthAndYear(@Param("month") int month,@Param("year") int year);
+
+    @Query(nativeQuery = true, value = "exec dbo.getActiveMonths")
+    ArrayList<String> getActiveMonths();
 }
