@@ -75,7 +75,7 @@
         .col {
             margin: 10px;
             width: 33.33%;
-            padding: 60px; /* Khoảng cách bên trong ô */
+            padding: 50px; /* Khoảng cách bên trong ô */
         }
 
     </style>
@@ -409,14 +409,14 @@
                         <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                             <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Thống kê</h5>
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Statistical</h5>
                             </div>
                         </div>
                         <ul class="nav nav-tabs mx-3 mt-1" id="myTab-ThongKe" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="thongKe-tab" data-bs-toggle="tab"
                                         data-bs-target="#thongKeUser" type="button" role="tab" aria-controls="thongKe"
-                                        aria-selected="true">Thống kê
+                                        aria-selected="true">Statistical
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
@@ -432,32 +432,21 @@
                                  aria-labelledby="thongKe-tab">
                                 <script src="https://www.gstatic.com/charts/loader.js"></script>
                                 <!-- Phần của bản 1 -->
-                                <div class="table-responsive p-0" id="tableThongKeUser">
-                                    <div class="container-fluid">
+                                <div class="table-responsive p-0 " id="tableThongKeUser">
+                                    <div  class=" container-fluid">
                                         <div class="row">
-                                            <a href="#"
-                                               class="col custom-bg-color custom-border custom-shadow bg-success rounded-2 text-decoration-none text-white">
-                                                <div>Số lượng account: <span id="totalAccountsSpan"> </span></div>
-                                            </a>
-                                            <a href="#"
-                                               class="col custom-bg-color custom-border custom-shadow bg-warning rounded-2 text-decoration-none text-white">
-                                                <div>Số lượng tổng Product: <span id="totalProductSpan"></span></div>
-                                            </a>
-                                            <a href="#"
-                                               class="col custom-bg-color custom-border custom-shadow bg-info rounded-2 text-decoration-none text-white">
-                                                <div>Loại sản phẩm: <span id="totalCategorySpan"></span></div>
-                                            </a>
+                                            <a href="#"  class="col custom-bg-color custom-border custom-shadow bg-success rounded-2 text-decoration-none text-white"><div>Number of accounts: <span id="totalAccountsSpan"> </span></div></a>
+                                            <a href="#"  class="col custom-bg-color custom-border custom-shadow bg-warning rounded-2 text-decoration-none text-white"><div >Total product quantity: <span id="totalProductSpan"></span></div></a>
+                                            <a href="#"  class="col custom-bg-color custom-border custom-shadow bg-info rounded-2 text-decoration-none text-white"><div >Product Type: <span id="totalCategorySpan"></span></div></a>
                                         </div>
 
 
-                                        <div class="row mt-3">
-                                            <div class="col-5">
-                                                <div id="myChart1"
-                                                     style="width:100%; max-width:600px; height:500px;"></div>
+                                        <div class="row mt-3 ">
+                                            <div class="col-xxl-6">
+                                                <div id="myChart1" style="width:99%; max-width:99%; height:99%;"></div>
                                             </div>
-                                            <div class="col-7 border-danger border-1">
-                                                <div id="myChart2"
-                                                     style="width:100%; max-width:600px; height:500px;"></div>
+                                            <div class="col-xxl-6 border-danger border-1">
+                                                <div id="myChart2" style="width:99%; max-width:99%; height:99%;"></div>
                                             </div>
                                         </div>
 
@@ -1136,13 +1125,13 @@
             // Xây dựng mảng dữ liệu từ phản hồi nhận được
             const data = google.visualization.arrayToDataTable([
                 ['Country', 'Mhl'],
-                ['AccountDK', responseDK[0]],
-                ['AccountGG', responseGG[0]]
+                ['Registered account', responseDK[0]],
+                ['Google Account', responseGG[0]]
             ]);
 
             // Cài đặt các tùy chọn cho biểu đồ
             const options = {
-                title: 'Thống kê người dùng',
+                title: 'User statistics',
                 is3D: true
             };
 
@@ -1161,35 +1150,29 @@
         fetch('/api/getProductCountPerCategory')
             .then(response => response.json())
             .then(data => {
-                // Chuyển dữ liệu sang định dạng array để sử dụng trong biểu đồ
-                const chartData = Object.entries(data);
+                    // Chuyển dữ liệu sang định dạng array để sử dụng trong biểu đồ
+                    const chartData = Object.entries(data);
 
-                // Thêm tiêu đề cột
-                chartData.unshift(['Loại sản phẩm', 'Số lượng sản phẩm']);
-
-                // Chuyển dữ liệu sang định dạng DataTable của Google Charts
-                const dataTable = google.visualization.arrayToDataTable(chartData);
-
-                // Thiết lập các tùy chọn cho biểu đồ
+                    // Thêm tiêu đề cột
+                    chartData.unshift(['Product type', 'Products']);
+                    const dataTable = google.visualization.arrayToDataTable(chartData); // Chuyển dữ liệu sang định dạng DataTable của Google Charts
                 const options = {
-                    title: 'Thống kê sản phẩm theo loại',
-                    chartArea: {width: '50%'},
+                    title: 'Product statistics by type',
+                    chartArea: { width: 'auto' },
                     hAxis: {
-                        title: 'Số lượng',
+                        title: 'Quantity',
                         minValue: 0
                     },
-                    vAxis: {
-                        title: 'Loại sản phẩm'
-                    }
+                    is3D: true,
+                    pieSliceText: 'percentage' // Hiển thị phần trăm trên biểu đồ bánh
                 };
 
-                // Vẽ biểu đồ cột
-                const chart = new google.visualization.BarChart(document.getElementById('myChart2'));
-                chart.draw(dataTable, options);
-            })
-            .catch(error => console.error('Lỗi khi tải dữ liệu:', error));
-    }
-</script>
+                    const chart = new google.visualization.PieChart(document.getElementById('myChart2')); // Vẽ biểu đồ cột
+                    chart.draw(dataTable, options);
+                })
+                .catch(error => console.error('Lỗi khi tải dữ liệu:', error));
+        }
+    </script>
 
 <script>
     // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
