@@ -105,7 +105,7 @@ public class HomeController {
             return "swappa/assests/html/userpage";
         } else {
             // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
-            return "swappa/assests/html/acc_login";
+            return "redirect:/login";
         }
     }
 

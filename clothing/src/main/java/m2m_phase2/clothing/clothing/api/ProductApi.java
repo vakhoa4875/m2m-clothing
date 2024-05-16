@@ -12,6 +12,7 @@ import m2m_phase2.clothing.clothing.data.entity.Category;
 import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
 import m2m_phase2.clothing.clothing.service.impl.CategoryImpl;
+import m2m_phase2.clothing.clothing.service.impl.CommentServiceImpl;
 import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

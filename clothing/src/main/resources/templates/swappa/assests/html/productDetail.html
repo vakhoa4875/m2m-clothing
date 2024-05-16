@@ -11,7 +11,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body ng-app="myApp" ng-Controller="productDetailCtrl">
-
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v19.0" nonce="pbEXUQBH"></script>
 <div>
     <!-- mobileNav -->
     <div class="d-block d-lg-none">
@@ -160,8 +161,10 @@
                                 <button class="btn border btn-outline-success" type="button" id="soLuong"
                                 ><i class="fa-solid fa-cart-plus"></i>
                                 </button>
+                                <div class="fb-share-button" data-href="http://127.0.0.1:5500/productDetail.html" data-layout="" data-size="">
+                                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A5500%2FproductDetail.html&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a>
+                                </div>
                             </div>
-                        </div>
                         <div class="card text-start mt-2">
                             <div class="card-header d-flex align-items-center justify-content-center">
                                 <span class="fs-4 fw-bolder" th:text="${listProduct.getName()}" id="productName"></span>
