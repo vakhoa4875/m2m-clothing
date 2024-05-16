@@ -61,5 +61,9 @@ public class StatisticalAPI {
         var top10 = statisticService.getTop10SoldProductByMonthAndYear(month, year);
         return ResponseEntity.ok(top10);
     }
+    @GetMapping("/api-admin/getActiveMonths")
+    public ResponseEntity<?> getActiveMonths() {
+        return ResponseEntity.ok(statisticService.getActiveMonths());
+    }
     //
 }

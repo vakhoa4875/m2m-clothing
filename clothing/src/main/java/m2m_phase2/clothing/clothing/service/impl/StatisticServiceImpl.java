@@ -28,6 +28,6 @@ public class StatisticServiceImpl implements StatisticService {
 
     @Override
     public ArrayList<String> getActiveMonths() {
-        return null;
+        return statisticRepo.getActiveMonths();
     }
 }
