@@ -1,0 +1,34 @@
+/* Đây là css của Sale */
+/* phần của product   */
+#tableProductContainerProductShop {
+    max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+
+#tableProductContainerProductShop tbody {
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+
+#tableProductContainerProductShop tbody tr {
+    width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
+}
+
+#tableProductContainerProductShop thead th:nth-child(1) {
+    width: 5%; /* Đặt chiều rộng của cột "Thứ tự" bằng 5% */
+}
+
+#tableProductContainerProductShop thead th:nth-child(2) {
+    width: 64%; /* Đặt chiều rộng của cột "Tên Product" bằng 25% */
+}
+
+#tableProductContainerProductShop thead th:nth-child(3) {
+    width: 6%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
+}
+
+#tableProductContainerProductShop thead th:nth-child(4) {
+    width: 12%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
+}
+
+#tableProductContainerProductShop thead th:nth-child(5) {
+    width: 10%; /* Đặt chiều rộng của cột "Giá tiền" bằng 15% */
+}
