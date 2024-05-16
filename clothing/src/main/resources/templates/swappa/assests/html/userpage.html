@@ -9,6 +9,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-js-package@1.0.4/qrcode.min.js"></script>
     <style>
 
         /* Order status */
@@ -292,8 +293,35 @@
                                 <div class="header mt-1 mb-1">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item bg-body-secondary rounded-3">
-                                            <h3>My profile</h3>
-                                            <span>Manage profile information for account security</span>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <h3>My profile</h3>
+                                                    <span>Manage profile information for account security</span>
+                                                </div>
+                                                <div class="col-6 ">
+                                                    <img id="qrImg" class="float-end" style="width: 100px; height: auto">
+                                                    <!--M2M-026 TanLoc Begin-->
+                                                    <script>
+                                                        function generateQRCode() {
+                                                            var username = $('#staticName').val();
+                                                            var name = $('#inputName').val();
+                                                            var email = $('#staticEmail').val();
+                                                            var phoneNumber = $('#staticPhone').val();
+
+                                                            var userData = "Tên: " + encodeURIComponent(name).replace(/%20/g, " ") + "%0A" +
+                                                                "Số điện thoại: " + encodeURIComponent(phoneNumber) + "%0A" +
+                                                                "Email: " + encodeURIComponent(email) + "%0A" +
+                                                                "Username: " + encodeURIComponent(username);
+                                                            var qrUrl = "https://quickchart.io/qr?text=" + userData;
+                                                            $("#qrImg").attr("src", qrUrl);
+                                                        }
+                                                        $(document).ready(function() {
+                                                            generateQRCode();
+                                                        });
+                                                    </script>
+                                                    <!--M2M-026 TanLoc End -->
+                                                </div>
+                                            </div>
                                         </li>
                                     </ul>
                                 </div>
@@ -595,6 +623,7 @@
 
         $('#submitBtn').click(function () {
             updateUser();
+            generateQRCode();
         });
     });
 </script>

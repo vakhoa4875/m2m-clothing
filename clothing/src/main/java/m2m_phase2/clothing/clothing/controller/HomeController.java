@@ -105,4 +105,9 @@ public class HomeController {
         session.invalidate();
         return "redirect:/";
     }
+
+    @GetMapping("/vouchers")
+    public String doGetViewAllVouchers() {
+        return "swappa/assests/html/vouchers";
+    }
 }
