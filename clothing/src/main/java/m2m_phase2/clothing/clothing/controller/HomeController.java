@@ -34,6 +34,7 @@ public class HomeController {
     public String defaultPage(Model model) {
         List<ProductM> list = productServiceImpl.findAll();
         model.addAttribute("products", list);
+        model.addAttribute("iduser",session.getAttribute("iduser"));
         return "swappa/assests/html/trangchu";
     }
 
@@ -41,6 +42,7 @@ public class HomeController {
     public String getTrangchu(Model model) {
         List<ProductM> list = productServiceImpl.findAll();
         model.addAttribute("products", list);
+        model.addAttribute("iduser",session.getAttribute("iduser"));
         return "swappa/assests/html/trangchu";
     }
 

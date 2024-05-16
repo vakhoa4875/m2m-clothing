@@ -196,7 +196,8 @@ public class AccountServiceImpl implements AccountService {
         }
         // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
         session.setAttribute("loggedInUser", accountRequest.getEmail());
-
+        model.addAttribute("iduser",existingAccount.getUserId());
+        session.setAttribute("iduser", existingAccount.getUserId());
         return "swappa/assests/html/trangchu";
     }
 

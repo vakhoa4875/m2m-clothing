@@ -48,6 +48,7 @@ public interface VoucherRepo extends JpaRepository<VoucherE, Integer> {
     @Query(value = "select v.voucher_id," +
             "              v.voucher_name," +
             "              v.reduce," +
+            "              v.quantity," +
             "              v.start_day," +
             "              v.end_day from Voucher v " +
             "       join VoucherDetails vd on v.voucher_id = vd.voucher_id " +
