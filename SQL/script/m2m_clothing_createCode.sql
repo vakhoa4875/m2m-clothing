@@ -411,6 +411,20 @@ go
 
 
 
+	SELECT COUNT(*) AS total_accounts FROM
+(
+    SELECT user_id FROM Account
+    UNION ALL
+    SELECT user_id_gg FROM AccountGG
+) AS combined_accounts;
+
+SELECT COUNT(*) AS total_accounts_account FROM Account;
+SELECT COUNT(*) AS total_accounts_accountgg FROM AccountGG;
+SELECT COUNT(*) AS so_loai_san_pham FROM Category;
+SELECT c.category_name, COUNT(p.product_id) AS so_san_pham
+FROM Category c
+LEFT JOIN Product p ON c.category_id = p.category_id
+GROUP BY c.category_name;
 
 
 

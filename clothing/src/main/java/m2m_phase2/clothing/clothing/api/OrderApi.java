@@ -57,7 +57,9 @@ public class OrderApi {
         }
 
         return new ResponseEntity<>(dtos, HttpStatus.OK);
-    };
+    }
+
+    ;
 
     @GetMapping("/ordersAllProctStatus")
     public ResponseEntity<?> getAllProctStatus() {
@@ -78,13 +80,15 @@ public class OrderApi {
             dtos.add(dto);
         }
         return ResponseEntity.ok(dtos);
-    };
+    }
+
+    ;
 
     @PostMapping("/saveOder")
-    public ResponseEntity<?> saveOderUser(@RequestBody OrderDto orderDto){
-        try{
-           orderService.inserOder(orderDto);
-        }catch (Exception e){
+    public ResponseEntity<?> saveOderUser(@RequestBody OrderDto orderDto) {
+        try {
+            orderService.inserOder(orderDto);
+        } catch (Exception e) {
             System.out.println("Call API Failed: /api/orders/saveOder");
             throw new RuntimeException(e);
         }
@@ -92,11 +96,11 @@ public class OrderApi {
     }
 
     @PostMapping("/insertOderdetail")
-    public ResponseEntity<?> insertOder(@RequestBody OrderDto orderDto){
+    public ResponseEntity<?> insertOder(@RequestBody OrderDto orderDto) {
         orderDto.setOrderId(orderDetailService.getLastInsertedOrderId());
-        try{
+        try {
             orderDetailService.UpdateOderDetail(orderDto);
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Call API Failed: /api/orders/saveOder");
             throw new RuntimeException(e);
         }
@@ -104,11 +108,11 @@ public class OrderApi {
     }
 
     @GetMapping("/updateOderUser")
-    public ResponseEntity<?> updateOdeUserfromAdmin(@Param("idProduct") Integer idProduct,@Param("OrderStatus") String OrderStatus){
-        try{
-            orderService.updateOrderStatusByOrderId(idProduct,OrderStatus);
-            return ResponseEntity.ok("Cập nhật thành id đơn hàng " +idProduct+ " thành công");
-        }catch (Exception e){
+    public ResponseEntity<?> updateOdeUserfromAdmin(@Param("idProduct") Integer idProduct, @Param("OrderStatus") String OrderStatus) {
+        try {
+            orderService.updateOrderStatusByOrderId(idProduct, OrderStatus);
+            return ResponseEntity.ok("Cập nhật thành id đơn hàng " + idProduct + " thành công");
+        } catch (Exception e) {
             System.out.println("Call API Failed: /api/orders/saveOder");
             throw new RuntimeException(e);
         }

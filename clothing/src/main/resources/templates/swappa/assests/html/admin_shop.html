@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="java">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/css/style.css">
+    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <link rel="stylesheet" href="/assests/css/admin-css.css">
+    <link rel="stylesheet" href="/assests/css/admin-shop-css.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script th:src="@{/assests/js/UserManagement.js}"></script>
+    <script th:src="@{/assests/js/productManagement.js}"></script>
+
+    <style>
+        .max-width-col {
+            max-width: 128px;
+        }
+
+
+    </style>
+
+    <style>
+        #fileInput {
+            display: none;
+        }
+
+        .custom-file-label {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #909498;
+            color: #fff;
+
+        }
+
+        .custom-file-label:hover {
+            background-color: #9a9fa4;
+        }
+
+        #previewImage {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-top: 20px;
+        }
+
+        .avatar {
+            width: 100%; /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của ô chứa */
+            height: auto; /* Đảm bảo tỉ lệ khung hình được bảo toàn */
+            max-width: 150px; /* Kích thước tối đa của ảnh */
+            max-height: 150px; /* Kích thước tối đa của ảnh */
+        }
+
+    </style>
+
+    <script>
+        const services = new UserManagement();
+        const productservices = new productManagement();
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.log("Test kinda done")
+            services.loadInit();
+            productservices.loadInit();
+        })
+    </script>
+</head>
+
+<body class="bg-black" ng-app="myApp" ng-Controller="AdminController">
+<div class="d-block d-lg-none">
+    <div id="mobileNav" style="color: rgb(231,227,223);">
+        <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
+            <div class="container-sm">
+
+                <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+
+                <a href="#" class="navbar-brand" title="Swappa">
+                    <img class="img-fluid"
+                         src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                         alt="Swappa Logo">
+                </a>
+
+                <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                        data-bs-target="#slide_search" aria-controls="navbarSupportedContent" aria-expanded="false"
+                        aria-label="Search">
+                    <i class="fa-solid fa-search" aria-hidden="true"></i>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+</div>
+<!-- mainNav -->
+<div class="d-none d-lg-block">
+    <!-- first-nav -->
+    <div class="stNav" style="color: rgb(231,227,223);">
+        <nav class="navbar navbar-expand-lg  navbar-dark">
+            <div class="container d-block">
+                <div class="d-flex justify-content-between align-items-center">
+                    <ul class="navbar-nav" role="presentation">
+                        <li class="nav-item">
+                            <a class="navbar-brand d-block text-center pt-2" href="#">
+                                <img class="img-fluid"
+                                     src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                     width="167px" height="35px" alt="Bootstrap">
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav" role="presentation">
+
+
+                        <li class="nav-item">
+                            <a href="#!/cart" class="nav-link position-relative">
+
+                                <i class="fa-solid fa-bell"></i>
+                                <span ng-bind="cartLen"
+                                      class="position-absolute top-0 start-100 translate-middle-x px-2 text-bg-cf badge rounded-pill">
+                                        1 <span class="visually-hidden">Cart Items</span>
+                                    </span>
+
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+    </div>
+</div>
+
+<div class="container-fluid  bg-body-secondary" style="height: 800px;">
+    <div class="row">
+        <div class="col-xl-3 col-lg-12 mt-1 p-0">
+            <div class="card">
+                <div class="card-header bg-black text-center">
+                    <a class="text-white bg-gradient-primary" href="#">
+                        <h5 class="m-0"><strong>SHOP MANAGEMENT</strong></h5>
+                    </a>
+                </div>
+                <div class="card-body p-1">
+                    <div class="align-items-start">
+                        <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist"
+                             aria-orientation="vertical">
+                            <button class="nav-link mt-1 text-black active" id="v-pills-home-status-productSale"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-home-statusProductSale" type="button"
+                                    role="tab"
+                                    aria-controls="v-pills-home-statusProductSale" aria-selected="true">PRODUCT
+                            </button>
+                            <a class="nav-link mt-1 text-black" href="/admin/logout">LOG OUT
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-xl-9 col-lg-12 p-0">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane active show" id="v-pills-home-statusProductSale" role="tabpanel"
+                     aria-labelledby="v-pills-home-voucher" tabindex="0">
+                    <div class="card my-1">
+                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">PRODUCT</h5>
+                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
+                                        data-bs-target="#exampleModalToggleProduct" data-bs-toggle="modal"
+                                        id="newInsButtonSale"
+                                        style="padding: 7px 12px 7px 12px;">
+                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+                        <div class="table-responsive p-0 mx-3" id="tableProductContainerProductShop">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                <!-- Tabs content -->
+                                <tr class="text-center">
+                                    <th scope="col" style="width: 60%">Name product</th>
+                                    <th scope="col" style="width: 15%">Price</th>
+                                    <th scope="col" style="width: 10%">Quantity</th>
+                                    <th scope="col"style="width: 5%"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="ProductTableBody">
+                                <tr>
+                                    <td class="align-middle text-center text-sm">
+                                        <div class="d-flex w-100 flex-column justify-content-center">
+                                            <div class="mb-0 text-sm">Hanes mens Ecosmart Hoodie</div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">16$</span>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <span class="text-secondary text-xs font-weight-bold">10</span>
+                                    </td>
+                                    <td class="align-middle text-center ">
+                                        <button class="btn border-0 rounded btn-outline-info" data-bs-toggle="modal" data-bs-target="#exampleModalUpdateProduct">
+                                            <i class="fa-solid fa-pen-to-square" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>
+
+
+<!--modal insert-->
+<div class="modal fade modal-lg" id="exampleModalToggleProduct" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="productForm" enctype="multipart/form-data" action="">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="insertProductModal">PRODUCT</h1>
+                    <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                            class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                </div>
+                <div class="modal-body" id="insertProductModalBody">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="mb-2 ">
+                                <label for="insNameProduct" class="form-label">Name</label>
+                                <input type="text" class="form-control ps-3" id="insNameProduct"
+                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            </div>
+                            <div class="mb-2 ">
+                                <label for="insPriceProduct" class="form-label">Price</label>
+                                <input type="text" class="form-control ps-3" id="insPriceProduct"
+                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            </div>
+                            <div class="mb-2 ">
+                                <label for="insQuantityProduct" class="form-label">Quantity</label>
+                                <input type="text" class="form-control ps-3" id="insQuantityProduct"
+                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            </div>
+                            <div class="mb-2">
+                                <label for="inDescriptionProduct" class="form-label">Description</label>
+                                <textarea class="form-control" id="inDescriptionProduct" rows="3"></textarea>
+                            </div>
+                            <div class="mb-2">
+                                <div class="container " style="">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="d-flex justify-content-center">
+                                                <img src="" class="avatar me-3 border-radius-lg"
+                                                     id="previewImage1" alt="Chọn ảnh">
+                                            </div>
+                                            <div class="text-center my-3" style="margin-right: 10px;">
+                                                <input type="file" class="form-control" id="fileInput1">
+                                                <label id="nameImageIns1" style="display: none"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="d-flex justify-content-center">
+                                                <img src="" class="avatar me-3 border-radius-lg"
+                                                     id="previewImage2" alt="Chọn ảnh">
+                                            </div>
+                                            <div class="text-center my-3" style="margin-right: 10px;">
+                                                <input type="file" class="form-control" id="fileInput2">
+                                                <label id="nameImageIns2" style="display: none"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="d-flex justify-content-center">
+                                                <img src="" class="avatar me-3 border-radius-lg"
+                                                     id="previewImage3" alt="Chọn ảnh">
+                                            </div>
+                                            <div class="text-center my-3" style="margin-right: 10px;">
+                                                <input type="file" class="form-control" id="fileInput3" >
+                                                <label id="nameImageIns3" style="display: none"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mb-2">
+                                <div class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <video  id="previewVideoIns" class="embed-responsive-item" alt="Chọn video"> </video>
+                                    </div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="text-center my-3" style="margin-right: 10px;">
+                                        <input type="file" class="form-control" id="fileInput4" >
+                                        <label id="nameVideoIns" style="display: none "></label>
+                                    </div>
+                                </div>
+                                <select class="form-select w-auto" aria-label="Default select example" id="formSelectIns">
+                                    <option value="1">Outerwear</option>
+                                    <option value="2">Tops</option>
+                                    <option value="3">Bottoms</option>
+                                    <option value="4">Jewels & Accessories</option>
+                                    <option value="5">Headwear</option>
+                                    <option value="6">Footwear</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" >
+                        Add new Product
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!--*********************** Modal Update Product *****************************-->
+<div class="modal fade modal-lg" id="exampleModalUpdateProduct" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel"
+     tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--                mơi vcat ne-->
+                <h1 class="modal-title fs-5" id="updateProductModal">PRODUCT</h1>
+                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body" id="updateProductModalBody">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="mb-2 ">
+                            <label for="updateNameProduct" class="form-label">Name</label>
+                            <input type="text" class="form-control ps-3" id="updateNameProduct" aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="updatePriceProduct" class="form-label">Price</label>
+                            <input type="text" class="form-control ps-3" id="updatePriceProduct" aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="updateQuantityProduct" class="form-label">Quantity</label>
+                            <input type="text" class="form-control ps-3" id="updateQuantityProduct" aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2">
+                            <label for="updateDescriptionProduct" class="form-label">Description</label>
+                            <textarea class="form-control" id="updateDescriptionProduct" rows="3"></textarea>
+                        </div>
+                        <div class="mb-2">
+                            <div class="container " style="">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="d-flex justify-content-center">
+                                            <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate1" alt="Chọn ảnh">
+                                        </div>
+                                        <div class="text-center my-3" style="margin-right: 10px;">
+                                            <input type="file" class="form-control" id="fileInputUpdate1">
+                                            <label id="nameImageUpdate1" style="display: none"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="d-flex justify-content-center">
+                                            <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate2" alt="Chọn ảnh">
+                                        </div>
+                                        <div class="text-center my-3" style="margin-right: 10px;">
+                                            <input type="file" class="form-control" id="fileInputUpdate2">
+                                            <label id="nameImageUpdate2" style="display: none"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="d-flex justify-content-center">
+                                            <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate3" alt="Chọn ảnh">
+                                        </div>
+                                        <div class="text-center my-3" style="margin-right: 10px;">
+                                            <input type="file" class="form-control" id="fileInputUpdate3">
+                                            <label id="nameImageUpdate3" style="display: none"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-2">
+                            <div class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
+                                <div class="embed-responsive embed-responsive-16by9">
+                                    <video id="previewVideoUpdate" class="embed-responsive-item" alt="Chọn video"> </video>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-center my-3" style="margin-right: 10px;">
+                                    <input type="file" class="form-control" id="fileInputUpdate4">
+                                    <label id="nameVideoUpdate" style="display: none "></label>
+                                </div>
+                            </div>
+                            <select class="form-select w-auto" aria-label="Default select example" id="formSelectUpdate">
+                                <option value="1">Outerwear</option>
+                                <option value="2">Tops</option>
+                                <option value="3">Bottoms</option>
+                                <option value="4">Jewels &amp; Accessories</option>
+                                <option value="5">Headwear</option>
+                                <option value="6">Footwear</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+                    Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+    <div class="container pt-2 pb-2">
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+
+        </div>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col d-flex justify-content-center align-items-center">
+                <div class=" text-white">
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-facebook fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-instagram fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-youtube fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-linkedin fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-reddit fs-1"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col text-center ">
+                <a href="./index.html"><img
+                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
+                        class="img-fluid" alt=""></a>
+            </div>
+            <div class="col text-center text-white d-flex justify-content-center align-items-center">
+                <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
+            </div>
+        </div>
+
+    </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+<script src="/node_modules/angular/angular.route.min.js"></script>
+<script src="/assests/js/app_admin.js"></script>
+<script src="/assests/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+</body>
+
+<!--<script>-->
+<!--    $.ajax({-->
+<!--        url: '/api-admin/users/getAllUsers',-->
+<!--        method: 'GET',-->
+<!--        success: (response) => {-->
+<!--            console.log(response);-->
+<!--        },-->
+<!--        error: (xhr, status, error) => {-->
+<!--            console.error("Error:", error);-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
+<!--<script>-->
+<!--    document.getElementById('fileInput').addEventListener('change', function () {-->
+<!--        var file = this.files[0];-->
+<!--        if (file) {-->
+<!--            var reader = new FileReader();-->
+<!--            reader.onload = function (event) {-->
+<!--                document.getElementById('previewImage').setAttribute('src', event.target.result);-->
+<!--                document.getElementById('previewImage').style.display = 'block';-->
+<!--            }-->
+<!--            reader.readAsDataURL(file);-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
+
+</html>

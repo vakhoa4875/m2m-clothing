@@ -20,4 +20,5 @@ public interface ProductService {
 	void updateProduct(ProductDTO productDTO);
 	void saveImgAndVideo(ProductDTO productDTO);
 	void deleteByProductId(int product_id) ;
+	Long getAllProducts();
 }

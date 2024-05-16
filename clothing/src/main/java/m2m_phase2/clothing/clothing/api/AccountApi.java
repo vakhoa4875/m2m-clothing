@@ -2,9 +2,7 @@ package m2m_phase2.clothing.clothing.api;
 
 import m2m_phase2.clothing.clothing.constant.AccountEnum;
 import m2m_phase2.clothing.clothing.data.dto.AccountDto;
-import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.entity.Account;
-import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +19,14 @@ public class AccountApi {
 
     @Autowired
     AccountService account;
+
     @GetMapping("/getAccountByUsernameAndEmail")
-    public Account findByUsernameAndEmail(@RequestParam("username") String username, @RequestParam("email") String email){
-       return accountImpl.findByUsernameAndEmail(username,email);
+    public Account findByUsernameAndEmail(@RequestParam("username") String username, @RequestParam("email") String email) {
+        return accountImpl.findByUsernameAndEmail(username, email);
     }
+
     @PostMapping("/api-admin/postCreateAccount")
-    public ResponseEntity<?> doPostCreateAccount(@RequestBody AccountDto accountDto){
+    public ResponseEntity<?> doPostCreateAccount(@RequestBody AccountDto accountDto) {
         String insertStatus;
         try {
             insertStatus = accountImpl.createAccount(accountDto);
