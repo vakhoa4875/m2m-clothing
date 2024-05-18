@@ -1,29 +1,24 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
-import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDto;
-import m2m_phase2.clothing.clothing.data.entity.VoucherE;
-import m2m_phase2.clothing.clothing.data.model.CommentM;
 import m2m_phase2.clothing.clothing.data.model.VoucherM;
 import m2m_phase2.clothing.clothing.repository.VoucherRepo;
 import m2m_phase2.clothing.clothing.service.VoucherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+
 @Service
 @Configuration
 @EnableScheduling
 public class VoucherServiceImpl implements VoucherService {
     @Autowired
     private VoucherRepo voucherRepo;
+
     @Override
     public List<VoucherM> findAll() {
         return VoucherM.converListVoucherEToListVoucherM(voucherRepo.findAll());
@@ -36,13 +31,13 @@ public class VoucherServiceImpl implements VoucherService {
 
     @Override
     public byte saveVoucher(VoucherDto voucherDto) throws SQLException {
-        voucherRepo.insertVoucher(voucherDto.getVoucherName(),voucherDto.getReduce(),voucherDto.getQuantity(),voucherDto.getStartDay(),voucherDto.getEndDay());
+        voucherRepo.insertVoucher(voucherDto.getVoucherName(), voucherDto.getReduce(), voucherDto.getQuantity(), voucherDto.getStartDay(), voucherDto.getEndDay());
         return 1;
     }
 
     @Override
     public byte updateVoucher(VoucherDto voucherDto) throws SQLException {
-        voucherRepo.updateVoucher(voucherDto.getVoucherName(),voucherDto.getReduce(),voucherDto.getQuantity(),voucherDto.getStartDay(),voucherDto.getEndDay(),voucherDto.getVoucherID());
+        voucherRepo.updateVoucher(voucherDto.getVoucherName(), voucherDto.getReduce(), voucherDto.getQuantity(), voucherDto.getStartDay(), voucherDto.getEndDay(), voucherDto.getVoucherID());
         return 1;
     }
 
@@ -55,6 +50,12 @@ public class VoucherServiceImpl implements VoucherService {
     public byte deleteVoucherByDay(VoucherDto voucherDto) throws SQLException {
         voucherRepo.deleteVoucherByDay(voucherDto.getToDay());
         return 1;
+    }
+
+    @Override
+    public VoucherM findByVoucherID(Integer voucherId) throws SQLException {
+        var voucher = voucherRepo.findByVoucherID(voucherId);
+        return voucher == null ? null : VoucherM.convertVoucherEToVoucherM(voucher);
     }
 
 //    @Scheduled(cron = "0 0 0 * * *")

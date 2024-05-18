@@ -1,6 +1,7 @@
 package m2m_phase2.clothing.clothing.api;
 
 
+import m2m_phase2.clothing.clothing.repository.StatisticRepo;
 import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.service.CategoryService;
 import m2m_phase2.clothing.clothing.service.ProductService;
@@ -24,6 +25,8 @@ public class StatisticalAPI {
     CategoryService categoryService;
     @Autowired
     private StatisticService statisticService;
+    @Autowired
+    private StatisticRepo statisticRepo;
 
     @GetMapping("/api/getAccountData")
     public Long AllAccount() {
@@ -51,7 +54,7 @@ public class StatisticalAPI {
     }
 
     @GetMapping("/api/getProductCountPerCategory")
-    public Map<String, Long> getProductCountPerCategory() {
+    public Map<String, Long> doGetProductCountPerCategory() {
         return categoryService.getProductCountPerCategory();
     }
 
@@ -59,6 +62,19 @@ public class StatisticalAPI {
     @GetMapping("/api-admin/getTop10SoldProduct")
     public ResponseEntity<?> doGetTop10SoldProduct(@RequestParam("year") Integer year, @RequestParam("month") Integer month) {
         var top10 = statisticService.getTop10SoldProductByMonthAndYear(month, year);
+        return ResponseEntity.ok(top10);
+    }
+    @GetMapping("/api-admin/getActiveMonths")
+    public ResponseEntity<?> doGetActiveMonths() {
+        return ResponseEntity.ok(statisticService.getActiveMonths());
+    }
+    @GetMapping("/api-admin/getVoucherUsedInMonth")
+    public ResponseEntity<?> doGetVoucherUsedInMonth() {
+        return ResponseEntity.ok(statisticRepo.getVoucherUsedInMonth());
+    }
+    @GetMapping("/api-admin/getTopUsedVoucher")
+    public ResponseEntity<?> doGetTopUsedVoucher(@RequestParam("year") Integer year, @RequestParam("month") Integer month) {
+        var top10 = statisticService.getTopUsedVoucher(month, year);
         return ResponseEntity.ok(top10);
     }
     //

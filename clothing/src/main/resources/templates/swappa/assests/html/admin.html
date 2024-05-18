@@ -10,18 +10,27 @@
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <link rel="stylesheet" href="/assests/css/admin-css.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script th:src="@{/assests/js/UserManagement.js}"></script>
     <script th:src="@{/assests/js/productManagement.js}"></script>
-
+    <script th:src="@{/assests/js/Statistic.js}"></script>
     <style>
         .max-width-col {
             max-width: 128px;
         }
 
+        .canvas-container {
+            /*position: relative;*/
+            /*width: 100%;*/
+            /*height: 100%;*/
+        }
 
-    </style>
+        canvas {
+            /*max-width: 80% !important;*/
+            /*max-height: 50% !important;*/
+        }
 
-    <style>
         #fileInput {
             display: none;
         }
@@ -51,11 +60,13 @@
             max-width: 150px; /* Kích thước tối đa của ảnh */
             max-height: 150px; /* Kích thước tối đa của ảnh */
         }
+
         /* Tùy chỉnh kích thước của các ô */
         .col {
             width: 33.33%;
             /* Chia đều không gian cho 3 ô */
         }
+
         /* Tùy chỉnh các thuộc tính */
         .custom-bg-color {
             background-color: #f0f0f0; /* Màu nền */
@@ -75,19 +86,22 @@
             width: 33.33%;
             padding: 50px; /* Khoảng cách bên trong ô */
         }
-
     </style>
-
     <script>
         const services = new UserManagement();
         const productservices = new productManagement();
+        const statistic = new Statistic();
     </script>
-
     <script type="text/javascript">
-        $(document).ready(function () {
-            console.log("Test kinda done")
+        $(document).ready(async function () {
             services.loadInit();
             productservices.loadInit();
+            await statistic.init();
+            // $('#select-period').on('change', () =>{statistic.renderTop10MostSoldProducts()});
+            $('#select-period').attr('onchange', 'statistic.renderTop10MostSoldProducts()');
+            statistic.renderTop10MostSoldProducts();
+            $('#select-voucher-period').attr('onchange', 'statistic.renderTopMostVoucherUsed()');
+            statistic.renderTopMostVoucherUsed();
         })
     </script>
 </head>
@@ -97,18 +111,15 @@
     <div id="mobileNav" style="color: rgb(231,227,223);">
         <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
             <div class="container-sm">
-
                 <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fa-solid fa-bars"></i>
                 </button>
-
                 <a href="#" class="navbar-brand" title="Swappa">
                     <img class="img-fluid"
                          src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
                          alt="Swappa Logo">
                 </a>
-
                 <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
                         data-bs-target="#slide_search" aria-controls="navbarSupportedContent" aria-expanded="false"
                         aria-label="Search">
@@ -136,8 +147,6 @@
                         </li>
                     </ul>
                     <ul class="navbar-nav" role="presentation">
-
-
                         <li class="nav-item">
                             <a href="#!/cart" class="nav-link position-relative">
 
@@ -146,12 +155,10 @@
                                       class="position-absolute top-0 start-100 translate-middle-x px-2 text-bg-cf badge rounded-pill">
                                         1 <span class="visually-hidden">Cart Items</span>
                                     </span>
-
                             </a>
                         </li>
                     </ul>
                 </div>
-
             </div>
         </nav>
     </div>
@@ -163,7 +170,7 @@
             <div class="card">
                 <div class="card-header bg-black text-center">
                     <a class="text-white bg-gradient-primary" href="#">
-                        <h5 class="m-0"><strong>USERS MANAGEMENT</strong></h5>
+                        <h5 class="m-0"><strong>APPLICATION MANAGEMENT</strong></h5>
                     </a>
                 </div>
                 <div class="card-body p-1">
@@ -172,7 +179,7 @@
                              aria-orientation="vertical">
                             <button class="nav-link mt-1 text-black active" id="v-pills-home-tab"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab"
-                                    aria-controls="v-pills-home" aria-selected="true">Account Information
+                                    aria-controls="v-pills-home" aria-selected="true">ACCOUNT & USER MANAGEMENT
                             </button>
                             <button class="nav-link mt-1 text-black" id="v-pills-home-sale"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-sale" type="button" role="tab"
@@ -194,7 +201,7 @@
                             <button class="nav-link mt-1 text-black" id="v-pills-home-status-statistical"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-statistical" type="button"
                                     role="tab"
-                                    aria-controls="v-pills-home-statistical" aria-selected="false">STATISTICAL
+                                    aria-controls="v-pills-home-statistical" aria-selected="false">STATISTIC
                             </button>
                             <a class="nav-link mt-1 text-black" href="/admin/logout">Log Out
                             </a>
@@ -222,7 +229,6 @@
                         </div>
                         <div class="card-body p-0 mx-3 pb-2">
                             <div class="table-responsive p-0" id="tableUserContainer">
-
                             </div>
                         </div>
                     </div>
@@ -242,7 +248,6 @@
                             </div>
                         </div>
                         <div class="card-body p-0 mx-3 pb-2">
-
                             <!--viết body vào đây Lộc-->
                             <div class="table-responsive p-0" id="tableSaleContainer">
                                 <table class="table align-items-center mb-0">
@@ -279,7 +284,6 @@
                             </div>
                         </div>
                         <div class="card-body p-0">
-
                             <!--viết body vào đây VOUCHER ACCOUNT-->
                             <div class="table-responsive p-0 mt-1 rounded" id="tableVoucherContainer">
                                 <table class="table align-items-center mb-0 table-hover">
@@ -410,40 +414,51 @@
                     </div>
                 </div>
                 <!--                Bắt đầu thống kê-->
-                <div class="tab-pane" id="v-pills-home-statistical" role="tabpanel" aria-labelledby="v-pills-home-product"
+                <div class="tab-pane" id="v-pills-home-statistical" role="tabpanel"
+                     aria-labelledby="v-pills-home-product"
                      tabindex="0">
                     <div class="card my-1">
                         <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                             <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Statistical</h5>
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">STATISTIC</h5>
                             </div>
                         </div>
                         <ul class="nav nav-tabs mx-3 mt-1" id="myTab-ThongKe" role="tablist">
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link active" id="thongKe-tab" data-bs-toggle="tab"
                                         data-bs-target="#thongKeUser" type="button" role="tab" aria-controls="thongKe"
-                                        aria-selected="true">Statistical
+                                        aria-selected="true">Overview Statistic
                                 </button>
                             </li>
                             <li class="nav-item" role="presentation">
                                 <button class="nav-link" id="product-tab-thongKe" data-bs-toggle="tab"
-                                        data-bs-target="#thongKeProduct" type="button" role="tab" aria-controls="product"
-                                        aria-selected="false">Thống kê sản phẩm
+                                        data-bs-target="#thongKeProduct" type="button" role="tab"
+                                        aria-controls="product"
+                                        aria-selected="false">Order Statistic
                                 </button>
                             </li>
                         </ul>
-                        <div class="tab-content mx-3" id="myTabContent2">
+                        <div class="tab-content mx-3 max-height-content" id="myTabContent2">
                             <div class="tab-pane fade show active" id="thongKeUser" role="tabpanel"
                                  aria-labelledby="thongKe-tab">
                                 <script src="https://www.gstatic.com/charts/loader.js"></script>
                                 <!-- Phần của bản 1 -->
                                 <div class="table-responsive p-0 " id="tableThongKeUser">
-                                    <div  class=" container-fluid">
+                                    <div class=" container-fluid">
                                         <div class="row">
-                                            <a href="#"  class="col custom-bg-color custom-border custom-shadow bg-success rounded-2 text-decoration-none text-white"><div>Number of accounts: <span id="totalAccountsSpan"> </span></div></a>
-                                            <a href="#"  class="col custom-bg-color custom-border custom-shadow bg-warning rounded-2 text-decoration-none text-white"><div >Total product quantity: <span id="totalProductSpan"></span></div></a>
-                                            <a href="#"  class="col custom-bg-color custom-border custom-shadow bg-info rounded-2 text-decoration-none text-white"><div >Product Type: <span id="totalCategorySpan"></span></div></a>
+                                            <a href="#"
+                                               class="col custom-bg-color custom-border custom-shadow bg-success rounded-2 text-decoration-none text-white">
+                                                <div>Number of accounts: <span id="totalAccountsSpan"> </span></div>
+                                            </a>
+                                            <a href="#"
+                                               class="col custom-bg-color custom-border custom-shadow bg-warning rounded-2 text-decoration-none text-white">
+                                                <div>Total product quantity: <span id="totalProductSpan"></span></div>
+                                            </a>
+                                            <a href="#"
+                                               class="col custom-bg-color custom-border custom-shadow bg-info rounded-2 text-decoration-none text-white">
+                                                <div>Product Type: <span id="totalCategorySpan"></span></div>
+                                            </a>
                                         </div>
 
 
@@ -463,9 +478,44 @@
                             </div>
                             <div class="tab-pane fade" id="thongKeProduct" role="tabpanel"
                                  aria-labelledby="product-tab-thongKe">
-                                <!-- Phần của bản 2 -->
-                                <div class="table-responsive p-0" id="tableThongKeProduct">
-                                    <h1>bảng 2</h1>
+                                <div class="container">
+                                    <div class="row mx-lg-5 mb-0 d-flex justify-content-center align-items-end">
+                                        <div class="col canvas-container p-3 py-4" style="background-color: #fff0d9 !important;">
+                                            <select class="form-select mb-3" id="select-voucher-period"
+                                                    aria-label="Select period">
+                                            </select>
+                                            <canvas id="myChart" class="mt-0"></canvas>
+                                            <h5 class="text-center">Top 10 most used vouchers</h5>
+                                        </div>
+                                        <div class="col canvas-container px-3" style="background-color: #fff0d9 !important;">
+                                            <canvas id="monthVoucherChart" class="mt-0"></canvas>
+                                            <h5 class="text-center">Vouchers used by months</h5>
+                                        </div>
+                                    </div>
+                                    <hr class="p-0 m-0 my-2">
+                                    <div class="row">
+                                        <div class="col mx-lg-5 p-0">
+                                            <h4 class="text-center">Top 10 Best Seller Items</h4>
+                                            <select class="form-select mb-3" id="select-period"
+                                                    aria-label="Select period">
+                                            </select>
+                                            <div class="table-responsive" style="min-height: 32vh !important;">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr class="text-center">
+                                                        <th scope="col" style="width: 10%">#</th>
+                                                        <th scope="col" colspan="2" style="width:60%">Product</th>
+                                                        <th scope="col" style="width: 10%">Price</th>
+                                                        <th scope="col" style="width: 10%">Sold</th>
+                                                        <th scope="col" style="width: 10%" class="text-end">Left</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="top-10-sold-product-container">
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <!-- Kết thúc phần bản 2 -->
                             </div>
@@ -1009,7 +1059,6 @@
         </div>
     </div>
 </div>
-
 <div class="modal fade modal-lg" id="exampleModalUpSaleProductFormSale" aria-hidden="true"
      aria-labelledby="exampleModalToggleLabel"
      tabindex="-1">
@@ -1036,15 +1085,13 @@
         </div>
     </div>
 </div>
-
 <!--=========================================================================================================================-->
 <!-- footer -->
 <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-    <div class="container pt-2 pb-2">
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
-
-        </div>
-        <div class="row row-cols-1 row-cols-md-3">
+    <div class="container">
+        <!--        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">-->
+        <!--        </div>-->
+        <div class="row">
             <div class="col d-flex justify-content-center align-items-center">
                 <div class=" text-white">
                     <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
@@ -1116,7 +1163,7 @@
 <!--</script>-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
-    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.load('current', {'packages': ['corechart']});
     google.charts.setOnLoadCallback(fetchDataAndDrawChart);
 
     function fetchDataAndDrawChart() {
@@ -1130,7 +1177,7 @@
                 url: '/api/postAccountGG',
                 method: 'POST'
             })
-        ).done(function(responseDK, responseGG) {
+        ).done(function (responseDK, responseGG) {
             // Xây dựng mảng dữ liệu từ phản hồi nhận được
             const data = google.visualization.arrayToDataTable([
                 ['Country', 'Mhl'],
@@ -1151,7 +1198,7 @@
     }
 </script>
 <script>
-    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.load('current', {'packages': ['corechart']});
     google.charts.setOnLoadCallback(drawChart);
 
     function drawChart() {
@@ -1159,15 +1206,15 @@
         fetch('/api/getProductCountPerCategory')
             .then(response => response.json())
             .then(data => {
-                    // Chuyển dữ liệu sang định dạng array để sử dụng trong biểu đồ
-                    const chartData = Object.entries(data);
+                // Chuyển dữ liệu sang định dạng array để sử dụng trong biểu đồ
+                const chartData = Object.entries(data);
 
-                    // Thêm tiêu đề cột
-                    chartData.unshift(['Product type', 'Products']);
-                    const dataTable = google.visualization.arrayToDataTable(chartData); // Chuyển dữ liệu sang định dạng DataTable của Google Charts
+                // Thêm tiêu đề cột
+                chartData.unshift(['Product type', 'Products']);
+                const dataTable = google.visualization.arrayToDataTable(chartData); // Chuyển dữ liệu sang định dạng DataTable của Google Charts
                 const options = {
                     title: 'Product statistics by type',
-                    chartArea: { width: 'auto' },
+                    chartArea: {width: 'auto'},
                     hAxis: {
                         title: 'Quantity',
                         minValue: 0
@@ -1176,12 +1223,12 @@
                     pieSliceText: 'percentage' // Hiển thị phần trăm trên biểu đồ bánh
                 };
 
-                    const chart = new google.visualization.PieChart(document.getElementById('myChart2')); // Vẽ biểu đồ cột
-                    chart.draw(dataTable, options);
-                })
-                .catch(error => console.error('Lỗi khi tải dữ liệu:', error));
-        }
-    </script>
+                const chart = new google.visualization.PieChart(document.getElementById('myChart2')); // Vẽ biểu đồ cột
+                chart.draw(dataTable, options);
+            })
+            .catch(error => console.error('Lỗi khi tải dữ liệu:', error));
+    }
+</script>
 
 <script>
     // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
@@ -1215,6 +1262,7 @@
             })
             .catch(error => console.error('Error fetching total accounts:', error));
     }
+
     // Gọi hàm để cập nhật tổng số tài khoản khi trang được tải
     window.addEventListener('DOMContentLoaded', updateTotalAccounts);
 </script>
@@ -1233,6 +1281,7 @@
             })
             .catch(error => console.error('Error fetching total accounts:', error));
     }
+
     // Gọi hàm để cập nhật tổng số tài khoản khi trang được tải
     window.addEventListener('DOMContentLoaded', updateTotalAccounts);
 </script>
