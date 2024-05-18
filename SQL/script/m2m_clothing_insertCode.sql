@@ -654,10 +654,10 @@ go
 
  INSERT INTO Comment(comment, product_id, user_id, create_date)
  VALUES
-    ('That shirt is so beautiful', 1 , 1, N'2024-04-15'),
-    ('That is so great', 1 , 3, N'2024-04-15'),
-    ('That is so great', 2 , 1, N'2024-04-15'),
-    ('So beautiful', 2 , 2, N'2024-04-15')
+    (N'That shirt is so beautiful', 1 , 1, N'2024-04-15'),
+    (N'That is so great', 1 , 3, N'2024-04-15'),
+    (N'That is so great', 2 , 1, N'2024-04-15'),
+    (N'So beautiful', 2 , 2, N'2024-04-15')
 
 
 INSERT INTO Voucher (voucher_name, reduce,quantity, start_day, end_day)

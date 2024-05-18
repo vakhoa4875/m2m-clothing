@@ -573,13 +573,14 @@
                 // Duyệt qua danh sách voucher và tạo HTML tương ứng
                 vouchers.forEach(function (voucher) {
                     voucherListHTML += `
-                <div class="col-xl-6 col-lg-12">
+<div class="row">
+                <div class="col-xl-6">
                     <div class="card mb-3">
                         <div class="row g-0">
-                            <div class="col-md-4">
+                            <div class="col-4">
                                 <img src="/assests/images/logoVoucher.jpg" class="img-fluid rounded-start" alt="...">
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-8">
                                 <div class="card-body py-0 mt-3">
                                     <h5 class="card-title">${voucher.voucherName}</h5>
                                     <p class="card-text">Giảm giá: ${voucher.reduce}</p>
