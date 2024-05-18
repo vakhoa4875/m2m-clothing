@@ -6,13 +6,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public interface StatisticRepo extends JpaRepository<Product, Integer> {
     @Query(nativeQuery = true, value = "exec dbo.getTop10SoldProduct :month, :year")
-    ArrayList<Object[]> getTop10SoldProductByMonthAndYear(@Param("month") int month,@Param("year") int year);
+    List<Integer> getTop10SoldProductByMonthAndYear(@Param("month") int month,@Param("year") int year);
 
     @Query(nativeQuery = true, value = "exec dbo.getActiveMonths")
-    ArrayList<String> getActiveMonths();
+    List<String> getActiveMonths();
+    
+    @Query(nativeQuery = true, value = "exec dbo.getVoucherUsedInMonth")
+    List<Object[]> getVoucherUsedInMonth();
+
+    @Query(nativeQuery = true, value = "exec dbo.getTopUsedVoucher :month, :year")
+    List<Object[]> getTopUsedVoucher(@Param("month") int month,@Param("year") int year);
 }

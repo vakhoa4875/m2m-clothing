@@ -60,5 +60,5 @@ public interface VoucherRepo extends JpaRepository<VoucherE, Integer> {
     @Query(value = "delete from Voucher WHERE :toDay > end_day", nativeQuery = true)
     void deleteVoucherByDay(@Param("toDay")Date toDay);
 
-
+    VoucherE findByVoucherID(Integer voucherID);
 }

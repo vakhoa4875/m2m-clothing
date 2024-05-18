@@ -108,12 +108,17 @@ class UserManagement {
     }
     doGetUserByUsernameAndEmail = async (username, email) => {
         await $.ajax({
-            url: '/api-public/users/getUserByUsernameAndEmail', method: 'GET', data: {
-                "username": username, "email": email
-            }, success: function (apiResult) {
+            url: '/api-public/users/getUserByUsernameAndEmail',
+            method: 'GET',
+            data: {
+                "username": username,
+                "email": email
+            },
+            success: function (apiResult) {
                 this.user = apiResult;
                 console.log(this.user)
-            }.bind(this), error: (error) => {
+            }.bind(this),
+            error: (error) => {
                 console.error("Error:", error);
             }
 
