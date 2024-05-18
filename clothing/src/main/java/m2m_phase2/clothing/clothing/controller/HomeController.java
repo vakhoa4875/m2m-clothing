@@ -81,7 +81,7 @@ public class HomeController {
         }
     }
 
-    @GetMapping("/login")
+    @GetMapping("/loginacount")
     public String getLog(Model model) {
         Account accountlog = new Account();
         model.addAttribute("accountlog", accountlog);
@@ -107,7 +107,7 @@ public class HomeController {
             return "swappa/assests/html/userpage";
         } else {
             // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
-            return "redirect:/login";
+            return "redirect:/loginacount";
         }
     }
 

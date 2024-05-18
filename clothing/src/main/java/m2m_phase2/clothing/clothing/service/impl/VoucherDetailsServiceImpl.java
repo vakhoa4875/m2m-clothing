@@ -1,5 +1,7 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
+import ch.qos.logback.classic.Logger;
+import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.data.entity.VoucherDetailsE;
@@ -22,6 +24,8 @@ public class VoucherDetailsServiceImpl implements VoucherDetailsService {
     private VoucherDetailsRepo voucherDetailsRepo;
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    private HttpSession session;
 
     @Override
     public byte saveVoucherDetails(VoucherDetailsDto voucherDetailsDto) throws SQLException {
@@ -43,22 +47,31 @@ public class VoucherDetailsServiceImpl implements VoucherDetailsService {
 
     @Override
     public byte saveVoucherForUser(VoucherDetailsDto voucherDetailsDto) throws SQLException {
-        if (sessionEmail == null) {
-            // Xử lý khi người dùng chưa đăng nhập
+        // Lấy thông tin người dùng đang đăng nhập từ session
+        String loggedInUserEmail = (String) session.getAttribute("loggedInUser");
+
+        if (loggedInUserEmail == null) {
+            // Người dùng chưa đăng nhập, không thể lưu voucher
             return -1;
         }
-        // Kiểm tra nếu chuỗi loggedInUser không rỗng
-        if (sessionEmail != null) {
-            // Tìm người dùng bằng email
-            var user = userRepo.findByEmail(sessionEmail);
-            if (user != null) {
-                voucherDetailsRepo.insertVoucherDetails(voucherDetailsDto.getVoucher().getVoucherID(),voucherDetailsDto.getUser().getId());
-                return 1;
-            }
+
+        // Kiểm tra xem người dùng đã nhận voucher này chưa
+        UserE user = userRepo.findByEmail(loggedInUserEmail);
+        if (user == null) {
+            // Người dùng không tồn tại trong cơ sở dữ liệu
+            return -1;
         }
 
-        // Xử lý khi không tìm thấy người dùng hoặc có lỗi xảy ra
-        return -1;
+        // Kiểm tra xem người dùng đã nhận voucher chưa
+        VoucherDetailsE existingVoucher = voucherDetailsRepo.getVoucherDetailsByVoucherIDAndUserID(voucherDetailsDto.getVoucher().getVoucherID(), user.getId());
+        if (existingVoucher != null) {
+            // Người dùng đã nhận voucher, không thể nhận lại
+            return 0;
+        }
+
+        // Lưu voucher cho người dùng
+        voucherDetailsRepo.insertVoucherDetails(voucherDetailsDto.getVoucher().getVoucherID(), user.getId());
+        return 1;
     }
 
 }

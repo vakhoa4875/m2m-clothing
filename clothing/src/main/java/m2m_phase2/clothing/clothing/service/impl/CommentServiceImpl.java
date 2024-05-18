@@ -44,7 +44,6 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public byte createComment(CommentDTO commentDTO) throws SQLException {
-//        System.out.println(sessionEmail);
         var product = productRepo.findByslugUrl(commentDTO.getSlugUrl());
         if (product == null) {
             return -1;
