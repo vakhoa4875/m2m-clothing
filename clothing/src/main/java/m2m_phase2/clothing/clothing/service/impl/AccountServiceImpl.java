@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.constant.AccountEnum;
 import m2m_phase2.clothing.clothing.data.dto.AccountDto;
 import m2m_phase2.clothing.clothing.data.entity.Account;
+import m2m_phase2.clothing.clothing.data.variable.StaticVariable;
 import m2m_phase2.clothing.clothing.repository.AccountGGRepo;
 import m2m_phase2.clothing.clothing.repository.AccountRepo;
 import m2m_phase2.clothing.clothing.service.AccountService;
@@ -171,7 +172,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
 
-    public String submitLogin(Account accountRequest, Model model, HttpSession session) throws SQLException {
+    public String submitLogin(Account accountRequest, Model model) throws SQLException {
 //        var loginUserDto = new UserDto();
 //        loginUserDto.setEmail(accountRequest.getEmail());
 //        loginUserDto.setUsername(accountRequest.getUsername());
@@ -196,7 +197,9 @@ public class AccountServiceImpl implements AccountService {
         }
         // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
         session.setAttribute("loggedInUser", accountRequest.getEmail());
-
+        StaticVariable.sessionEmail = accountRequest.getEmail();
+        model.addAttribute("iduser",existingAccount.getUserId());
+        session.setAttribute("iduser", existingAccount.getUserId());
         return "swappa/assests/html/trangchu";
     }
 
@@ -239,7 +242,10 @@ public class AccountServiceImpl implements AccountService {
     }
 
     public boolean isLoggedIn(HttpSession session) {
-        // Kiểm tra xem session có chứa thông tin người dùng hay không
-        return session.getAttribute("loggedInUser") != null;
+        // Lấy thông tin người dùng từ session
+        Object loggedInUser = session.getAttribute("loggedInUser");
+
+        // Kiểm tra nếu thông tin người dùng không null và là một chuỗi không rỗng
+        return loggedInUser instanceof String && !((String) loggedInUser).isEmpty();
     }
 }

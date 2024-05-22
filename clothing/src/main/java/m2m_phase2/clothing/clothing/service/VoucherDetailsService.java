@@ -12,4 +12,6 @@ public interface VoucherDetailsService {
     byte deleteVoucherDetails(VoucherDetailsDto voucherDetailsDto) throws SQLException;
 
     boolean isVoucherDetailsExist(VoucherDetailsDto voucherDetailsDto) throws SQLException;
+
+    byte saveVoucherForUser(VoucherDetailsDto voucherDetailsDto) throws SQLException;
 }

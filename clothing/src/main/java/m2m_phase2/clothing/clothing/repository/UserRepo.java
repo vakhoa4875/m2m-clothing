@@ -104,4 +104,6 @@ public interface UserRepo extends JpaRepository<UserE, Integer> {
     List<UserE> findUserNotInVoucher(@Param("voucherID")Integer voucherID);
 
     UserE findByEmailOrUsername(@Param("email")String email, @Param("username")String username);
+
+    UserE findByEmail(@Param("email")String email);
 }

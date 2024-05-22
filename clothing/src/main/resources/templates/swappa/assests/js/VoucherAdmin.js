@@ -133,8 +133,8 @@ $(document).ready(function () {
     });
     function getVoucherByID(voucherID) {
         $.ajax({
-            url: '/api-public/vouchers/getVoucherByID',
-            type: 'GET',
+            url: '/api-public/vouchers/getVoucherByID2',
+            method: 'GET',
             data: {
                 "voucherID": voucherID
             },

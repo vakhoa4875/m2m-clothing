@@ -117,7 +117,7 @@ create table [Cart]
 create table Comment
 (
     comment_id  int IDENTITY (1,1) PRIMARY KEY,
-    comment     varchar(255),
+    comment     nvarchar(255),
     product_id  int,
     user_id     int,
     create_date date,
@@ -286,7 +286,7 @@ begin
     COMMIT TRANSACTION;
 end
 go
---CREATE OR ALTER TRIGGER gen_user_info 
+--CREATE OR ALTER TRIGGER gen_user_info
 --ON Account
 --AFTER INSERT
 --AS
@@ -323,7 +323,6 @@ Create table [OrderDetail]
     quatity         int,
     toal_product    float
 )
-
 
 go
 create or alter trigger trigger_after_create_Order
@@ -388,6 +387,13 @@ create or alter trigger trigger_after_insert_account
         from inserted i
     end
 go
+
+create table Notification
+(
+    user_id INT,
+    namenotification nvarchar(255),
+)
+go
 create or alter trigger trigger_after_insert_accountgg
     on [AccountGG]
     for insert
@@ -403,6 +409,17 @@ create or alter trigger trigger_after_insert_accountgg
                 i.user_id_gg
         from inserted i
     end
+go
+   CREATE OR ALTER TRIGGER trigger_after_insert_voucherdetails
+    ON VoucherDetails
+    for INSERT
+    AS
+    BEGIN
+        INSERT INTO Notification (user_id, namenotification)
+        SELECT i.user_id,null
+        FROM inserted i;
+    END;
+
 
 
 

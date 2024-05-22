@@ -5,11 +5,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import jakarta.servlet.http.HttpServletRequest;
+import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
 import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
 import m2m_phase2.clothing.clothing.data.entity.Category;
 import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
 import m2m_phase2.clothing.clothing.service.impl.CategoryImpl;
+import m2m_phase2.clothing.clothing.service.impl.CommentServiceImpl;
 import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -28,7 +31,11 @@ public class ProductApi {
 	
 	@Autowired
 	private ProductServiceImpl productserviceimpl;
-	
+
+	@Autowired
+	private CommentServiceImpl commentService;
+
+
 	@Autowired
 	private CategoryImpl categoryimpl;
 	
@@ -93,6 +100,29 @@ public class ProductApi {
 		productserviceimpl.deleteByProductId(productId);
 	}
 
+	@PostMapping("/saveComment")
+	public ResponseEntity<?> doPostSaveComment(@RequestBody CommentDTO commentDTO) {
+		byte rowEffected;
+		try {
+			rowEffected = commentService.saveComment(commentDTO);
+		} catch (Exception e) {
+			System.out.println("Call API Failed: /saveComment");
+			throw new RuntimeException(e);
+		}
+		return ResponseEntity.ok(rowEffected);
+	}
+
+	@PostMapping("/createComment")
+	public ResponseEntity<?> doPostCreateComment(@RequestBody CommentDTO commentDTO) {
+		byte rowEffected;
+		try {
+			rowEffected = commentService.createComment(commentDTO);
+		} catch (Exception e) {
+			System.out.println("Call API Failed: /createComment");
+			throw new RuntimeException(e);
+		}
+		return ResponseEntity.ok(rowEffected);
+	}
 
 	@Autowired
 	private ClientRegistrationRepository clientRegistrationRepository;
