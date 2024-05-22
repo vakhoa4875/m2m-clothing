@@ -65,8 +65,9 @@ CREATE TABLE Product
     pictures     varchar(max),
     videos       varchar(255),
     slug_url     varchar(255) default '',
+    shop_id      int foreign key references Shop(shop_id),
     category_id  int FOREIGN KEY REFERENCES Category (category_id),
-    sale_ID      int FOREIGN KEY REFERENCES Sale (sale_ID)
+    sale_ID      int FOREIGN KEY REFERENCES Sale (sale_ID),
 );
 
 
@@ -145,6 +146,17 @@ create table VoucherDetails
     FOREIGN KEY (user_id) REFERENCES [user] (id)
 )
 go
+create table Shop
+(
+    shop_id int IDENTITY (1,1) primary key,
+    logo varchar,
+    name_shop nvarchar,
+    date_established date,
+    owner_email nvarchar unique ,
+    foreign key (owner_email) references [user] (email)
+)
+go
+
 alter table [user]
 add sdt varchar(15);
 ALTER TABLE [user]
