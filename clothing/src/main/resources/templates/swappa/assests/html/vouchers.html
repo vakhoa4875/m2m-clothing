@@ -229,36 +229,39 @@
             type: 'GET',
             success: function(data) {
                 if (data && data.length > 0) {
+                    var currentDate = new Date();
                     data.forEach(function(voucher) {
-                        var voucherCard = `
-                        <div class="col-md-4">
-                            <div class="card voucher-card">
-                                <div class="text-right p-2 voucher-provider">
-                                    <img src="https://i.imgur.com/w68MQc4.png" width="120">
-                                </div>
-                                <div class="text-center">
-                                    <small class="text-uppercase flat">${voucher.voucherName}</small>
-                                </div>
-                                <div class="d-flex justify-content-center px-2">
-                                    <div class="d-flex flex-row">
-                                        <span class="mt-0 off fw-bold">${voucher.reduce}% OFF</span>
-                                        <sup class="mt-2 text-primary star">*</sup>
+                        var voucherEndDate = new Date(voucher.endDay);
+                        if (voucherEndDate >= currentDate) {
+                            var voucherCard = `
+                            <div class="col-md-4">
+                                <div class="card voucher-card">
+                                    <div class="text-right p-2 voucher-provider">
+                                        <img src="https://i.imgur.com/w68MQc4.png" width="120">
+                                    </div>
+                                    <div class="text-center">
+                                        <small class="text-uppercase flat">${voucher.voucherName}</small>
+                                    </div>
+                                    <div class="d-flex justify-content-center px-2">
+                                        <div class="d-flex flex-row">
+                                            <span class="mt-0 off fw-bold">${voucher.reduce}% OFF</span>
+                                            <sup class="mt-2 text-primary star">*</sup>
+                                        </div>
+                                    </div>
+                                    <div class="line">
+                                        <hr>
+                                    </div>
+                                    <div class="text-center mb-2">
+                                        <p class="text-uppercase">Hạn sử dụng đến ${voucher.endDay}</p>
+                                        <button class="btn btn-coffee claim-btn" data-voucher-id="${voucher.voucherID}">Nhận ngay!</button>
                                     </div>
                                 </div>
-                                <div class="line">
-                                    <hr>
-                                </div>
-                                <div class="text-center mb-2">
-                                    <p class="text-uppercase">Hạn sử dụng đến ${voucher.endDay}</p>
-                                    <button class="btn btn-coffee claim-btn" data-voucher-id="${voucher.voucherID}">Nhận ngay!</button>
-                                </div>
                             </div>
-                        </div>
-                    `;
-                        $('#voucherContainer').append(voucherCard);
+                        `;
+                            $('#voucherContainer').append(voucherCard);
+                        }
                     });
 
-                    // Thêm sự kiện click cho các nút "Nhận ngay!"
                     // Thêm sự kiện click cho các nút "Nhận ngay!"
                     $('.claim-btn').click(function() {
                         var btn = $(this); // Lưu trữ thẻ nút được nhấp vào
@@ -298,7 +301,7 @@
                     alert('Đã nhận voucher thành công!');
                 } else {
                     alert('Không thể nhận voucher.');
-                    btn.removeClass('claim-btn').addClass('claimed').text('Voucher đã được nhận').prop('disabled', true);
+                    btn.removeClass('claim-btn').addClass('claimed').text('Nhận ngay!').prop('disabled', true);
                 }
             },
             error: function() {
@@ -312,5 +315,6 @@
         getAllVouchers();
     });
 </script>
+
 
 </html>
