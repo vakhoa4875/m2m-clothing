@@ -4,99 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Giỏ Hàng</title>
-    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assests/css/style.css">
-    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/bootstrap-5.3.2-dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assests/css/style.css}">
+    <link rel="shortcut icon" th:href="@{/assests/srcPic/x.png}" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-
 </head>
-<body ng-app="myApp" ng-Controller="accountForgotCtrl">
-
-<div>
-    <!-- mobileNav -->
-    <div class="d-block d-lg-none">
-        <div id="mobileNav"  style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
-            <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
-                <div class="container-sm">
-
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-
-                    <a href="/trangchu" class="navbar-brand" title="Swappa">
-                        <img class="img-fluid"
-                             src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                             alt="Swappa Logo">
-                    </a>
-
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_search"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
-                        <i class="fa-solid fa-search" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </nav>
-        </div>
-
-    </div>
-    <!-- mainNav -->
-    <div class="d-none d-lg-block">
-        <!-- first-nav -->
-        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
-            <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
-                <div class="container d-block">
-                    <div class="d-flex gap-3">
-                        <ul class="navbar-nav" role="presentation">
-                            <li class="nav-item">
-                                <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
-                                    <img class="img-fluid"
-                                         src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                         width="167px" height="35px" alt="Bootstrap">
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="flex-grow-1">
-                            <form action="" class="d-flex align-items-center position-relative h-100">
-                                <!-- {{keyword}} -->
-                                <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
-                                <input type="search" class="form-control rounded-0" id="navbar_search_input" name="q"
-                                       ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
-                                <!-- </a> -->
-                            </form>
-                        </div>
-                        <ul class="navbar-nav" role="presentation">
-                            <li class="d-flex align-items-center justify-content-center">
-                                <div class="">
-                                    <a href="/userprofile">
-                                        <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </li>
-                            <li class="ms-3 d-flex align-items-center justify-content-center">
-                                <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
-                                    <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
-                                      0
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="d-flex justify-content-around pb-1" id="userListCategory">
-                        <!-- api -->
-                    </div>
-                </div>
-            </nav>
-        </div>
-        <!-- second-nav -->
-    </div>
-</div>
-
-
-    <div class="container-fluid bg-semiBlack p-0" >
+<body>
+    <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
+    <div class="container-fluid bg-semiBlack p-0">
 
         <main class="flex-shrink-0">
-            <div class="container-fluid text-bg-light p-4 pb-2 mb-2" style="background-color: white !important; min-height: 800px;">
+            <div class="container-fluid text-bg-light p-4 pb-2 mb-2"
+                style="background-color: white !important; min-height: 800px;">
                 <div id="tooltip-bar" class="row row-cols-2 row-cols-md-4 text-center mt-2">
                     <div class="col">
                         <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='                    
@@ -118,8 +37,8 @@
                             </div>
                             <div class="pt-0 card-body">No broken screens, blocked phones, or scammers. We have strict condition requirements, and real people verify listings before they go live.
                             </div>
-                        </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" class="text-primary"><i
-                                class="fa-solid fa-ban"></i> No
+                        </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
+                            class="text-primary"><i class="fa-solid fa-ban"></i> No
                             Junks, No Jerks</a>
                     </div>
                     <div class="col">
@@ -130,8 +49,8 @@
                             </div>
                             <div class="pt-0 card-body">Our support team typically responds in 20 minutes or less. Really!
                             </div>
-                        </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" class="text-primary"><i
-                                class="fa-solid fa-envelope-open-text"></i>
+                        </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
+                            class="text-primary"><i class="fa-solid fa-envelope-open-text"></i>
                             24/7/350 Supports</a>
                     </div>
                     <div class="col">
@@ -142,15 +61,16 @@
                             </div>
                             <div class="pt-0 card-body">We use PayPal for payments because they provide extensive buyer and seller protections. Get paid directly to your PayPal account as soon as your item sells.
                             </div>
-                        </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" class="text-primary"><i
-                                class="fa-brands fa-paypal"></i>
+                        </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
+                            class="text-primary"><i class="fa-brands fa-paypal"></i>
                             Paypal Protection</a>
                     </div>
                 </div>
                 <!-- breadcrumb-bar -->
                 <div id="breadcrumb-bar" class="mt-2 visually-hidden">
-    
-                    <nav aria-label="breadcrumb" style="background-color: rgb(245, 245, 245)" class="py-1 px-3 rounded ">
+
+                    <nav aria-label="breadcrumb" style="background-color: rgb(245, 245, 245)"
+                        class="py-1 px-3 rounded ">
                         <ul class="breadcrumb">
                             <li class="breadcrumb-item"><a href="../../index" class="text-success">Home</a></li>
                             <li class="breadcrumb-item"><a href="#" class="text-success">Phones</a></li>
@@ -161,7 +81,7 @@
                 </div>
                 <div id="message-block" class="text-center mt-3 visually-hidden">
                     <h2>Apple iPhone 15 Pro Max <span class="text-secondary h4">Unlocked</span></h2>
-    
+
                     <div class="d-flex text-center justify-content-center gap-3 flex-wrap">
                         <span>Good</span>
                         <span>512 GB</span>
@@ -174,66 +94,67 @@
                     </div>
                 </div>
                 <div class="row">
-                
+
                     <div class="container">
                         <ul class="list-group">
                             <li class="list-group-item p-0">
                                 <table class="table mb-0">
                                     <thead>
-                                      <tr>
-                                        <th scope="col">
-                                            <div class="ms-4">
-                                                <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">
-                                                Sản phẩm
-                                            </div>
-                                            
-                                        </th>
-                                        <th scope="col">Thành tiền</th>
-                                        <th scope="col">Số lượng</th>
-                                        <th scope="col">Tổng tiền</th>
-                                        <th scope="col"></th>
-                                      </tr>
+                                        <tr>
+                                            <th scope="col">
+                                                <div class="ms-4">
+                                                    <input class="form-check-input" type="checkbox" id="checkboxNoLabel"
+                                                        value="" aria-label="...">
+                                                    Sản phẩm
+                                                </div>
+
+                                            </th>
+                                            <th scope="col">Thành tiền</th>
+                                            <th scope="col">Số lượng</th>
+                                            <th scope="col">Tổng tiền</th>
+                                            <th scope="col"></th>
+                                        </tr>
                                     </thead>
                                     <tbody id="productList">
-                                        
-<!--                                      <tr>-->
-<!--                                        <th scope="row">-->
-<!--                                            <li style="overflow: hidden" height="auto" width="136px" class="d-flex align-items-center ms-4">-->
-<!--                                                <input class="form-check-input me-2" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">-->
-<!--                                                <img src="../media/1-3.jpg" alt="" width="auto" style="display: block; max-width: 150px; max-height: 150px; width: auto; height: auto;">-->
-<!--                                                <span class="ms-3">Áo đen </span>-->
-<!--                                            </li>-->
-<!--                                        </th>-->
-<!--                                        <td class="align-middle">13$</td>-->
-<!--                                        <td class="align-middle">-->
-<!--                                            <div>-->
-<!--                                                <nav aria-label="Page navigation example">-->
-<!--                                                    <ul class="pagination">-->
-<!--                                                        <li class="page-item">-->
-<!--                                                            <a class="page-link" href="#">-->
-<!--                                                                <i class="fa-solid fa-minus"></i>-->
-<!--                                                            </a>-->
-<!--                                                        </li>-->
-<!--                                                        <li class="page-item disabled">-->
-<!--                                                            <a class="page-link text-danger" href="#">2</a>-->
-<!--                                                        </li>-->
-<!--                                                        <li class="page-item">-->
-<!--                                                            <a class="page-link text-dark" href="#">-->
-<!--                                                                <i class="fa-solid fa-plus"></i>-->
-<!--                                                            </a>-->
-<!--                                                        </li>-->
-<!--                                                    </ul>-->
-<!--                                                  </nav>-->
-<!--                                            </div>-->
-<!--                                        </td>-->
-<!--                                        <td class="align-middle fw-bold">13$</td>-->
-<!--                                        <td class="align-middle">-->
-<!--                                            <button class="btn btn-close"></button>-->
-<!--                                        </td>-->
-<!--                                      </tr>-->
-        
+
+                                        <!--                                      <tr>-->
+                                        <!--                                        <th scope="row">-->
+                                        <!--                                            <li style="overflow: hidden" height="auto" width="136px" class="d-flex align-items-center ms-4">-->
+                                        <!--                                                <input class="form-check-input me-2" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">-->
+                                        <!--                                                <img src="../media/1-3.jpg" alt="" width="auto" style="display: block; max-width: 150px; max-height: 150px; width: auto; height: auto;">-->
+                                        <!--                                                <span class="ms-3">Áo đen </span>-->
+                                        <!--                                            </li>-->
+                                        <!--                                        </th>-->
+                                        <!--                                        <td class="align-middle">13$</td>-->
+                                        <!--                                        <td class="align-middle">-->
+                                        <!--                                            <div>-->
+                                        <!--                                                <nav aria-label="Page navigation example">-->
+                                        <!--                                                    <ul class="pagination">-->
+                                        <!--                                                        <li class="page-item">-->
+                                        <!--                                                            <a class="page-link" href="#">-->
+                                        <!--                                                                <i class="fa-solid fa-minus"></i>-->
+                                        <!--                                                            </a>-->
+                                        <!--                                                        </li>-->
+                                        <!--                                                        <li class="page-item disabled">-->
+                                        <!--                                                            <a class="page-link text-danger" href="#">2</a>-->
+                                        <!--                                                        </li>-->
+                                        <!--                                                        <li class="page-item">-->
+                                        <!--                                                            <a class="page-link text-dark" href="#">-->
+                                        <!--                                                                <i class="fa-solid fa-plus"></i>-->
+                                        <!--                                                            </a>-->
+                                        <!--                                                        </li>-->
+                                        <!--                                                    </ul>-->
+                                        <!--                                                  </nav>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </td>-->
+                                        <!--                                        <td class="align-middle fw-bold">13$</td>-->
+                                        <!--                                        <td class="align-middle">-->
+                                        <!--                                            <button class="btn btn-close"></button>-->
+                                        <!--                                        </td>-->
+                                        <!--                                      </tr>-->
+
                                     </tbody>
-                                  </table>
+                                </table>
                             </li>
                             <li class="list-group-item">
                                 <div>
@@ -241,23 +162,26 @@
                                         <div class="col-md-7 col-sm-12">
                                         </div>
                                         <div class="col-md-5 col-sm-12">
-                                            <span class="" style="padding-left: 65px;">Tổng số tiền cần thanh toán : <span class="fw-bolder tienThanhToan" style="color: rgb(251, 67, 67);"></span></span>
+                                            <span class="" style="padding-left: 65px;">Tổng số tiền cần thanh toán :
+                                                <span class="fw-bolder tienThanhToan"
+                                                    style="color: rgb(251, 67, 67);"></span></span>
                                         </div>
                                     </div>
                                 </div>
                             </li>
-                          </ul>
+                        </ul>
                     </div>
                 </div>
                 <div class="mt-2">
                     <div class="row">
                         <div class="col-md-7">
                             <div class="input-group mb-3 w-50">
-<!--                                <span class="input-group-text" id="basic-addon1">Mã giảm giá</span>-->
-<!--                                <input type="text" class="form-control" placeholder="Mã giảm giá" aria-label="Username" aria-describedby="basic-addon1">-->
+                                <!--                                <span class="input-group-text" id="basic-addon1">Mã giảm giá</span>-->
+                                <!--                                <input type="text" class="form-control" placeholder="Mã giảm giá" aria-label="Username" aria-describedby="basic-addon1">-->
 
                                 <!-- Button trigger modal voucher -->
-                                <button type="button" id="btnvoucherModal" class="btn btn-primary rounded" data-bs-toggle="modal" data-bs-target="#voucherModal">
+                                <button type="button" id="btnvoucherModal" class="btn btn-primary rounded"
+                                    data-bs-toggle="modal" data-bs-target="#voucherModal">
                                     Mã giảm giá
                                 </button>
 
@@ -265,12 +189,14 @@
                                 <div class="alert alert-success mt-2 d-none" id="addVoucherText"></div>
 
                                 <!-- Modal Voucher -->
-                                <div class="modal fade" id="voucherModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="voucherModal" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-scrollable">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body" id="modalBodyVoucherInCart">
 
@@ -302,15 +228,17 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6 d-flex flex-column">
                                             <span class="ms-5 w-25 tienCanTra"></span>
-                                            <span class="ms-5 w-25 tiengiam" ></span>
-                                            <span class="ms-5 w-25 fw-bold tienThanhToan" style="color: rgb(251, 67, 67);"></span>
+                                            <span class="ms-5 w-25 tiengiam"></span>
+                                            <span class="ms-5 w-25 fw-bold tienThanhToan"
+                                                style="color: rgb(251, 67, 67);"></span>
                                         </div>
-                                        
+
                                     </div>
                                 </li>
                                 <li class="list-group-item">
                                     <div class="d-flex ">
-                                        <a href="#" class="btn btn-outline-primary " onclick="xoaHetGioHang()">Hủy đơn hàng</a>
+                                        <a href="#" class="btn btn-outline-primary " onclick="xoaHetGioHang()">Hủy đơn
+                                            hàng</a>
                                         <div id="thanhtoan" class="ms-3">
 
                                         </div>
@@ -320,56 +248,17 @@
                         </div>
                     </div>
                 </div>
-         </main>
+        </main>
     </div>
-    
-
     <!-- footer -->
-    <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-        <div class="container pt-2 pb-2">
-            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
-
-            </div>
-            <div class="row row-cols-1 row-cols-md-3">
-                <div class="col d-flex justify-content-center align-items-center">
-                    <div class=" text-white">
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-facebook fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-instagram fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-youtube fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-linkedin fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-reddit fs-1"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col text-center ">
-                    <a href="./index.html"><img
-                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
-                            alt=""></a>
-                </div>
-                <div class="col text-center text-white d-flex justify-content-center align-items-center">
-                    <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
 </body>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="/node_modules/angular/angular.min.js"></script>
-    <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
-    <script src="/node_modules/angular/angular.route.min.js"></script>
-    <script src="/assests/js/app_admin.js"></script>
-    <script src="/assests/js/script.js"></script>
-    <script src="/assests/js/jsAll.js"/></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+<script src="/assests/js/app_admin.js"></script>
+<script src="/assests/js/script.js"></script>
+<script src="/assests/js/jsAll.js"></script>
 </html>

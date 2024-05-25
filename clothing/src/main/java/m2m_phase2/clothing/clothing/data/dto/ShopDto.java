@@ -1,5 +1,6 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
+<<<<<<< HEAD
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,4 +21,23 @@ public class ShopDto {
     private String slugUrl; // Bằng với tên
     private int categoryId;
     private int saleId;
+=======
+import lombok.*;
+import m2m_phase2.clothing.clothing.data.entity.UserE;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+public class ShopDto {
+    private Integer shopId;
+
+    private String logo;
+
+    private String nameShop;
+
+    private String dateEstablished;
+
+    private UserE userE;
+>>>>>>> main
 }
