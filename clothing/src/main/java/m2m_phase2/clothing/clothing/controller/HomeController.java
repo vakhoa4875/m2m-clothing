@@ -105,4 +105,10 @@ public class HomeController {
         session.invalidate();
         return "redirect:/";
     }
+
+    @GetMapping("/searchProduct")
+    public String search( Model model){
+        return "swappa/assests/html/searchProduct";
+    }
+
 }

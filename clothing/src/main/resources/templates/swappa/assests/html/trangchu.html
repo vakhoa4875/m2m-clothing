@@ -430,5 +430,18 @@
     <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
     <script src="/assests/js/jsAll.js"/></script>
+<script>
+    $(document).ready(function() {
+        $('#navbar_search_input').on('keypress', function(e) {
+            if (e.which == 13) { // Nếu phím Enter được nhấn
+                e.preventDefault(); // Ngăn chặn form submit
+                showAlert(); // Hiển thị cảnh báo
+            }
+        });
+    });
 
+    function showAlert() {
+        alert('Tôi là ai, đây là đâu ?'); // Hiển thị cảnh báo khi nhấn Enter
+    }
+</script>
 </html>
