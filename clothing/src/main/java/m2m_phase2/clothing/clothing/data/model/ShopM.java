@@ -1,16 +1,14 @@
 package m2m_phase2.clothing.clothing.data.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import m2m_phase2.clothing.clothing.data.entity.ShopE;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder

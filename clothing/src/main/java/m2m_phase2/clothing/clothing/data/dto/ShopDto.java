@@ -1,11 +1,10 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShopDto {

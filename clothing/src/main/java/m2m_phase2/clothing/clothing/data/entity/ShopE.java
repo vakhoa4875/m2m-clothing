@@ -3,6 +3,7 @@ package m2m_phase2.clothing.clothing.data.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.stereotype.Component;
 
 @Table(name = "Shop")
 @Entity
