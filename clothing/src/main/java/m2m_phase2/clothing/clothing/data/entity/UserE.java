@@ -1,12 +1,13 @@
 package m2m_phase2.clothing.clothing.data.entity;
-import java.util.Date;
-import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.Date;
+import java.util.List;
 
 @Table(name = "[user]")
 @Entity
@@ -73,8 +74,6 @@ public class UserE {
     @JsonIgnore
     List<CommentE> comments;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
-    List<Card> card;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     List<VoucherDetailsE> voucherDetailsES;
