@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import m2m_phase2.clothing.clothing.data.entity.Card;
 import m2m_phase2.clothing.clothing.data.entity.OrderDetailE;
 
 import java.util.List;
