@@ -1,13 +1,13 @@
 package m2m_phase2.clothing.clothing.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Table(name = "Shop")
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ShopE {
@@ -26,6 +26,7 @@ public class ShopE {
     private String dateEstablished;
 
     @OneToOne
+    @JsonIgnore
     @JoinColumn(name = "id",referencedColumnName = "id", unique = true)
     private UserE userE;
 }
