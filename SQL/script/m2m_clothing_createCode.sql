@@ -157,8 +157,6 @@ create table VoucherDetails
     FOREIGN KEY (user_id) REFERENCES [user] (id)
 )
 go
-
-
 alter table [user]
 add sdt varchar(15);
 ALTER TABLE [user]
