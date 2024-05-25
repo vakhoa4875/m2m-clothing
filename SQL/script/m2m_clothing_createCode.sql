@@ -77,8 +77,8 @@ create table [user]
 create table Shop
 (
     shop_id int IDENTITY (1,1) primary key,
-    logo varchar,
-    name_shop nvarchar,
+    logo varchar(255),
+    name_shop nvarchar(255),
     date_established date,
     id int unique ,
     foreign key (id) references [user] (id)
