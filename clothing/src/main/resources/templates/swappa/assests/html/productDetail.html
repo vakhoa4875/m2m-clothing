@@ -4,99 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sản phẩm chi tiết</title>
-    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assests/css/style.css">
-    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/bootstrap-5.3.2-dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assests/css/style.css}">
+    <link rel="shortcut icon" th:href="@{/assests/srcPic/x.png}" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#submitButtonNhanXet").click(function () {
+                // Lấy nội dung của nhận xét
+                var commentText = $("#commentText").val();
+
+                // Lấy slugUrl từ URL hiện tại
+                var urlString = window.location.href;
+                // Phân tách URL để lấy phần query string
+                var urlParts = urlString.split('?');
+                // Lấy query string
+                var queryString = urlParts[1];
+                // Phân tách query string để lấy phần sau dấu bằng
+                var queryParams = queryString.split('=');
+                // Lấy giá trị sau dấu bằng
+                var slugUrl = queryParams[1];
+
+                console.log(slugUrl);
+
+                // Tạo ngày hiện tại
+                var currentDate = new Date();
+
+                // Tạo một đối tượng CommentDTO
+                var commentDTO = {
+                    comment: commentText,
+                    slugUrl: slugUrl, // Sửa từ slug_url thành slugUrl để trùng với tên trường trong DTO
+                    createDate: currentDate
+                };
+
+                // Thực hiện AJAX request để tạo nhận xét
+                $.ajax({
+                    url: "/createComment",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify(commentDTO),
+                    success: function (response) {
+                        console.log("Nhận xét được tạo thành công.", response)
+                        $("#commentText").val("");
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Lỗi khi tạo nhận xét:", error);
+                        // Tùy chọn, bạn có thể hiển thị thông báo lỗi cho người dùng
+                    }
+                });
+            });
+        });
+    </script>
 </head>
-<body ng-app="myApp" ng-Controller="productDetailCtrl">
+<body>
 <div id="fb-root"></div>
-<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v19.0" nonce="pbEXUQBH"></script>
-<div>
-    <!-- mobileNav -->
-    <div class="d-block d-lg-none">
-        <div id="mobileNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-            <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
-                <div class="container-sm">
-
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-
-                    <a href="/trangchu" class="navbar-brand" title="Swappa">
-                        <img class="img-fluid"
-                             src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                             alt="Swappa Logo">
-                    </a>
-
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
-                            data-bs-target="#slide_search"
-                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
-                        <i class="fa-solid fa-search" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </nav>
-        </div>
-
-    </div>
-    <!-- mainNav -->
-    <div class="d-none d-lg-block">
-        <!-- first-nav -->
-        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-            <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
-                <div class="container d-block">
-                    <div class="d-flex gap-3">
-                        <ul class="navbar-nav" role="presentation">
-                            <li class="nav-item">
-                                <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
-                                    <img class="img-fluid"
-                                         src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                         width="167px" height="35px" alt="Bootstrap">
-                                </a>
-                            </li>
-                        </ul>
-                        <div class="flex-grow-1">
-                            <form action="" class="d-flex align-items-center position-relative h-100">
-                                <!-- {{keyword}} -->
-                                <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
-                                <input type="search" class="form-control rounded-0" id="navbar_search_input" name="q"
-                                       ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
-                                <!-- </a> -->
-                            </form>
-                        </div>
-                        <ul class="navbar-nav" role="presentation">
-                            <li class="d-flex align-items-center justify-content-center">
-                                <div class="">
-                                    <a href="/userprofile">
-                                        <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
-                                    </a>
-                                </div>
-                            </li>
-                            <li class="ms-3 d-flex align-items-center justify-content-center">
-                                <a href="/giohang" class="border border-0 position-relative"
-                                   style="background-color: rgb(18,17,13) !important;">
-                                    <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;"
-                                       aria-hidden="true"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                          id="tongSoLuongSP">
-                                      0
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="d-flex justify-content-around pb-1" id="userListCategory">
-                        <!-- api -->
-                    </div>
-                </div>
-            </nav>
-        </div>
-        <!-- second-nav -->
-    </div>
-</div>
-
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v19.0"
+        nonce="pbEXUQBH"></script>
+<!-- header -->
+<div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
 <!-- body -->
 <div class="container-fluid bg-semiBlack">
     <main class="flex-shrink-0">
@@ -161,196 +128,207 @@
                                 <button class="btn border btn-outline-success" type="button" id="soLuong"
                                 ><i class="fa-solid fa-cart-plus"></i>
                                 </button>
-                                <div class="fb-share-button" data-href="http://127.0.0.1:5500/productDetail.html" data-layout="" data-size="">
-                                    <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A5500%2FproductDetail.html&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">Chia sẻ</a>
+                                <div class="fb-share-button" data-href="http://127.0.0.1:5500/productDetail.html"
+                                     data-layout="" data-size="">
+                                    <a target="_blank"
+                                       href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2F127.0.0.1%3A5500%2FproductDetail.html&amp;src=sdkpreparse"
+                                       class="fb-xfbml-parse-ignore">Chia sẻ</a>
                                 </div>
                             </div>
-                        <div class="card text-start mt-2">
-                            <div class="card-header d-flex align-items-center justify-content-center">
-                                <span class="fs-4 fw-bolder" th:text="${listProduct.getName()}" id="productName"></span>
-                                <span class="fs-4 fw-bolder">------ Rate : </span>
-                                <span class="fs-4 fw-bolder" style="color: #c24444"
-                                      th:text="'$'+ ${(listProduct.getSale() != null ? #numbers.formatDecimal(listProduct.getPrice().intValue() - (listProduct.getSale.getSalePercent() / 100.00 * listProduct.getPrice().intValue()), 1, 'DEFAULT', 2,'DEFAULT') : listProduct.getPrice())}"
-                                      id="productPrice"></span>
+                            <div class="card text-start mt-2">
+                                <div class="card-header d-flex align-items-center justify-content-center">
+                                    <span class="fs-4 fw-bolder" th:text="${listProduct.getName()}"
+                                          id="productName"></span>
+                                    <span class="fs-4 fw-bolder">------ Rate : </span>
+                                    <span class="fs-4 fw-bolder" style="color: #c24444"
+                                          th:text="'$'+ ${(listProduct.getSale() != null ? #numbers.formatDecimal(listProduct.getPrice().intValue() - (listProduct.getSale.getSalePercent() / 100.00 * listProduct.getPrice().intValue()), 1, 'DEFAULT', 2,'DEFAULT') : listProduct.getPrice())}"
+                                          id="productPrice"></span>
+                                </div>
+                                <div>
+                                    <ul class="small-ul">
+                                        <li class="pt-1"><i class="fa-solid fa-circle-info" style="color: #47608a;"></i>
+                                            <span th:text="${listProduct.description}"></span>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <div>
-                                <ul class="small-ul">
-                                    <li class="pt-1"><i class="fa-solid fa-circle-info" style="color: #47608a;"></i>
-                                        <span th:text="${listProduct.description}"></span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
 
-                        <div class="card text-start mt-4">
+                            <div class="card text-start mt-4">
 
-                            <div class="p-2 d-flex justify-content-center align-items-centerW">
-                                <video controls class="w-100" style="max-width: 1098px; max-height: 549px;">
-                                    <source th:src="@{'../media/'+${listProduct.videos}}">
-                                </video>
+                                <div class="p-2 d-flex justify-content-center align-items-centerW">
+                                    <video controls class="w-100" style="max-width: 1098px; max-height: 549px;">
+                                        <source th:src="@{'../media/'+${listProduct.videos}}">
+                                    </video>
+                                </div>
+                                <div class="">
+                                    <ul class="small-ul border-start ps-2 ms-3 fw-lighter fs-18">
+                                        <li th:text="${listProduct.description}"></li>
+                                        <!-- <li>{{prod.name3}}
+                                            Pro Max in striking {{prod.color}} with a generous {{prod.storage}} of storage,
+                                            compatible with
+                                            Boost Infinite/Mobile.</li>
+                                        <li class="mt-2">This {{prod.name3}} is in immaculate condition, but it doesn't
+                                            come in its original packaging. It has been handled with care and it looks
+                                            essentially brand new, ready for its next owner to enjoy.</li>
+                                        <li class="mt-2">The battery health stands at {{prod.battery}}.</li>
+                                        <li class="mt-2">Please note that this listing includes the {{prod.name3}} device
+                                            only, without any accessories. It is in like-new condition.</li>
+                                        <li class="mt-2">If you have any questions or need further information about this
+                                            essentially new {{prod.name3}}, please feel free to reach out.</li>
+                                        <li class="mt-2">Thank you for considering this exceptional opportunity to own a
+                                            virtually new {{prod.name3}}.</li> -->
+                                    </ul>
+                                    <hr class="mx-5">
+                                </div>
+                                <div class="card-footer text-end border-top-0"
+                                     style="background-color: rgb(56, 56, 56);">
+                                    <a href="" class="fw-light fs-14 text-white"><em><i
+                                            class="fa-regular fa-calendar-check"></i> Last
+                                        updated: Jan 12, 2024</em></a>
+                                </div>
                             </div>
-                            <div class="">
-                                <ul class="small-ul border-start ps-2 ms-3 fw-lighter fs-18">
-                                    <li th:text="${listProduct.description}"></li>
-                                    <!-- <li>{{prod.name3}}
-                                        Pro Max in striking {{prod.color}} with a generous {{prod.storage}} of storage,
-                                        compatible with
-                                        Boost Infinite/Mobile.</li>
-                                    <li class="mt-2">This {{prod.name3}} is in immaculate condition, but it doesn't
-                                        come in its original packaging. It has been handled with care and it looks
-                                        essentially brand new, ready for its next owner to enjoy.</li>
-                                    <li class="mt-2">The battery health stands at {{prod.battery}}.</li>
-                                    <li class="mt-2">Please note that this listing includes the {{prod.name3}} device
-                                        only, without any accessories. It is in like-new condition.</li>
-                                    <li class="mt-2">If you have any questions or need further information about this
-                                        essentially new {{prod.name3}}, please feel free to reach out.</li>
-                                    <li class="mt-2">Thank you for considering this exceptional opportunity to own a
-                                        virtually new {{prod.name3}}.</li> -->
-                                </ul>
-                                <hr class="mx-5">
-                            </div>
-                            <div class="card-footer text-end border-top-0" style="background-color: rgb(56, 56, 56);">
-                                <a href="" class="fw-light fs-14 text-white"><em><i
-                                        class="fa-regular fa-calendar-check"></i> Last
-                                    updated: Jan 12, 2024</em></a>
-                            </div>
-                        </div>
 
-                        <div class="mt-2">
+                            <div class="mt-2">
 
-                            <div class="row d-flex justify-content-center">
-                                <div class="col-md-8 col-lg-6 w-100">
-                                    <div class="card shadow-0 border" style="background-color: #f0f2f5;">
-                                        <div class="card-body p-2">
-                                            <div class="form-outline mb-4">
-                                                <div class="input-group mb-3">
+                                <div class="row d-flex justify-content-center">
+                                    <div class="col-md-8 col-lg-6 w-100">
+                                        <div class="card shadow-0 border" style="background-color: #f0f2f5;">
+                                            <div class="card-body p-2">
+                                                <div class="form-outline mb-4">
+                                                    <div class="input-group mb-3">
                                                     <textarea placeholder="Nhập nhận xét của bạn về sản phẩm"
                                                               class="form-control" id="commentText" rows="1"></textarea>
-                                                    <button class="btn btn-outline-secondary" type="button"
-                                                            id="submitButtonNhanXet">Nhận xét
-                                                    </button>
+                                                        <button class="btn btn-outline-secondary" type="button"
+                                                                id="submitButtonNhanXet">Nhận xét
+                                                        </button>
+                                                    </div>
+                                                    <div id="commentMessage" class="text-danger"></div>
+                                                    <!-- Placeholder for error/success message -->
                                                 </div>
-                                                <div id="commentMessage" class="text-danger"></div>
-                                                <!-- Placeholder for error/success message -->
-                                            </div>
 
 
-                                            <div class="card mb-4" th:each="comment : ${commentM}">
-                                                <div class="card-body">
-                                                    <h5 th:text="${comment.getComment()}"></h5>
+                                                <div class="card mb-4" th:each="comment : ${commentM}">
+                                                    <div class="card-body">
+                                                        <h5 th:text="${comment.getComment()}"></h5>
 
-                                                    <div class="d-flex justify-content-between">
-                                                        <div class="d-flex flex-row align-items-center">
-                                                            <img th:src="@{'/assests/imagesUser/' + ${comment.getUser().getAvatar()}}"
-                                                                 alt="avatar" width="50"
-                                                                 height="50"/>
-                                                            <p class="small mb-0 ms-2"
-                                                               th:text="${comment.getUser().getFullname()}"></p>
-                                                        </div>
-                                                        <div class="d-flex flex-row align-items-center">
-                                                            <p class="small text-muted mb-0">Upvote?</p>
-                                                            <i class="far fa-thumbs-up mx-2 fa-xs text-black"
-                                                               style="margin-top: -0.16rem;"></i>
-                                                            <p class="small text-muted mb-0"
-                                                               th:text="${#dates.format(comment.getCreateDate(), 'dd-MM-yyyy')}"></p>
+                                                        <div class="d-flex justify-content-between">
+                                                            <div class="d-flex flex-row align-items-center">
+                                                                <img th:src="@{'/assests/imagesUser/' + ${comment.getUser().getAvatar()}}"
+                                                                     alt="avatar" width="50"
+                                                                     height="50"/>
+                                                                <p class="small mb-0 ms-2"
+                                                                   th:text="${comment.getUser().getFullname()}"></p>
+                                                            </div>
+                                                            <div class="d-flex flex-row align-items-center">
+                                                                <p class="small text-muted mb-0">Upvote?</p>
+                                                                <i class="far fa-thumbs-up mx-2 fa-xs text-black"
+                                                                   style="margin-top: -0.16rem;"></i>
+                                                                <p class="small text-muted mb-0"
+                                                                   th:text="${#dates.format(comment.getCreateDate(), 'dd-MM-yyyy')}"></p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+
+
+                                                <div class="d-flex justify-content-center ">
+                                                    <nav aria-label="Page navigation example">
+                                                        <ul class="pagination">
+                                                            <li class="page-item">
+                                                                <a class="page-link text-dark" href="#"
+                                                                   aria-label="Previous">
+                                                                    <span aria-hidden="true">&laquo;</span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="page-item "><a class="page-link text-dark"
+                                                                                      href="#">1</a></li>
+                                                            <li class="page-item"><a class="page-link text-dark"
+                                                                                     href="#">2</a></li>
+                                                            <li class="page-item"><a class="page-link text-dark"
+                                                                                     href="#">3</a></li>
+                                                            <li class="page-item">
+                                                                <a class="page-link text-dark" href="#"
+                                                                   aria-label="Next">
+                                                                    <span aria-hidden="true">&raquo;</span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                    </nav>
+                                                </div>
+
                                             </div>
-
-
-                                            <div class="d-flex justify-content-center ">
-                                                <nav aria-label="Page navigation example">
-                                                    <ul class="pagination">
-                                                        <li class="page-item">
-                                                            <a class="page-link text-dark" href="#"
-                                                               aria-label="Previous">
-                                                                <span aria-hidden="true">&laquo;</span>
-                                                            </a>
-                                                        </li>
-                                                        <li class="page-item "><a class="page-link text-dark"
-                                                                                  href="#">1</a></li>
-                                                        <li class="page-item"><a class="page-link text-dark"
-                                                                                 href="#">2</a></li>
-                                                        <li class="page-item"><a class="page-link text-dark"
-                                                                                 href="#">3</a></li>
-                                                        <li class="page-item">
-                                                            <a class="page-link text-dark" href="#" aria-label="Next">
-                                                                <span aria-hidden="true">&raquo;</span>
-                                                            </a>
-                                                        </li>
-                                                    </ul>
-                                                </nav>
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                        </div>
-                        <div class="card text-start mt-4">
-                            <div class="card-header d-flex align-items-center border-bottom mx-3">
+                            </div>
+                            <div class="card text-start mt-4">
+                                <div class="card-header d-flex align-items-center border-bottom mx-3">
+                                    <div>
+                                        <span class="h4 fw-bold">Shipping & Handling</span>
+                                    </div>
+                                    <div class="ms-2">
+                                        <a href="" class="text-success">Shipping Policies</a>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table align-middle">
+                                        <tr>
+                                            <td rowspan="4" class="text-center fs-5 border-0">
+                                                <i class="fa-solid fa-dolly"></i>
+                                                <br>
+                                                <span>Standard Shipping</span>
+                                                <br>
+                                                <b>Free</b>
+                                            </td>
+                                            <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
+                                                                                  style="color: #00bd16;"></i> Ships
+                                                from
+                                                Chesapeake, VA
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
+                                                                                  style="color: #00bd16;"></i> Ships
+                                                with
+                                                Tracking & Insurance
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
+                                                                                  style="color: #00bd16;"></i> Ships in
+                                                2
+                                                business days or less
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
+                                                                                  style="color: #00bd16;"></i> Seller
+                                                not
+                                                required to ship internationally
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- <div class="card text-start mt-4">
+                                <div class="card-header d-flex align-items-center gap-2 flex-wrap border-bottom mx-3">
+                                    <span class="h4">Return & Refund</span>
+                                    <a href="#!/404page" class="text-success">Return Policies</a>
+                                </div>
                                 <div>
-                                    <span class="h4 fw-bold">Shipping & Handling</span>
+                                    <ul class="text-secondary">
+                                        <li><i class="fa-solid fa-shield-virus" style="color: #e66f00;"></i> Eligible for <a
+                                                href="#!/404page" class="text-success">PayPal Purchase Protection</a> , so
+                                            you
+                                            get
+                                            what you paid for</li>
+                                        <li><i class="fa-solid fa-shield-virus" style="color: #e66f00;"></i> Items received
+                                            not as described shall be returned to the seller for a prompt refund</li>
+                                    </ul>
                                 </div>
-                                <div class="ms-2">
-                                    <a href="" class="text-success">Shipping Policies</a>
-                                </div>
-                            </div>
-                            <div class="table-responsive">
-                                <table class="table align-middle">
-                                    <tr>
-                                        <td rowspan="4" class="text-center fs-5 border-0">
-                                            <i class="fa-solid fa-dolly"></i>
-                                            <br>
-                                            <span>Standard Shipping</span>
-                                            <br>
-                                            <b>Free</b>
-                                        </td>
-                                        <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
-                                                                              style="color: #00bd16;"></i> Ships from
-                                            Chesapeake, VA
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
-                                                                              style="color: #00bd16;"></i> Ships with
-                                            Tracking & Insurance
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
-                                                                              style="color: #00bd16;"></i> Ships in 2
-                                            business days or less
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="border-0 fw-light py-1"><i class="fa-solid fa-circle-check"
-                                                                              style="color: #00bd16;"></i> Seller not
-                                            required to ship internationally
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
+                            </div> -->
                         </div>
-                        <!-- <div class="card text-start mt-4">
-                            <div class="card-header d-flex align-items-center gap-2 flex-wrap border-bottom mx-3">
-                                <span class="h4">Return & Refund</span>
-                                <a href="#!/404page" class="text-success">Return Policies</a>
-                            </div>
-                            <div>
-                                <ul class="text-secondary">
-                                    <li><i class="fa-solid fa-shield-virus" style="color: #e66f00;"></i> Eligible for <a
-                                            href="#!/404page" class="text-success">PayPal Purchase Protection</a> , so
-                                        you
-                                        get
-                                        what you paid for</li>
-                                    <li><i class="fa-solid fa-shield-virus" style="color: #e66f00;"></i> Items received
-                                        not as described shall be returned to the seller for a prompt refund</li>
-                                </ul>
-                            </div>
-                        </div> -->
                     </div>
                 </div>
             </section>
@@ -367,108 +345,17 @@
 
 </div>
 
-
-<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-    <div class="container pt-2 pb-2">
-        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
-
-        </div>
-        <div class="row row-cols-1 row-cols-md-3">
-            <div class="col d-flex justify-content-center align-items-center">
-                <div class=" text-white">
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-square-facebook fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-square-instagram fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-youtube fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-linkedin fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-square-reddit fs-1"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col text-center ">
-                <a href="./index.html"><img
-                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
-                        alt=""></a>
-            </div>
-            <div class="col text-center text-white d-flex justify-content-center align-items-center">
-                <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
-            </div>
-        </div>
-    </div>
-</footer>
-</body>
-<script src="/node_modules/angular/angular.min.js"></script>
+<footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
 <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
-<script src="/node_modules/angular/angular.route.min.js"></script>
 <script src="/assests/js/app.js"></script>
 <script src="/assests/js/script.js"></script>
-<script src="/assests/js/jsAll.js"/>
-</script>
-
+<script src="/assests/js/jsAll.js"></script>
 <script th:inline="javascript">
     /* Định nghĩa hàm formatNumber để format số thành chuỗi với số lượng chữ số thập phân cho trước */
     function formatNumber(number) {
         return number.toFixed(2);
     }
 </script>
-<script>
-    $(document).ready(function () {
-        $("#submitButtonNhanXet").click(function () {
-            // Lấy nội dung của nhận xét
-            var commentText = $("#commentText").val();
-
-            // Lấy slugUrl từ URL hiện tại
-            var urlString = window.location.href;
-            // Phân tách URL để lấy phần query string
-            var urlParts = urlString.split('?');
-            // Lấy query string
-            var queryString = urlParts[1];
-            // Phân tách query string để lấy phần sau dấu bằng
-            var queryParams = queryString.split('=');
-            // Lấy giá trị sau dấu bằng
-            var slugUrl = queryParams[1];
-
-            console.log(slugUrl);
-
-            // Tạo ngày hiện tại
-            var currentDate = new Date();
-
-            // Tạo một đối tượng CommentDTO
-            var commentDTO = {
-                comment: commentText,
-                slugUrl: slugUrl, // Sửa từ slug_url thành slugUrl để trùng với tên trường trong DTO
-                createDate: currentDate
-            };
-
-            // Thực hiện AJAX request để tạo nhận xét
-            $.ajax({
-                url: "/createComment",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(commentDTO),
-                success: function (response) {
-                    console.log("Nhận xét được tạo thành công.", response)
-                    $("#commentText").val("");
-                    location.reload();
-                },
-                error: function (xhr, status, error) {
-                    console.error("Lỗi khi tạo nhận xét:", error);
-                    // Tùy chọn, bạn có thể hiển thị thông báo lỗi cho người dùng
-                }
-            });
-        });
-    });
-</script>
-
-
-
+</body>
 </html>
