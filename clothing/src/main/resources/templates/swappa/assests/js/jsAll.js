@@ -21,7 +21,7 @@ function compareData() {
             tr.innerHTML = `
                                         <th scope="row">
                                             <li style="overflow: hidden" height="auto" width="136px" class="d-flex align-items-center ms-4">
-                                                <input class="form-check-input me-2" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." >
+<!--                                                <input class="form-check-input me-2" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." >-->
                                                 <img src="${object.linkanh}" alt="" style="display: block; width: 150px; height: 150px; object-fit: contain;">
                                                 <span class="ms-3">${object.tensp}</span>
                                             </li>
@@ -446,9 +446,12 @@ $(document).ready(function () {
 
 
 
-
+// $(document).ready(function () {
+//     sessionStorage.setItem("redirected", "");
+// })
 //chi tiết sản phẩm
 var gia = document.getElementById("productPrice");
+var dangnhap = document.getElementById("dn");
 var giaString = gia.textContent;
 // Thay thế dấu phẩy bằng dấu chấm
 var giaSo = parseFloat(giaString.replace("$", "").replace(",", "."));
@@ -462,7 +465,26 @@ let btnCart = document.getElementById("soLuong");
 var soLuong = 0;
 var discount = 0;
 // Thêm sự kiện click cho nút button
+
+
 btnCart.addEventListener("click", function() {
+
+    if(dangnhap.innerHTML === ""){
+        const currentUrl = window.location.href;
+        const url = new URL(currentUrl);
+        const pathAndQuery = url.pathname + url.search;
+        sessionStorage.setItem("duongdan", pathAndQuery);
+
+        window.location.href = "/loginacount";
+        return;
+    }else {
+        sessionStorage.removeItem("duongdan")
+    }
+
+
+
+
+
     // Tăng số lượng sản phẩm lên 1
     soLuong++;
 
@@ -498,7 +520,20 @@ btnCart.addEventListener("click", function() {
 });
 
 let btnBuyNow = document.getElementById("buynow");
+
+
 btnBuyNow.addEventListener("click",function (){
+
+    if(dangnhap.innerHTML === ""){
+        const currentUrl = window.location.href;
+        const url = new URL(currentUrl);
+        const pathAndQuery = url.pathname + url.search;
+        sessionStorage.setItem("duongdan", pathAndQuery);
+        window.location.href = "/loginacount";
+        return;
+    }else {
+        sessionStorage.removeItem("duongdan")
+    }
     // Đặt số lượng mặc định là 1
     var soLuong = 1;
 

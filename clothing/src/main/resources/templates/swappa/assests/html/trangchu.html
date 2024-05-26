@@ -482,6 +482,8 @@
 </script>
 
 <script >
+
+
     $(document).ready(function () {
 
         $('#xoathongbaooo').click(function () {
@@ -528,6 +530,15 @@
             });
         }
     });
+</script>
+
+<script>
+    var duongdan  = sessionStorage.getItem("duongdan");
+    if(duongdan != null){
+        window.location.href = sessionStorage.getItem("duongdan");
+    }else {
+
+    }
 </script>
 
 </html>
