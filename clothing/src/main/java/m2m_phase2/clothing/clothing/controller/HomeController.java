@@ -2,7 +2,6 @@ package m2m_phase2.clothing.clothing.controller;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.entity.Account;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
@@ -17,7 +16,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -63,9 +61,14 @@ public class HomeController {
 
     @GetMapping("/giohang")
     public String getGioHang(Model model) {
-        List<ProductM> list = productServiceImpl.findAll();
-        model.addAttribute("listSp", list);
-        return "swappa/assests/html/card";
+        if(accountServiceImpl.isLoggedIn(session)){
+            List<ProductM> list = productServiceImpl.findAll();
+            model.addAttribute("listSp", list);
+            return "swappa/assests/html/card";
+        }else {
+            return "redirect:/loginacount";
+        }
+
     }
 
     @GetMapping("/thanhtoan")
