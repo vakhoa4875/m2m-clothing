@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin</title>
-    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assests/css/style.css">
-    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/bootstrap-5.3.2-dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assests/css/style.css}">
+    <link rel="shortcut icon" th:href="@{/assests/srcPic/x.png}" type="image/x-icon">
     <link rel="stylesheet" href="/assests/css/admin-css.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
@@ -40,7 +40,6 @@
             padding: 10px 20px;
             background-color: #909498;
             color: #fff;
-
         }
 
         .custom-file-label:hover {
@@ -55,10 +54,14 @@
         }
 
         .avatar {
-            width: 100%; /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của ô chứa */
-            height: auto; /* Đảm bảo tỉ lệ khung hình được bảo toàn */
-            max-width: 150px; /* Kích thước tối đa của ảnh */
-            max-height: 150px; /* Kích thước tối đa của ảnh */
+            width: 100%;
+            /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của ô chứa */
+            height: auto;
+            /* Đảm bảo tỉ lệ khung hình được bảo toàn */
+            max-width: 150px;
+            /* Kích thước tối đa của ảnh */
+            max-height: 150px;
+            /* Kích thước tối đa của ảnh */
         }
 
         /* Tùy chỉnh kích thước của các ô */
@@ -69,22 +72,26 @@
 
         /* Tùy chỉnh các thuộc tính */
         .custom-bg-color {
-            background-color: #f0f0f0; /* Màu nền */
+            background-color: #f0f0f0;
+            /* Màu nền */
         }
 
         .custom-border {
-            border: 1px solid #ccc; /* Viền */
+            border: 1px solid #ccc;
+            /* Viền */
         }
 
         .custom-shadow {
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Hiệu ứng bóng */
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            /* Hiệu ứng bóng */
         }
 
         /* Đảm bảo các ô chiếm không gian chính xác */
         .col {
             margin: 10px;
             width: 33.33%;
-            padding: 50px; /* Khoảng cách bên trong ô */
+            padding: 50px;
+            /* Khoảng cách bên trong ô */
         }
     </style>
     <script>
@@ -106,1183 +113,1074 @@
     </script>
 </head>
 
-<body class="bg-black" ng-app="myApp" ng-Controller="AdminController">
-<div class="d-block d-lg-none">
-    <div id="mobileNav" style="color: rgb(231,227,223);">
-        <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
-            <div class="container-sm">
-                <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
-                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <i class="fa-solid fa-bars"></i>
-                </button>
-                <a href="#" class="navbar-brand" title="Swappa">
-                    <img class="img-fluid"
-                         src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                         alt="Swappa Logo">
-                </a>
-                <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
-                        data-bs-target="#slide_search" aria-controls="navbarSupportedContent" aria-expanded="false"
-                        aria-label="Search">
-                    <i class="fa-solid fa-search" aria-hidden="true"></i>
-                </button>
-            </div>
-        </nav>
-    </div>
+<body class="bg-black">
 
-</div>
-<!-- mainNav -->
-<div class="d-none d-lg-block">
-    <!-- first-nav -->
-    <div class="stNav" style="color: rgb(231,227,223);">
-        <nav class="navbar navbar-expand-lg  navbar-dark">
-            <div class="container d-block">
-                <div class="d-flex justify-content-between align-items-center">
-                    <ul class="navbar-nav" role="presentation">
-                        <li class="nav-item">
-                            <a class="navbar-brand d-block text-center pt-2" href="#">
-                                <img class="img-fluid"
-                                     src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                     width="167px" height="35px" alt="Bootstrap">
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav" role="presentation">
-                        <li class="nav-item">
-                            <a href="#!/cart" class="nav-link position-relative">
+    <div th:replace="~{swappa/assests/html/layout/_layoutAdmin::header}"></div>
 
-                                <i class="fa-solid fa-bell"></i>
-                                <span ng-bind="cartLen"
-                                      class="position-absolute top-0 start-100 translate-middle-x px-2 text-bg-cf badge rounded-pill">
-                                        1 <span class="visually-hidden">Cart Items</span>
-                                    </span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
-</div>
-
-<div class="container-fluid  bg-body-secondary" style="height: 800px;">
-    <div class="row">
-        <div class="col-xl-3 col-lg-12 mt-1 p-0">
-            <div class="card">
-                <div class="card-header bg-black text-center">
-                    <a class="text-white bg-gradient-primary" href="#">
-                        <h5 class="m-0"><strong>APPLICATION MANAGEMENT</strong></h5>
-                    </a>
-                </div>
-                <div class="card-body p-1">
-                    <div class="align-items-start">
-                        <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist"
-                             aria-orientation="vertical">
-                            <button class="nav-link mt-1 text-black active" id="v-pills-home-tab"
+    <div class="container-fluid  bg-body-secondary" style="height: 800px;">
+        <div class="row">
+            <div class="col-xl-3 col-lg-12 mt-1 p-0">
+                <div class="card">
+                    <div class="card-header bg-black text-center">
+                        <a class="text-white bg-gradient-primary" href="#">
+                            <h5 class="m-0"><strong>APPLICATION MANAGEMENT</strong></h5>
+                        </a>
+                    </div>
+                    <div class="card-body p-1">
+                        <div class="align-items-start">
+                            <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist"
+                                aria-orientation="vertical">
+                                <button class="nav-link mt-1 text-black active" id="v-pills-home-tab"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab"
                                     aria-controls="v-pills-home" aria-selected="true">ACCOUNT & USER MANAGEMENT
-                            </button>
-                            <button class="nav-link mt-1 text-black" id="v-pills-home-sale"
-                                    data-bs-toggle="pill" data-bs-target="#v-pills-sale" type="button" role="tab"
-                                    aria-controls="v-pills-sale" aria-selected="false">SALE AND PRODUCT
-                            </button>
-                            <button class="nav-link mt-1 text-black" id="v-pills-home-voucher"
-                                    data-bs-toggle="pill" data-bs-target="#v-pills-voucher" type="button" role="tab"
+                                </button>
+                                <button class="nav-link mt-1 text-black" id="v-pills-home-sale" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-sale" type="button" role="tab" aria-controls="v-pills-sale"
+                                    aria-selected="false">SALE AND PRODUCT
+                                </button>
+                                <button class="nav-link mt-1 text-black" id="v-pills-home-voucher" data-bs-toggle="pill"
+                                    data-bs-target="#v-pills-voucher" type="button" role="tab"
                                     aria-controls="v-pills-voucher" aria-selected="false">VOUCHER ACCOUNT
-                            </button>
-                            <button class="nav-link mt-1 text-black" id="v-pills-home-status-product"
+                                </button>
+                                <button class="nav-link mt-1 text-black" id="v-pills-home-status-product"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-status" type="button" role="tab"
                                     aria-controls="v-pills-home-status" aria-selected="false">STATUS PRODUCT
-                            </button>
-                            <button class="nav-link mt-1 text-black" id="v-pills-home-status-productSale"
+                                </button>
+                                <button class="nav-link mt-1 text-black" id="v-pills-home-status-productSale"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-statusProductSale" type="button"
-                                    role="tab"
-                                    aria-controls="v-pills-home-statusProductSale" aria-selected="false">SALE
-                            </button>
-                            <button class="nav-link mt-1 text-black" id="v-pills-home-status-statistical"
+                                    role="tab" aria-controls="v-pills-home-statusProductSale" aria-selected="false">SALE
+                                </button>
+                                <button class="nav-link mt-1 text-black" id="v-pills-home-status-statistical"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-statistical" type="button"
-                                    role="tab"
-                                    aria-controls="v-pills-home-statistical" aria-selected="false">STATISTIC
-                            </button>
-                            <a class="nav-link mt-1 text-black" href="/admin/logout">Log Out
-                            </a>
+                                    role="tab" aria-controls="v-pills-home-statistical" aria-selected="false">STATISTIC
+                                </button>
+                                <a class="nav-link mt-1 text-black" href="/admin/logout">Log Out
+                                </a>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-xl-9 col-lg-12 p-0">
-            <div class="tab-content" id="v-pills-tabContent">
-                <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
-                     aria-labelledby="v-pills-home-tab" tabindex="0">
-                    <div class="card my-1">
-                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
-                            <div
+            <div class="col-xl-9 col-lg-12 p-0">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel"
+                        aria-labelledby="v-pills-home-tab" tabindex="0">
+                        <div class="card my-1">
+                            <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                                <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Account Information
-                                </h5>
-                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">Account Information
+                                    </h5>
+                                    <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
                                         style="padding: 7px 12px 7px 12px;">
-                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>
-                                </button>
+                                        <i class="fa-solid fa-plus " aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body p-0 mx-3 pb-2">
-                            <div class="table-responsive p-0" id="tableUserContainer">
+                            <div class="card-body p-0 mx-3 pb-2">
+                                <div class="table-responsive p-0" id="tableUserContainer">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane" id="v-pills-sale" role="tabpanel"
-                     aria-labelledby="v-pills-home-sale" tabindex="0">
-                    <div class="card my-1">
-                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
-                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">SALE AND PRODUCT
-                                </h5>
-                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
+                    <div class="tab-pane" id="v-pills-sale" role="tabpanel" aria-labelledby="v-pills-home-sale"
+                        tabindex="0">
+                        <div class="card my-1">
+                            <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                                <div
+                                    class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">SALE AND PRODUCT
+                                    </h5>
+                                    <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleProduct" data-bs-toggle="modal"
                                         style="padding: 7px 12px 7px 12px;">
-                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>
-                                </button>
+                                        <i class="fa-solid fa-plus " aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body p-0 mx-3 pb-2">
-                            <!--viết body vào đây Lộc-->
-                            <div class="table-responsive p-0" id="tableSaleContainer">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                    <tr class="text-center">
-                                        <th scope="col" class="max-width-column"></th>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="listproduct">
-                                    <!--                                    fill all product-->
-                                    </tbody>
-                                </table>
+                            <div class="card-body p-0 mx-3 pb-2">
+                                <!--viết body vào đây Lộc-->
+                                <div class="table-responsive p-0" id="tableSaleContainer">
+                                    <table class="table align-items-center mb-0">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th scope="col" class="max-width-column"></th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="listproduct">
+                                            <!--                                    fill all product-->
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane" id="v-pills-voucher" role="tabpanel"
-                     aria-labelledby="v-pills-home-voucher" tabindex="0">
-                    <div class="card my-1">
-                        <div class="card-header p-0 bg-dark-subtle mt-2 mx-3 position-relative z-index-2">
-                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">VOUCHER ACCOUNT
-                                </h5>
-                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
+                    <div class="tab-pane" id="v-pills-voucher" role="tabpanel" aria-labelledby="v-pills-home-voucher"
+                        tabindex="0">
+                        <div class="card my-1">
+                            <div class="card-header p-0 bg-dark-subtle mt-2 mx-3 position-relative z-index-2">
+                                <div
+                                    class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">VOUCHER ACCOUNT
+                                    </h5>
+                                    <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleVoucher" data-bs-toggle="modal"
-                                        id="newInsButtonAccount"
-                                        style="padding: 7px 12px 7px 12px;">
-                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>
-                                </button>
+                                        id="newInsButtonAccount" style="padding: 7px 12px 7px 12px;">
+                                        <i class="fa-solid fa-plus " aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body p-0">
-                            <!--viết body vào đây VOUCHER ACCOUNT-->
-                            <div class="table-responsive p-0 mt-1 rounded" id="tableVoucherContainer">
-                                <table class="table align-items-center mb-0 table-hover">
-                                    <thead>
-                                    <tr class="text-center">
-                                        <th scope="col">Voucher Name</th>
-                                        <th scope="col">Reduce</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Start Day</th>
-                                        <th scope="col">End Day</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="voucherTableBody">
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="tab-pane" id="v-pills-home-status" role="tabpanel"
-                     aria-labelledby="v-pills-home-product" tabindex="0">
-                    <div class="card my-1">
-                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
-                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">STATUS PRODUCT
-                                </h5>
-                                <!--                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"-->
-                                <!--                                        data-bs-target="#exampleModalAccpectProduct" data-bs-toggle="modal"-->
-                                <!--                                        style="padding: 7px 12px 7px 12px;">-->
-                                <!--                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>-->
-                                <!--                                </button>-->
-                            </div>
-                        </div>
-                        <div class="card-body p-0 mx-3 pb-2">
-
-                            <!--viết body vào đây-->
-                            <div class="table-responsive p-0" id="tableStatusProductContainer">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                    <tr class="text-center">
-                                        <th scope="col">Order number</th>
-                                        <th scope="col">Username</th>
-                                        <th scope="col">Phone</th>
-                                        <th scope="col">Payment method</th>
-                                        <th scope="col">Quantity of products</th>
-                                        <th scope="col">Payment status</th>
-                                        <th scope="col"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="TableStatusUser">
-
-                                    </tbody>
-                                </table>
+                            <div class="card-body p-0">
+                                <!--viết body vào đây VOUCHER ACCOUNT-->
+                                <div class="table-responsive p-0 mt-1 rounded" id="tableVoucherContainer">
+                                    <table class="table align-items-center mb-0 table-hover">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th scope="col">Voucher Name</th>
+                                                <th scope="col">Reduce</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Start Day</th>
+                                                <th scope="col">End Day</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="voucherTableBody">
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="tab-pane" id="v-pills-home-statusProductSale" role="tabpanel"
-                     aria-labelledby="v-pills-home-voucher" tabindex="0">
-                    <div class="card my-1">
-                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
-                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">Sale</h5>
-                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
+                    <div class="tab-pane" id="v-pills-home-status" role="tabpanel"
+                        aria-labelledby="v-pills-home-product" tabindex="0">
+                        <div class="card my-1">
+                            <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                                <div
+                                    class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">STATUS PRODUCT
+                                    </h5>
+                                    <!--                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"-->
+                                    <!--                                        data-bs-target="#exampleModalAccpectProduct" data-bs-toggle="modal"-->
+                                    <!--                                        style="padding: 7px 12px 7px 12px;">-->
+                                    <!--                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>-->
+                                    <!--                                </button>-->
+                                </div>
+                            </div>
+                            <div class="card-body p-0 mx-3 pb-2">
+
+                                <!--viết body vào đây-->
+                                <div class="table-responsive p-0" id="tableStatusProductContainer">
+                                    <table class="table align-items-center mb-0">
+                                        <thead>
+                                            <tr class="text-center">
+                                                <th scope="col">Order number</th>
+                                                <th scope="col">Username</th>
+                                                <th scope="col">Phone</th>
+                                                <th scope="col">Payment method</th>
+                                                <th scope="col">Quantity of products</th>
+                                                <th scope="col">Payment status</th>
+                                                <th scope="col"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="TableStatusUser">
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="v-pills-home-statusProductSale" role="tabpanel"
+                        aria-labelledby="v-pills-home-voucher" tabindex="0">
+                        <div class="card my-1">
+                            <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                                <div
+                                    class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">Sale</h5>
+                                    <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleSaleProduct" data-bs-toggle="modal"
-                                        id="newInsButtonSale"
-                                        style="padding: 7px 12px 7px 12px;">
-                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>
-                                </button>
+                                        id="newInsButtonSale" style="padding: 7px 12px 7px 12px;">
+                                        <i class="fa-solid fa-plus " aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <ul class="nav nav-tabs mx-3 mt-1" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="sale-tab" data-bs-toggle="tab"
+                            <ul class="nav nav-tabs mx-3 mt-1" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="sale-tab" data-bs-toggle="tab"
                                         data-bs-target="#sale" type="button" role="tab" aria-controls="sale"
                                         aria-selected="true">Sale
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="product-tab" data-bs-toggle="tab" data-bs-target="#product"
-                                        type="button" role="tab" aria-controls="product" aria-selected="false">Product
-                                </button>
-                            </li>
-                        </ul>
-                        <div class="tab-content mx-3" id="myTabContent">
-                            <div class="tab-pane fade show active" id="sale" role="tabpanel" aria-labelledby="sale-tab">
-                                <div class="table-responsive p-0" id="tableProductSaleContainer">
-                                    <table class="table align-items-center mb-0">
-                                        <thead>
-                                        <!-- Tabs content -->
-                                        <tr class="text-center">
-                                            <th scope="col">Order</th>
-                                            <th scope="col">Name sale</th>
-                                            <th scope="col">% Sale</th>
-                                            <th scope="col">Start Day</th>
-                                            <th scope="col">End Day</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="SaleProductTableBody">
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="product-tab" data-bs-toggle="tab"
+                                        data-bs-target="#product" type="button" role="tab" aria-controls="product"
+                                        aria-selected="false">Product
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="tab-content mx-3" id="myTabContent">
+                                <div class="tab-pane fade show active" id="sale" role="tabpanel"
+                                    aria-labelledby="sale-tab">
+                                    <div class="table-responsive p-0" id="tableProductSaleContainer">
+                                        <table class="table align-items-center mb-0">
+                                            <thead>
+                                                <!-- Tabs content -->
+                                                <tr class="text-center">
+                                                    <th scope="col">Order</th>
+                                                    <th scope="col">Name sale</th>
+                                                    <th scope="col">% Sale</th>
+                                                    <th scope="col">Start Day</th>
+                                                    <th scope="col">End Day</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="SaleProductTableBody">
 
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="product-tab">
-                                <div class="table-responsive p-0" id="tableProductSaleContainerProduct">
-                                    <table class="table align-items-center mb-0">
-                                        <thead>
-                                        <!-- Tabs content -->
-                                        <tr class="text-center">
-                                            <th scope="col">Order</th>
-                                            <th scope="col">Name product</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Name sale</th>
-                                            <th scope="col"></th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="ProductTableBody">
+                                <div class="tab-pane fade" id="product" role="tabpanel" aria-labelledby="product-tab">
+                                    <div class="table-responsive p-0" id="tableProductSaleContainerProduct">
+                                        <table class="table align-items-center mb-0">
+                                            <thead>
+                                                <!-- Tabs content -->
+                                                <tr class="text-center">
+                                                    <th scope="col">Order</th>
+                                                    <th scope="col">Name product</th>
+                                                    <th scope="col">Price</th>
+                                                    <th scope="col">Category</th>
+                                                    <th scope="col">Name sale</th>
+                                                    <th scope="col"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="ProductTableBody">
 
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <!--                Bắt đầu thống kê-->
-                <div class="tab-pane" id="v-pills-home-statistical" role="tabpanel"
-                     aria-labelledby="v-pills-home-product"
-                     tabindex="0">
-                    <div class="card my-1">
-                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
-                            <div
+                    <!--                Bắt đầu thống kê-->
+                    <div class="tab-pane" id="v-pills-home-statistical" role="tabpanel"
+                        aria-labelledby="v-pills-home-product" tabindex="0">
+                        <div class="card my-1">
+                            <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                                <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">STATISTIC</h5>
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">STATISTIC</h5>
+                                </div>
                             </div>
-                        </div>
-                        <ul class="nav nav-tabs mx-3 mt-1" id="myTab-ThongKe" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="thongKe-tab" data-bs-toggle="tab"
+                            <ul class="nav nav-tabs mx-3 mt-1" id="myTab-ThongKe" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="thongKe-tab" data-bs-toggle="tab"
                                         data-bs-target="#thongKeUser" type="button" role="tab" aria-controls="thongKe"
                                         aria-selected="true">Overview Statistic
-                                </button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="product-tab-thongKe" data-bs-toggle="tab"
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="product-tab-thongKe" data-bs-toggle="tab"
                                         data-bs-target="#thongKeProduct" type="button" role="tab"
-                                        aria-controls="product"
-                                        aria-selected="false">Order Statistic
-                                </button>
-                            </li>
-                        </ul>
-                        <div class="tab-content mx-3 max-height-content" id="myTabContent2">
-                            <div class="tab-pane fade show active" id="thongKeUser" role="tabpanel"
-                                 aria-labelledby="thongKe-tab">
-                                <script src="https://www.gstatic.com/charts/loader.js"></script>
-                                <!-- Phần của bản 1 -->
-                                <div class="table-responsive p-0 " id="tableThongKeUser">
-                                    <div class=" container-fluid">
+                                        aria-controls="product" aria-selected="false">Order Statistic
+                                    </button>
+                                </li>
+                            </ul>
+                            <div class="tab-content mx-3 max-height-content" id="myTabContent2">
+                                <div class="tab-pane fade show active" id="thongKeUser" role="tabpanel"
+                                    aria-labelledby="thongKe-tab">
+                                    <script src="https://www.gstatic.com/charts/loader.js"></script>
+                                    <!-- Phần của bản 1 -->
+                                    <div class="table-responsive p-0 " id="tableThongKeUser">
+                                        <div class=" container-fluid">
+                                            <div class="row">
+                                                <a href="#"
+                                                    class="col custom-bg-color custom-border custom-shadow bg-success rounded-2 text-decoration-none text-white">
+                                                    <div>Number of accounts: <span id="totalAccountsSpan"> </span></div>
+                                                </a>
+                                                <a href="#"
+                                                    class="col custom-bg-color custom-border custom-shadow bg-warning rounded-2 text-decoration-none text-white">
+                                                    <div>Total product quantity: <span id="totalProductSpan"></span>
+                                                    </div>
+                                                </a>
+                                                <a href="#"
+                                                    class="col custom-bg-color custom-border custom-shadow bg-info rounded-2 text-decoration-none text-white">
+                                                    <div>Product Type: <span id="totalCategorySpan"></span></div>
+                                                </a>
+                                            </div>
+
+
+                                            <div class="row mt-3 ">
+                                                <div class="col-xxl-6">
+                                                    <div id="myChart1" style="width:99%; max-width:99%; height:99%;">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xxl-6 border-danger border-1">
+                                                    <div id="myChart2" style="width:99%; max-width:99%; height:99%;">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Kết thúc phần bản 1 -->
+                                </div>
+                                <div class="tab-pane fade" id="thongKeProduct" role="tabpanel"
+                                    aria-labelledby="product-tab-thongKe">
+                                    <div class="container">
+                                        <div class="row mx-lg-5 mb-0 d-flex justify-content-center align-items-end">
+                                            <div class="col canvas-container p-3 py-4"
+                                                style="background-color: #fff0d9 !important;">
+                                                <select class="form-select mb-3" id="select-voucher-period"
+                                                    aria-label="Select period">
+                                                </select>
+                                                <canvas id="myChart" class="mt-0"></canvas>
+                                                <h5 class="text-center">Top 10 most used vouchers</h5>
+                                            </div>
+                                            <div class="col canvas-container px-3"
+                                                style="background-color: #fff0d9 !important;">
+                                                <canvas id="monthVoucherChart" class="mt-0"></canvas>
+                                                <h5 class="text-center">Vouchers used by months</h5>
+                                            </div>
+                                        </div>
+                                        <hr class="p-0 m-0 my-2">
                                         <div class="row">
-                                            <a href="#"
-                                               class="col custom-bg-color custom-border custom-shadow bg-success rounded-2 text-decoration-none text-white">
-                                                <div>Number of accounts: <span id="totalAccountsSpan"> </span></div>
-                                            </a>
-                                            <a href="#"
-                                               class="col custom-bg-color custom-border custom-shadow bg-warning rounded-2 text-decoration-none text-white">
-                                                <div>Total product quantity: <span id="totalProductSpan"></span></div>
-                                            </a>
-                                            <a href="#"
-                                               class="col custom-bg-color custom-border custom-shadow bg-info rounded-2 text-decoration-none text-white">
-                                                <div>Product Type: <span id="totalCategorySpan"></span></div>
-                                            </a>
-                                        </div>
-
-
-                                        <div class="row mt-3 ">
-                                            <div class="col-xxl-6">
-                                                <div id="myChart1" style="width:99%; max-width:99%; height:99%;"></div>
-                                            </div>
-                                            <div class="col-xxl-6 border-danger border-1">
-                                                <div id="myChart2" style="width:99%; max-width:99%; height:99%;"></div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <!-- Kết thúc phần bản 1 -->
-                            </div>
-                            <div class="tab-pane fade" id="thongKeProduct" role="tabpanel"
-                                 aria-labelledby="product-tab-thongKe">
-                                <div class="container">
-                                    <div class="row mx-lg-5 mb-0 d-flex justify-content-center align-items-end">
-                                        <div class="col canvas-container p-3 py-4" style="background-color: #fff0d9 !important;">
-                                            <select class="form-select mb-3" id="select-voucher-period"
+                                            <div class="col mx-lg-5 p-0">
+                                                <h4 class="text-center">Top 10 Best Seller Items</h4>
+                                                <select class="form-select mb-3" id="select-period"
                                                     aria-label="Select period">
-                                            </select>
-                                            <canvas id="myChart" class="mt-0"></canvas>
-                                            <h5 class="text-center">Top 10 most used vouchers</h5>
-                                        </div>
-                                        <div class="col canvas-container px-3" style="background-color: #fff0d9 !important;">
-                                            <canvas id="monthVoucherChart" class="mt-0"></canvas>
-                                            <h5 class="text-center">Vouchers used by months</h5>
-                                        </div>
-                                    </div>
-                                    <hr class="p-0 m-0 my-2">
-                                    <div class="row">
-                                        <div class="col mx-lg-5 p-0">
-                                            <h4 class="text-center">Top 10 Best Seller Items</h4>
-                                            <select class="form-select mb-3" id="select-period"
-                                                    aria-label="Select period">
-                                            </select>
-                                            <div class="table-responsive" style="min-height: 32vh !important;">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                    <tr class="text-center">
-                                                        <th scope="col" style="width: 10%">#</th>
-                                                        <th scope="col" colspan="2" style="width:60%">Product</th>
-                                                        <th scope="col" style="width: 10%">Price</th>
-                                                        <th scope="col" style="width: 10%">Sold</th>
-                                                        <th scope="col" style="width: 10%" class="text-end">Left</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody id="top-10-sold-product-container">
-                                                    </tbody>
-                                                </table>
+                                                </select>
+                                                <div class="table-responsive" style="min-height: 32vh !important;">
+                                                    <table class="table table-hover">
+                                                        <thead>
+                                                            <tr class="text-center">
+                                                                <th scope="col" style="width: 10%">#</th>
+                                                                <th scope="col" colspan="2" style="width:60%">Product
+                                                                </th>
+                                                                <th scope="col" style="width: 10%">Price</th>
+                                                                <th scope="col" style="width: 10%">Sold</th>
+                                                                <th scope="col" style="width: 10%" class="text-end">Left
+                                                                </th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody id="top-10-sold-product-container">
+                                                        </tbody>
+                                                    </table>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- Kết thúc phần bản 2 -->
                                 </div>
-                                <!-- Kết thúc phần bản 2 -->
                             </div>
                         </div>
                     </div>
+                    <!--                Kết thúc thống kê-->
                 </div>
-                <!--                Kết thúc thống kê-->
             </div>
         </div>
     </div>
-</div>
 
+    <modalSection>
+        <!--==================================================MODAL ACCOUNT INFORMATION==============================================-->
+        <!--insert modal Account Information-->
+        <div class="modal fade modal-lg" id="exampleModalToggle" aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="insertedUserModal">User's Information</h1>
+                        <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="modal-body" id="insertModalBody">
+                        <div class="mb-2 ">
+                            <label for="inUsername" class="form-label">Username</label>
+                            <input type="text" class="form-control ps-3" id="inUsername"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <!--                <div class="mb-2 ">-->
+                        <!--                    <label for="inFullname" class="form-label">Fullname</label>-->
+                        <!--                    <input type="text" class="form-control ps-3" id="inFullname"-->
+                        <!--                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">-->
+                        <!--                </div>-->
+                        <div class="mb-2 ">
+                            <label for="inEmail" class="form-label">Email</label>
+                            <input type="email" class="form-control ps-3" id="inEmail"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
 
-<!--==================================================MODAL ACCOUNT INFORMATION==============================================-->
-<!--insert modal Account Information-->
-<div class="modal fade modal-lg" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-     tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="insertedUserModal">User's Information</h1>
-                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-            </div>
-            <div class="modal-body" id="insertModalBody">
-                <div class="mb-2 ">
-                    <label for="inUsername" class="form-label">Username</label>
-                    <input type="text" class="form-control ps-3" id="inUsername"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-                <!--                <div class="mb-2 ">-->
-                <!--                    <label for="inFullname" class="form-label">Fullname</label>-->
-                <!--                    <input type="text" class="form-control ps-3" id="inFullname"-->
-                <!--                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">-->
-                <!--                </div>-->
-                <div class="mb-2 ">
-                    <label for="inEmail" class="form-label">Email</label>
-                    <input type="email" class="form-control ps-3" id="inEmail"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
+                        <div class="mb-2 ">
+                            <label for="inPass" class="form-label">Password</label>
+                            <input type="password" class="form-control ps-3" id="inPass" aria-describedby=""
+                                style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="inConfirmPass" class="form-label">Confirm password</label>
+                            <input id="inConfirmPass" class="form-control ps-3 pe-3" type="password"
+                                style="border: 1px solid #d2d6da;">
 
-                <div class="mb-2 ">
-                    <label for="inPass" class="form-label">Password</label>
-                    <input type="password" class="form-control ps-3" id="inPass" aria-describedby=""
-                           style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="inRole" class="form-label me-3 m-0">Role</label>
+                            <select class="form-select" id="inRole" aria-label="Default select example">
+                                <option value="true">Admin</option>
+                                <!--                        <option value="2">Manager</option>-->
+                                <option value="false">User</option>
+                            </select>
+                        </div>
+                        <!--                <div class="mb-2">-->
+                        <!--                    <label for="inDescription" class="form-label">Description</label>-->
+                        <!--                    <textarea class="form-control" id="inDescription" rows="3"></textarea>-->
+                        <!--                </div>-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                            onclick="services.insertNewUser()">
+                            Add new user
+                        </button>
+                    </div>
                 </div>
-                <div class="mb-2 ">
-                    <label for="inConfirmPass" class="form-label">Confirm password</label>
-                    <input id="inConfirmPass" class="form-control ps-3 pe-3" type="password"
-                           style="border: 1px solid #d2d6da;">
-
-                </div>
-                <div class="mb-2 ">
-                    <label for="inRole" class="form-label me-3 m-0">Role</label>
-                    <select class="form-select" id="inRole" aria-label="Default select example">
-                        <option value="true">Admin</option>
-                        <!--                        <option value="2">Manager</option>-->
-                        <option value="false">User</option>
-                    </select>
-                </div>
-                <!--                <div class="mb-2">-->
-                <!--                    <label for="inDescription" class="form-label">Description</label>-->
-                <!--                    <textarea class="form-control" id="inDescription" rows="3"></textarea>-->
-                <!--                </div>-->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal"
-                        onclick="services.insertNewUser()">
-                    Add new user
-                </button>
             </div>
         </div>
-    </div>
-</div>
 
 
-<!-- modal sửa Account Information-->
-<div class="modal fade modal-lg" id="exampleModalSua1" aria-hidden="true" aria-labelledby="exampleModalToggleLabel"
-     tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="updateUserModal">User's Infomation</h1>
-                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-            </div>
-            <div class="modal-body" id="updateUserModalBody">
+        <!-- modal sửa Account Information-->
+        <div class="modal fade modal-lg" id="exampleModalSua1" aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updateUserModal">User's Infomation</h1>
+                        <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="modal-body" id="updateUserModalBody">
 
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="services.updateUser()">
-                    Save changes
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal xóa Account Information-->
-<div class="modal fade" id="exampleModalXoa" tabindex="-1" aria-labelledby="exampleModalXoa" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm delete user?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">Are your sure to delete this user out of your system?</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="services.disableUser()">
-                    I'm sure!
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--========================================SALE AND PRODUCT MANAGEMENT<=====================================================-->
-<!--insert modal PRODUCT MANAGEMENT<-->
-<div class="modal fade modal-lg" id="exampleModalToggleProduct" aria-hidden="true"
-     aria-labelledby="exampleModalToggleLabel"
-     tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <form id="productForm" enctype="multipart/form-data" action="">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="insertProductModal">SALE AND PRODUCT MANAGEMENT</h1>
-                    <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                            class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                            onclick="services.updateUser()">
+                            Save changes
+                        </button>
+                    </div>
                 </div>
-                <div class="modal-body" id="insertProductModalBody">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="mb-2 ">
-                                <label for="insNameProduct" class="form-label">Name</label>
-                                <input type="text" class="form-control ps-3" id="insNameProduct"
-                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                            </div>
-                            <div class="mb-2 ">
-                                <label for="insPriceProduct" class="form-label">Price</label>
-                                <input type="text" class="form-control ps-3" id="insPriceProduct"
-                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                            </div>
-                            <div class="mb-2 ">
-                                <label for="insQuantityProduct" class="form-label">Quantity</label>
-                                <input type="text" class="form-control ps-3" id="insQuantityProduct"
-                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                            </div>
-                            <div class="mb-2">
-                                <label for="inDescriptionProduct" class="form-label">Description</label>
-                                <textarea class="form-control" id="inDescriptionProduct" rows="3"></textarea>
-                            </div>
-                            <div class="mb-2">
-                                <div class="container " style="">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <div class="d-flex justify-content-center">
-                                                <img src="" class="avatar me-3 border-radius-lg"
-                                                     id="previewImage1" alt="Chọn ảnh">
-                                            </div>
-                                            <div class="text-center my-3" style="margin-right: 10px;">
-                                                <input type="file" class="form-control" id="fileInput1" accept="image/*"
-                                                       onchange="productservices.previewImage(event, 'previewImage1','previewImage','fileInput','nameImageIns')">
-                                                <label id="nameImageIns1" style="display: none"></label>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="d-flex justify-content-center">
-                                                <img src="" class="avatar me-3 border-radius-lg"
-                                                     id="previewImage2" alt="Chọn ảnh">
-                                            </div>
-                                            <div class="text-center my-3" style="margin-right: 10px;">
-                                                <input type="file" class="form-control" id="fileInput2" accept="image/*"
-                                                       onchange="productservices.previewImage(event, 'previewImage2','previewImage','fileInput','nameImageIns')">
-                                                <label id="nameImageIns2" style="display: none"></label>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="d-flex justify-content-center">
-                                                <img src="" class="avatar me-3 border-radius-lg"
-                                                     id="previewImage3" alt="Chọn ảnh">
-                                            </div>
-                                            <div class="text-center my-3" style="margin-right: 10px;">
-                                                <input type="file" class="form-control" id="fileInput3" accept="image/*"
-                                                       onchange="productservices.previewImage(event, 'previewImage3','previewImage','fileInput','nameImageIns')">
-                                                <label id="nameImageIns3" style="display: none"></label>
+            </div>
+        </div>
+        <!-- Modal xóa Account Information-->
+        <div class="modal fade" id="exampleModalXoa" tabindex="-1" aria-labelledby="exampleModalXoa" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Confirm delete user?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">Are your sure to delete this user out of your system?</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                            onclick="services.disableUser()">
+                            I'm sure!
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--========================================SALE AND PRODUCT MANAGEMENT<=====================================================-->
+        <!--insert modal PRODUCT MANAGEMENT<-->
+        <div class="modal fade modal-lg" id="exampleModalToggleProduct" aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <form id="productForm" enctype="multipart/form-data" action="">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="insertProductModal">SALE AND PRODUCT MANAGEMENT</h1>
+                            <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                                    class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                        </div>
+                        <div class="modal-body" id="insertProductModalBody">
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="mb-2 ">
+                                        <label for="insNameProduct" class="form-label">Name</label>
+                                        <input type="text" class="form-control ps-3" id="insNameProduct"
+                                            aria-describedby="basic-addon3 basic-addon4"
+                                            style="border: 1px solid #d2d6da;">
+                                    </div>
+                                    <div class="mb-2 ">
+                                        <label for="insPriceProduct" class="form-label">Price</label>
+                                        <input type="text" class="form-control ps-3" id="insPriceProduct"
+                                            aria-describedby="basic-addon3 basic-addon4"
+                                            style="border: 1px solid #d2d6da;">
+                                    </div>
+                                    <div class="mb-2 ">
+                                        <label for="insQuantityProduct" class="form-label">Quantity</label>
+                                        <input type="text" class="form-control ps-3" id="insQuantityProduct"
+                                            aria-describedby="basic-addon3 basic-addon4"
+                                            style="border: 1px solid #d2d6da;">
+                                    </div>
+                                    <div class="mb-2">
+                                        <label for="inDescriptionProduct" class="form-label">Description</label>
+                                        <textarea class="form-control" id="inDescriptionProduct" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-2">
+                                        <div class="container " style="">
+                                            <div class="row">
+                                                <div class="col-4">
+                                                    <div class="d-flex justify-content-center">
+                                                        <img src="" class="avatar me-3 border-radius-lg"
+                                                            id="previewImage1" alt="Chọn ảnh">
+                                                    </div>
+                                                    <div class="text-center my-3" style="margin-right: 10px;">
+                                                        <input type="file" class="form-control" id="fileInput1"
+                                                            accept="image/*"
+                                                            onchange="productservices.previewImage(event, 'previewImage1','previewImage','fileInput','nameImageIns')">
+                                                        <label id="nameImageIns1" style="display: none"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="d-flex justify-content-center">
+                                                        <img src="" class="avatar me-3 border-radius-lg"
+                                                            id="previewImage2" alt="Chọn ảnh">
+                                                    </div>
+                                                    <div class="text-center my-3" style="margin-right: 10px;">
+                                                        <input type="file" class="form-control" id="fileInput2"
+                                                            accept="image/*"
+                                                            onchange="productservices.previewImage(event, 'previewImage2','previewImage','fileInput','nameImageIns')">
+                                                        <label id="nameImageIns2" style="display: none"></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div class="d-flex justify-content-center">
+                                                        <img src="" class="avatar me-3 border-radius-lg"
+                                                            id="previewImage3" alt="Chọn ảnh">
+                                                    </div>
+                                                    <div class="text-center my-3" style="margin-right: 10px;">
+                                                        <input type="file" class="form-control" id="fileInput3"
+                                                            accept="image/*"
+                                                            onchange="productservices.previewImage(event, 'previewImage3','previewImage','fileInput','nameImageIns')">
+                                                        <label id="nameImageIns3" style="display: none"></label>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="mb-2">
-                                <div class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
-                                    <div class="embed-responsive embed-responsive-16by9">
-                                        <video id="previewVideoIns" class="embed-responsive-item" alt="Chọn video">
-                                            <source src="">
-                                        </video>
+                                    <div class="mb-2">
+                                        <div
+                                            class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
+                                            <div class="embed-responsive embed-responsive-16by9">
+                                                <video id="previewVideoIns" class="embed-responsive-item"
+                                                    alt="Chọn video">
+                                                    <source src="">
+                                                </video>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="text-center my-3" style="margin-right: 10px;">
+                                                <input type="file" class="form-control" id="fileInput4" accept="video/*"
+                                                    onchange="productservices.previewVideo(event,'previewVideoIns','nameVideoIns')">
+                                                <label id="nameVideoIns" style="display: none "></label>
+                                            </div>
+                                        </div>
+                                        <select class="form-select w-auto" aria-label="Default select example"
+                                            id="formSelectIns">
+                                            <option value="1">Outerwear</option>
+                                            <option value="2">Tops</option>
+                                            <option value="3">Bottoms</option>
+                                            <option value="4">Jewels & Accessories</option>
+                                            <option value="5">Headwear</option>
+                                            <option value="6">Footwear</option>
+                                        </select>
                                     </div>
                                 </div>
-                                <div class="col-4">
-                                    <div class="text-center my-3" style="margin-right: 10px;">
-                                        <input type="file" class="form-control" id="fileInput4" accept="video/*"
-                                               onchange="productservices.previewVideo(event,'previewVideoIns','nameVideoIns')">
-                                        <label id="nameVideoIns" style="display: none "></label>
-                                    </div>
-                                </div>
-                                <select class="form-select w-auto" aria-label="Default select example"
-                                        id="formSelectIns">
-                                    <option value="1">Outerwear</option>
-                                    <option value="2">Tops</option>
-                                    <option value="3">Bottoms</option>
-                                    <option value="4">Jewels & Accessories</option>
-                                    <option value="5">Headwear</option>
-                                    <option value="6">Footwear</option>
-                                </select>
                             </div>
                         </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                                onclick="productservices.inSertProduct();">
+                                Add new Product
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- modal sửa Product-->
+        <div class="modal fade modal-lg" id="exampleModalUpdateProduct" aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered ">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <!--                mơi vcat ne-->
+                        <h1 class="modal-title fs-5" id="updateProductModal">Product</h1>
+                        <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="modal-body" id="updateProductModalBody">
+                        <!--getproductfindbyid-->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
+                            onclick="productservices.updateProduct();">
+                            Save changes
+                        </button>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal"
-                            onclick="productservices.inSertProduct();">
-                        Add new Product
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-<!-- modal sửa Product-->
-<div class="modal fade modal-lg" id="exampleModalUpdateProduct" aria-hidden="true"
-     aria-labelledby="exampleModalToggleLabel"
-     tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered ">
-        <div class="modal-content">
-            <div class="modal-header">
-                <!--                mơi vcat ne-->
-                <h1 class="modal-title fs-5" id="updateProductModal">Product</h1>
-                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-            </div>
-            <div class="modal-body" id="updateProductModalBody">
-                <!--getproductfindbyid-->
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal"
-                        onclick="productservices.updateProduct();">
-                    Save changes
-                </button>
             </div>
         </div>
-    </div>
-</div>
-<!-- Modal xóa Product-->
-<!--chuyển qua js rồi nha dòng 50 bên productmanegement.js-->
-<div class="modal fade" id="exampleModalDeleteProduct" tabindex="-1" aria-labelledby="exampleModalXoa"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="DeleteProductModal">Confirm delete Product?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">Are your sure to delete this user out of your system?</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal"
-                        onclick="productservices.callFuntionDelete()">
-                    I'm sure!
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--====================================================Voucher==============================================================-->
-<!--insert modal Voucher Acount<-->
-<div class="modal fade modal-lg" id="exampleModalToggleVoucher" aria-hidden="true"
-     aria-labelledby="exampleModalToggleLabel"
-     tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="insertVoucherModal">VOUCHER ACCOUNT</h1>
-                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-            </div>
-            <div class="modal-body" id="insertVoucherModalBody">
-                <div class="mb-2 ">
-                    <label for="insNameProduct" class="form-label">Name</label>
-                    <input type="text" class="form-control ps-3" id="insNameVoucher"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-                <div class="mb-2 ">
-                    <label for="insReduce" class="form-label">Reduce</label>
-                    <input type="number" min="1" max="100" class="form-control ps-3" id="insReduce"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-                <div class="mb-2 ">
-                    <label for="insQuantity" class="form-label">Quantity</label>
-                    <input type="number" min="1" class="form-control ps-3" id="insQuantity"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-                <div class="mb-2 ">
-                    <label for="insStartDay" class="form-label">Start Day</label>
-                    <input type="date" class="form-control ps-3" id="insStartDay"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-                <div class="mb-2 ">
-                    <label for="insEndDay" class="form-label">End Day</label>
-                    <input type="date" class="form-control ps-3" id="insEndDay"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-                <div class="" role="alert" id="alertMessVoucher">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" id="insButtonVoucher">
-                    Add New Voucher
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- modal sửa Product-->
-<div class="modal fade modal-lg" id="exampleModalUpdateVoucher" aria-hidden="true"
-     aria-labelledby="exampleModalToggleLabel"
-     tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="updateVoucherModal">Product</h1>
-                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-            </div>
-            <div class="modal-body" id="updateVoucherModalBody">
-                <div class="mb-2 ">
-                    <label for="updateIDVoucher" class="form-label">ID Voucher</label>
-                    <input type="text" class="form-control ps-3" id="updateIDVoucher" disabled
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    <label for="updateNameVoucher" class="form-label">Name Voucher</label>
-                    <input type="text" class="form-control ps-3" id="updateNameVoucher"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    <label for="updateReduceVoucher" class="form-label">Reduce</label>
-                    <input type="number" min="0" max="100" class="form-control ps-3" id="updateReduceVoucher"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    <label for="updateQuantityVoucher" class="form-label">Quantity</label>
-                    <input type="number" min="0" class="form-control ps-3" id="updateQuantityVoucher"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    <label for="updateStartDayVoucher" class="form-label">Start Day</label>
-                    <input type="date" class="form-control ps-3" id="updateStartDayVoucher"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    <label for="updateEndDayVoucher" class="form-label">Name Voucher</label>
-                    <input type="date" class="form-control ps-3" id="updateEndDayVoucher"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                    <div class="" role="alert" id="alertMessVoucherUpdate">
+        <!-- Modal xóa Product-->
+        <!--chuyển qua js rồi nha dòng 50 bên productmanegement.js-->
+        <div class="modal fade" id="exampleModalDeleteProduct" tabindex="-1" aria-labelledby="exampleModalXoa"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="DeleteProductModal">Confirm delete Product?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">Are your sure to delete this user out of your system?</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal"
+                            onclick="productservices.callFuntionDelete()">
+                            I'm sure!
+                        </button>
                     </div>
                 </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="buttonUpdateVoucher">
-                    Save changes
-                </button>
             </div>
         </div>
-    </div>
-</div>
-<!-- Modal xóa Voucher-->
-<div class="modal fade" id="exampleModalDeleteVoucher" tabindex="-1" aria-labelledby="exampleModalXoa"
-     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="DeleteVoucherModal">Confirm delete Voucher?</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">Are your sure to delete this user out of your system?</div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="">
-                    I'm sure!
-                </button>
+        <!--====================================================Voucher==============================================================-->
+        <!--insert modal Voucher Acount<-->
+        <div class="modal fade modal-lg" id="exampleModalToggleVoucher" aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="insertVoucherModal">VOUCHER ACCOUNT</h1>
+                        <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="modal-body" id="insertVoucherModalBody">
+                        <div class="mb-2 ">
+                            <label for="insNameProduct" class="form-label">Name</label>
+                            <input type="text" class="form-control ps-3" id="insNameVoucher"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="insReduce" class="form-label">Reduce</label>
+                            <input type="number" min="1" max="100" class="form-control ps-3" id="insReduce"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="insQuantity" class="form-label">Quantity</label>
+                            <input type="number" min="1" class="form-control ps-3" id="insQuantity"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="insStartDay" class="form-label">Start Day</label>
+                            <input type="date" class="form-control ps-3" id="insStartDay"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="insEndDay" class="form-label">End Day</label>
+                            <input type="date" class="form-control ps-3" id="insEndDay"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="" role="alert" id="alertMessVoucher">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" id="insButtonVoucher">
+                            Add New Voucher
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<!--===========================================Select voucher for user=======================================================-->
-<div class="modal fade modal-lg" id="exampleModalVoucherSendAcount" aria-hidden="true"
-     aria-labelledby="exampleModalToggleLabel"
-     tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="VoucherModalSendAcount">Select voucher for user</h1>
-                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-            </div>
-            <div class="modal-body" id="VoucherSendAcountModalBody">
-                <table class="table align-items-center mb-0">
-                    <thead>
-                    <tr class="text-center">
-                        <th scope="col">ID</th>
-                        <th scope="col">UserName</th>
-                        <th scope="col">FullName</th>
-                        <th scope="col">Email</th>
-                        <th scope="col">Phone</th>
-                        <th scope="col"></th>
-                    </tr>
-                    </thead>
-                    <tbody id="userOnVoucher">
+        <!-- modal sửa Product-->
+        <div class="modal fade modal-lg" id="exampleModalUpdateVoucher" aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updateVoucherModal">Product</h1>
+                        <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="modal-body" id="updateVoucherModalBody">
+                        <div class="mb-2 ">
+                            <label for="updateIDVoucher" class="form-label">ID Voucher</label>
+                            <input type="text" class="form-control ps-3" id="updateIDVoucher" disabled
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            <label for="updateNameVoucher" class="form-label">Name Voucher</label>
+                            <input type="text" class="form-control ps-3" id="updateNameVoucher"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            <label for="updateReduceVoucher" class="form-label">Reduce</label>
+                            <input type="number" min="0" max="100" class="form-control ps-3" id="updateReduceVoucher"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            <label for="updateQuantityVoucher" class="form-label">Quantity</label>
+                            <input type="number" min="0" class="form-control ps-3" id="updateQuantityVoucher"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            <label for="updateStartDayVoucher" class="form-label">Start Day</label>
+                            <input type="date" class="form-control ps-3" id="updateStartDayVoucher"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            <label for="updateEndDayVoucher" class="form-label">Name Voucher</label>
+                            <input type="date" class="form-control ps-3" id="updateEndDayVoucher"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            <div class="" role="alert" id="alertMessVoucherUpdate">
+                            </div>
+                        </div>
 
-                    </tbody>
-                </table>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" id="saveVoucherDetails">
-                    SEND
-                </button>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="buttonUpdateVoucher">
+                            Save changes
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-</div>
-<!--===========================================accpect product for admin=======================================================-->
-<!-- Modal accpect product-->
-<div class="modal fade" id="exampleModalAccpectProduct" tabindex="-1" aria-labelledby="exampleModalAccpectProduct"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content w-100">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="..">Xác nhận đơn hàng cho khách</h1>
-            </div>
-            <div class="modal-body">
-                <div class="text-center">
-                    <h3>
-                        Bạn có chắc là số lượng đơn hàng đã đủ cho mã đơn hàng "<span id="idProduct"
-                                                                                      class="fw-bolder"></span>" <br>
-                        <span class="badge text-bg-warning">Nhấn xác nhận,nếu đã chắc</span>
-                    </h3>
+        <!-- Modal xóa Voucher-->
+        <div class="modal fade" id="exampleModalDeleteVoucher" tabindex="-1" aria-labelledby="exampleModalXoa"
+            aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="DeleteVoucherModal">Confirm delete Voucher?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">Are your sure to delete this user out of your system?</div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="">
+                            I'm sure!
+                        </button>
+                    </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-outline-secondary" data-bs-dismiss="modal" aria-label="Close" v>
-                    Close
-                </button>
-                <button type="submit" class="btn btn-outline-danger" data-bs-dismiss="modal" id="updateStatusProduct">
-                    Xác nhận
-                </button>
             </div>
         </div>
-    </div>
-</div>
+        <!--===========================================Select voucher for user=======================================================-->
+        <div class="modal fade modal-lg" id="exampleModalVoucherSendAcount" aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="VoucherModalSendAcount">Select voucher for user</h1>
+                        <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="modal-body" id="VoucherSendAcountModalBody">
+                        <table class="table align-items-center mb-0">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">ID</th>
+                                    <th scope="col">UserName</th>
+                                    <th scope="col">FullName</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">Phone</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody id="userOnVoucher">
 
-<!--==================================================MODAL SALE==============================================-->
-<!--insert modal Sale-->
-<div class="modal fade modal-lg" id="exampleModalToggleSaleProduct" aria-hidden="true"
-     aria-labelledby="exampleModalToggleLabel"
-     tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="insertedSaleProductModal">SALE</h1>
-                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-            </div>
-            <div class="modal-body" id="insertModalBodySaleProduct">
-                <div class="mb-2 ">
-                    <label for="inSalename" class="form-label">Sale name</label>
-                    <input type="text" class="form-control ps-3" id="inSalename"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="saveVoucherDetails">
+                            SEND
+                        </button>
+                    </div>
                 </div>
-                <div class="mb-2 ">
-                    <label for="inSalename" class="form-label">Sale percent</label>
-                    <input type="text" class="form-control ps-3" id="inSalePercent"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-                <div class="mb-2 ">
-                    <label for="StartDate" class="form-label">Start day</label>
-                    <input type="date" class="form-control ps-3" id="StartDate"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-                <div class="mb-2 ">
-                    <label for="EndDate" class="form-label">End day</label>
-                    <input type="date" class="form-control ps-3" id="EndDate"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="insertSale()">
-                    Add new Sale
-                </button>
             </div>
         </div>
-    </div>
-</div>
-
-
-<!-- modal sửa Account Information-->
-<div class="modal fade modal-lg" id="exampleModalUpSaleProduct" aria-hidden="true"
-     aria-labelledby="exampleModalToggleLabel"
-     tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="updateSaleProductModal">Sale Infomation</h1>
-                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-            </div>
-            <div class="modal-body" id="updateSaleProductModalBody">
-                <div class="mb-2 ">
-                    <label for="upSalename" class="form-label">Order</label>
-                    <input type="text" class="form-control ps-3" id="upid"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" disabled>
+        <!--===========================================accpect product for admin=======================================================-->
+        <!-- Modal accpect product-->
+        <div class="modal fade" id="exampleModalAccpectProduct" tabindex="-1"
+            aria-labelledby="exampleModalAccpectProduct" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content w-100">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="..">Xác nhận đơn hàng cho khách</h1>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <h3>
+                                Bạn có chắc là số lượng đơn hàng đã đủ cho mã đơn hàng "<span id="idProduct"
+                                    class="fw-bolder"></span>" <br>
+                                <span class="badge text-bg-warning">Nhấn xác nhận,nếu đã chắc</span>
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                            aria-label="Close" v>
+                            Close
+                        </button>
+                        <button type="submit" class="btn btn-outline-danger" data-bs-dismiss="modal"
+                            id="updateStatusProduct">
+                            Xác nhận
+                        </button>
+                    </div>
                 </div>
-                <div class="mb-2 ">
-                    <label for="upSalename" class="form-label">Sale name</label>
-                    <input type="text" class="form-control ps-3" id="upSalename"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-                <div class="mb-2 ">
-                    <label for="upSalename" class="form-label">Sale percent (%)</label>
-                    <input type="text" class="form-control ps-3" id="upSalePercent"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-                <div class="mb-2 ">
-                    <label for="upStartDate" class="form-label">Start day</label>
-                    <input type="date" class="form-control ps-3" id="upStartDate"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-                <div class="mb-2 ">
-                    <label for="upEndDate" class="form-label">End day</label>
-                    <input type="date" class="form-control ps-3" id="upEndDate"
-                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
-                </div>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" onclick="UpdateSale()">
-                    Save changes sale
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="modal fade modal-lg" id="exampleModalUpSaleProductFormSale" aria-hidden="true"
-     aria-labelledby="exampleModalToggleLabel"
-     tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5">Sale Infomation</h1>
-                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-2">
-                    <select class="form-select form-select-sm" style="height: 36px;"
-                            aria-label=".form-select-sm example" id="productSale">
-                        <option selected>Vui lòng chọn sale cho mặt hảng của bạn</option>
-                    </select>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" id="saveSaleProduct">
-                    Save changes sale from Product
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-<!--=========================================================================================================================-->
-<!-- footer -->
-<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-    <div class="container">
-        <!--        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">-->
-        <!--        </div>-->
-        <div class="row">
-            <div class="col d-flex justify-content-center align-items-center">
-                <div class=" text-white">
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-square-facebook fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-square-instagram fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-youtube fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-linkedin fs-1"></i>
-                    </a>
-                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                        <i class="fa-brands fa-square-reddit fs-1"></i>
-                    </a>
-                </div>
-            </div>
-            <div class="col text-center ">
-                <a href="./index.html"><img
-                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
-                        class="img-fluid" alt=""></a>
-            </div>
-            <div class="col text-center text-white d-flex justify-content-center align-items-center">
-                <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
             </div>
         </div>
 
-    </div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-<script src="/node_modules/angular/angular.min.js"></script>
-<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
-<script src="/node_modules/angular/angular.route.min.js"></script>
-<script src="/assests/js/app_admin.js"></script>
-<script src="/assests/js/script.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-<script src="/assests/js/VoucherAdmin.js"></script>
-<script src="/assests/js/StatusProduct.js"></script>
-<script src="/assests/js/sale.js"></script>
-</body>
+        <!--==================================================MODAL SALE==============================================-->
+        <!--insert modal Sale-->
+        <div class="modal fade modal-lg" id="exampleModalToggleSaleProduct" aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="insertedSaleProductModal">SALE</h1>
+                        <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="modal-body" id="insertModalBodySaleProduct">
+                        <div class="mb-2 ">
+                            <label for="inSalename" class="form-label">Sale name</label>
+                            <input type="text" class="form-control ps-3" id="inSalename"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="inSalename" class="form-label">Sale percent</label>
+                            <input type="text" class="form-control ps-3" id="inSalePercent"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="StartDate" class="form-label">Start day</label>
+                            <input type="date" class="form-control ps-3" id="StartDate"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="EndDate" class="form-label">End day</label>
+                            <input type="date" class="form-control ps-3" id="EndDate"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="insertSale()">
+                            Add new Sale
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-<!--<script>-->
-<!--    $.ajax({-->
-<!--        url: '/api-admin/users/getAllUsers',-->
-<!--        method: 'GET',-->
-<!--        success: (response) => {-->
-<!--            console.log(response);-->
-<!--        },-->
-<!--        error: (xhr, status, error) => {-->
-<!--            console.error("Error:", error);-->
-<!--        }-->
-<!--    });-->
-<!--</script>-->
-<!--<script>-->
-<!--    document.getElementById('fileInput').addEventListener('change', function () {-->
-<!--        var file = this.files[0];-->
-<!--        if (file) {-->
-<!--            var reader = new FileReader();-->
-<!--            reader.onload = function (event) {-->
-<!--                document.getElementById('previewImage').setAttribute('src', event.target.result);-->
-<!--                document.getElementById('previewImage').style.display = 'block';-->
-<!--            }-->
-<!--            reader.readAsDataURL(file);-->
-<!--        }-->
-<!--    });-->
-<!--</script>-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-    google.charts.load('current', {'packages': ['corechart']});
-    google.charts.setOnLoadCallback(fetchDataAndDrawChart);
 
-    function fetchDataAndDrawChart() {
-        // Gửi yêu cầu AJAX để nhận dữ liệu từ endpoint API và vẽ biểu đồ sau khi nhận được dữ liệu
-        $.when(
-            $.ajax({
-                url: '/api/postAccountDK',
-                method: 'POST'
-            }),
-            $.ajax({
-                url: '/api/postAccountGG',
-                method: 'POST'
-            })
-        ).done(function (responseDK, responseGG) {
-            // Xây dựng mảng dữ liệu từ phản hồi nhận được
-            const data = google.visualization.arrayToDataTable([
-                ['Country', 'Mhl'],
-                ['Registered account', responseDK[0]],
-                ['Google Account', responseGG[0]]
-            ]);
+        <!-- modal sửa Account Information-->
+        <div class="modal fade modal-lg" id="exampleModalUpSaleProduct" aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="updateSaleProductModal">Sale Infomation</h1>
+                        <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="modal-body" id="updateSaleProductModalBody">
+                        <div class="mb-2 ">
+                            <label for="upSalename" class="form-label">Order</label>
+                            <input type="text" class="form-control ps-3" id="upid"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;"
+                                disabled>
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="upSalename" class="form-label">Sale name</label>
+                            <input type="text" class="form-control ps-3" id="upSalename"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="upSalename" class="form-label">Sale percent (%)</label>
+                            <input type="text" class="form-control ps-3" id="upSalePercent"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="upStartDate" class="form-label">Start day</label>
+                            <input type="date" class="form-control ps-3" id="upStartDate"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2 ">
+                            <label for="upEndDate" class="form-label">End day</label>
+                            <input type="date" class="form-control ps-3" id="upEndDate"
+                                aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
+                        </div>
 
-            // Cài đặt các tùy chọn cho biểu đồ
-            const options = {
-                title: 'User statistics',
-                is3D: true
-            };
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                            onclick="UpdateSale()">
+                            Save changes sale
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade modal-lg" id="exampleModalUpSaleProductFormSale" aria-hidden="true"
+            aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5">Sale Infomation</h1>
+                        <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="mb-2">
+                            <select class="form-select form-select-sm" style="height: 36px;"
+                                aria-label=".form-select-sm example" id="productSale">
+                                <option selected>Vui lòng chọn sale cho mặt hảng của bạn</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"
+                            id="saveSaleProduct">
+                            Save changes sale from Product
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--=========================================================================================================================-->
+    </modalSection>
 
-            // Vẽ biểu đồ
-            const chart = new google.visualization.PieChart(document.getElementById('myChart1'));
-            chart.draw(data, options);
-        });
-    }
-</script>
-<script>
-    google.charts.load('current', {'packages': ['corechart']});
-    google.charts.setOnLoadCallback(drawChart);
+    <!-- footer -->
+    <footer th:replace="~{swappa/assests/html/layout/_layoutAdmin::footer}"></footer>
+    <!-- script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+    <script src="/assests/js/app_admin.js"></script>
+    <script src="/assests/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="/assests/js/VoucherAdmin.js"></script>
+    <script src="/assests/js/StatusProduct.js"></script>
+    <script src="/assests/js/sale.js"></script>
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(fetchDataAndDrawChart);
 
-    function drawChart() {
-        // Gọi API để lấy dữ liệu số lượng sản phẩm cho mỗi loại sản phẩm
-        fetch('/api/getProductCountPerCategory')
-            .then(response => response.json())
-            .then(data => {
-                // Chuyển dữ liệu sang định dạng array để sử dụng trong biểu đồ
-                const chartData = Object.entries(data);
+        function fetchDataAndDrawChart() {
+            // Gửi yêu cầu AJAX để nhận dữ liệu từ endpoint API và vẽ biểu đồ sau khi nhận được dữ liệu
+            $.when(
+                $.ajax({
+                    url: '/api/postAccountDK',
+                    method: 'POST'
+                }),
+                $.ajax({
+                    url: '/api/postAccountGG',
+                    method: 'POST'
+                })
+            ).done(function (responseDK, responseGG) {
+                // Xây dựng mảng dữ liệu từ phản hồi nhận được
+                const data = google.visualization.arrayToDataTable([
+                    ['Country', 'Mhl'],
+                    ['Registered account', responseDK[0]],
+                    ['Google Account', responseGG[0]]
+                ]);
 
-                // Thêm tiêu đề cột
-                chartData.unshift(['Product type', 'Products']);
-                const dataTable = google.visualization.arrayToDataTable(chartData); // Chuyển dữ liệu sang định dạng DataTable của Google Charts
+                // Cài đặt các tùy chọn cho biểu đồ
                 const options = {
-                    title: 'Product statistics by type',
-                    chartArea: {width: 'auto'},
-                    hAxis: {
-                        title: 'Quantity',
-                        minValue: 0
-                    },
-                    is3D: true,
-                    pieSliceText: 'percentage' // Hiển thị phần trăm trên biểu đồ bánh
+                    title: 'User statistics',
+                    is3D: true
                 };
 
-                const chart = new google.visualization.PieChart(document.getElementById('myChart2')); // Vẽ biểu đồ cột
-                chart.draw(dataTable, options);
-            })
-            .catch(error => console.error('Lỗi khi tải dữ liệu:', error));
-    }
-</script>
+                // Vẽ biểu đồ
+                const chart = new google.visualization.PieChart(document.getElementById('myChart1'));
+                chart.draw(data, options);
+            });
+        }
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
 
-<script>
-    // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
-    function updateTotalAccounts() {
-        fetch('/api/getAccountData')
-            .then(response => response.json())
-            .then(data => {
-                const totalAccounts = data; // Biến chứa tổng số tài khoản nhận được từ API
-                const spanElement = document.getElementById('totalAccountsSpan');
-                if (spanElement) {
-                    spanElement.textContent = totalAccounts;
-                }
-            })
-            .catch(error => console.error('Error fetching total accounts:', error));
-    }
+        function drawChart() {
+            // Gọi API để lấy dữ liệu số lượng sản phẩm cho mỗi loại sản phẩm
+            fetch('/api/getProductCountPerCategory')
+                .then(response => response.json())
+                .then(data => {
+                    // Chuyển dữ liệu sang định dạng array để sử dụng trong biểu đồ
+                    const chartData = Object.entries(data);
 
-    // Gọi hàm để cập nhật tổng số tài khoản khi trang được tải
-    window.addEventListener('DOMContentLoaded', updateTotalAccounts);
-</script>
-<script>
-    // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
-    function updateTotalAccounts() {
-        fetch('/api/getProduct')
-            .then(response => response.json())
-            .then(data => {
-                const totalProduct = data; // Biến chứa tổng số tài khoản nhận được từ API
-                const spanElement = document.getElementById('totalProductSpan');
-                if (spanElement) {
-                    spanElement.textContent = totalProduct;
-                }
-            })
-            .catch(error => console.error('Error fetching total accounts:', error));
-    }
+                    // Thêm tiêu đề cột
+                    chartData.unshift(['Product type', 'Products']);
+                    const dataTable = google.visualization.arrayToDataTable(chartData); // Chuyển dữ liệu sang định dạng DataTable của Google Charts
+                    const options = {
+                        title: 'Product statistics by type',
+                        chartArea: { width: 'auto' },
+                        hAxis: {
+                            title: 'Quantity',
+                            minValue: 0
+                        },
+                        is3D: true,
+                        pieSliceText: 'percentage' // Hiển thị phần trăm trên biểu đồ bánh
+                    };
 
-    // Gọi hàm để cập nhật tổng số tài khoản khi trang được tải
-    window.addEventListener('DOMContentLoaded', updateTotalAccounts);
-</script>
+                    const chart = new google.visualization.PieChart(document.getElementById('myChart2')); // Vẽ biểu đồ cột
+                    chart.draw(dataTable, options);
+                })
+                .catch(error => console.error('Lỗi khi tải dữ liệu:', error));
+        }
 
-<script>
-    // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
-    function updateTotalAccounts() {
-        fetch('/api/getCategory')
-            .then(response => response.json())
-            .then(data => {
-                const getCategory = data; // Biến chứa tổng số tài khoản nhận được từ API
-                const spanElement = document.getElementById('totalCategorySpan');
-                if (spanElement) {
-                    spanElement.textContent = getCategory;
-                }
-            })
-            .catch(error => console.error('Error fetching total accounts:', error));
-    }
+        // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
+        function updateTotalAccounts() {
+            fetch('/api/getAccountData')
+                .then(response => response.json())
+                .then(data => {
+                    const totalAccounts = data; // Biến chứa tổng số tài khoản nhận được từ API
+                    const spanElement = document.getElementById('totalAccountsSpan');
+                    if (spanElement) {
+                        spanElement.textContent = totalAccounts;
+                    }
+                })
+                .catch(error => console.error('Error fetching total accounts:', error));
+        }
 
-    // Gọi hàm để cập nhật tổng số tài khoản khi trang được tải
-    window.addEventListener('DOMContentLoaded', updateTotalAccounts);
-</script>
+        // Gọi hàm để cập nhật tổng số tài khoản khi trang được tải
+        window.addEventListener('DOMContentLoaded', updateTotalAccounts);
+        // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
+        function updateTotalProducts() {
+            fetch('/api/getProduct')
+                .then(response => response.json())
+                .then(data => {
+                    const totalProduct = data; // Biến chứa tổng số tài khoản nhận được từ API
+                    const spanElement = document.getElementById('totalProductSpan');
+                    if (spanElement) {
+                        spanElement.textContent = totalProduct;
+                    }
+                })
+                .catch(error => console.error('Error fetching total accounts:', error));
+        }
+
+        // Gọi hàm để cập nhật tổng số tài khoản khi trang được tải
+        window.addEventListener('DOMContentLoaded', updateTotalProducts);
+        // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
+        function updateTotalCategories() {
+            fetch('/api/getCategory')
+                .then(response => response.json())
+                .then(data => {
+                    const getCategory = data; // Biến chứa tổng số tài khoản nhận được từ API
+                    const spanElement = document.getElementById('totalCategorySpan');
+                    if (spanElement) {
+                        spanElement.textContent = getCategory;
+                    }
+                })
+                .catch(error => console.error('Error fetching total accounts:', error));
+        }
+
+        // Gọi hàm để cập nhật tổng số tài khoản khi trang được tải
+        window.addEventListener('DOMContentLoaded', updateTotalCategories);
+    </script>
+</body>
+
 </html>

@@ -102,6 +102,8 @@ begin
       and year(o.order_date) = @year
     group by v.voucher_id
 end
+
+truncate table Cart;
 -- go
 -- exec dbo.getTopUsedVoucher 5, 2024;
 -- select top 10 od.product_id, sum(od.quatity) as sold

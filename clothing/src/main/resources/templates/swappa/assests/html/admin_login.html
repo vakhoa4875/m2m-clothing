@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assests/css/style.css">
-    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/bootstrap-5.3.2-dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assests/css/style.css}">
+    <link rel="shortcut icon" th:href="@{/assests/srcPic/x.png}" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
     <title>Login Admin</title>
 </head>
@@ -15,10 +15,8 @@
             <!-- body -->
             <main class="container">
                 <!-- Section: Design Block -->
-                <div class="row">
-        
+                <div class="row">        
                     <section class="text-center d-flex justify-content-center align-items-center">
-        
                         <div class="card shadow-5-strong w-50 " style="
                   background: hsla(0, 0%, 0%, 0.5);
                   backdrop-filter: blur(15px);
@@ -92,8 +90,7 @@
                     <hr class="d-lg-none mb-4 d-sm-block">
                 </div>
                 <!-- Section: Design Block -->
-            </main>
-        
+            </main>        
         </div>
     </div>
 </body>
