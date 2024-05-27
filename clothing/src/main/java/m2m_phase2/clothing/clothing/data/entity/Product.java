@@ -1,15 +1,13 @@
 package m2m_phase2.clothing.clothing.data.entity;
 
-import java.io.Serializable;
-import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "Product")
@@ -63,6 +61,11 @@ public class Product implements Serializable {
 	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
 	@JsonIgnore
 	List<CommentE> comments;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JsonIgnore
+	@JoinColumn(name = "shop_id")
+	private ShopE shopE;
 
 	@Override
 	public String toString() {
