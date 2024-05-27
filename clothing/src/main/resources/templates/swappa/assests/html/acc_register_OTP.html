@@ -14,104 +14,101 @@
 
 <body ng-app="myApp" ng-controller="accountCtrl">
 
-    <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
+<div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
 
-    <!-- main -->
-    <div style="min-height: 800px;">
-
-        <!-- body -->
-        <main class="container pt-5 pb-5">
-            <!-- Section: Design Block -->
-            <div class="row">
-
-                <section class="text-center d-flex justify-content-center">
-
-                    <div class="card shadow-5-strong w-50" style="
+<!-- main -->
+<div>
+    <!-- body -->
+    <main class="container pt-5 pb-5">
+        <!-- Section: Design Block -->
+        <div class="row">
+            <section class="text-center d-flex justify-content-center">
+                <div class="card shadow-5-strong w-50" style="
                 background: hsla(0, 0%, 0%, 0.5);
                 backdrop-filter: blur(50px);
                 ">
-                        <div class="card-body py-5">
+                    <div class="card-body py-5">
 
-                            <div class="d-flex justify-content-center">
-                                <div class="">
-                                    <h2 class="fw-bold mb-5 text-white">Confirm OTP Register</h2>
-                                    <div class="mb-5">
-                                        <span class="text-white fw-bolder">Please enter all information below</span>
-                                    </div>
-                                    <form name="formSignUp" class="text-white" ng-submit="submitForm()"
-                                        th:action="@{/otp}" method="post">
-                                        <div class="row">
-                                            <div class="col-md-2 mb-4">
-                                                <div class="form-outline">
-                                                    <input type="text" name="otp1" maxlength="1" required
-                                                        class="form-control text-bg-dark text-center" />
-                                                </div>
-
+                        <div class="d-flex justify-content-center">
+                            <div class="">
+                                <h2 class="fw-bold mb-5 text-white">Confirm OTP Register</h2>
+                                <div class="mb-5">
+                                    <span class="text-white fw-bolder">Please enter all information below</span>
+                                </div>
+                                <form name="formSignUp" class="text-white" ng-submit="submitForm()"
+                                      th:action="@{/otp}" method="post">
+                                    <div class="row">
+                                        <div class="col-md-2 mb-4">
+                                            <div class="form-outline">
+                                                <input type="text" name="otp1" maxlength="1" required
+                                                       class="form-control text-bg-dark text-center"/>
                                             </div>
 
-                                            <div class="col-md-2 mb-4">
-                                                <div class="form-outline">
-                                                    <input type="text" name="otp2" maxlength="1" required
-                                                        class="form-control text-bg-dark text-center" />
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-md-2 mb-4">
-                                                <div class="form-outline">
-                                                    <input type="text" name="otp3" maxlength="1" required
-                                                        class="form-control text-bg-dark text-center" />
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-md-2 mb-4">
-                                                <div class="form-outline">
-                                                    <input type="text" name="otp4" maxlength="1" required
-                                                        class="form-control text-bg-dark text-center" />
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-md-2 mb-4">
-                                                <div class="form-outline">
-                                                    <input type="text" name="otp5" maxlength="1" required
-                                                        class="form-control text-bg-dark text-center" />
-                                                </div>
-
-                                            </div>
-
-                                            <div class="col-md-2 mb-4">
-                                                <div class="form-outline">
-                                                    <input type="text" name="otp6" maxlength="1" required
-                                                        class="form-control text-bg-dark text-center" />
-                                                </div>
-                                            </div>
                                         </div>
 
+                                        <div class="col-md-2 mb-4">
+                                            <div class="form-outline">
+                                                <input type="text" name="otp2" maxlength="1" required
+                                                       class="form-control text-bg-dark text-center"/>
+                                            </div>
 
-                                        <div>
-                                            <!-- Submit button -->
-                                            <div class="d-flex flex-column align-items-center">
-                                                <button type="submit"
+                                        </div>
+
+                                        <div class="col-md-2 mb-4">
+                                            <div class="form-outline">
+                                                <input type="text" name="otp3" maxlength="1" required
+                                                       class="form-control text-bg-dark text-center"/>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-2 mb-4">
+                                            <div class="form-outline">
+                                                <input type="text" name="otp4" maxlength="1" required
+                                                       class="form-control text-bg-dark text-center"/>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-2 mb-4">
+                                            <div class="form-outline">
+                                                <input type="text" name="otp5" maxlength="1" required
+                                                       class="form-control text-bg-dark text-center"/>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-md-2 mb-4">
+                                            <div class="form-outline">
+                                                <input type="text" name="otp6" maxlength="1" required
+                                                       class="form-control text-bg-dark text-center"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div>
+                                        <!-- Submit button -->
+                                        <div class="d-flex flex-column align-items-center">
+                                            <button type="submit"
                                                     class="btn btn-success fw-bold btn-block px-5 rounded-5 w-75"
                                                     ng-disabled="formSignUp.$invalid">
-                                                    Xác nhận
-                                                </button>
-                                            </div>
-                                    </form>
-                                </div>
+                                                Xác nhận
+                                            </button>
+                                        </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                </section>
-            </div>
-            <!-- Section: Design Block -->
-        </main>
+                </div>
+            </section>
+        </div>
+        <!-- Section: Design Block -->
+    </main>
 
-    </div>
-    <!-- footer -->
-    <footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
+</div>
+<!-- footer -->
+<footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
 </body>
 <script src="/node_modules/angular/angular.min.js"></script>
 <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
