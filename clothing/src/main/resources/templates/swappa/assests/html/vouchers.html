@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/assests/css/style.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .img-container {
             height: 200px;
@@ -237,7 +238,7 @@
                             <div class="col-md-4">
                                 <div class="card voucher-card">
                                     <div class="text-right p-2 voucher-provider">
-                                        <img src="https://i.imgur.com/w68MQc4.png" width="120">
+                                        <img src="/assests/images/logoVoucher.jpg" width="120">
                                     </div>
                                     <div class="text-center">
                                         <small class="text-uppercase flat">${voucher.voucherName}</small>
@@ -253,7 +254,7 @@
                                     </div>
                                     <div class="text-center mb-2">
                                         <p class="text-uppercase">Hạn sử dụng đến ${voucher.endDay}</p>
-                                        <button class="btn btn-coffee claim-btn" data-voucher-id="${voucher.voucherID}">Nhận ngay!</button>
+                                        <button class="btn btn-coffee claim-btn" onclick="showAlert()" data-voucher-id="${voucher.voucherID}">Nhận ngay!</button>
                                     </div>
                                 </div>
                             </div>
@@ -297,15 +298,30 @@
             success: function(response) {
                 if (response === 1) {
                     // Thay đổi trạng thái của nút khi nhận voucher thành công
-                    btn.removeClass('claim-btn').addClass('claimed').text('Voucher đã được nhận').prop('disabled', true);
-                    alert('Đã nhận voucher thành công!');
+                    btn.removeClass('claim-btn').addClass('claimed disabled').text('Voucher đã được nhận');
+                    Swal.fire({
+                        title: 'Thành công!',
+                        text: 'Đã nhận voucher thành công!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
                 } else {
-                    alert('Không thể nhận voucher.');
+                    Swal.fire({
+                        title: 'Thất bại!',
+                        text: 'Không thể nhận voucher.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                     btn.removeClass('claim-btn').addClass('claimed').text('Nhận ngay!').prop('disabled', true);
                 }
             },
             error: function() {
-                alert('Đã xảy ra lỗi khi nhận voucher.');
+                Swal.fire({
+                    title: 'Lỗi!',
+                    text: 'Đã xảy ra lỗi khi nhận voucher.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             }
         });
     }
@@ -315,6 +331,5 @@
         getAllVouchers();
     });
 </script>
-
 
 </html>
