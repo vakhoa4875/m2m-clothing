@@ -1,5 +1,6 @@
 package m2m_phase2.clothing.clothing.controller;
 
+import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
 import m2m_phase2.clothing.clothing.data.model.CommentM;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
@@ -23,6 +24,8 @@ public class ProductController {
 	private CommentServiceImpl commentServiceImpl;
 	@Autowired
 	private CategoryImpl category;
+	@Autowired
+	public HttpSession session;
 
 	@GetMapping("/categoryType")
 	public String getcategoryType(@RequestParam Integer categoryId ,Model model) {
@@ -50,6 +53,7 @@ public class ProductController {
 		List<CommentM>  commentM = commentServiceImpl.findByProductId(commentDTO);
 		model.addAttribute("listProduct", product);
 		model.addAttribute("commentM", commentM);
+		model.addAttribute("checklogin",session.getAttribute("loggedInUser"));
 		return "swappa/assests/html/productDetail";
 	}
 }

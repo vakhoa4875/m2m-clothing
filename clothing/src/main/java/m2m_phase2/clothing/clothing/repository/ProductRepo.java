@@ -62,4 +62,8 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
 
     @Query("SELECT COUNT(p) FROM Product p WHERE p.category.category_id = :categoryId")
     Long countByCategory(@Param("categoryId") Integer categoryId);
+
+    @Query("SELECT p FROM Product p WHERE p.category.category_id = :categoryId and p.shopE.userE.email = :email")
+    List<Product> findProductByShopCategory(@Param("categoryId") Integer categoryId,
+                                            @Param("email") String email);
 }
