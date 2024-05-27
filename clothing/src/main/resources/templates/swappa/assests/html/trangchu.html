@@ -303,7 +303,6 @@
                 </div>
             </section>
         </div>
-
     </div>
 </div>
 
@@ -356,6 +355,14 @@
             });
         }
     });
+</script>
+<script>
+    var duongdan  = sessionStorage.getItem("duongdan");
+    if(duongdan != null){
+        window.location.href = sessionStorage.getItem("duongdan");
+    }else {
+
+    }
 </script>
 </body>
 </html>
