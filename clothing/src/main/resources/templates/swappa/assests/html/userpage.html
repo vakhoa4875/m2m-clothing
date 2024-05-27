@@ -12,6 +12,7 @@
     <!-- Tải thư viện Bootstrap JS -->
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode-js-package@1.0.4/qrcode.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <style>
 
         /* Order status */
@@ -348,8 +349,18 @@
                                                             $("#qrImg").attr("src", qrUrl);
                                                         }
                                                         $(document).ready(function() {
-                                                            generateQRCode();
+                                                            $("#generateQRBtn").click(function(e) {
+                                                                e.preventDefault();
+                                                                $("#captchaContainer").show(); // Hiển thị reCAPTCHA khi nhấp vào nút "Generate QR Code"
+                                                            });
                                                         });
+                                                        function xuLyCaptchaThanhCong() {
+                                                            console.log("Captcha đã được xác nhận thành công!");
+                                                            generateQRCode();
+                                                            $("#captchaContainer").hide();
+                                                            $("#generateQRBtn").hide();
+                                                        }
+
                                                     </script>
                                                     <!--M2M-026 TanLoc End -->
                                                 </div>
@@ -395,6 +406,12 @@
                                                     <span id="phoneError" class="text-danger"></span>
                                                 </div>
 
+                                            </div>
+                                            <div class=" my-3 row d-flex" style="margin-right: 10px;">
+                                                <span id="generateQRBtn" class="col-3 me-3">Generate QR Code</span>
+                                                <div id="captchaContainer" style="display: none;" class="col-9">
+                                                    <div class="g-recaptcha" data-sitekey="6LdatOcpAAAAANmoLRJRie7PC1wg-H7FJ5NRb-cd" data-callback="xuLyCaptchaThanhCong"></div>
+                                                </div>
                                             </div>
                                             <p id="iduser" th:text="${userM.getId()}" style="position: absolute; top: 95px; left: 11px; color: white"></p>
                                             <div class="mb-3 row alert alert-success" id="updateSuccess"></div>
