@@ -418,3 +418,7 @@ footer i {
     width: auto;
     margin: auto;
 }
+
+.main-container {
+    min-height: 90vh;
+}
