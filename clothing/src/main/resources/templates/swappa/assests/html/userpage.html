@@ -481,7 +481,9 @@
                                 </div>
                                 <div class="container">
                                     <div class="row">
-                                        <div id="voucherList" class="p-0"></div>
+                                        <div id="voucherList" class="row">
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -573,24 +575,24 @@
                 // Duyệt qua danh sách voucher và tạo HTML tương ứng
                 vouchers.forEach(function (voucher) {
                     voucherListHTML += `
-<div class="row">
-                <div class="col-xl-6">
-                    <div class="card mb-3">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="/assests/images/logoVoucher.jpg" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body py-0 mt-3">
-                                    <h5 class="card-title">${voucher.voucherName}</h5>
-                                    <p class="card-text">Giảm giá: ${voucher.reduce}</p>
-                                    <p class="card-text">Ngày bắt đầu: ${voucher.startDay}</p>
-                                    <p class="card-text">Ngày kết thúc: ${voucher.endDay}</p>
-                                    <!-- Thêm các thông tin khác cần hiển thị -->
+                    <div class="col-xl-6">
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-4">
+                                    <img src="/assests/images/logoVoucher.jpg" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="col-8">
+                                    <div class="card-body py-0 mt-3">
+                                        <h5 class="card-title">${voucher.voucherName}</h5>
+                                        <p class="card-text">Giảm giá: ${voucher.reduce}</p>
+                                        <p class="card-text">Ngày bắt đầu: ${voucher.startDay}</p>
+                                        <p class="card-text">Ngày kết thúc: ${voucher.endDay}</p>
+                                        <!-- Thêm các thông tin khác cần hiển thị -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                     </div>
                 </div>
             `;
                 });
