@@ -13,6 +13,4 @@ public interface ShopRepo extends JpaRepository<ShopE, Integer> {
 
     @Query(value = "select s from ShopE s where s.userE.email = :email")
     ShopE findShopByUser(@Param("email") String email);
-
-    List<ShopE> findAll();
 }
