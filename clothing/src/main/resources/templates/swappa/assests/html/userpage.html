@@ -553,7 +553,9 @@
                                 </div>
                                 <div class="container">
                                     <div class="row">
-                                        <div id="voucherList" class="p-0"></div>
+                                        <div id="voucherList" class="row">
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -586,5 +588,304 @@
         }
     });
 </script>
-</body>
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<!--<script th:src="@{/assests/js/userpage.js}"></script>-->
+<script>
+    $(document).ready(function () {
+        // Sử dụng Ajax để gọi API và lấy danh sách voucher
+        $.ajax({
+            url: '/api-public/vouchers/getVouchersByEmail', // URL của API endpoint
+            type: 'GET',
+            success: function (response) {
+                // Xử lý dữ liệu khi API trả về thành công
+                var vouchers = response;
+                var voucherListHTML = '';
+
+                // Duyệt qua danh sách voucher và tạo HTML tương ứng
+                vouchers.forEach(function (voucher) {
+                    voucherListHTML += `
+                    <div class="col-xl-6">
+                        <div class="card mb-3">
+                            <div class="row g-0">
+                                <div class="col-4">
+                                    <img src="/assests/images/logoVoucher.jpg" class="img-fluid rounded-start" alt="...">
+                                </div>
+                                <div class="col-8">
+                                    <div class="card-body py-0 mt-3">
+                                        <h5 class="card-title">${voucher.voucherName}</h5>
+                                        <p class="card-text">Giảm giá: ${voucher.reduce}</p>
+                                        <p class="card-text">Ngày bắt đầu: ${voucher.startDay}</p>
+                                        <p class="card-text">Ngày kết thúc: ${voucher.endDay}</p>
+                                        <!-- Thêm các thông tin khác cần hiển thị -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+                </div>
+            `;
+                });
+
+                // Đưa HTML vào div chứa danh sách voucher
+                $('#voucherList').html(voucherListHTML);
+            },
+            error: function (xhr, status, error) {
+                // Xử lý khi gọi API gặp lỗi
+                console.error('Error calling API:', error);
+            }
+        });
+    });
+</script>
+
+
+<script>
+
+    $(document).ready(function () {
+        $('#updateSuccess, #updateError').hide();
+
+        function updateUser() {
+            var username = $('#staticName').val();
+            var fullname = $('#inputName').val();
+            var email = $('#staticEmail').val();
+            var sdt = $('#staticPhone').val();
+            if (sdt.length !== 10) {
+                $('#phoneError').text("*Phone number must have 10 digits");
+                return;
+            } else {
+                $('#phoneError').text("");
+            }
+            var avatar = null;
+            if (nameImg && path) {
+                avatar = nameImg + "," + path; // Nếu đã chọn ảnh mới, sử dụng giá trị mới cho avatar
+            }
+            console.log(avatar);
+            let userData = {
+                username: username,
+                email: email,
+                fullname: fullname,
+                sdt: sdt,
+                avatar: avatar
+            };
+            $.ajax({
+                url: '/api-public/users/updateUserInfo',
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(userData),
+                success: function (response) {
+                    console.log(response === 1 ? 'Cập nhật thành công' : 'Cập nhật thất bại');
+                    if (response === 1) {
+                        $('#updateError').hide();
+                        $('#updateSuccess').text('Update successful').show();
+                    } else {
+                        $('#updateSuccess').hide();
+                        $('#updateError').text('Update failed').show();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                }
+            });
+        }
+
+        $('#submitBtn').click(function () {
+            updateUser();
+            generateQRCode();
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        // Gọi API để lấy danh sách đơn hàng dựa trên email của người dùng
+        $.ajax({
+            url: '/api-product/orders',
+            type: 'GET',
+            success: function (data) {
+                // Hiển thị dữ liệu trong bảng
+                data.forEach(function (order) {
+                    var orderDateFormatted = new Date(order.orderDate);
+                    var formattedDate = `${orderDateFormatted.getDate()}/${orderDateFormatted.getMonth() + 1}/${orderDateFormatted.getFullYear()}`;
+                    $('#TableStatusUser').append(`
+                        <tr class="align-middle">
+<!--                        <td class="text-center">${order.orderId}</td>-->
+                        <td class="text-center">${order.username}</td>
+                        <td class="text-center">${formattedDate}</td>
+                        <td class="text-center">${order.phoneNumber}</td>
+                        <td class="text-center">${order.deliveryAddress}</td>
+                        <td class="text-center">
+                            <div class="badge text-bg-secondary">${order.paymentMethod}</div>
+                        </td>
+                        <td class="text-center">$${order.totalAmount}</td>
+                        <td class="text-center">
+                            <div class="${order.orderStatus == 'Approved'     ? 'badge text-bg-success' : 'badge text-bg-warning'} ">${order.orderStatus}</div>
+                        </td>
+                        <td class="text-center">
+                            <button class="btn btn-success" ${
+                                            (() => {
+                                                switch (true) {
+                                                    case ((order.paymentMethod === 'Cod' && (order.orderStatus === 'Approved' || order.orderStatus === 'Need approved'))):
+                                                        return 'disabled';
+                                                    case ((order.paymentMethod === 'Paypal' || order.orderStatus === 'Need approved')):
+                                                        return 'disabled';
+                                                    case ((order.paymentMethod === 'Paypal' && order.orderStatus === 'Approved')):
+                                                        return "";
+                                                }
+                                            })()
+                                        }
+                            onclick="payWithPaypal(${order.totalAmount}, ${order.orderId})">Pay with paypal</button>
+                        </td>
+                    </tr>
+
+                `);
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error:', errorThrown);
+            }
+        });
+    });
+    const payWithPaypal = async (amount, orderId) => {
+        let description = 'testing';
+        let intent = 'sale';
+        let method = 'paypal';
+        let currency = 'USD';
+
+        try {
+            const response = await $.ajax({
+                type: 'POST',
+                url: 'http://localhost:8083/payment/paypal/create-payment',
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    description: description,
+                    intent: intent,
+                    method: method,
+                    currency: currency,
+                    totalAmount: amount,
+                    orderId: orderId
+                }),
+                success: (data) => {
+                    // window.location.href = data;
+                    openInNewPopup(data, orderId);
+                },
+                error: (error) => {
+                    console.log('>>error:', error);
+                }
+            });
+        } catch (error) {
+            console.error('>>error:', error);
+        }
+    }
+
+    const logout = () => {
+        let agreed = confirm("Logout from M2M-Clothing?");
+        if (agreed) {
+            window.location.href = "/account/logout"
+        }
+    }
+    // Kiểm tra xem data có phải là URL hợp lệ không
+    const isValidURL = (url) => {
+        var pattern = new RegExp(
+            // '^(https?:\\/\\/)?' + // giao thức
+            '((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|' + // Tên miền...
+            '((\\d{1,3}\\.){3}\\d{1,3}))' + // ...hoặc địa chỉ IP
+            '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' + // cổng và đường dẫn
+            '(\\?[;&a-z\\d%_.~+=-]*)?' + // truy vấn chuỗi
+            '(\\#[-a-z\\d_]*)?$', 'i'); // fragment locator
+        // return !!pattern.test(url);
+        return true;
+    }
+
+    // Mở một cửa sổ pop-up mới và chuyển hướng đến liên kết
+    const openInNewPopup = (url, orderId) => {
+        if (isValidURL(url)) {
+            // Cấu hình các thuộc tính của cửa sổ pop-up
+            var popupConfig = 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=yes, resizable=yes, width=800, height=1000, top=100, left=100';
+
+            // Mở cửa sổ pop-up
+            var newPopup = window.open(url, '_blank', popupConfig);
+            if (newPopup) {
+                console.log('x');
+                newPopup.focus();
+                console.log('y');
+                window.addEventListener('message', function (event) {
+                    console.log('a');
+                    // Kiểm tra xem thông điệp có phải từ cửa sổ pop-up PayPal không
+                    if (event.source === popupWindow) {
+                        console.log('b');
+                        // Thực hiện các hành động khi thanh toán thành công
+                        // Lấy URL của cửa sổ pop-up
+                        var popupUrl = popupWindow.location.href;
+                        if (popupUrl.contains('/payment/paypal/')) {
+                            console.log('c');
+                            var status = url.substring(url.lastIndexOf("/") + 1)
+                            popupWindow.close();
+                            window.location.href = '/userprofile?tab=order&paymentId=' + orderId + '&status=' + status;
+                        }
+
+                        // Đóng cửa sổ pop-up
+                    }
+                });
+            } else {
+                alert('Trình duyệt của bạn đã chặn cửa sổ pop-up. Vui lòng tắt chặn pop-up và thử lại.');
+            }
+        } else {
+            alert('Đây không phải là một URL hợp lệ.');
+        }
+    }
+
+
+</script>
+<script >
+    $(document).ready(function () {
+
+        $('#xoathongbao').click(function () {
+            var id = $('#iduser').text();
+            xoathongbao(id);
+        });
+
+        var soluong = 0;
+
+        var id = $('#iduser').text();
+        $.ajax({
+            url: '/finduseridwitchNotification?id='+id,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
+                soluong = data.length;
+                $('#soluongthongbao').text(soluong)
+                // Hiển thị dữ liệu trong bảng
+                data.forEach(function (order) {
+                    $('#thongbao').append(`
+                        <div class="dropdown-item">
+                              <div>Có mã giảm giá mới!</div>
+                        </div>
+                `);
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error:', errorThrown);
+            }
+        });
+
+        function xoathongbao(id){
+            $.ajax({
+                url: '/deleteNotification?id='+id,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log("xóa thành công")
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        }
+    });
+</script>
+
+
 </html>
