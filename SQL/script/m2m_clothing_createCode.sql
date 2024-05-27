@@ -52,22 +52,7 @@ CREATE TABLE Sale
 )
 
 
-CREATE TABLE Product
-(
-    product_id   int IDENTITY (1,1) PRIMARY KEY,
-    product_name nvarchar(255) NOT NULL,
-    price        float,
-    quantity     int,
-    description  nvarchar(max),
-    average_rate float,
-    rate_count   int,
-    sold         int,
-    pictures     varchar(max),
-    videos       varchar(255),
-    slug_url     varchar(255) default '',
-    category_id  int FOREIGN KEY REFERENCES Category (category_id),
-    sale_ID      int FOREIGN KEY REFERENCES Sale (sale_ID)
-);
+
 
 
 create table [user]
@@ -88,6 +73,33 @@ create table [user]
     role_id     int          not null default 3,
     role_name   nvarchar(63) not null default 'User',
     processed   bit                   default 0
+);
+create table Shop
+(
+    shop_id int IDENTITY (1,1) primary key,
+    logo varchar(255),
+    name_shop nvarchar(255),
+    date_established date,
+    id int unique ,
+    foreign key (id) references [user] (id)
+)
+go
+CREATE TABLE Product
+(
+    product_id   int IDENTITY (1,1) PRIMARY KEY,
+    product_name nvarchar(255) NOT NULL,
+    price        float,
+    quantity     int,
+    description  nvarchar(max),
+    average_rate float,
+    rate_count   int,
+    sold         int,
+    pictures     varchar(max),
+    videos       varchar(255),
+    slug_url     varchar(255) default '',
+    shop_id      int foreign key references Shop(shop_id),
+    category_id  int FOREIGN KEY REFERENCES Category (category_id),
+    sale_ID      int FOREIGN KEY REFERENCES Sale (sale_ID),
 );
 
 CREATE TABLE AccountGG

@@ -1,10 +1,7 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
-import m2m_phase2.clothing.clothing.data.entity.CommentE;
 import m2m_phase2.clothing.clothing.data.model.CommentM;
 import m2m_phase2.clothing.clothing.repository.CommentRepo;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
@@ -65,8 +62,6 @@ public class CommentServiceImpl implements CommentService {
         // Xử lý khi không tìm thấy người dùng hoặc có lỗi xảy ra
         return -1;
     }
-
-
 
 
 }
