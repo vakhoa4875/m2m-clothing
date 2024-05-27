@@ -21,4 +21,7 @@ public interface ProductService {
 	void saveImgAndVideo(ProductDTO productDTO);
 	void deleteByProductId(int product_id) ;
 	Long getAllProducts();
+
+	List<Product> findProductByShopCategory(Integer categoryId ,String email);
+
 }

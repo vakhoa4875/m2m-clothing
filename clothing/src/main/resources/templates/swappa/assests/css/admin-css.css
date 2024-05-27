@@ -164,5 +164,10 @@
     width: 12%;
 }
 
+.max-height-content {
+    max-height: 640px;
+    overflow-y: auto;
+}
+
 
 
