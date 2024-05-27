@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <link rel="shortcut icon" href="../srcPic/x.png" type="image/x-icon">
-    <title>Title</title>
+    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <title>Shop</title>
+    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/css/style.css">
 </head>
 <style>
     .active-category a {
@@ -28,102 +28,8 @@
 </style>
 <body>
 
-<div>
-    <!-- mobileNav -->
-    <div class="d-block d-lg-none">
-        <div id="mobileNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-            <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
-                <div class="container-sm">
-
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
-                            data-bs-target="#slide_menu" aria-controls="navbarSupportedContent" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
-
-                    <a href="/trangchu" class="navbar-brand" title="Swappa">
-                        <img class="img-fluid"
-                             src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                             alt="Swappa Logo">
-                    </a>
-
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
-                            data-bs-target="#slide_search" aria-controls="navbarSupportedContent" aria-expanded="false"
-                            aria-label="Search">
-                        <i class="fa-solid fa-search" aria-hidden="true"></i>
-                    </button>
-                </div>
-            </nav>
-        </div>
-
-    </div>
-    <!-- mainNav -->
-    <div class="d-none d-lg-block">
-        <!-- first-nav -->
-        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-            <nav class="navbar navbar-expand-lg  navbar-dark ">
-                <div class="container d-block">
-                    <div class="d-flex justify-content-between gap-3">
-                        <ul class="navbar-nav" role="presentation">
-                            <li class="nav-item">
-                                <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
-                                    <img class="img-fluid"
-                                         src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                         width="167px" height="35px" alt="Bootstrap">
-                                </a>
-                            </li>
-                        </ul>
-                        <!--                        <div class="flex-grow-1">-->
-                        <!--                            <form action="" class="d-flex align-items-center position-relative h-100">-->
-                        <!--                                &lt;!&ndash; {{keyword}} &ndash;&gt;-->
-                        <!--                                &lt;!&ndash; <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> &ndash;&gt;-->
-                        <!--                                <input type="search" class="form-control rounded-0" id="navbar_search_input"-->
-                        <!--                                       name="q" ng-model="keyword" placeholder="Find a good deal" autocomplete="off">-->
-                        <!--                                &lt;!&ndash; </a> &ndash;&gt;-->
-                        <!--                            </form>-->
-                        <!--                        </div>-->
-                        <ul class="navbar-nav" role="presentation">
-                            <li class="d-flex align-items-center justify-content-center">
-                                <div class="">
-                                    <a href="/userprofile">
-                                        <i class="fs-6 fa-solid fa-circle-user text-white" aria-hidden="true"
-                                           style="font-size: 25px;"></i>
-                                    </a>
-                                </div>
-                            </li>
-                            <li class="d-flex align-items-center justify-content-center dropdown"
-                                style="margin-left: 10px">
-                                <a href="" class="border border-0 position-relative" data-toggle="dropdown"
-                                   style="background-color: rgb(18,17,13) !important;">
-                                    <i class="fa-regular fa-bell " style="color: white; font-size: 25px"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                          id="soluongthongbao" style="color: white; top: -10px; left: 14px;">
-                                            1
-                                    </span>
-                                </a>
-                                <div class="dropdown-menu" style="top: 35px">
-                                    <div id="thongbao">
-                                        <!--                                        <div class="dropdown-item" >-->
-                                        <!--                                           <div>Thông báo từ admin</div>-->
-                                        <!--                                        </div>-->
-                                    </div>
-                                    <div class="dropdown-item">
-                                        <div class="text-center">
-                                            <a href="" id="xoathongbao">
-                                                <i class="fa-solid fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </div>
-        <!-- second-nav -->
-    </div>
-</div>
+<!-- header -->
+<div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
 
 <!--main-->
 <div style="min-height: 600px">
@@ -163,50 +69,8 @@
     </div>
 </div>
 <!--footer-->
-<div>
-    <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-        <div class="container pt-2 pb-2">
-            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
-
-            </div>
-            <div class="row row-cols-1 row-cols-md-3">
-                <div class="col d-flex justify-content-center align-items-center">
-                    <div class=" text-white">
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243"
-                           style="color: white; font-size: 25px;">
-                            <i class="fa-brands fa-square-facebook fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243"
-                           style="color: white; font-size: 25px;">
-                            <i class="fa-brands fa-square-instagram fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243"
-                           style="color: white; font-size: 25px;">
-                            <i class="fa-brands fa-youtube fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243"
-                           style="color: white; font-size: 25px;">
-                            <i class="fa-brands fa-linkedin fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243"
-                           style="color: white; font-size: 25px;">
-                            <i class="fa-brands fa-square-reddit fs-1"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col text-center ">
-                    <a href="./index.html">
-                        <img src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
-                             class="" alt="" style="height: 50px">
-                    </a>
-                </div>
-                <div class="text-center text-white d-flex justify-content-center align-items-center">
-                    <p class="m-0">Copyright © 2023-2024 -M2M-</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-</div>
+<!-- footer -->
+<footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
 </body>
 <script src="https://kit.fontawesome.com/fe7d543762.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
