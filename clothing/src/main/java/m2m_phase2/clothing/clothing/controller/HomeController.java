@@ -1,14 +1,12 @@
 package m2m_phase2.clothing.clothing.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.entity.Account;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
 import m2m_phase2.clothing.clothing.data.model.UserM;
-import m2m_phase2.clothing.clothing.service.impl.AccountServiceImpl;
-import m2m_phase2.clothing.clothing.service.impl.CommentServiceImpl;
-import m2m_phase2.clothing.clothing.service.impl.ProductServiceImpl;
+import m2m_phase2.clothing.clothing.service.AccountService;
+import m2m_phase2.clothing.clothing.service.ProductService;
 import m2m_phase2.clothing.clothing.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,31 +22,28 @@ import java.util.List;
 public class HomeController {
 
 
-
     @Autowired
-    private AccountServiceImpl accountServiceImpl;
+    private AccountService accountService;
     @Autowired
     public HttpSession session;
     @Autowired
     private UserServiceImpl userService;
     @Autowired
-    private ProductServiceImpl productServiceImpl;
-    @Autowired
-    private CommentServiceImpl commentService;
+    private ProductService productService;
 
     @GetMapping("/")
     public String defaultPage(Model model) {
-        List<ProductM> list = productServiceImpl.findAll();
+        List<ProductM> list = productService.findAll();
         model.addAttribute("products", list);
-        model.addAttribute("iduser",session.getAttribute("iduser"));
+        model.addAttribute("iduser", session.getAttribute("iduser"));
         return "swappa/assests/html/trangchu";
     }
 
     @GetMapping("/trangchu")
     public String getTrangchu(Model model) {
-        List<ProductM> list = productServiceImpl.findAll();
+        List<ProductM> list = productService.findAll();
         model.addAttribute("products", list);
-        model.addAttribute("iduser",session.getAttribute("iduser"));
+        model.addAttribute("iduser", session.getAttribute("iduser"));
         return "swappa/assests/html/trangchu";
     }
 
@@ -61,11 +56,11 @@ public class HomeController {
 
     @GetMapping("/giohang")
     public String getGioHang(Model model) {
-        if(accountServiceImpl.isLoggedIn(session)){
-            List<ProductM> list = productServiceImpl.findAll();
+        if (accountService.isLoggedIn(session)) {
+            List<ProductM> list = productService.findAll();
             model.addAttribute("listSp", list);
             return "swappa/assests/html/card";
-        }else {
+        } else {
             return "redirect:/loginacount";
         }
 
@@ -73,7 +68,7 @@ public class HomeController {
 
     @GetMapping("/thanhtoan")
     public String getThanhToan(HttpSession session, Model model) throws SQLException {
-        if (accountServiceImpl.isLoggedIn(session)) {
+        if (accountService.isLoggedIn(session)) {
             UserDto userDto = new UserDto();
             userDto.setEmail(session.getAttribute("loggedInUser") + "");
             UserM userM = userService.getUserByEmail(userDto);
@@ -92,14 +87,14 @@ public class HomeController {
     }
 
     @PostMapping("/submitLogin")
-    public String submitLogin(@ModelAttribute("accountlog") Account accountRequest, Model model, HttpServletRequest httpServletRequest) throws SQLException {
-        return accountServiceImpl.submitLogin(accountRequest, model);
+    public String submitLogin(@ModelAttribute("accountlog") Account accountRequest, Model model) throws SQLException {
+        return accountService.submitLogin(accountRequest, model);
     }
 
     @GetMapping("/userprofile")
     public String userProfileGet(Model model) throws SQLException {
         // Kiểm tra xem người dùng đã đăng nhập hay chưa
-        if (accountServiceImpl.isLoggedIn(session)) {
+        if (accountService.isLoggedIn(session)) {
             // Nếu đã đăng nhập, chuyển hướng đến trang profile của người dùng
             UserDto userDto = new UserDto();
             userDto.setEmail(session.getAttribute("loggedInUser") + "");

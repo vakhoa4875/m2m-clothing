@@ -1,19 +1,20 @@
 use m2m_clothing
 go
 
-create table [Payment] (
-    sys_payment_id          int             primary key identity ,
-    payment_id              nvarchar(255)   unique ,
-    payer_id                nvarchar(255)   not null ,
-    total_amount            float           not null ,
-    currency                nvarchar(10)    default 'USD',
-    method                  nvarchar(20)    default 'Paypal',
-    intent                  nvarchar(255)   default 'sale',
-    description             nvarchar(255)   ,
-    payment_status          nvarchar(50)    not null default 'Processing',
-    date_created            datetime        default getdate(),
-    date_updated            datetime ,
-    order_id                int             foreign key references [Order](order_id)
+create table [Payment]
+(
+    sys_payment_id int primary key identity,
+    payment_id     nvarchar(255) unique,
+    payer_id       nvarchar(255) not null,
+    total_amount   float         not null,
+    currency       nvarchar(10)           default 'USD',
+    method         nvarchar(20)           default 'Paypal',
+    intent         nvarchar(255)          default 'sale',
+    description    nvarchar(255),
+    payment_status nvarchar(50)  not null default 'Processing',
+    date_created   datetime               default getdate(),
+    date_updated   datetime,
+    order_id       int foreign key references [Order] (order_id)
 )
 
 Alter table [Order]
@@ -25,21 +26,21 @@ ALTER table [OrderDetail]
         sub_total float;
 go
 -- Tạo 5 bản ghi cho bảng [Order]
-INSERT INTO [Order] (customer_id, phone_number, delivery_address, payment_method, total_amount, order_status, count_sp)
-VALUES (1, '1234567890', '123 Street, City, Country', 'Credit Card', 100.00, 'Pending', 3),
-       (2, '0987654321', '456 Avenue, City, Country', 'PayPal', 75.50, 'Delivered', 2),
-       (3, '5555555555', '789 Road, City, Country', 'Cash on Delivery', 150.25, 'Processing', 1),
-       (4, '1111111111', '321 Lane, City, Country', 'Bank Transfer', 200.75, 'Cancelled', 1),
-       (1, '9999999999', '654 Boulevard, City, Country', 'Credit Card', 80.00, 'Completed', 4);
-go
+-- INSERT INTO [Order] (customer_id, phone_number, delivery_address, payment_method, total_amount, order_status, count_sp)
+-- VALUES (1, '1234567890', '123 Street, City, Country', 'Credit Card', 100.00, 'Pending', 3),
+--        (2, '0987654321', '456 Avenue, City, Country', 'PayPal', 75.50, 'Delivered', 2),
+--        (3, '5555555555', '789 Road, City, Country', 'Cash on Delivery', 150.25, 'Processing', 1),
+--        (4, '1111111111', '321 Lane, City, Country', 'Bank Transfer', 200.75, 'Cancelled', 1),
+--        (1, '9999999999', '654 Boulevard, City, Country', 'Credit Card', 80.00, 'Completed', 4);
+-- go
 -- Tạo 5 bản ghi cho bảng [OrderDetail]
-INSERT INTO [OrderDetail] (order_id_detail, nameproduct, quatity, toal_product, product_id, order_id, sub_total)
-VALUES (1, 'Product A', 2, 50.00, 15, 1, 100.00),
-       (2, 'Product B', 1, 30.00, 12, 1, 30.00),
-       (3, 'Product C', 3, 20.00, 10, 2, 60.00),
-       (4, 'Product D', 4, 15.00, 14, 3, 60.00),
-       (5, 'Product E', 1, 100.00, 5, 4, 100.00);
-go
+-- INSERT INTO [OrderDetail] (order_id_detail, nameproduct, quatity, toal_product, product_id, order_id, sub_total)
+-- VALUES (1, 'Product A', 2, 50.00, 15, 1, 100.00),
+--        (2, 'Product B', 1, 30.00, 12, 1, 30.00),
+--        (3, 'Product C', 3, 20.00, 10, 2, 60.00),
+--        (4, 'Product D', 4, 15.00, 14, 3, 60.00),
+--        (5, 'Product E', 1, 100.00, 5, 4, 100.00);
+-- go
 update Product
 set sold = 0
 where 1 = 1
@@ -102,8 +103,37 @@ begin
       and year(o.order_date) = @year
     group by v.voucher_id
 end
+go
+drop table if exists Cart;
 
-truncate table Cart;
+-- create or alter trigger slugUrlGenerator
+--     on Product
+--     after insert
+--     as
+-- begin
+--     update Product
+--     set slug_url = ()
+--     from Product p
+--              join inserted i on i.product_id = p.product_id
+--     where p.slug_url = ''
+--        or p.slug_url is null;
+-- end
+go
+drop trigger if exists trigger_after_create_Order;
+go
+drop table if exists OrderDetail;
+go
+Create table order_detail
+(
+    order_detail_id int identity (1,1) primary key,
+    product_id      int foreign key references Product (product_id),
+    order_id        int foreign key references [Order] (order_id),
+    price           float not null,
+    quantity        int   not null
+);
+go
+alter table [Order]
+add order_code nvarchar(127) unique ;
 -- go
 -- exec dbo.getTopUsedVoucher 5, 2024;
 -- select top 10 od.product_id, sum(od.quatity) as sold

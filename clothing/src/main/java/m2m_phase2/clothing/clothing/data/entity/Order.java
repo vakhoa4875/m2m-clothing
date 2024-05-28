@@ -1,32 +1,34 @@
-
 package m2m_phase2.clothing.clothing.data.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name = "[Order]")
 @Data
-@Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order implements Serializable {
+@Builder
+public class Order {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Integer orderId;
 
     @ManyToOne
-    @JoinColumn(name = "customer_id", referencedColumnName = "id")
+    @JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false)
     private UserE customer;
 
-    @Column(name = "order_date")
-    private Date orderDate;
+    @Column(name = "order_date", nullable = false)
+    @Temporal(TemporalType.DATE)
+    private Date orderDate = new Date();
 
     @Column(name = "phone_number", length = 20)
     private String phoneNumber;
@@ -43,6 +45,16 @@ public class Order implements Serializable {
     @Column(name = "order_status", length = 50)
     private String orderStatus;
 
-    @OneToMany(mappedBy = "orderDetail", fetch = FetchType.LAZY)
-    List<OrderDetailE> listOrder;
+    @Column(name = "count_sp")
+    private Integer countSp;
+
+    @Column(name = "order_code", unique = true, length = 127)
+    private String orderCode;
+
+    @ManyToOne
+    @JoinColumn(name = "voucher_id", referencedColumnName = "voucher_id")
+    private VoucherE voucher;
+
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY, targetEntity = OrderDetailE.class)
+    private List<OrderDetailE> orderDetails;
 }

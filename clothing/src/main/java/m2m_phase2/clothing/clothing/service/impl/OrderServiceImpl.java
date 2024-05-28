@@ -1,19 +1,26 @@
 package m2m_phase2.clothing.clothing.service.impl;
 
+import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.constant.OrderStatus;
 import m2m_phase2.clothing.clothing.data.dto.OrderDto;
 import m2m_phase2.clothing.clothing.data.entity.Order;
 import m2m_phase2.clothing.clothing.repository.OrderRepo;
+import m2m_phase2.clothing.clothing.repository.ProductRepo;
+import m2m_phase2.clothing.clothing.repository.UserRepo;
+import m2m_phase2.clothing.clothing.repository.VoucherRepo;
 import m2m_phase2.clothing.clothing.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class OrderServiceImpl implements OrderService {
-    @Autowired
-    private OrderRepo repo;
+    private final OrderRepo repo;
+    private final UserRepo userRepo;
+    private final VoucherRepo voucherRepo;
+    private final OrderRepo orderRepo;
+    private final ProductRepo productRepo;
 
     @Override
     public List<Order> findAllOrders() {
@@ -41,6 +48,14 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Object[]> findAllUser() {
         return repo.findAllUser();
+    }
+
+    @Override
+    public Order saveOrder(OrderDto orderDto) {
+        orderDto.setOrderCode();
+        orderDto.getOrderDetails().forEach(e -> e.setOrderCode(orderDto.getOrderCode()));
+        var order = OrderDto.convertOrderDtoToOrder(orderDto, userRepo, voucherRepo, orderRepo, productRepo);
+        return orderRepo.save(order);
     }
 
     public Order findOrderByOrderId(Integer orderId) {
