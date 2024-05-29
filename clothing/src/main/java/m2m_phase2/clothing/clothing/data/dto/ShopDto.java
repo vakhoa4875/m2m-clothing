@@ -3,6 +3,8 @@ package m2m_phase2.clothing.clothing.data.dto;
 import lombok.*;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 
+import java.util.Date;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,7 +16,7 @@ public class ShopDto {
 
     private String nameShop;
 
-    private String dateEstablished;
+    private Date dateEstablished;
 
     private UserE userE;
 }

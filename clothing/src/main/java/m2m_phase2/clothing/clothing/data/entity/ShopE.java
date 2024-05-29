@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
 import java.util.List;
 
 @Table(name = "Shop")
@@ -28,7 +29,7 @@ public class ShopE {
 
     @Column(name = "date_established")
     @Temporal(TemporalType.DATE)
-    private String dateEstablished;
+    private Date dateEstablished;
 
     @OneToOne
     @JoinColumn(name = "id", referencedColumnName = "id", unique = true)
