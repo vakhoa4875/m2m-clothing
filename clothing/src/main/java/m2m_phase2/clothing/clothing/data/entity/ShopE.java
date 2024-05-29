@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Table(name = "Shop")
 @Entity
 @Getter
@@ -30,4 +32,8 @@ public class ShopE {
     @JsonIgnore
     @JoinColumn(name = "id",referencedColumnName = "id", unique = true)
     private UserE userE;
+
+    @OneToMany(mappedBy = "shopE", fetch = FetchType.LAZY)
+    @JsonIgnore
+    private List<Product> products;
 }

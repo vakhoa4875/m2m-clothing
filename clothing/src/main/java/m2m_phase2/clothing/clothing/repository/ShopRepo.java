@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ShopRepo extends JpaRepository<ShopE, Integer> {
@@ -19,5 +20,7 @@ public interface ShopRepo extends JpaRepository<ShopE, Integer> {
     ShopE findShopByUser(@Param("email") String email);
 
     List<ShopE> findAll();
+
+    Optional<ShopE> findByUserE_Email(String email);
 
 }
