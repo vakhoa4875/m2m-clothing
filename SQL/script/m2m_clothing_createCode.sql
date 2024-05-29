@@ -52,22 +52,7 @@ CREATE TABLE Sale
 )
 
 
-CREATE TABLE Product
-(
-    product_id   int IDENTITY (1,1) PRIMARY KEY,
-    product_name nvarchar(255) NOT NULL,
-    price        float,
-    quantity     int,
-    description  nvarchar(max),
-    average_rate float,
-    rate_count   int,
-    sold         int,
-    pictures     varchar(max),
-    videos       varchar(255),
-    slug_url     varchar(255) default '',
-    category_id  int FOREIGN KEY REFERENCES Category (category_id),
-    sale_ID      int FOREIGN KEY REFERENCES Sale (sale_ID)
-);
+
 
 
 create table [user]
@@ -88,6 +73,33 @@ create table [user]
     role_id     int          not null default 3,
     role_name   nvarchar(63) not null default 'User',
     processed   bit                   default 0
+);
+create table Shop
+(
+    shop_id int IDENTITY (1,1) primary key,
+    logo varchar(255),
+    name_shop nvarchar(255),
+    date_established date,
+    id int unique ,
+    foreign key (id) references [user] (id)
+)
+go
+CREATE TABLE Product
+(
+    product_id   int IDENTITY (1,1) PRIMARY KEY,
+    product_name nvarchar(255) NOT NULL,
+    price        float,
+    quantity     int,
+    description  nvarchar(max),
+    average_rate float,
+    rate_count   int,
+    sold         int,
+    pictures     varchar(max),
+    videos       varchar(255),
+    slug_url     varchar(255) default '',
+    shop_id      int foreign key references Shop(shop_id),
+    category_id  int FOREIGN KEY REFERENCES Category (category_id),
+    sale_ID      int FOREIGN KEY REFERENCES Sale (sale_ID),
 );
 
 CREATE TABLE AccountGG
@@ -116,7 +128,7 @@ create table [Cart]
 create table Comment
 (
     comment_id  int IDENTITY (1,1) PRIMARY KEY,
-    comment     varchar(255),
+    comment     nvarchar(255),
     product_id  int,
     user_id     int,
     create_date date,
@@ -274,7 +286,7 @@ begin
     COMMIT TRANSACTION;
 end
 go
---CREATE OR ALTER TRIGGER gen_user_info 
+--CREATE OR ALTER TRIGGER gen_user_info
 --ON Account
 --AFTER INSERT
 --AS
@@ -311,7 +323,6 @@ Create table [OrderDetail]
     quatity         int,
     toal_product    float
 )
-
 
 go
 create or alter trigger trigger_after_create_Order
@@ -376,6 +387,13 @@ create or alter trigger trigger_after_insert_account
         from inserted i
     end
 go
+
+create table Notification
+(
+    user_id INT,
+    namenotification nvarchar(255),
+)
+go
 create or alter trigger trigger_after_insert_accountgg
     on [AccountGG]
     for insert
@@ -391,13 +409,37 @@ create or alter trigger trigger_after_insert_accountgg
                 i.user_id_gg
         from inserted i
     end
+go
+   CREATE OR ALTER TRIGGER trigger_after_insert_voucherdetails
+    ON VoucherDetails
+    for INSERT
+    AS
+    BEGIN
+        INSERT INTO Notification (user_id, namenotification)
+        SELECT i.user_id,null
+        FROM inserted i;
+    END;
 
 
 
 
+	SELECT COUNT(*) AS total_accounts FROM
+(
+    SELECT user_id FROM Account
+    UNION ALL
+    SELECT user_id_gg FROM AccountGG
+) AS combined_accounts;
 
+SELECT COUNT(*) AS total_accounts_account FROM Account;
+SELECT COUNT(*) AS total_accounts_accountgg FROM AccountGG;
+SELECT COUNT(*) AS so_loai_san_pham FROM Category;
+SELECT c.category_name, COUNT(p.product_id) AS so_san_pham
+FROM Category c
+LEFT JOIN Product p ON c.category_id = p.category_id
+GROUP BY c.category_name;
 
-
+select * from Product
+SELECT * FROM Product WHERE shop_id = 1;
 
 
 

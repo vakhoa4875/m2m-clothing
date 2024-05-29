@@ -1,33 +1,39 @@
-.hoverbutton:hover{
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&display=swap');
+.hoverbutton:hover {
     background-color: gray;
 }
 
-.active-custom{
+.active-custom {
     color: rgb(243, 84, 84);
     font-weight: bold;
 }
 
-.nav-link:hover{
+.nav-link:hover {
     background-color: #707474 !important;
     color: white !important;
 }
 
-header i:hover{
+header i:hover {
     color: white !important;
 }
 
 /* thanh đổi boder của ô chọn phương thức thanh toán */
 .form-check-input:not(:checked) {
-    background-color: #ffffff; /* Màu nền của ô radio khi chưa được nhấn */
-    border-color: #6c757d; /* Màu viền của ô radio khi chưa được nhấn */
+    background-color: #ffffff;
+    /* Màu nền của ô radio khi chưa được nhấn */
+    border-color: #6c757d;
+    /* Màu viền của ô radio khi chưa được nhấn */
 }
 
 
 .max-width-column {
-    max-width: 100px; /* Đây là giá trị max-width bạn muốn */
+    max-width: 100px;
+    /* Đây là giá trị max-width bạn muốn */
     overflow: hidden;
-    text-overflow: ellipsis; /* Để tránh hiển thị quá nhiều văn bản nếu vượt quá max-width */
-    white-space: nowrap; /* Ngăn chặn văn bản từ việc xuống dòng */
+    text-overflow: ellipsis;
+    /* Để tránh hiển thị quá nhiều văn bản nếu vượt quá max-width */
+    white-space: nowrap;
+    /* Ngăn chặn văn bản từ việc xuống dòng */
 }
 
 
@@ -41,8 +47,14 @@ ng-view {
 }
 
 body {
-    font-family: "Roboto";
-    /* Use Playfair Display if available, otherwise fall back to a serif font */
+    height: 100%;
+    font-family: "Comfortaa", sans-serif;
+    /*background-image: url('../images/1323882.png'); !* Replace with your image path *!*/
+    background-size: cover;
+    background-color: white;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
 }
 
 .valid-input {
@@ -349,11 +361,65 @@ footer i {
 
 /* admin */
 
-#v-pills-tab .active{
+#v-pills-tab .active {
     background-color: #707474;
     color: white !important;
     font-weight: bolder;
 }
-.nav-link:hover{
+
+.nav-link:hover {
     color: aliceblue;
+}
+
+/* body {
+    background-color: #eee
+} */
+
+.card {
+    border: none;
+    position: relative
+}
+
+.off {
+    font-size: 40px;
+    margin-top: -16px !important;
+    color: #102C57;
+}
+
+.flat {
+    font-size: 20px
+}
+
+.star {
+    margin-top: 25px !important;
+    font-size: 28px
+}
+
+.line {
+    margin-top: -16px !important;
+    padding-right: 4rem !important;
+    padding-left: 4rem !important
+}
+
+.line hr {
+    height: 2px
+}
+.btn-coffee {
+    border: none !important;
+    background-color: #543310 !important;
+    color: #F8F4E1 !important;
+}
+.min-main-container-height {
+    min-height: 100vh;
+}
+.table-img {
+    max-height: 35px;
+    max-width: 35px;
+    height: auto;
+    width: auto;
+    margin: auto;
+}
+
+.main-container {
+    min-height: 90vh;
 }

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Layout</title>
+</head>
+<body>
+<div th:fragment="header" class="sticky-lg-top">
+    <!-- mobileNav -->
+    <div class="d-block">
+        <div id="mobileNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+            <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
+                <div class="container-fluid">
+                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                            data-bs-target="#slide_menu" aria-controls="navbarSupportedContent" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <a href="/trangchu" class="navbar-brand" title="Swappa">
+                        <img class="img-fluid" th:src="@{../assests/images/mini-logo-white.png}"
+                             style="height:50px; margin: auto;"
+                             alt="Swappa Logo">
+                    </a>
+                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
+                            data-bs-target="#slide_search" aria-controls="navbarSupportedContent" aria-expanded="false"
+                            aria-label="Search">
+                        <i class="fa-solid fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+    </div>
+</div>
+
+<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);" th:fragment="footer" class="">
+    <div class="container pt-2 pb-2">
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+        </div>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col d-flex justify-content-center align-items-center">
+                <div class=" text-white">
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-facebook fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-instagram fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-youtube fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-linkedin fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-reddit fs-1"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col text-center ">
+                <a href="./index.html"><img
+                        th:src="@{../assests/images/mini-logo-white.png}"
+                        style="height: 50px; margin: auto"
+                        class="img-fluid" alt=""></a>
+            </div>
+            <div class="col text-center text-white d-flex justify-content-center align-items-center">
+                <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

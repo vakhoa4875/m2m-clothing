@@ -5,7 +5,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 /**
- * cái này là đẩy thư mục media lên web trính tình trạng không có ảnh khi load web
+ * cái này là đẩy thư mục media lên web tránh tình trạng không có ảnh khi load web
 * */
 public class MvcConfig implements WebMvcConfigurer {
     @Override

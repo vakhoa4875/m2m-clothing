@@ -133,6 +133,17 @@ public class ProductServiceImpl implements ProductService {
 		repo.deleteByProductId(product_id);
 	}
 
+	@Override
+	public Long getAllProducts() {
+		long count = repo.count();
+		return count;
+	}
+
+	@Override
+	public List<Product> findProductByShopCategory(Integer categoryId, String email) {
+		return repo.findProductByShopCategory(categoryId,email);
+	}
+
 	private void saveImageAndVideoSentFromClient(String nameImage,String base64FromFileImg) throws FileNotFoundException {
 		if(base64FromFileImg != null && !base64FromFileImg.isEmpty()){
 			byte[] bytes = Base64.decodeBase64(base64FromFileImg);

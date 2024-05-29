@@ -5,105 +5,197 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Thanh Toán</title>
-    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assests/css/style.css">
-    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <link rel="stylesheet" th:href="@{/bootstrap-5.3.2-dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assests/css/style.css}">
+    <link rel="shortcut icon" th:href="@{/assests/srcPic/x.png}" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var ptthanhtoan = "";
+            function Finalpayment() {
+                var productList = document.getElementById("thanhtoan");
+                productList.innerHTML = '';
+                if (localStorage.length > 0) {
+                    // Duyệt qua tất cả các phần tử trong local storage
+                    var soluongton = 0;
+                    for (var i = 0; i < localStorage.length; i++) {
+                        var key = localStorage.key(i);
+                        var value = localStorage.getItem(key);
 
+                        var object = JSON.parse(value);
+                        // Tạo các thẻ HTML để hiển thị thông tin của đối tượng
+                        var tr = document.createElement("tr");
+
+                        tr.innerHTML = `<tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+
+                                            <div style="overflow: hidden" height="auto" width="136px">
+                                                <img src="${object.linkanh}"
+                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user1"
+                                                        id="thongtin" style="display: block; width: 150px; height: 150px; object-fit: contain;">
+                                            </div>
+                                            <div class="w-100 d-flex align-items-center">
+                                                <p class="text-xs text-secondary mb-0" id="${object.tensp},${i}">
+                                                    ${object.tensp}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs text-secondary mb-0" >
+                                            $${object.gia.toFixed(2)}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs text-secondary mb-0" id="${object.soLuong},${i}">
+                                            ${object.soLuong}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs text-secondary mb-0" id="${(object.soLuong * object.gia)},${i}">
+                                            $${(object.soLuong * object.gia).toFixed(2)}</p>
+                                    </td>
+
+                                </tr>
+                    `;
+                        var tennguoidung = $('#name').text();
+                        var sdt = $('#sdt').text();
+                        var diachi = $('#diachi').val();
+                        var id = $('#id').text();
+                        document.getElementById("thanhtoan").appendChild(tr);
+                        capNhatTienTong();
+                        var tongThanhToanID = $('#TongThanhToan').text();
+                        var tongThanhToan = parseFloat(tongThanhToanID.substring(1)).toFixed(2) //tiền tổng thanh toán
+                        soluongton += object.soLuong;
+                        getInfoCard(object.tensp, soluongton, (object.soLuong * object.gia).toFixed(2), tennguoidung, sdt, diachi, id, ptthanhtoan, tongThanhToan);
+                    }
+                }
+            }
+
+            function capNhatTienTong() {
+                var tongTien = 0;
+                var discount = 0;
+                if (localStorage.length > 0) {
+                    // Duyệt qua tất cả các phần tử trong local storage
+                    for (var i = 0; i < localStorage.length; i++) {
+                        var key = localStorage.key(i);
+                        var value = localStorage.getItem(key);
+
+                        var object = JSON.parse(value);
+
+                        tongTien += object.soLuong * object.gia;
+                        discount = object.discount;
+                    }
+
+                    var cacPhanTu = document.querySelectorAll(".tienThanhToan");
+                    // Lặp qua từng phần tử và cập nhật giá trị mới
+                    cacPhanTu.forEach(function (element) {
+                        element.textContent = "$" + tongTien.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
+                    });
+                    var discountthtml = document.getElementById("discount");
+                    discountthtml.textContent = "$" + discount; // giam gia trong localStorage
+
+                    var tongthanhtoan = document.getElementById("TongThanhToan");
+
+                    tongthanhtoan.textContent = "$" + ((parseFloat(tongTien.toFixed(2)) + parseFloat(2) - discount));
+
+                }
+            }
+
+
+
+
+            var objsp = [];
+            function getInfoCard(name, soluongton, tien, tennguoidung, sdt, diachi, id, ptthanhtoan, tongThanhToan) {
+                var sp = {
+                    orderId: id,
+                    phoneNumber: sdt,
+                    deliveryAddress: diachi,
+                    paymentMethod: ptthanhtoan,
+                    totalAmount: tongThanhToan,
+                    orderStatus: "Need approved",
+                    soluong: soluongton
+                };
+
+                objsp.push(sp);
+            }
+
+            console.log(objsp)
+
+
+            function thanhtoan() {
+                Swal.fire({
+                    title: 'Thông Báo từ hệ thống',
+                    text: 'Cảm ơn bạn đã thanh toán hóa đơn!, Vui lòng chờ đơn hàng được xác nhận!',
+                    icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                    confirmButtonText: 'Xác nhận',
+                    allowOutsideClick: false,
+
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/api-product/saveOder',
+                            type: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify(objsp[objsp.length - 1]),
+                            success: (redirectURL) => {
+                                console.log("lưu thành công")
+                            },
+                            error: (xhr, status, error) => {
+                                console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                            }
+                        });
+                        setTimeout(function () {
+                            console.log("chuẩn bị cập nhật bên order detail")
+                            $.ajax({
+                                url: '/api-product/insertOderdetail',
+                                type: 'POST',
+                                contentType: 'application/json',
+                                data: JSON.stringify(objsp[objsp.length - 1]),
+                                success: (redirectURL) => {
+                                    // Xác nhận đã được nhấn
+                                    localStorage.clear();
+                                    window.location.href = "/userprofile"; // Chuyển hướng trang ngược lại trang hiện tại
+                                },
+                                error: (xhr, status, error) => {
+                                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                                }
+                            });
+                        }, 1200);
+                    }
+                });
+            }
+
+            $('#submitBtn').click(function () {
+                if (!$('input[type="radio"][name="flexRadioDefault"]').is(':checked')) {
+                    Swal.fire({
+                        title: 'Thông Báo từ hệ thống',
+                        text: 'Vui lòng chọn phương thức thanh toán',
+                        icon: 'error', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                        confirmButtonText: 'Xác nhận',
+                        allowOutsideClick: false,
+                    })
+                    return false;
+                }
+                thanhtoan();
+            });
+
+            $('input[type="radio"][name="flexRadioDefault"]').change(function () {
+                ptthanhtoan = $(this).val();
+                // Gọi lại hàm Finalpayment() để cập nhật lại giá trị của biến thanhtoan
+                Finalpayment();
+            });
+            window.onload = Finalpayment;
+        })
+    </script>
 </head>
 
 <body>
     <!-- mobileNav -->
-    <div>
-        <!-- mobileNav -->
-        <div class="d-block d-lg-none">
-            <div id="mobileNav"  style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
-                <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
-                    <div class="container-sm">
-
-                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
-                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                            <i class="fa-solid fa-bars"></i>
-                        </button>
-
-                        <a href="/trangchu" class="navbar-brand" title="Swappa">
-                            <img class="img-fluid"
-                                 src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                 alt="Swappa Logo">
-                        </a>
-
-                        <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_search"
-                                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
-                            <i class="fa-solid fa-search" aria-hidden="true"></i>
-                        </button>
-                    </div>
-                </nav>
-            </div>
-
-        </div>
-        <!-- mainNav -->
-        <div class="d-none d-lg-block">
-            <!-- first-nav -->
-            <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
-                <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
-                    <div class="container d-block">
-                        <div class="d-flex gap-3">
-                            <ul class="navbar-nav" role="presentation">
-                                <li class="nav-item">
-                                    <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
-                                        <img class="img-fluid"
-                                             src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
-                                             width="167px" height="35px" alt="Bootstrap">
-                                    </a>
-                                </li>
-                            </ul>
-                            <div class="flex-grow-1">
-                                <form action="" class="d-flex align-items-center position-relative h-100">
-                                    <!-- {{keyword}} -->
-                                    <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
-                                    <input type="search" class="form-control rounded-0" id="navbar_search_input" name="q"
-                                           ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
-                                    <!-- </a> -->
-                                    <select class="form-select rounded-0 " id="select_loai" ng-model="selectedType" style="width: 135px">
-                                        <option value="">Chọn loại</option>
-                                        <option value="loai1">Outerwear</option>
-                                        <option value="loai2">Tops</option>
-                                        <option value="loai3">Bottoms</option>
-                                    </select>
-                                </form>
-                            </div>
-                            <ul class="navbar-nav" role="presentation">
-                                <li class="d-flex align-items-center justify-content-center">
-                                    <div class="">
-                                        <a href="/userprofile">
-                                            <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
-                                        </a>
-                                    </div>
-                                </li>
-                                <li class="ms-3 d-flex align-items-center justify-content-center">
-                                    <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
-                                        <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
-                                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
-                                        0
-                                    </span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="d-flex justify-content-around pb-1" id="userListCategory">
-                            <!-- api -->
-                        </div>
-                    </div>
-                </nav>
-            </div>
-            <!-- second-nav -->
-        </div>
-    </div>
-
+    <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
     <!-- body -->
-
-    <div class="container-fluid">
+    <div class="container-fluid main-container">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div id="tooltip-bar" class="row row-cols-2 row-cols-md-4 text-center mt-2">
@@ -173,19 +265,23 @@
 
                             <tbody>
                                 <tr>
-<!--                                    nếu có update vui lòng không đổi tên id tránh bị lỗi do call api-->
+                                    <!--                                    nếu có update vui lòng không đổi tên id tránh bị lỗi do call api-->
 
                                     <th>
-                                        <div id="name" class="d-flex justify-content-center align-items-center" th:text="${user.getEmail()}"></div>
+                                        <div id="name" class="d-flex justify-content-center align-items-center"
+                                            th:text="${user.getEmail()}"></div>
                                     </th>
                                     <td>
-                                        <div class="d-flex justify-content-center align-items-center"  th:text="${user.getFullname()}"></div>
+                                        <div class="d-flex justify-content-center align-items-center"
+                                            th:text="${user.getFullname()}"></div>
                                     </td>
                                     <td>
-                                        <div class="d-flex justify-content-center align-items-center" id="sdt" th:text="${user.getSdt()}"></div>
+                                        <div class="d-flex justify-content-center align-items-center" id="sdt"
+                                            th:text="${user.getSdt()}"></div>
                                     </td>
                                     <td class="input-group ">
-                                        <input type="text" class="form-control" disabled style="width: 90%" id="diachi" value="Cà Phê Phố Hiến, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh">
+                                        <input type="text" class="form-control" disabled style="width: 90%" id="diachi"
+                                            value="Cà Phê Phố Hiến, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh">
                                     </td>
                                     <td>
                                         <div class="d-flex justify-content-center align-items-center">
@@ -200,7 +296,6 @@
             </div>
         </main>
     </div>
-
     <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
@@ -218,37 +313,37 @@
                                 </tr>
                             </thead>
                             <tbody id="thanhtoan">
-<!--                                <tr>-->
-<!--                                    <td>-->
-<!--                                        <div class="d-flex px-2 py-1">-->
+                                <!--                                <tr>-->
+                                <!--                                    <td>-->
+                                <!--                                        <div class="d-flex px-2 py-1">-->
 
-<!--                                            <div>-->
-<!--                                                <img src="https://placehold.co/36x36/"-->
-<!--                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user1"-->
-<!--                                                    id="thongtin">-->
-<!--                                            </div>-->
-<!--                                            <div class="w-100 d-flex align-items-center">-->
-<!--                                                <p class="text-xs text-secondary mb-0">-->
-<!--                                                    Loại: Mặt Đen 80x20cm,....</p>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </td>-->
-<!--                                    <td class="align-middle text-center">-->
-<!--                                    </td>-->
-<!--                                    <td class="align-middle text-center">-->
-<!--                                        <p class="text-xs text-secondary mb-0" >-->
-<!--                                            100$</p>-->
-<!--                                    </td>-->
-<!--                                    <td class="align-middle text-center">-->
-<!--                                        <p class="text-xs text-secondary mb-0" >-->
-<!--                                            2</p>-->
-<!--                                    </td>-->
-<!--                                    <td class="align-middle text-center">-->
-<!--                                        <p class="text-xs text-secondary mb-0" >-->
-<!--                                            200$</p>-->
-<!--                                    </td>-->
+                                <!--                                            <div>-->
+                                <!--                                                <img src="https://placehold.co/36x36/"-->
+                                <!--                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user1"-->
+                                <!--                                                    id="thongtin">-->
+                                <!--                                            </div>-->
+                                <!--                                            <div class="w-100 d-flex align-items-center">-->
+                                <!--                                                <p class="text-xs text-secondary mb-0">-->
+                                <!--                                                    Loại: Mặt Đen 80x20cm,....</p>-->
+                                <!--                                            </div>-->
+                                <!--                                        </div>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td class="align-middle text-center">-->
+                                <!--                                    </td>-->
+                                <!--                                    <td class="align-middle text-center">-->
+                                <!--                                        <p class="text-xs text-secondary mb-0" >-->
+                                <!--                                            100$</p>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td class="align-middle text-center">-->
+                                <!--                                        <p class="text-xs text-secondary mb-0" >-->
+                                <!--                                            2</p>-->
+                                <!--                                    </td>-->
+                                <!--                                    <td class="align-middle text-center">-->
+                                <!--                                        <p class="text-xs text-secondary mb-0" >-->
+                                <!--                                            200$</p>-->
+                                <!--                                    </td>-->
 
-<!--                                </tr>-->
+                                <!--                                </tr>-->
 
                             </tbody>
                         </table>
@@ -270,7 +365,7 @@
                                         <div class="p-2 flex-fill"> <strong>Shipping Unit</strong></div>
                                         <div class="p-2 me-5 flex-fill align-middle text-center">Fast</div>
                                         <div class="p-2 me-4 flex-fill align-middle text-center">
-                                            <a href="" class="text-danger pointeredit" >Edit</a>
+                                            <a href="" class="text-danger pointeredit">Edit</a>
                                         </div>
                                         <div class="p-2 me-4 flex-fill align-middle text-center">$2</div>
                                     </li>
@@ -297,50 +392,49 @@
             </div>
         </main>
     </div>
-
     <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div class="row">
                     <div class="col-12">
                         <ul class="list-group list-group-flush">
-<!--                            <li class="list-group-item">-->
-<!--                                <div class="container">-->
-<!--                                    <div class="d-flex">-->
-<!--                                        <div class="p-2 w-100">-->
-<!--                                            <div>-->
-<!--                                                <i class="fa-solid fa-ticket"></i>-->
-<!--                                                <span>Voucher</span>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="p-2  ms-auto ">-->
-<!--                                            <a href="" class="text-primary">-->
-<!--                                                <span>Select</span>-->
-<!--                                            </a>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </li>-->
+                            <!--                            <li class="list-group-item">-->
+                            <!--                                <div class="container">-->
+                            <!--                                    <div class="d-flex">-->
+                            <!--                                        <div class="p-2 w-100">-->
+                            <!--                                            <div>-->
+                            <!--                                                <i class="fa-solid fa-ticket"></i>-->
+                            <!--                                                <span>Voucher</span>-->
+                            <!--                                            </div>-->
+                            <!--                                        </div>-->
+                            <!--                                        <div class="p-2  ms-auto ">-->
+                            <!--                                            <a href="" class="text-primary">-->
+                            <!--                                                <span>Select</span>-->
+                            <!--                                            </a>-->
+                            <!--                                        </div>-->
+                            <!--                                    </div>-->
+                            <!--                                </div>-->
+                            <!--                            </li>-->
                             <li class="list-group-item">
                                 <div class="container">
                                     <div class="d-flex">
                                         <div class="p-2 w-50">
-                                            <span>Payment methods</span >
+                                            <span>Payment methods</span>
                                         </div>
 
                                         <div class="w-50 ms-auto p-2">
                                             <div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" value="PayPal" name="flexRadioDefault"
-                                                        >
-                                                    <label class="form-check-label" >
+                                                    <input class="form-check-input" type="radio" value="PayPal"
+                                                        name="flexRadioDefault">
+                                                    <label class="form-check-label">
                                                         PayPal (thanh toán bằng ngân hàng)
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
-                                                    <input class="form-check-input" type="radio" value="Cod" name="flexRadioDefault"
-                                                         >
-                                                    <label class="form-check-label" >
+                                                    <input class="form-check-input" type="radio" value="Cod"
+                                                        name="flexRadioDefault">
+                                                    <label class="form-check-label">
                                                         Cod (thanh toán bằng tiền mặt)
                                                     </label>
                                                 </div>
@@ -355,7 +449,6 @@
             </div>
         </main>
     </div>
-
     <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-2 mb-2" style="background-color: white !important;">
@@ -386,7 +479,8 @@
                     <div class="col-12">
                         <div class="row">
                             <div class="col-4 ms-auto">
-                                <button type="button" class="btn btn-outline-success " id="submitBtn">Xác nhận thanh toán</button>
+                                <button type="button" class="btn btn-outline-success " id="submitBtn">Xác nhận thanh
+                                    toán</button>
                             </div>
                         </div>
                     </div>
@@ -394,231 +488,12 @@
             </div>
         </main>
     </div>
-
-
-    <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-        <div class="container pt-2 pb-2">
-            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
-
-            </div>
-            <div class="row row-cols-1 row-cols-md-3">
-                <div class="col d-flex justify-content-center align-items-center">
-                    <div class=" text-white">
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-facebook fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-instagram fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-youtube fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-linkedin fs-1"></i>
-                        </a>
-                        <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
-                            <i class="fa-brands fa-square-reddit fs-1"></i>
-                        </a>
-                    </div>
-                </div>
-                <div class="col text-center ">
-                    <a href="./index.html"><img
-                            src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
-                            alt=""></a>
-                </div>
-                <div class="col text-center text-white d-flex justify-content-center align-items-center">
-                    <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
-                </div>
-            </div>
-        </div>
-    </footer>
-
-    <script src="/node_modules/angular/angular.min.js"></script>
+    <footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
     <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
-    <script src="/node_modules/angular/angular.route.min.js"></script>
     <script src="/assests/js/app_admin.js"></script>
     <script src="/assests/js/script.js"></script>
     <script src="/assests/js/jsAll.js"></script>
-    <script>
-        $(document).ready(function (){
-            var ptthanhtoan = "";
-            function Finalpayment (){
-                var productList = document.getElementById("thanhtoan");
-                productList.innerHTML = '';
-                if (localStorage.length > 0) {
-                    // Duyệt qua tất cả các phần tử trong local storage
-                    var soluongton = 0;
-                    for (var i = 0; i < localStorage.length; i++) {
-                        var key = localStorage.key(i);
-                        var value = localStorage.getItem(key);
-
-                        var object = JSON.parse(value);
-                        // Tạo các thẻ HTML để hiển thị thông tin của đối tượng
-                        var tr = document.createElement("tr");
-
-                        tr.innerHTML = `<tr>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-
-                                            <div style="overflow: hidden" height="auto" width="136px">
-                                                <img src="${object.linkanh}"
-                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user1"
-                                                        id="thongtin" style="display: block; width: 150px; height: 150px; object-fit: contain;">
-                                            </div>
-                                            <div class="w-100 d-flex align-items-center">
-                                                <p class="text-xs text-secondary mb-0" id="${object.tensp},${i}">
-                                                    ${object.tensp}</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs text-secondary mb-0" >
-                                            $${object.gia.toFixed(2)}</p>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs text-secondary mb-0" id="${object.soLuong},${i}">
-                                            ${object.soLuong}</p>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs text-secondary mb-0" id="${(object.soLuong * object.gia)},${i}">
-                                            $${(object.soLuong * object.gia).toFixed(2)}</p>
-                                    </td>
-
-                                </tr>
-                    `;
-                        var tennguoidung = $('#name').text();
-                        var sdt = $('#sdt').text();
-                        var diachi = $('#diachi').val();
-                        var id = $('#id').text();
-                        document.getElementById("thanhtoan").appendChild(tr);
-                        capNhatTienTong();
-                        var tongThanhToanID = $('#TongThanhToan').text();
-                        var tongThanhToan = parseFloat(tongThanhToanID.substring(1)).toFixed(2) //tiền tổng thanh toán
-                        soluongton += object.soLuong;
-                        getInfoCard(object.tensp, soluongton,(object.soLuong * object.gia).toFixed(2),tennguoidung, sdt, diachi,id, ptthanhtoan, tongThanhToan);
-                    }
-                }
-            }
-
-            function capNhatTienTong() {
-                var tongTien = 0;
-                var discount = 0;
-                if (localStorage.length > 0) {
-                    // Duyệt qua tất cả các phần tử trong local storage
-                    for (var i = 0; i < localStorage.length; i++) {
-                        var key = localStorage.key(i);
-                        var value = localStorage.getItem(key);
-
-                        var object = JSON.parse(value);
-
-                        tongTien += object.soLuong * object.gia;
-                        discount = object.discount;
-                    }
-
-                    var cacPhanTu = document.querySelectorAll(".tienThanhToan");
-                    // Lặp qua từng phần tử và cập nhật giá trị mới
-                    cacPhanTu.forEach(function (element) {
-                        element.textContent = "$" + tongTien.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
-                    });
-                    var discountthtml = document.getElementById("discount");
-                    discountthtml.textContent = "$" + discount; // giam gia trong localStorage
-
-                    var tongthanhtoan = document.getElementById("TongThanhToan");
-
-                    tongthanhtoan.textContent = "$" + ((parseFloat(tongTien.toFixed(2)) + parseFloat(2) - discount));
-
-                }
-            }
-
-
-
-
-            var objsp =[];
-            function getInfoCard(name, soluongton,tien, tennguoidung, sdt, diachi, id, ptthanhtoan, tongThanhToan){
-                var sp ={
-                    orderId : id,
-                    phoneNumber : sdt,
-                    deliveryAddress : diachi,
-                    paymentMethod : ptthanhtoan,
-                    totalAmount : tongThanhToan,
-                    orderStatus : "Need approved",
-                    soluong : soluongton
-                };
-
-                objsp.push(sp);
-            }
-
-            console.log(objsp)
-
-
-            function thanhtoan(){
-                Swal.fire({
-                    title: 'Thông Báo từ hệ thống',
-                    text: 'Cảm ơn bạn đã thanh toán hóa đơn!, Vui lòng chờ đơn hàng được xác nhận!',
-                    icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-                    confirmButtonText: 'Xác nhận',
-                    allowOutsideClick: false,
-
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: '/api-product/saveOder',
-                            type: 'POST',
-                            contentType: 'application/json',
-                            data: JSON.stringify(objsp[objsp.length -1]),
-                            success: (redirectURL) => {
-                                console.log("lưu thành công")
-                            },
-                            error: (xhr, status, error) => {
-                                console.error("Đã xảy ra lỗi khi gọi API: " + error);
-                            }
-                        });
-                        setTimeout(function() {
-                            console.log("chuẩn bị cập nhật bên order detail")
-                            $.ajax({
-                                url: '/api-product/insertOderdetail',
-                                type: 'POST',
-                                contentType: 'application/json',
-                                data: JSON.stringify(objsp[objsp.length -1]),
-                                success: (redirectURL) => {
-                                    // Xác nhận đã được nhấn
-                                    localStorage.clear();
-                                    window.location.href = "/userprofile"; // Chuyển hướng trang ngược lại trang hiện tại
-                                },
-                                error: (xhr, status, error) => {
-                                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
-                                }
-                            });
-                        }, 1200);
-                    }
-                });
-            }
-
-            $('#submitBtn').click(function () {
-                if (!$('input[type="radio"][name="flexRadioDefault"]').is(':checked')) {
-                    Swal.fire({
-                        title: 'Thông Báo từ hệ thống',
-                        text: 'Vui lòng chọn phương thức thanh toán',
-                        icon: 'error', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-                        confirmButtonText: 'Xác nhận',
-                        allowOutsideClick: false,
-                    })
-                    return false;
-                }
-                thanhtoan();
-            });
-
-            $('input[type="radio"][name="flexRadioDefault"]').change(function() {
-                ptthanhtoan = $(this).val();
-                // Gọi lại hàm Finalpayment() để cập nhật lại giá trị của biến thanhtoan
-                Finalpayment();
-            });
-            window.onload = Finalpayment;
-        })
-    </script>
     <script>
         function editAddress() {
 
@@ -627,7 +502,7 @@
             if (input.disabled) {
                 input.disabled = false; // Bỏ disabled nếu đã có
                 console.log("mở")
-                text.textContent  = "Save";
+                text.textContent = "Save";
             } else {
                 input.disabled = true; // Kích hoạt disabled nếu chưa có
                 Swal.fire({
@@ -637,7 +512,7 @@
                     confirmButtonText: 'Xác nhận',
                     allowOutsideClick: false,
                 }).then((result) => {
-                    text.textContent  = "Edit";
+                    text.textContent = "Edit";
                 })
             }
 

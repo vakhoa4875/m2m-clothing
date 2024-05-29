@@ -2,10 +2,7 @@ package m2m_phase2.clothing.clothing.api;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import m2m_phase2.clothing.clothing.data.dto.UserDto;
-import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDto;
-import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.data.model.VoucherM;
 import m2m_phase2.clothing.clothing.service.impl.VoucherServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.parser.Entity;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -44,6 +40,18 @@ public class VoucherApi {
         try {
             VoucherDto voucherDto = new VoucherDto(); // Tạo một đối tượng VoucherDto và đặt voucherID vào đó
             voucherDto.setVoucherID(voucherID);
+            voucherM = voucherService.findVoucherByID(voucherDto);
+        } catch (Exception e) {
+            System.out.println("Gọi API thất bại: /api-public/vouchers/getVoucherByID");
+            throw new RuntimeException(e);
+        }
+        return ResponseEntity.ok(voucherM);
+    }
+
+    @GetMapping("/getVoucherByID2")
+    public ResponseEntity<?> doGetVoucherByID2(VoucherDto voucherDto) {
+        VoucherM voucherM;
+        try {
             voucherM = voucherService.findVoucherByID(voucherDto);
         } catch (Exception e) {
             System.out.println("Gọi API thất bại: /api-public/vouchers/getVoucherByID");

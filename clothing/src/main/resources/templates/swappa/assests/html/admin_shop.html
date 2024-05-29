@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="java">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin</title>
+    <link rel="stylesheet" th:href="@{/bootstrap-5.3.2-dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/assests/css/style.css}">
+    <link rel="shortcut icon" th:href="@{/assests/srcPic/x.png}" type="image/x-icon">
+    <link rel="stylesheet" href="/assests/css/admin-css.css">
+    <link rel="stylesheet" href="/assests/css/admin-shop-css.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script th:src="@{/assests/js/UserManagement.js}"></script>
+    <script th:src="@{/assests/js/productManagement.js}"></script>
+    <style>
+        .max-width-col {
+            max-width: 128px;
+        }
+
+        #fileInput {
+            display: none;
+        }
+
+        .custom-file-label {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #909498;
+            color: #fff;
+
+        }
+
+        .custom-file-label:hover {
+            background-color: #9a9fa4;
+        }
+
+        #previewImage {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-top: 20px;
+        }
+
+        .avatar {
+            width: 100%;
+            /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của ô chứa */
+            height: auto;
+            /* Đảm bảo tỉ lệ khung hình được bảo toàn */
+            max-width: 150px;
+            /* Kích thước tối đa của ảnh */
+            max-height: 150px;
+            /* Kích thước tối đa của ảnh */
+        }
+    </style>
+    <script>
+        const services = new UserManagement();
+        const productservices = new productManagement();
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            console.log("Test kinda done")
+            services.loadInit();
+            productservices.loadInit();
+        })
+    </script>
+</head>
+
+<body class="bg-black">
+
+    <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
+
+    <div class="container-fluid  bg-body-secondary main-container" style="height: 800px;">
+        <div class="row">
+            <div class="col-xl-3 col-lg-12 mt-1 p-0">
+                <div class="card">
+                    <div class="card-header bg-black text-center">
+                        <a class="text-white bg-gradient-primary" href="#">
+                            <h5 class="m-0"><strong>SHOP MANAGEMENT</strong></h5>
+                        </a>
+                    </div>
+                    <div class="card-body p-1">
+                        <div class="align-items-start">
+                            <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist"
+                                aria-orientation="vertical">
+                                <button class="nav-link mt-1 text-black active" id="v-pills-home-status-productSale"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-home-statusProductSale" type="button"
+                                    role="tab" aria-controls="v-pills-home-statusProductSale"
+                                    aria-selected="true">PRODUCT
+                                </button>
+                                <a class="nav-link mt-1 text-black" href="/admin/logout">LOG OUT
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-xl-9 col-lg-12 p-0">
+                <div class="tab-content" id="v-pills-tabContent">
+                    <div class="tab-pane active show" id="v-pills-home-statusProductSale" role="tabpanel"
+                        aria-labelledby="v-pills-home-voucher" tabindex="0">
+                        <div class="card my-1">
+                            <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                                <div
+                                    class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">PRODUCT</h5>
+                                    <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
+                                        data-bs-target="#exampleModalToggleProduct" data-bs-toggle="modal"
+                                        id="newInsButtonSale" style="padding: 7px 12px 7px 12px;">
+                                        <i class="fa-solid fa-plus " aria-hidden="true"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+
+                            <div class="table-responsive p-0 mx-3" id="tableProductContainerProductShop">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                    <tr class="text-center">
+                                        <th scope="col" style="width: 60%">Name product</th>
+                                        <th scope="col" style="width: 15%">Price</th>
+                                        <th scope="col" style="width: 10%">Quantity</th>
+                                        <th scope="col" style="width: 5%"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody id="ProductTableBody">
+                                    <!-- Các dòng sản phẩm sẽ được thêm vào đây -->
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+    <!--modal insert-->
+    <div class="modal fade modal-lg" id="exampleModalToggleProduct" aria-hidden="true"
+        aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <form id="productForm" enctype="multipart/form-data" action="">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="insertProductModal">PRODUCT</h1>
+                        <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                    </div>
+                    <div class="modal-body" id="insertProductModalBody">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="mb-2 ">
+                                    <label for="insNameProduct" class="form-label">Name</label>
+                                    <input type="text" class="form-control ps-3" id="insNameProduct"
+                                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" name="productName">
+                                </div>
+                                <div class="mb-2 ">
+                                    <label for="insPriceProduct" class="form-label">Price</label>
+                                    <input type="text" class="form-control ps-3" id="insPriceProduct"
+                                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" name="price">
+                                </div>
+                                <div class="mb-2 ">
+                                    <label for="insQuantityProduct" class="form-label">Quantity</label>
+                                    <input type="text" class="form-control ps-3" id="insQuantityProduct"
+                                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" name="quantity">
+                                </div>
+                                <div class="mb-2">
+                                    <label for="inDescriptionProduct" class="form-label">Description</label>
+                                    <textarea class="form-control" id="inDescriptionProduct" rows="3" name="description"></textarea>
+                                </div>
+                                <div class="mb-2">
+                                    <div class="container " style="">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="d-flex justify-content-center">
+                                                    <img src="" class="avatar me-3 border-radius-lg" id="previewImage1"
+                                                         alt="Chọn ảnh">
+                                                </div>
+                                                <div class="text-center my-3" style="margin-right: 10px;">
+                                                    <input type="file" class="form-control" id="fileInput1" name="pictures" accept="image/*">
+                                                    <label id="nameImageIns1" style="display: none"></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="d-flex justify-content-center">
+                                                    <img src="" class="avatar me-3 border-radius-lg"  id="previewImage2"
+                                                         alt="Chọn ảnh">
+                                                </div>
+                                                <div class="text-center my-3" style="margin-right: 10px;">
+                                                    <input type="file" class="form-control" id="fileInput2" name="pictures" accept="image/*">
+                                                    <label id="nameImageIns2" style="display: none"></label>
+                                                </div>
+                                            </div>
+                                            <div class="col-4">
+                                                <div class="d-flex justify-content-center">
+                                                    <img src="" class="avatar me-3 border-radius-lg" id="previewImage3"
+                                                         alt="Chọn ảnh">
+                                                </div>
+                                                <div class="text-center my-3" style="margin-right: 10px;">
+                                                    <input type="file" class="form-control" id="fileInput3" name="pictures" accept="image/*">
+                                                    <label id="nameImageIns3" style="display: none"></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <div class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
+                                        <div class="embed-responsive embed-responsive-16by9">
+                                            <video id="previewVideoIns" class="embed-responsive-item" alt="Chọn video">
+                                            </video>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="text-center my-3" style="margin-right: 10px;">
+                                            <input type="file" class="form-control" id="fileInput4" name="video" accept="video/*">
+                                            <label id="nameVideoIns" style="display: none "></label>
+                                        </div>
+                                    </div>
+                                    <select class="form-select w-auto" aria-label="Default select example"
+                                            id="formSelectIns" name="categoryId">
+                                        <option value="1">Outerwear</option>
+                                        <option value="2">Tops</option>
+                                        <option value="3">Bottoms</option>
+                                        <option value="4">Jewels & Accessories</option>
+                                        <option value="5">Headwear</option>
+                                        <option value="6">Footwear</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="saveProduct()">
+                            Add new Product
+                        </button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!--*********************** Modal Update Product *****************************-->
+    <div class="modal fade modal-lg" id="exampleModalUpdateProduct" aria-hidden="true"
+         aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <form class="modal-dialog modal-dialog-centered" id="updateProductForm" method="post">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="updateProductModal">PRODUCT</h1>
+                    <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                            class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+                </div>
+                <div class="modal-body" id="updateProductModalBody">
+                    <div class="row">
+                        <input type="hidden" id="updateProductId">
+                        <div class="col-12">
+                            <!-- Form fields for product details -->
+                            <div class="mb-2">
+                                <label for="updateNameProduct" class="form-label">Name</label>
+                                <input type="text" class="form-control ps-3" id="updateNameProduct" style="border: 1px solid #d2d6da;">
+                            </div>
+                            <div class="mb-2">
+                                <label for="updatePriceProduct" class="form-label">Price</label>
+                                <input type="text" class="form-control ps-3" id="updatePriceProduct" style="border: 1px solid #d2d6da;">
+                            </div>
+                            <div class="mb-2">
+                                <label for="updateQuantityProduct" class="form-label">Quantity</label>
+                                <input type="text" class="form-control ps-3" id="updateQuantityProduct" style="border: 1px solid #d2d6da;">
+                            </div>
+                            <div class="mb-2">
+                                <label for="updateDescriptionProduct" class="form-label">Description</label>
+                                <textarea class="form-control" id="updateDescriptionProduct" rows="3"></textarea>
+                            </div>
+                            <!-- Image preview and upload fields -->
+                            <div class="mb-2">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <div class="d-flex justify-content-center">
+                                                <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate1" alt="Chọn ảnh">
+                                            </div>
+                                            <div class="text-center my-3">
+                                                <input type="file" class="form-control" id="fileInputUpdate1" name="pictures">
+                                                <label id="nameImageUpdate1" style="display: block"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="d-flex justify-content-center">
+                                                <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate2" alt="Chọn ảnh">
+                                            </div>
+                                            <div class="text-center my-3">
+                                                <input type="file" class="form-control" id="fileInputUpdate2" name="pictures">
+                                                <label id="nameImageUpdate2" style="display: block"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="d-flex justify-content-center">
+                                                <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate3" alt="Chọn ảnh">
+                                            </div>
+                                            <div class="text-center my-3">
+                                                <input type="file" class="form-control" id="fileInputUpdate3" name="pictures">
+                                                <label id="nameImageUpdate3" style="display: block"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <!-- Video preview and upload field -->
+                            <div class="mb-2">
+                                <div class="d-flex justify-content-center embed-responsive embed-responsive-4by3" style="max-width: 100%; max-height: 300px;">
+                                    <video id="previewVideoUpdate" class="embed-responsive-item" controls style="max-width: 100%; max-height: 300px;"></video>
+                                </div>
+                                <div class="col-4">
+                                    <div class="text-center my-3">
+                                        <input type="file" class="form-control" id="fileInputUpdate4" name="video">
+                                        <label id="nameVideoUpdate" style="display: none"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Category select field -->
+                            <div class="mb-2">
+                                <select class="form-select w-auto" aria-label="Default select example" id="formSelectUpdate">
+                                    <option value="1">Outerwear</option>
+                                    <option value="2">Tops</option>
+                                    <option value="3">Bottoms</option>
+                                    <option value="4">Jewels & Accessories</option>
+                                    <option value="5">Headwear</option>
+                                    <option value="6">Footwear</option>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="saveChangesButton">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+
+
+
+
+
+    <footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+    <script src="/assests/js/app_admin.js"></script>
+    <script src="/assests/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
+
+
+<script>
+    function saveProduct() {
+        const form = document.getElementById('productForm');
+        const formData = new FormData(form);
+
+        fetch('http://localhost:8083/saveShopAdmin', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Success:', data);
+                alert('Sản phẩm đã được lưu thành công!');
+
+
+                const productList = document.getElementById('productList');
+                if (productList) {
+                    const newProduct = document.createElement('li');
+                    newProduct.textContent = `${data.productName} - ${data.price} - ${data.quantity}`;
+                    productList.appendChild(newProduct);
+                }
+
+                form.reset();
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Đã xảy ra lỗi khi lưu sản phẩm. Vui lòng thử lại.');
+            });
+    }
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        axios.get('http://localhost:8083/products')
+            .then(response => {
+                const products = response.data;
+                const productTableBody = document.getElementById('ProductTableBody');
+                productTableBody.innerHTML = '';
+
+                products.forEach(product => {
+                    const row = document.createElement('tr');
+                    row.classList.add('text-center');
+
+                    const nameCell = document.createElement('td');
+                    nameCell.textContent = product.productName;
+                    row.appendChild(nameCell);
+
+                    const priceCell = document.createElement('td');
+                    priceCell.textContent = product.price;
+                    row.appendChild(priceCell);
+
+                    const quantityCell = document.createElement('td');
+                    quantityCell.textContent = product.quantity;
+                    row.appendChild(quantityCell);
+
+                    const actionCell = document.createElement('td');
+                    const editButton = document.createElement('button');
+                    editButton.textContent = 'Edit';
+                    editButton.classList.add('btn', 'btn-primary', 'btn-sm');
+                    editButton.dataset.productId = product.productId; // Lưu productId vào data attribute
+                    editButton.addEventListener('click', function() {
+                        loadProductData(product.productId); // Gọi hàm loadProductData khi bấm nút
+                    });
+                    actionCell.appendChild(editButton);
+                    row.appendChild(actionCell);
+
+                    productTableBody.appendChild(row);
+                });
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    });
+
+    function loadProductData(productId) {
+        axios.get(`http://localhost:8083/product/${productId}`)
+            .then(response => {
+                const product = response.data;
+                console.dir(response);
+
+                document.getElementById('updateNameProduct').value = product.productName;
+                document.getElementById('updatePriceProduct').value = product.price;
+                document.getElementById('updateQuantityProduct').value = product.quantity;
+                document.getElementById('updateDescriptionProduct').value = product.description;
+
+                // Thiết lập giá trị cho form select
+                let formSelect = document.getElementById('formSelectUpdate');
+                let options = formSelect.options;
+                for (let i = 0; i < options.length; i++) {
+                    if (options[i].value == product.category.category_id) {
+                        console.log(options[i].value, product.category.category_id);
+                        formSelect.selectedIndex = i;
+                        break;
+                    }
+                }
+
+                // Cập nhật URL ảnh và tên ảnh
+                const imageUrls = product.pictures ? product.pictures.split(',') : [];
+                const basePath = '../media/'; // Thay đổi đường dẫn này để phù hợp với đường dẫn lưu trữ ảnh trên server
+                const imageNames = product.pictures ? product.pictures.split(',') : [];
+
+                document.getElementById('previewImageUpdate1').src = imageUrls[0] ? basePath + imageUrls[0] : '';
+                document.getElementById('nameImageUpdate1').textContent = imageNames[0] ? imageNames[0] : 'No Image';
+
+                document.getElementById('previewImageUpdate2').src = imageUrls[1] ? basePath + imageUrls[1] : '';
+                document.getElementById('nameImageUpdate2').textContent = imageNames[1] ? imageNames[1] : 'No Image';
+
+                document.getElementById('previewImageUpdate3').src = imageUrls[2] ? basePath + imageUrls[2] : '';
+                document.getElementById('nameImageUpdate3').textContent = imageNames[2] ? imageNames[2] : 'No Image';
+
+                // Cập nhật URL video
+                document.getElementById('previewVideoUpdate').src = product.videos ? basePath + product.videos : '';
+
+                // Lưu productId vào trường ẩn
+                document.getElementById('updateProductId').value = product.productId;
+
+                // Hiển thị modal
+                const updateProductModal = new bootstrap.Modal(document.getElementById('exampleModalUpdateProduct'));
+                updateProductModal.show();
+            })
+            .catch(error => {
+                console.error('There was an error!', error);
+            });
+    }
+
+
+
+
+
+</script>
+<script>
+    document.getElementById('saveChangesButton').addEventListener('click', function() {
+        var formData = new FormData();
+
+        var productName = document.getElementById('updateNameProduct').value.trim();
+        var price = document.getElementById('updatePriceProduct').value.trim();
+        var quantity = document.getElementById('updateQuantityProduct').value.trim();
+        var description = document.getElementById('updateDescriptionProduct').value.trim();
+        var categoryId = document.getElementById('formSelectUpdate').value.trim();
+        var productId = document.getElementById('updateProductId').value.trim();
+
+        if (productName === "" || price === "" || quantity === "" || categoryId === "") {
+            alert("Vui lòng điền đầy đủ thông tin sản phẩm.");
+            return;
+        }
+
+        formData.append('productName', productName);
+        formData.append('price', price);
+        formData.append('quantity', quantity);
+        formData.append('description', description);
+        formData.append('categoryId', categoryId);
+
+        // Thêm productId nếu có
+        if (productId !== "") {
+            formData.append('productId', productId);
+        }
+
+        var pictureInputs = ['fileInputUpdate1', 'fileInputUpdate2', 'fileInputUpdate3'];
+        pictureInputs.forEach(function(inputId) {
+            var input = document.getElementById(inputId);
+            if (input.files.length > 0) {
+                formData.append('pictures', input.files[0]);
+            }
+        });
+
+        var videoInput = document.getElementById('fileInputUpdate4');
+        if (videoInput.files.length > 0) {
+            formData.append('video', videoInput.files[0]);
+        }
+
+        fetch('http://localhost:8083/editProductShop', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Success:', data);
+                $('#exampleModalUpdateProduct').modal('hide');
+                alert("Lưu thành công !");
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert("Lưu thất bại !");
+            });
+    });
+
+
+
+
+</script>
+
+
+</html>

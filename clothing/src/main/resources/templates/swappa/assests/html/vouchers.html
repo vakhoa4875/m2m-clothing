@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim vouchers</title>
+    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/css/style.css">
+    <style>
+        .img-container {
+            height: 200px;
+            /* Điều chỉnh chiều cao tùy theo nhu cầu */
+            display: flex;
+            /* Sử dụng flexbox để căn chỉnh hình ảnh */
+            align-items: center;
+            /* Căn chỉnh hình ảnh theo trục dọc */
+            justify-content: center;
+            /* Căn chỉnh hình ảnh theo trục ngang */
+            overflow: hidden;
+            /* Đảm bảo ảnh không bị tràn ra ngoài */
+        }
+
+        .img-container img {
+            max-height: 100%;
+            /* Đảm bảo chiều cao của ảnh không vượt quá container */
+            width: auto;
+            /* Chiều rộng tự động điều chỉnh để duy trì tỷ lệ khung hình */
+        }
+        .claimed {
+            background-color: #ccc; /* Màu nền khi đã nhận voucher */
+            cursor: not-allowed; /* Không cho click */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- header -->
+    <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
+
+    <!-- main -->
+    <div class="main-container">
+        <div class="container-fluid bg-semiBlack min-main-container-height">
+            <div class="py-2">
+                <div id="tooltip-bar">
+                </div>
+                <div id="breadscrum-bar">
+
+                </div>
+                <div id="message-block">
+
+                </div><!-- content-top -->
+
+                <section class="p-4 mb-2 text-center container text-bg-cf position-relative" id="voucher-section">
+                    <div class="voucher-banner">
+                        <div class="row">
+                            <img src="/assests/images/vouchers-category-banner-1440x421-01.jpeg" alt="">
+                        </div>
+                    </div>
+                    <div class="voucher-displayer mt-3">
+                        <div class="container">
+                            <div class="row overflow-x-auto flex-nowrap px-0" id="voucherContainer">
+<!--                                <div class="col-md-4">-->
+<!--                                    <div class="card" style="background-color: #DAC0A3 !important;">-->
+<!--                                        <div class="text-right p-2 voucher-provider"> <img-->
+<!--                                                src="https://i.imgur.com/w68MQc4.png" width="120">-->
+<!--                                        </div>-->
+<!--                                        <div class="text-center"> <small class="text-uppercase flat">Voucher-->
+<!--                                                name</small> </div>-->
+<!--                                        <div class="d-flex justify-content-center px-2">-->
+<!--                                            <div class="d-flex flex-row">-->
+<!--                                                <span class="mt-0 off fw-bold">50% OFF</span> <sup-->
+<!--                                                    class="mt-2 text-primary star">*</sup>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                        <div class="line">-->
+<!--                                            <hr>-->
+<!--                                        </div>-->
+<!--                                        <div class="text-center mb-2">-->
+<!--                                            <p class="text-uppercase">Valid till 23th August</p>-->
+<!--                                            <button class="btn btn-coffee">Claim now!</button>-->
+<!--                                            &lt;!&ndash; <button class="btn btn-coffee" disabled>Claimed</button> &ndash;&gt;-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- footer -->
+    <footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
+
+</body>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+<script>
+    function getAllVouchers() {
+        // Lấy danh sách voucher mà người dùng đã nhận
+        $.ajax({
+            url: '/api-public/vouchers/getCartVouchersByEmail',
+            type: 'GET',
+            success: function(userVoucherData) {
+                const userVouchers = userVoucherData || [];
+                const userVoucherIds = userVouchers.map(v => v.voucherID);
+
+                // Lấy danh sách tất cả các voucher
+                $.ajax({
+                    url: '/api-public/vouchers/getAllVouchers',
+                    type: 'GET',
+                    success: function(data) {
+                        if (data && data.length > 0) {
+                            var currentDate = new Date();
+                            data.forEach(function(voucher) {
+                                var voucherEndDate = new Date(voucher.endDay);
+                                if (voucherEndDate >= currentDate) {
+                                    var isClaimed = userVoucherIds.includes(voucher.voucherID);
+                                    var buttonState = isClaimed ?
+                                        '<button class="btn btn-coffee claimed" disabled>Voucher đã được nhận</button>' :
+                                        `<button class="btn btn-coffee claim-btn" data-voucher-id="${voucher.voucherID}">Nhận ngay!</button>`;
+
+                                    var voucherCard = `
+                                    <div class="col-md-4">
+                                        <div class="card voucher-card">
+                                            <div class="text-right p-2 voucher-provider">
+                                                <img src="https://i.imgur.com/w68MQc4.png" width="120">
+                                            </div>
+                                            <div class="text-center">
+                                                <small class="text-uppercase flat">${voucher.voucherName}</small>
+                                            </div>
+                                            <div class="d-flex justify-content-center px-2">
+                                                <div class="d-flex flex-row">
+                                                    <span class="mt-0 off fw-bold">${voucher.reduce}% OFF</span>
+                                                    <sup class="mt-2 text-primary star">*</sup>
+                                                </div>
+                                            </div>
+                                            <div class="line">
+                                                <hr>
+                                            </div>
+                                            <div class="text-center mb-2">
+                                                <p class="text-uppercase">Hạn sử dụng đến ${voucher.endDay}</p>
+                                                ${buttonState}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    `;
+                                    $('#voucherContainer').append(voucherCard);
+                                }
+                            });
+
+                            // Thêm sự kiện click cho các nút "Nhận ngay!" chưa được nhận
+                            $('.claim-btn').click(function() {
+                                var btn = $(this); // Lưu trữ thẻ nút được nhấp vào
+
+                                // Kiểm tra lại lần nữa xem nút đã được nhận voucher hay chưa
+                                if (!btn.hasClass('claimed')) {
+                                    var voucherID = btn.data('voucher-id');
+                                    var voucherDetails = {
+                                        voucher: { voucherID: voucherID },
+                                    };
+
+                                    // Gọi hàm createVoucher() khi nút "Nhận ngay!" được nhấp vào
+                                    createVoucher(voucherDetails, btn);
+                                }
+                            });
+                        } else {
+                            $('#voucherContainer').append('<p>Không có voucher nào có sẵn</p>');
+                        }
+                    },
+                    error: function() {
+                        console.error('Không thể lấy danh sách voucher');
+                        $('#voucherContainer').append('<p>Không thể tải danh sách voucher</p>');
+                    }
+                });
+            },
+            error: function() {
+                console.error('Không thể lấy danh sách voucher của người dùng');
+                $('#voucherContainer').append('<p>Không thể tải danh sách voucher của người dùng</p>');
+            }
+        });
+    }
+
+    function createVoucher(voucherDetails, btn) {
+        $.ajax({
+            url: '/api-public/vouchers-details/createVoucher',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(voucherDetails),
+            success: function(response) {
+                if (response === 1) {
+                    // Thay đổi trạng thái của nút khi nhận voucher thành công
+                    btn.removeClass('claim-btn').addClass('claimed').text('Voucher đã được nhận').prop('disabled', true);
+                    Swal.fire({
+                        title: 'Thành công!',
+                        text: 'Đã nhận voucher thành công!',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
+                    });
+                } else {
+                    Swal.fire({
+                        title: 'Thất bại!',
+                        text: 'Không thể nhận voucher.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
+            },
+            error: function() {
+                Swal.fire({
+                    title: 'Lỗi!',
+                    text: 'Đã xảy ra lỗi khi nhận voucher.',
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        // Gọi hàm getAllVouchers() khi trang được tải lần đầu tiên
+        getAllVouchers();
+    });
+</script>
+
+</html>
