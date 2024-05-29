@@ -2,13 +2,18 @@ package m2m_phase2.clothing.clothing.api;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.ShopAdminDto;
+import m2m_phase2.clothing.clothing.data.dto.ShopDto;
+import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.entity.Category;
 import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.entity.ShopE;
+import m2m_phase2.clothing.clothing.data.entity.UserE;
+import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.repository.CategoryRepo;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
 import m2m_phase2.clothing.clothing.service.ShopAdminService;
 import m2m_phase2.clothing.clothing.service.ShopService;
+import m2m_phase2.clothing.clothing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +38,9 @@ public class ShopApi {
 
     @Autowired
     private ShopAdminService shopAdminService;
+
     @Autowired
+    UserService userService;
     private HttpSession session;
     @Autowired
     private ShopService shopService;
@@ -50,7 +58,7 @@ public class ShopApi {
                                  @RequestParam("description") String description,
                                  @RequestParam("categoryId") int categoryId) {
         // Lấy email từ session
-        String email = (String) session.getAttribute("loggedInUser");
+        String email = sessionEmail;
         System.out.println(email);
         // Kiểm tra xem email có tồn tại trong hệ thống hay không và lấy shop tương ứng
         ShopE shop = shopService.findShopByEmail(email);
@@ -102,7 +110,7 @@ public class ShopApi {
 
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getProductsByShopId() {
-        String email = (String) session.getAttribute("loggedInUser");
+        String email = sessionEmail;
         System.out.println(email);
         // Kiểm tra xem email có tồn tại trong hệ thống hay không và lấy shop tương ứng
         ShopE shop = shopService.findShopByEmail(email);
@@ -135,7 +143,7 @@ public class ShopApi {
         }
 
         // Lấy email từ session
-        String email = (String) session.getAttribute("loggedInUser");
+        String email = sessionEmail;
         // Kiểm tra xem email có tồn tại trong hệ thống hay không và lấy shop tương ứng
         ShopE shop = shopService.findShopByEmail(email);
         if (shop == null) {
@@ -210,6 +218,34 @@ public class ShopApi {
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("/api/public/shopSignUp")
+    public ResponseEntity<?> shopSignUp() {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            ShopDto shopDto = new ShopDto();
+            shopDto.setNameShop("Shop");
+            shopDto.setDateEstablished(new Date());
+
+            UserDto userDto = new UserDto();
+            userDto.setEmail(sessionEmail);
+
+            UserM userM = userService.getUserByEmail(userDto);
+
+            UserE userE = new UserE();
+            userE.setId(userM.getId());
+
+            shopDto.setUserE(userE);
+
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            result.put("data", shopService.insertShop(shopDto));
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
 //    @PostMapping("/download")
 //    @ResponseStatus(HttpStatus.CREATED)
 //    public Product downloadShopAdmin(@RequestBody ShopAdminDto shopAdminDto,

@@ -470,13 +470,13 @@
                 const imageNames = product.pictures ? product.pictures.split(',') : [];
 
                 document.getElementById('previewImageUpdate1').src = imageUrls[0] ? basePath + imageUrls[0] : '';
-                document.getElementById('nameImageUpdate1').textContent = imageNames[0] ? imageNames[0] : 'No Image';
+                // document.getElementById('nameImageUpdate1').textContent = imageNames[0] ? imageNames[0] : 'No Image';
 
                 document.getElementById('previewImageUpdate2').src = imageUrls[1] ? basePath + imageUrls[1] : '';
-                document.getElementById('nameImageUpdate2').textContent = imageNames[1] ? imageNames[1] : 'No Image';
+                // document.getElementById('nameImageUpdate2').textContent = imageNames[1] ? imageNames[1] : 'No Image';
 
                 document.getElementById('previewImageUpdate3').src = imageUrls[2] ? basePath + imageUrls[2] : '';
-                document.getElementById('nameImageUpdate3').textContent = imageNames[2] ? imageNames[2] : 'No Image';
+                // document.getElementById('nameImageUpdate3').textContent = imageNames[2] ? imageNames[2] : 'No Image';
 
                 // Cập nhật URL video
                 document.getElementById('previewVideoUpdate').src = product.videos ? basePath + product.videos : '';
