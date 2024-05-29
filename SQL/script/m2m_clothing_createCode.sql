@@ -438,9 +438,8 @@ FROM Category c
 LEFT JOIN Product p ON c.category_id = p.category_id
 GROUP BY c.category_name;
 
-
-
-
+select * from Product
+SELECT * FROM Product WHERE shop_id = 1;
 
 
 

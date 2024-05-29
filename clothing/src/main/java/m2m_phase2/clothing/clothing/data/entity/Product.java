@@ -54,6 +54,11 @@ public class Product implements Serializable {
 	@JoinColumn(name = "category_id")
 	private Category category;
 
+	@ManyToOne
+	@JoinColumn(name = "shop_id")
+	@JsonBackReference
+	private ShopE shopE;
+
 	@ManyToOne()
 	@JoinColumn(name = "sale_ID")
 	private Sale sale;

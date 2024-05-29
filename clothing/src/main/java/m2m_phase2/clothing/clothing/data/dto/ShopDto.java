@@ -1,5 +1,6 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
+
 import lombok.*;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 
@@ -17,4 +18,5 @@ public class ShopDto {
     private String dateEstablished;
 
     private UserE userE;
+
 }

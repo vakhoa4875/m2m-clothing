@@ -9,6 +9,8 @@ import lombok.Setter;
 
 import java.util.List;
 
+import java.util.List;
+
 @Table(name = "Shop")
 @Entity
 @Getter
