@@ -13,96 +13,99 @@
 
 <body ng-app="myApp" ng-controller="accountCtrl">
 
-    <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
+<div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
 
-    <!-- main -->
-    <main style="background-image: url('/assests/images/1323882.png');background-attachment: fixed; min-height: 800px;"
-        class="">
-        <!-- body -->
-        <main class="container pt-5 pb-5">
-            <!-- Section: Design Block -->
-            <div class="row">
+<!-- main -->
+<main  class="main-container">
+    <!-- body -->
+    <main class="container pt-5 pb-5">
+        <!-- Section: Design Block -->
+        <div class="row">
 
-                <section class="text-center d-flex justify-content-center">
+            <section class="text-center d-flex justify-content-center">
 
-                    <div class="card shadow-5-strong w-50" style="
+                <div class="card shadow-5-strong w-50" style="
                   background: hsla(0, 0%, 0%, 0.5);
-                  backdrop-filter: blur(15px);">
-                        <div class="card-body py-5 px-md-5 pb-2">
+                  backdrop-filter: blur(50px);">
+                    <div class="card-body py-5 px-md-5 pb-2">
 
-                            <div class="justify-content-center">
-                                <div class="">
-                                    <h2 class="fw-bold mb-5 text-white">LOGIN</h2>
-                                    <form class="text-white" method="POST" th:action="@{/submitLogin}">
-                                        <!--                                        th:object="${accountlog}">-->
-                                        <!--                                        <div ng-hide="status == null" class="alert text-bg-dark"-->
-                                        <!--                                            ng-class="{'text-danger invalid-input':(status !== 1), 'text-success valid-input': (status === 1)}">-->
-                                        <!--                                            {{textStatus}}</div>-->
+                        <div class="justify-content-center">
+                            <div class="">
+                                <h2 class="fw-bold mb-5 text-white">LOGIN</h2>
+                                <form class="text-white" method="POST" th:action="@{/submitLogin}">
+                                    <!--                                        th:object="${accountlog}">-->
+                                    <!--                                        <div ng-hide="status == null" class="alert text-bg-dark"-->
+                                    <!--                                            ng-class="{'text-danger invalid-input':(status !== 1), 'text-success valid-input': (status === 1)}">-->
+                                    <!--                                            {{textStatus}}</div>-->
 
-                                        <div class="text-center" style="display: none;">
+                                    <div class="text-center" style="display: none;">
                                             <span class="text-danger" style="font-weight: bolder;">Tài khoản hoặc mật
                                                 khẩu đã sai</span>
+                                    </div>
+                                    <div class="mb-3 row">
+                                        <label for="inputMail" class="col-sm-3 col-form-label text-end">Email</label>
+                                        <div class="col-sm-9">
+                                            <input type="email" class="form-control" id="inputMail" name="email"
+                                                   th-field="*{email}">
                                         </div>
-                                        <div class="mb-3 row">
-                                            <label for="inputMail" class="col-sm-2 col-form-label">Email</label>
-                                            <div class="col-sm-10">
-                                                <input type="email" class="form-control" id="inputMail" name="email"
-                                                    th-field="*{email}">
+                                    </div>
+
+
+                                    <div class="mb-3 row">
+                                        <label for="inputPassword"
+                                               class="col-sm-3 col-form-label text-end">Password</label>
+                                        <div class="col-sm-9">
+                                            <input type="password" class="form-control" id="inputPassword"
+                                                   name="hashedPassword" th-field="*{hashedPassword}">
+                                        </div>
+                                    </div>
+
+                                    <div th:if="${error}" class="alert alert-danger p-0" role="alert">
+                                        <p th:text="${error}"></p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="offset-md-3">
+                                            <div class="form-check form-switch d-flex align-items-center mb-3">
+                                                <input class="form-check-input" type="checkbox" id="rememberMe" checked>
+                                                <label class="form-check-label mb-0 ms-3" for="rememberMe">Remember
+                                                    me</label>
                                             </div>
                                         </div>
-
-
-                                        <div class="mb-3 row">
-                                            <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                                            <div class="col-sm-10">
-                                                <input type="password" class="form-control" id="inputPassword"
-                                                    name="hashedPassword" th-field="*{hashedPassword}">
-                                            </div>
-                                        </div>
-
-                                        <div th:if="${error}" class="alert alert-danger p-0" role="alert">
-                                            <p th:text="${error}"></p>
-                                        </div>
-                                        <div class="form-check form-switch d-flex align-items-center mb-3">
-                                            <input class="form-check-input" type="checkbox" id="rememberMe" checked>
-                                            <label class="form-check-label mb-0 ms-3" for="rememberMe">Remember to log
-                                                in
-                                                next time</label>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="submit"
-                                                class="btn btn-outline-success btn-block px-5 mb-4 rounded-5 ms-3">Login
-                                            </button>
-                                        </div>
-                                        <a href="/register"
-                                            class="btn btn-outline-success btn-block px-5 mb-4 rounded-5 ms-3">
-                                            Register
-                                        </a>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit"
+                                                class="btn btn-success btn-block px-5 mb-4 rounded-5 ms-3">Login
+                                        </button>
+                                    </div>
+                                    <a href="/register"
+                                       class="btn btn-success btn-block px-5 mb-4 rounded-5 ms-3">
+                                        Register
+                                    </a>
+                                    <!-- Register buttons -->
+                                    <div class="text-center">
                                         <!-- Register buttons -->
-                                        <div class="text-center">
-                                            <!-- Register buttons -->
-                                            <div class="text-center text-white">
-                                                <!--M2M- 010 TanLoc Begin-->
-                                                <a th:href="@{/oauth2/authorization/google}" class="text-white-50">or
-                                                    sign in with: <i class="fab fa-google"></i></a>
-                                                <!--M2M- 010 TanLoc End-->
-                                            </div>
+                                        <div class="text-center text-white">
+                                            <!--M2M- 010 TanLoc Begin-->
+                                            <a th:href="@{/oauth2/authorization/google}" class="text-white-50">or
+                                                sign in with: <i class="fab fa-google"></i></a>
+                                            <!--M2M- 010 TanLoc End-->
                                         </div>
-                                    </form>
-                                </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
+        </div>
 
 
-            <hr class="d-lg-none mb-4 d-sm-block">
-        </main>
-        <!-- Section: Design Block -->
+        <hr class="d-lg-none mb-4 d-sm-block">
     </main>
-    <!-- footer -->
-    <footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
+    <!-- Section: Design Block -->
+</main>
+<!-- footer -->
+<footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
 </body>
 <script src="/node_modules/angular/angular.min.js"></script>
 <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>

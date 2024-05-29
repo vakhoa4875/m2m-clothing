@@ -285,4 +285,24 @@ public class ShopApi {
 //    }
 
 
+    @Autowired
+    HttpSession session;
+    @Autowired
+    ShopService shopService;
+
+    @GetMapping("/get-shop-by-user-email")
+    public ResponseEntity<?> getShopByUserEmail() {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            result.put("data", shopService.findShopByUser(sessionEmail));
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
 }

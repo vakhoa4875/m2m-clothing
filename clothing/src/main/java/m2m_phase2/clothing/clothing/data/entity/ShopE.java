@@ -2,8 +2,12 @@ package m2m_phase2.clothing.clothing.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.*;
-import org.springframework.stereotype.Component;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+import java.util.List;
 
 import java.util.List;
 
@@ -29,11 +33,10 @@ public class ShopE {
     private String dateEstablished;
 
     @OneToOne
-    @JsonIgnore
-    @JoinColumn(name = "id",referencedColumnName = "id", unique = true)
+    @JoinColumn(name = "id", referencedColumnName = "id", unique = true)
     private UserE userE;
 
-    @OneToMany(mappedBy = "shopE", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "shopE", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
-    private List<Product> products;
+    List<Product> products;
 }

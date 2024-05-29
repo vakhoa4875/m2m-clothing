@@ -20,8 +20,8 @@
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <a href="/trangchu" class="navbar-brand" title="Swappa">
-                        <img class="img-fluid"
-                             src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                        <img class="img-fluid" th:src="@{../assests/images/mini-logo-white.png}"
+                             style="height:50px; margin: auto;"
                              alt="Swappa Logo">
                     </a>
                     <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
@@ -36,7 +36,7 @@
     </div>
 </div>
 
-<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);" th:fragment="footer">
+<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);" th:fragment="footer" class="">
     <div class="container pt-2 pb-2">
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
         </div>
@@ -62,7 +62,8 @@
             </div>
             <div class="col text-center ">
                 <a href="./index.html"><img
-                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
+                        th:src="@{../assests/images/mini-logo-white.png}"
+                        style="height: 50px; margin: auto"
                         class="img-fluid" alt=""></a>
             </div>
             <div class="col text-center text-white d-flex justify-content-center align-items-center">
