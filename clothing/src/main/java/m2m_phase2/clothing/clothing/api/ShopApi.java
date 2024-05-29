@@ -1,25 +1,20 @@
 package m2m_phase2.clothing.clothing.api;
 
 import jakarta.servlet.http.HttpSession;
-import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
 import m2m_phase2.clothing.clothing.data.dto.ShopAdminDto;
 import m2m_phase2.clothing.clothing.data.entity.Category;
 import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.entity.ShopE;
 import m2m_phase2.clothing.clothing.repository.CategoryRepo;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
-import m2m_phase2.clothing.clothing.repository.ShopAdminRepo;
 import m2m_phase2.clothing.clothing.service.ShopAdminService;
 import m2m_phase2.clothing.clothing.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,8 +22,8 @@ import java.nio.file.StandardCopyOption;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Collectors;
+
+import static m2m_phase2.clothing.clothing.data.variable.StaticVariable.sessionEmail;
 
 
 @RestController
@@ -135,7 +130,7 @@ public class ShopApi {
                                      @RequestParam("categoryId") int categoryId,
                                      @RequestParam("productId") int productId) {
         // Kiểm tra giá trị đầu vào
-        if (productName == null || productName.isEmpty() || price == null || quantity <= 0 ) {
+        if (productName == null || productName.isEmpty() || price == null || quantity <= 0) {
             throw new RuntimeException("Invalid input values");
         }
 
@@ -200,8 +195,20 @@ public class ShopApi {
         return shopAdminService.updateProduct(existingProduct);
     }
 
-
-
+    @GetMapping("/get-shop-by-user-email")
+    public ResponseEntity<?> getShopByUserEmail() {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            result.put("data", shopService.findShopByUser(sessionEmail));
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
 
 //    @PostMapping("/download")
 //    @ResponseStatus(HttpStatus.CREATED)
@@ -284,25 +291,5 @@ public class ShopApi {
 //        return shopAdminService.saveProduct(shopAdminDto);
 //    }
 
-
-    @Autowired
-    HttpSession session;
-    @Autowired
-    ShopService shopService;
-
-    @GetMapping("/get-shop-by-user-email")
-    public ResponseEntity<?> getShopByUserEmail() {
-        Map<String, Object> result = new HashMap<>();
-        try {
-            result.put("status", true);
-            result.put("message", "Call Api Success");
-            result.put("data", shopService.findShopByUser(sessionEmail));
-        } catch (Exception e) {
-            result.put("status", false);
-            result.put("message", "Call Api Fail");
-            result.put("data", null);
-        }
-        return ResponseEntity.ok(result);
-    }
 
 }

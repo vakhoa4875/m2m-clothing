@@ -1,5 +1,6 @@
 package m2m_phase2.clothing.clothing.data.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -67,10 +68,10 @@ public class Product implements Serializable {
 	@JsonIgnore
 	List<CommentE> comments;
 
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JsonIgnore
-	@JoinColumn(name = "shop_id")
-	private ShopE shopE;
+//	@ManyToOne(fetch = FetchType.EAGER)
+//	@JsonIgnore
+//	@JoinColumn(name = "shop_id")
+//	private ShopE shopE;
 
 	@Override
 	public String toString() {
