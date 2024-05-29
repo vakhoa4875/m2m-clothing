@@ -1,6 +1,10 @@
 package m2m_phase2.clothing.clothing.repository;
 
 import jakarta.transaction.Transactional;
+
+
+
+
 import m2m_phase2.clothing.clothing.data.entity.ShopE;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
@@ -10,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface ShopRepo extends JpaRepository<ShopE, Integer> {
@@ -24,4 +29,8 @@ public interface ShopRepo extends JpaRepository<ShopE, Integer> {
     int insertShop(@Param("name_shop") String nameShop,
                     @Param("date_established") Date dateEstablished,
                     @Param("id") Long id);
+    List<ShopE> findAll();
+
+    Optional<ShopE> findByUserE_Email(String email);
+
 }
