@@ -8,6 +8,7 @@ import m2m_phase2.clothing.clothing.data.entity.Category;
 import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.entity.ShopE;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
+import m2m_phase2.clothing.clothing.data.model.ShopM;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.repository.CategoryRepo;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
@@ -210,6 +211,7 @@ public class ShopApi {
             result.put("status", true);
             result.put("message", "Call Api Success");
             result.put("data", shopService.findShopByUser(sessionEmail));
+            result.put("data2", sessionEmail);
         } catch (Exception e) {
             result.put("status", false);
             result.put("message", "Call Api Fail");
@@ -239,6 +241,34 @@ public class ShopApi {
             result.put("status", true);
             result.put("message", "Call Api Success");
             result.put("data", shopService.insertShop(shopDto));
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/api/public/updateShopInfo")
+    public ResponseEntity<?> updateShopInfo(@RequestParam("logo") MultipartFile file,
+                                            @RequestParam("nameShop") String nameShop,
+                                            @RequestParam("email") String emailShop) {
+
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            ShopM shopM = shopService.findShopByUser(emailShop);
+            if(shopM.getLogo() != file.getOriginalFilename()) {
+            try {
+                Path path = CURRENT_FOLDER.resolve("src\\main\\resources\\templates\\swappa\\assests\\shopImg").resolve(file.getOriginalFilename());
+                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Failed to store picture", e);
+            }
+            }
+            result.put("data", shopService.updateShop(nameShop, file.getOriginalFilename(), emailShop));
         } catch (Exception e) {
             result.put("status", false);
             result.put("message", "Call Api Fail");

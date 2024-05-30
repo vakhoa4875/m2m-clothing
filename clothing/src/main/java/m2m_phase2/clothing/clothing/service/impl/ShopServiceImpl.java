@@ -25,7 +25,13 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public int insertShop(ShopDto shopDto) throws SQLException {
         int rowCount = shopRepo.insertShop(shopDto.getNameShop(), shopDto.getDateEstablished(), shopDto.getUserE().getId());
-        return rowCount;
+        return rowCount > 0 ? rowCount : -1;
+    }
+
+    @Override
+    public int updateShop(String nameShop, String logo, String email) throws SQLException {
+        int rowCount = shopRepo.updateShop(nameShop, logo, email);
+        return rowCount > 0 ? rowCount : -1;
     }
 
     @Override

@@ -14,8 +14,49 @@
     <script th:src="@{/assests/js/UserManagement.js}"></script>
     <script th:src="@{/assests/js/productManagement.js}"></script>
     <style>
-        .max-width-col {
-            max-width: 128px;
+        #orderstatus {
+            max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
+            overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+        }
+
+        #orderstatus tbody {
+            overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+        }
+
+        #orderstatus tbody tr {
+            width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
+        }
+
+        #orderstatus thead th:nth-child(1) {
+            width: 5%;
+        }
+
+        #orderstatus thead th:nth-child(2) {
+            width: 15%;
+        }
+
+        #orderstatus thead th:nth-child(3) {
+            width: 8%;
+        }
+
+        #orderstatus thead th:nth-child(4) {
+            width: 35%;
+        }
+
+        #orderstatus thead th:nth-child(5) {
+            width: 8%;
+        }
+
+        #orderstatus thead th:nth-child(6) {
+            width: 5%;
+        }
+
+        #orderstatus thead th:nth-child(7) {
+            width: 12%;
+        }
+
+        #orderstatus thead th:nth-child(8) {
+            width: 20%;
         }
 
         #fileInput {
@@ -27,7 +68,6 @@
             padding: 10px 20px;
             background-color: #909498;
             color: #fff;
-
         }
 
         .custom-file-label:hover {
@@ -41,15 +81,68 @@
             margin-top: 20px;
         }
 
-        .avatar {
-            width: 100%;
-            /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của ô chứa */
+        #fileInput {
+            border: 2px solid #909498;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        #fileInput:hover {
+            border-color: #9a9fa4;
+        }
+
+        #fileInput:focus {
+            border-color: #9a9fa4;
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+        }
+
+        .custom-file-label {
+            cursor: pointer;
+            padding: 10px 20px;
+            background-color: #909498;
+            color: #fff;
+            border: 2px solid #909498;
+            border-radius: 5px;
+        }
+
+        .custom-file-label:hover {
+            background-color: #9a9fa4;
+        }
+
+        #previewImage {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-top: 20px;
+            border: 2px solid #909498; /* Màu và độ dày của đường viền */
+            border-radius: 5px; /* Độ cong của các góc */
+        }
+
+        #previewImage {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            margin-top: 20px;
+            border: 2px solid #909498; /* Màu và độ dày của đường viền */
+            border-radius: 5px; /* Độ cong của các góc */
+            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5); /* Hiệu ứng đổ bóng */
+        }
+
+        #previewImage:hover {
+            border-color: #9a9fa4; /* Thay đổi màu sắc của đường viền khi di chuột qua */
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7); /* Hiệu ứng đổ bóng khi di chuột qua */
+        }
+
+        .img-300 {
+            width: 300px;
             height: auto;
-            /* Đảm bảo tỉ lệ khung hình được bảo toàn */
-            max-width: 150px;
-            /* Kích thước tối đa của ảnh */
-            max-height: 150px;
-            /* Kích thước tối đa của ảnh */
+            margin: auto;
+        }
+
+        .dropdown-item:hover {
+            background-color: #b7b6b6; /* Màu nền khi hover */
+            color: white;
+            cursor: pointer;
         }
     </style>
     <script>
@@ -67,266 +160,246 @@
 
 <body class="bg-black">
 
-    <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
+<div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
 
-    <div class="container-fluid  bg-body-secondary main-container" style="height: 800px;">
-        <div class="row">
-            <div class="col-xl-3 col-lg-12 mt-1 p-0">
-                <div class="card">
-                    <div class="card-header bg-black text-center">
-                        <a class="text-white bg-gradient-primary" href="#">
-                            <h5 class="m-0"><strong>SHOP MANAGEMENT</strong></h5>
-                        </a>
-                    </div>
-                    <div class="card-body p-1">
-                        <div class="align-items-start">
-                            <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist"
-                                aria-orientation="vertical">
-                                <button class="nav-link mt-1 text-black active" id="v-pills-home-status-productSale"
+<div class="container-fluid  bg-body-secondary main-container" style="height: 800px;">
+    <div class="row">
+        <div class="col-xl-3 col-lg-12 mt-1 p-0">
+            <div class="card">
+                <div class="card-header bg-black text-center">
+                    <a class="text-white bg-gradient-primary" href="#">
+                        <h5 class="m-0"><strong>SHOP MANAGEMENT</strong></h5>
+                    </a>
+                </div>
+                <div class="card-body p-1">
+                    <div class="align-items-start">
+                        <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist"
+                             aria-orientation="vertical">
+                            <button class="nav-link mt-1 text-black active" id="v-pills-home-shopinfo"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-home-shop-info-container"
+                                    type="button"
+                                    role="tab" aria-controls="v-pills-home-shop-info-container"
+                                    aria-selected="true">SHOP INFO
+                            </button>
+                            <button class="nav-link mt-1 text-black" id="v-pills-home-status-productSale"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-statusProductSale" type="button"
                                     role="tab" aria-controls="v-pills-home-statusProductSale"
                                     aria-selected="true">PRODUCT
-                                </button>
-                                <a class="nav-link mt-1 text-black" href="/admin/logout">LOG OUT
-                                </a>
-                            </div>
+                            </button>
+                            <a class="nav-link mt-1 text-black" href="/admin/logout">LOG OUT
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
 
-            <div class="col-xl-9 col-lg-12 p-0">
-                <div class="tab-content" id="v-pills-tabContent">
-                    <div class="tab-pane active show" id="v-pills-home-statusProductSale" role="tabpanel"
-                        aria-labelledby="v-pills-home-voucher" tabindex="0">
-                        <div class="card my-1">
-                            <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
-                                <div
+        <div class="col-xl-9 col-lg-12 p-0">
+            <div class="tab-content" id="v-pills-tabContent">
+                <div class="tab-pane active show" id="v-pills-home-shop-info-container" role="tabpanel"
+                     aria-labelledby="v-pills-home-voucher" tabindex="0">
+                    <div class="card my-1">
+                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                            <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">PRODUCT</h5>
-                                    <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">SHOP INFO</h5>
+
+                            </div>
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="row">
+
+                                <div class="col-8">
+                                    <div class="container">
+                                        <div class="row mb-3">
+                                            <label for="nameShop"
+                                                   class="col-xl-3 col-lg-12 col-form-label">Name Shop</label>
+                                            <div class="col-xl-9 col-lg-12">
+                                                <input type="text" class="form-control" id="nameShop">
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <label for="emailShop"
+                                                   class="col-xl-3 col-lg-12 col-form-label">Email Shop</label>
+                                            <div class="col-xl-9 col-lg-12">
+                                                <input type="text" class="form-control" id="emailShop" disabled>
+                                            </div>
+                                        </div>
+                                        <div class="mb-3 row">
+                                            <label for="dateEst"
+                                                   class="col-xl-3 col-lg-12 col-form-label">Date Established</label>
+                                            <div class="col-xl-9 col-lg-12">
+                                                <input type="date" class="form-control" id="dateEst" disabled>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <div class="d-flex justify-content-center">
+                                        <img
+                                             class="avatar me-3 border-radius-lg"
+                                             id="previewImage" alt="Ảnh đã chọn">
+                                    </div>
+
+                                    <div class="text-center my-3" style="margin-right: 10px;">
+                                        <input type="file" class="form-control" id="fileInput" name="logo">
+                                        <label class="custom-file-label" for="fileInput">Select photos for shop</label>
+                                    </div>
+
+                                </div>
+
+                                <button type="button" id="submitShopBtn" class="col-5 btn btn-secondary ms-5 mb-5">
+                                    Submit
+                                </button>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="tab-pane" id="v-pills-home-statusProductSale" role="tabpanel"
+                     aria-labelledby="v-pills-home-voucher" tabindex="0">
+                    <div class="card my-1">
+                        <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
+                            <div
+                                    class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
+                                <h5 class="text-black ps-3 d-flex align-items-center mb-0">PRODUCT</h5>
+                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleProduct" data-bs-toggle="modal"
                                         id="newInsButtonSale" style="padding: 7px 12px 7px 12px;">
-                                        <i class="fa-solid fa-plus " aria-hidden="true"></i>
-                                    </button>
-                                </div>
+                                    <i class="fa-solid fa-plus " aria-hidden="true"></i>
+                                </button>
                             </div>
+                        </div>
 
 
-                            <div class="table-responsive p-0 mx-3" id="tableProductContainerProductShop">
-                                <table class="table align-items-center mb-0">
-                                    <thead>
-                                    <tr class="text-center">
-                                        <th scope="col" style="width: 60%">Name product</th>
-                                        <th scope="col" style="width: 15%">Price</th>
-                                        <th scope="col" style="width: 10%">Quantity</th>
-                                        <th scope="col" style="width: 5%"></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody id="ProductTableBody">
-                                    <!-- Các dòng sản phẩm sẽ được thêm vào đây -->
-                                    </tbody>
-                                </table>
+                        <div class="table-responsive p-0 mx-3" id="tableProductContainerProductShop">
+                            <table class="table align-items-center mb-0">
+                                <thead>
+                                <tr class="text-center">
+                                    <th scope="col" style="width: 60%">Name product</th>
+                                    <th scope="col" style="width: 15%">Price</th>
+                                    <th scope="col" style="width: 10%">Quantity</th>
+                                    <th scope="col" style="width: 5%"></th>
+                                </tr>
+                                </thead>
+                                <tbody id="ProductTableBody">
+                                <!-- Các dòng sản phẩm sẽ được thêm vào đây -->
+                                </tbody>
+                            </table>
 
-                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
+
+
     </div>
+</div>
 
 
-    <!--modal insert-->
-    <div class="modal fade modal-lg" id="exampleModalToggleProduct" aria-hidden="true"
-        aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <form id="productForm" enctype="multipart/form-data" action="">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="insertProductModal">PRODUCT</h1>
-                        <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
-                                class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
-                    </div>
-                    <div class="modal-body" id="insertProductModalBody">
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="mb-2 ">
-                                    <label for="insNameProduct" class="form-label">Name</label>
-                                    <input type="text" class="form-control ps-3" id="insNameProduct"
-                                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" name="productName">
-                                </div>
-                                <div class="mb-2 ">
-                                    <label for="insPriceProduct" class="form-label">Price</label>
-                                    <input type="text" class="form-control ps-3" id="insPriceProduct"
-                                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" name="price">
-                                </div>
-                                <div class="mb-2 ">
-                                    <label for="insQuantityProduct" class="form-label">Quantity</label>
-                                    <input type="text" class="form-control ps-3" id="insQuantityProduct"
-                                           aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;" name="quantity">
-                                </div>
-                                <div class="mb-2">
-                                    <label for="inDescriptionProduct" class="form-label">Description</label>
-                                    <textarea class="form-control" id="inDescriptionProduct" rows="3" name="description"></textarea>
-                                </div>
-                                <div class="mb-2">
-                                    <div class="container " style="">
-                                        <div class="row">
-                                            <div class="col-4">
-                                                <div class="d-flex justify-content-center">
-                                                    <img src="" class="avatar me-3 border-radius-lg" id="previewImage1"
-                                                         alt="Chọn ảnh">
-                                                </div>
-                                                <div class="text-center my-3" style="margin-right: 10px;">
-                                                    <input type="file" class="form-control" id="fileInput1" name="pictures" accept="image/*">
-                                                    <label id="nameImageIns1" style="display: none"></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="d-flex justify-content-center">
-                                                    <img src="" class="avatar me-3 border-radius-lg"  id="previewImage2"
-                                                         alt="Chọn ảnh">
-                                                </div>
-                                                <div class="text-center my-3" style="margin-right: 10px;">
-                                                    <input type="file" class="form-control" id="fileInput2" name="pictures" accept="image/*">
-                                                    <label id="nameImageIns2" style="display: none"></label>
-                                                </div>
-                                            </div>
-                                            <div class="col-4">
-                                                <div class="d-flex justify-content-center">
-                                                    <img src="" class="avatar me-3 border-radius-lg" id="previewImage3"
-                                                         alt="Chọn ảnh">
-                                                </div>
-                                                <div class="text-center my-3" style="margin-right: 10px;">
-                                                    <input type="file" class="form-control" id="fileInput3" name="pictures" accept="image/*">
-                                                    <label id="nameImageIns3" style="display: none"></label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="mb-2">
-                                    <div class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
-                                        <div class="embed-responsive embed-responsive-16by9">
-                                            <video id="previewVideoIns" class="embed-responsive-item" alt="Chọn video">
-                                            </video>
-                                        </div>
-                                    </div>
-                                    <div class="col-4">
-                                        <div class="text-center my-3" style="margin-right: 10px;">
-                                            <input type="file" class="form-control" id="fileInput4" name="video" accept="video/*">
-                                            <label id="nameVideoIns" style="display: none "></label>
-                                        </div>
-                                    </div>
-                                    <select class="form-select w-auto" aria-label="Default select example"
-                                            id="formSelectIns" name="categoryId">
-                                        <option value="1">Outerwear</option>
-                                        <option value="2">Tops</option>
-                                        <option value="3">Bottoms</option>
-                                        <option value="4">Jewels & Accessories</option>
-                                        <option value="5">Headwear</option>
-                                        <option value="6">Footwear</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="saveProduct()">
-                            Add new Product
-                        </button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-    <!--*********************** Modal Update Product *****************************-->
-    <div class="modal fade modal-lg" id="exampleModalUpdateProduct" aria-hidden="true"
-         aria-labelledby="exampleModalToggleLabel" tabindex="-1">
-        <form class="modal-dialog modal-dialog-centered" id="updateProductForm" method="post">
-            <div class="modal-content">
+<!--modal insert-->
+<div class="modal fade modal-lg" id="exampleModalToggleProduct" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form id="productForm" enctype="multipart/form-data" action="">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="updateProductModal">PRODUCT</h1>
+                    <h1 class="modal-title fs-5" id="insertProductModal">PRODUCT</h1>
                     <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
                             class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
                 </div>
-                <div class="modal-body" id="updateProductModalBody">
+                <div class="modal-body" id="insertProductModalBody">
                     <div class="row">
-                        <input type="hidden" id="updateProductId">
                         <div class="col-12">
-                            <!-- Form fields for product details -->
-                            <div class="mb-2">
-                                <label for="updateNameProduct" class="form-label">Name</label>
-                                <input type="text" class="form-control ps-3" id="updateNameProduct" style="border: 1px solid #d2d6da;">
+                            <div class="mb-2 ">
+                                <label for="insNameProduct" class="form-label">Name</label>
+                                <input type="text" class="form-control ps-3" id="insNameProduct"
+                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;"
+                                       name="productName">
+                            </div>
+                            <div class="mb-2 ">
+                                <label for="insPriceProduct" class="form-label">Price</label>
+                                <input type="text" class="form-control ps-3" id="insPriceProduct"
+                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;"
+                                       name="price">
+                            </div>
+                            <div class="mb-2 ">
+                                <label for="insQuantityProduct" class="form-label">Quantity</label>
+                                <input type="text" class="form-control ps-3" id="insQuantityProduct"
+                                       aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;"
+                                       name="quantity">
                             </div>
                             <div class="mb-2">
-                                <label for="updatePriceProduct" class="form-label">Price</label>
-                                <input type="text" class="form-control ps-3" id="updatePriceProduct" style="border: 1px solid #d2d6da;">
+                                <label for="inDescriptionProduct" class="form-label">Description</label>
+                                <textarea class="form-control" id="inDescriptionProduct" rows="3"
+                                          name="description"></textarea>
                             </div>
                             <div class="mb-2">
-                                <label for="updateQuantityProduct" class="form-label">Quantity</label>
-                                <input type="text" class="form-control ps-3" id="updateQuantityProduct" style="border: 1px solid #d2d6da;">
-                            </div>
-                            <div class="mb-2">
-                                <label for="updateDescriptionProduct" class="form-label">Description</label>
-                                <textarea class="form-control" id="updateDescriptionProduct" rows="3"></textarea>
-                            </div>
-                            <!-- Image preview and upload fields -->
-                            <div class="mb-2">
-                                <div class="container">
+                                <div class="container " style="">
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="d-flex justify-content-center">
-                                                <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate1" alt="Chọn ảnh">
+                                                <img src="" class="avatar me-3 border-radius-lg" id="previewImage1"
+                                                     alt="Chọn ảnh">
                                             </div>
-                                            <div class="text-center my-3">
-                                                <input type="file" class="form-control" id="fileInputUpdate1" name="pictures">
-                                                <label id="nameImageUpdate1" style="display: block"></label>
-                                            </div>
-                                        </div>
-                                        <div class="col-4">
-                                            <div class="d-flex justify-content-center">
-                                                <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate2" alt="Chọn ảnh">
-                                            </div>
-                                            <div class="text-center my-3">
-                                                <input type="file" class="form-control" id="fileInputUpdate2" name="pictures">
-                                                <label id="nameImageUpdate2" style="display: block"></label>
+                                            <div class="text-center my-3" style="margin-right: 10px;">
+                                                <input type="file" class="form-control" id="fileInput1" name="pictures"
+                                                       accept="image/*">
+                                                <label id="nameImageIns1" style="display: none"></label>
                                             </div>
                                         </div>
                                         <div class="col-4">
                                             <div class="d-flex justify-content-center">
-                                                <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate3" alt="Chọn ảnh">
+                                                <img src="" class="avatar me-3 border-radius-lg" id="previewImage2"
+                                                     alt="Chọn ảnh">
                                             </div>
-                                            <div class="text-center my-3">
-                                                <input type="file" class="form-control" id="fileInputUpdate3" name="pictures">
-                                                <label id="nameImageUpdate3" style="display: block"></label>
+                                            <div class="text-center my-3" style="margin-right: 10px;">
+                                                <input type="file" class="form-control" id="fileInput2" name="pictures"
+                                                       accept="image/*">
+                                                <label id="nameImageIns2" style="display: none"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-4">
+                                            <div class="d-flex justify-content-center">
+                                                <img src="" class="avatar me-3 border-radius-lg" id="previewImage3"
+                                                     alt="Chọn ảnh">
+                                            </div>
+                                            <div class="text-center my-3" style="margin-right: 10px;">
+                                                <input type="file" class="form-control" id="fileInput3" name="pictures"
+                                                       accept="image/*">
+                                                <label id="nameImageIns3" style="display: none"></label>
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
-                            <!-- Video preview and upload field -->
                             <div class="mb-2">
-                                <div class="d-flex justify-content-center embed-responsive embed-responsive-4by3" style="max-width: 100%; max-height: 300px;">
-                                    <video id="previewVideoUpdate" class="embed-responsive-item" controls style="max-width: 100%; max-height: 300px;"></video>
+                                <div class=" d-flex justify-content-center embed-responsive embed-responsive-16by9">
+                                    <div class="embed-responsive embed-responsive-16by9">
+                                        <video id="previewVideoIns" class="embed-responsive-item" alt="Chọn video">
+                                        </video>
+                                    </div>
                                 </div>
                                 <div class="col-4">
-                                    <div class="text-center my-3">
-                                        <input type="file" class="form-control" id="fileInputUpdate4" name="video">
-                                        <label id="nameVideoUpdate" style="display: none"></label>
+                                    <div class="text-center my-3" style="margin-right: 10px;">
+                                        <input type="file" class="form-control" id="fileInput4" name="video"
+                                               accept="video/*">
+                                        <label id="nameVideoIns" style="display: none "></label>
                                     </div>
                                 </div>
-                            </div>
-                            <!-- Category select field -->
-                            <div class="mb-2">
-                                <select class="form-select w-auto" aria-label="Default select example" id="formSelectUpdate">
+                                <select class="form-select w-auto" aria-label="Default select example"
+                                        id="formSelectIns" name="categoryId">
                                     <option value="1">Outerwear</option>
                                     <option value="2">Tops</option>
                                     <option value="3">Bottoms</option>
@@ -335,30 +408,159 @@
                                     <option value="6">Footwear</option>
                                 </select>
                             </div>
-
                         </div>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="saveChangesButton">Save changes</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" onclick="saveProduct()">
+                        Add new Product
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<!--*********************** Modal Update Product *****************************-->
+<div class="modal fade modal-lg" id="exampleModalUpdateProduct" aria-hidden="true"
+     aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+    <form class="modal-dialog modal-dialog-centered" id="updateProductForm" method="post">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="updateProductModal">PRODUCT</h1>
+                <button type="button" class="btn m-0" data-bs-dismiss="modal" aria-label="Close"><i
+                        class="fa-solid fa-xmark fa-xl" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body" id="updateProductModalBody">
+                <div class="row">
+                    <input type="hidden" id="updateProductId">
+                    <div class="col-12">
+                        <!-- Form fields for product details -->
+                        <div class="mb-2">
+                            <label for="updateNameProduct" class="form-label">Name</label>
+                            <input type="text" class="form-control ps-3" id="updateNameProduct"
+                                   style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2">
+                            <label for="updatePriceProduct" class="form-label">Price</label>
+                            <input type="text" class="form-control ps-3" id="updatePriceProduct"
+                                   style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2">
+                            <label for="updateQuantityProduct" class="form-label">Quantity</label>
+                            <input type="text" class="form-control ps-3" id="updateQuantityProduct"
+                                   style="border: 1px solid #d2d6da;">
+                        </div>
+                        <div class="mb-2">
+                            <label for="updateDescriptionProduct" class="form-label">Description</label>
+                            <textarea class="form-control" id="updateDescriptionProduct" rows="3"></textarea>
+                        </div>
+                        <!-- Image preview and upload fields -->
+                        <div class="mb-2">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="d-flex justify-content-center">
+                                            <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate1"
+                                                 alt="Chọn ảnh">
+                                        </div>
+                                        <div class="text-center my-3">
+                                            <input type="file" class="form-control" id="fileInputUpdate1"
+                                                   name="pictures">
+                                            <label id="nameImageUpdate1" style="display: block"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="d-flex justify-content-center">
+                                            <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate2"
+                                                 alt="Chọn ảnh">
+                                        </div>
+                                        <div class="text-center my-3">
+                                            <input type="file" class="form-control" id="fileInputUpdate2"
+                                                   name="pictures">
+                                            <label id="nameImageUpdate2" style="display: block"></label>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="d-flex justify-content-center">
+                                            <img src="" class="avatar me-3 border-radius-lg" id="previewImageUpdate3"
+                                                 alt="Chọn ảnh">
+                                        </div>
+                                        <div class="text-center my-3">
+                                            <input type="file" class="form-control" id="fileInputUpdate3"
+                                                   name="pictures">
+                                            <label id="nameImageUpdate3" style="display: block"></label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <!-- Video preview and upload field -->
+                        <div class="mb-2">
+                            <div class="d-flex justify-content-center embed-responsive embed-responsive-4by3"
+                                 style="max-width: 100%; max-height: 300px;">
+                                <video id="previewVideoUpdate" class="embed-responsive-item" controls
+                                       style="max-width: 100%; max-height: 300px;"></video>
+                            </div>
+                            <div class="col-4">
+                                <div class="text-center my-3">
+                                    <input type="file" class="form-control" id="fileInputUpdate4" name="video">
+                                    <label id="nameVideoUpdate" style="display: none"></label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Category select field -->
+                        <div class="mb-2">
+                            <select class="form-select w-auto" aria-label="Default select example"
+                                    id="formSelectUpdate">
+                                <option value="1">Outerwear</option>
+                                <option value="2">Tops</option>
+                                <option value="3">Bottoms</option>
+                                <option value="4">Jewels & Accessories</option>
+                                <option value="5">Headwear</option>
+                                <option value="6">Footwear</option>
+                            </select>
+                        </div>
+
+                    </div>
                 </div>
             </div>
-        </form>
-    </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="saveChangesButton">Save changes</button>
+            </div>
+        </div>
+    </form>
+</div>
 
 
-
-
-
-
-    <footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
-    <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
-    <script src="/assests/js/app_admin.js"></script>
-    <script src="/assests/js/script.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+<script src="/assests/js/app_admin.js"></script>
+<script src="/assests/js/script.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/assests/js/ShopAdmin.js"></script>
+<script>
+    var path;
+    var nameImg;
+    document.getElementById('fileInput').addEventListener('change', function () {
+        var file = this.files[0];
+        nameImg = file.name;
+        if (file) {
+            var reader = new FileReader();
+            reader.onload = function (event) {
+                path = event.target.result;
+                document.getElementById('previewImage').setAttribute('src', event.target.result);
+                document.getElementById('previewImage').style.display = 'block';
+            }
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
 </body>
 
 
@@ -400,7 +602,7 @@
 </script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         axios.get('http://localhost:8083/products')
             .then(response => {
                 const products = response.data;
@@ -428,7 +630,7 @@
                     editButton.textContent = 'Edit';
                     editButton.classList.add('btn', 'btn-primary', 'btn-sm');
                     editButton.dataset.productId = product.productId; // Lưu productId vào data attribute
-                    editButton.addEventListener('click', function() {
+                    editButton.addEventListener('click', function () {
                         loadProductData(product.productId); // Gọi hàm loadProductData khi bấm nút
                     });
                     actionCell.appendChild(editButton);
@@ -494,12 +696,9 @@
     }
 
 
-
-
-
 </script>
 <script>
-    document.getElementById('saveChangesButton').addEventListener('click', function() {
+    document.getElementById('saveChangesButton').addEventListener('click', function () {
         var formData = new FormData();
 
         var productName = document.getElementById('updateNameProduct').value.trim();
@@ -526,7 +725,7 @@
         }
 
         var pictureInputs = ['fileInputUpdate1', 'fileInputUpdate2', 'fileInputUpdate3'];
-        pictureInputs.forEach(function(inputId) {
+        pictureInputs.forEach(function (inputId) {
             var input = document.getElementById(inputId);
             if (input.files.length > 0) {
                 formData.append('pictures', input.files[0]);
@@ -554,8 +753,6 @@
                 alert("Lưu thất bại !");
             });
     });
-
-
 
 
 </script>
