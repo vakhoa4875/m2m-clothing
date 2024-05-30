@@ -13,4 +13,6 @@ public interface ShopService {
     ShopM findShopByUser(String email) throws SQLException;
 
     int insertShop(ShopDto shopDto) throws SQLException;
+
+    int updateShop(String nameShop, String logo, String email) throws SQLException;
 }
