@@ -119,4 +119,8 @@ public class HomeController {
     public String doGetViewAllVouchers() {
         return "swappa/assests/html/vouchers";
     }
+    @GetMapping("/viewSearchShop")
+    public String doGetViewSearchedShop() {
+        return "swappa/assests/html/searchShop";
+    }
 }
