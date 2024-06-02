@@ -76,7 +76,7 @@ public class OrderApi {
             dto.setDeliveryAddress((String) obj[4]);
             dto.setPaymentMethod((String) obj[5]);
             dto.setTotalAmount(Float.valueOf((float) ((Double) obj[6]).doubleValue()));
-            dto.setSoluong(String.valueOf(obj[7]));
+            dto.setCountSp((Integer) obj[7]);
             dto.setOrderStatus((String) obj[8]);
             dtos.add(dto);
         }
@@ -96,17 +96,17 @@ public class OrderApi {
         return ResponseEntity.ok(orderDto);
     }
 
-    @PostMapping("/insertOderdetail")
-    public ResponseEntity<?> insertOder(@RequestBody OrderDto orderDto) {
-        orderDto.setOrderId(orderDetailService.getLastInsertedOrderId());
-        try {
-            orderDetailService.UpdateOderDetail(orderDto);
-        } catch (Exception e) {
-            System.out.println("Call API Failed: /api/orders/saveOder");
-            throw new RuntimeException(e);
-        }
-        return ResponseEntity.ok(orderDto);
-    }
+//    @PostMapping("/insertOderdetail")
+//    public ResponseEntity<?> insertOder(@RequestBody OrderDto orderDto) {
+//        orderDto.setOrderId(orderDetailService.getLastInsertedOrderId());
+//        try {
+//            orderDetailService.UpdateOderDetail(orderDto);
+//        } catch (Exception e) {
+//            System.out.println("Call API Failed: /api/orders/saveOder");
+//            throw new RuntimeException(e);
+//        }
+//        return ResponseEntity.ok(orderDto);
+//    }
 
     @GetMapping("/updateOderUser")
     public ResponseEntity<?> updateOdeUserfromAdmin(@Param("idProduct") Integer idProduct, @Param("OrderStatus") String OrderStatus) {

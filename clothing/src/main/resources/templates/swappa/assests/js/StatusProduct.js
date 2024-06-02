@@ -18,7 +18,6 @@ function loadStatusProduct(){
             data.forEach(function(order) {
                 var orderDateFormatted = new Date(order.orderDate);
                 var formattedDate = `${orderDateFormatted.getDate()}/${orderDateFormatted.getMonth() + 1}/${orderDateFormatted.getFullYear()}`;
-
                 if(order.orderStatus === "Approved"){
                     return;
                 }
@@ -39,7 +38,7 @@ function loadStatusProduct(){
                                             <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-secondary">${order.deliveryAddress}</span></span>
                                         </td>
                                         <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">${order.soluong}</span>
+                                            <span class="text-secondary text-xs font-weight-bold">${order.countSp}</span>
                                         </td>
                                         <td class="align-middle text-center">
                                             <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-warning">${order.orderStatus}</span></span>
@@ -71,7 +70,6 @@ function getidProduct(id){
 }
 
 function updateStatus(){
-    console.log(idprocudt)
     $.ajax({
         url: "/api-product/updateOderUser?idProduct="+idprocudt+"&OrderStatus="+"Approved",
         type: 'Get',
