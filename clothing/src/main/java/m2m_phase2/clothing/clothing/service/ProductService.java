@@ -22,5 +22,6 @@ public interface ProductService {
 	void deleteByProductId(int product_id) ;
 	Long getAllProducts();
 
+	List<Product> findProductByShopCategory(Integer categoryId ,String email);
 
 }

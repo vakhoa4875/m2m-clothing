@@ -134,6 +134,11 @@ Create table order_detail
 go
 alter table [Order]
 add order_code nvarchar(127) unique ;
+truncate table Cart;
+go
+insert into Shop(logo, name_shop, date_established, id) values
+    ('', 'niggaonsale', '2024-05-25', 3)
+
 -- go
 -- exec dbo.getTopUsedVoucher 5, 2024;
 -- select top 10 od.product_id, sum(od.quatity) as sold

@@ -4,6 +4,7 @@ import lombok.*;
 import m2m_phase2.clothing.clothing.data.entity.ShopE;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +20,7 @@ public class ShopM {
 
     private String nameShop;
 
-    private String dateEstablished;
+    private Date dateEstablished;
 
     private UserE userE;
     public static ShopM convertShopEToShopM(ShopE ShopE){

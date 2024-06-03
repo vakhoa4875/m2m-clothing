@@ -45,4 +45,9 @@ public class CategoryImpl implements CategoryService {
 		return productCountMap;
 	}
 
+	@Override
+	public List<Category> findCategoryByShop(String email) {
+		return repo.findCategoryByShop(email);
+	}
+
 }

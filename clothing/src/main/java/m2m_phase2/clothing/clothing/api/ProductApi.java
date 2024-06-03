@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static m2m_phase2.clothing.clothing.data.variable.StaticVariable.sessionEmail;
+
 
 @RestController
 public class ProductApi {
@@ -150,5 +152,21 @@ public class ProductApi {
 
 //		return oAuth2AuthenticationToken.getPrincipal().getAttributes();
 	}
+
+	@GetMapping("/api-public-getListProductByCategoryAndShopEmail")
+	public ResponseEntity<?> findProductByShopCategory(@RequestParam Integer categoryId){
+		Map<String, Object> result = new HashMap<>();
+		try {
+			result.put("status", true);
+			result.put("message", "Call Api Success");
+			result.put("data", productserviceimpl.findProductByShopCategory(categoryId,sessionEmail));
+		} catch (Exception e) {
+			result.put("status", false);
+			result.put("message", "Call Api Fail");
+			result.put("data", null);
+		}
+		return ResponseEntity.ok(result);
+	}
+
 
 }
