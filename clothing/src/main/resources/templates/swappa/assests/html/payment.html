@@ -155,6 +155,7 @@
                 }else {
                     var voucherID = JSON.parse(sessionStorage.getItem("voucherdetill"));
                     voucher = parseFloat(voucherID.voucherID);
+
                 }
 
                 var sp = {
@@ -164,13 +165,11 @@
                     totalAmount : parseFloat(tongThanhToan).toFixed(2),
                     orderStatus : "Need approved",
                     countSp : soluongton,
-                    voucherIdd : voucher,
+                    voucherId : voucher,
                     orderDetails : objarray
                 };
 
                 spxannhan = sp;
-
-                console.log(spxannhan)
             }
 
 
