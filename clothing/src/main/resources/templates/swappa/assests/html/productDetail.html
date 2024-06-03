@@ -77,8 +77,11 @@
                         <ol class="breadcrumb mb-2">
                             <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
                             <li class="breadcrumb-item"><a href="#" th:text="${listProduct.getName()}"></a></li>
-                            <div style="color: #ff000000">
+                            <div style="color: #ff000000; display: none">
                                 <span id="dn" th:text="${checklogin}"></span>
+                            </div>
+                            <div style="color: #ff000000; display: none">
+                                <span id="idproduct" th:text="${listProduct.getProductId()}"></span>
                             </div>
                         </ol>
                     </nav>
