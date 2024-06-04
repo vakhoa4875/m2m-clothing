@@ -11,161 +11,11 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+
         $(document).ready(function () {
             var ptthanhtoan = "";
-            function Finalpayment() {
-                var productList = document.getElementById("thanhtoan");
-                productList.innerHTML = '';
-                if (localStorage.length > 0) {
-                    // Duyệt qua tất cả các phần tử trong local storage
-                    var soluongton = 0;
-                    for (var i = 0; i < localStorage.length; i++) {
-                        var key = localStorage.key(i);
-                        var value = localStorage.getItem(key);
 
-                        var object = JSON.parse(value);
-                        // Tạo các thẻ HTML để hiển thị thông tin của đối tượng
-                        var tr = document.createElement("tr");
-
-                        tr.innerHTML = `<tr>
-                                    <td>
-                                        <div class="d-flex px-2 py-1">
-
-                                            <div style="overflow: hidden" height="auto" width="136px">
-                                                <img src="${object.linkanh}"
-                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user1"
-                                                        id="thongtin" style="display: block; width: 150px; height: 150px; object-fit: contain;">
-                                            </div>
-                                            <div class="w-100 d-flex align-items-center">
-                                                <p class="text-xs text-secondary mb-0" id="${object.tensp},${i}">
-                                                    ${object.tensp}</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs text-secondary mb-0" >
-                                            $${object.gia.toFixed(2)}</p>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs text-secondary mb-0" id="${object.soLuong},${i}">
-                                            ${object.soLuong}</p>
-                                    </td>
-                                    <td class="align-middle text-center">
-                                        <p class="text-xs text-secondary mb-0" id="${(object.soLuong * object.gia)},${i}">
-                                            $${(object.soLuong * object.gia).toFixed(2)}</p>
-                                    </td>
-
-                                </tr>
-                    `;
-                        var tennguoidung = $('#name').text();
-                        var sdt = $('#sdt').text();
-                        var diachi = $('#diachi').val();
-                        var id = $('#id').text();
-                        document.getElementById("thanhtoan").appendChild(tr);
-                        capNhatTienTong();
-                        var tongThanhToanID = $('#TongThanhToan').text();
-                        var tongThanhToan = parseFloat(tongThanhToanID.substring(1)).toFixed(2) //tiền tổng thanh toán
-                        soluongton += object.soLuong;
-                        getInfoCard(object.tensp, soluongton, (object.soLuong * object.gia).toFixed(2), tennguoidung, sdt, diachi, id, ptthanhtoan, tongThanhToan);
-                    }
-                }
-            }
-
-            function capNhatTienTong() {
-                var tongTien = 0;
-                var discount = 0;
-                if (localStorage.length > 0) {
-                    // Duyệt qua tất cả các phần tử trong local storage
-                    for (var i = 0; i < localStorage.length; i++) {
-                        var key = localStorage.key(i);
-                        var value = localStorage.getItem(key);
-
-                        var object = JSON.parse(value);
-
-                        tongTien += object.soLuong * object.gia;
-                        discount = object.discount;
-                    }
-
-                    var cacPhanTu = document.querySelectorAll(".tienThanhToan");
-                    // Lặp qua từng phần tử và cập nhật giá trị mới
-                    cacPhanTu.forEach(function (element) {
-                        element.textContent = "$" + tongTien.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
-                    });
-                    var discountthtml = document.getElementById("discount");
-                    discountthtml.textContent = "$" + discount; // giam gia trong localStorage
-
-                    var tongthanhtoan = document.getElementById("TongThanhToan");
-
-                    tongthanhtoan.textContent = "$" + ((parseFloat(tongTien.toFixed(2)) + parseFloat(2) - discount));
-
-                }
-            }
-
-
-
-
-            var objsp = [];
-            function getInfoCard(name, soluongton, tien, tennguoidung, sdt, diachi, id, ptthanhtoan, tongThanhToan) {
-                var sp = {
-                    orderId: id,
-                    phoneNumber: sdt,
-                    deliveryAddress: diachi,
-                    paymentMethod: ptthanhtoan,
-                    totalAmount: tongThanhToan,
-                    orderStatus: "Need approved",
-                    soluong: soluongton
-                };
-
-                objsp.push(sp);
-            }
-
-            console.log(objsp)
-
-
-            function thanhtoan() {
-                Swal.fire({
-                    title: 'Thông Báo từ hệ thống',
-                    text: 'Cảm ơn bạn đã thanh toán hóa đơn!, Vui lòng chờ đơn hàng được xác nhận!',
-                    icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-                    confirmButtonText: 'Xác nhận',
-                    allowOutsideClick: false,
-
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        $.ajax({
-                            url: '/api-product/saveOder',
-                            type: 'POST',
-                            contentType: 'application/json',
-                            data: JSON.stringify(objsp[objsp.length - 1]),
-                            success: (redirectURL) => {
-                                console.log("lưu thành công")
-                            },
-                            error: (xhr, status, error) => {
-                                console.error("Đã xảy ra lỗi khi gọi API: " + error);
-                            }
-                        });
-                        setTimeout(function () {
-                            console.log("chuẩn bị cập nhật bên order detail")
-                            $.ajax({
-                                url: '/api-product/insertOderdetail',
-                                type: 'POST',
-                                contentType: 'application/json',
-                                data: JSON.stringify(objsp[objsp.length - 1]),
-                                success: (redirectURL) => {
-                                    // Xác nhận đã được nhấn
-                                    localStorage.clear();
-                                    window.location.href = "/userprofile"; // Chuyển hướng trang ngược lại trang hiện tại
-                                },
-                                error: (xhr, status, error) => {
-                                    console.error("Đã xảy ra lỗi khi gọi API: " + error);
-                                }
-                            });
-                        }, 1200);
-                    }
-                });
-            }
+            Finalpayment(ptthanhtoan);
 
             $('#submitBtn').click(function () {
                 if (!$('input[type="radio"][name="flexRadioDefault"]').is(':checked')) {
@@ -184,23 +34,193 @@
             $('input[type="radio"][name="flexRadioDefault"]').change(function () {
                 ptthanhtoan = $(this).val();
                 // Gọi lại hàm Finalpayment() để cập nhật lại giá trị của biến thanhtoan
-                Finalpayment();
+                Finalpayment(ptthanhtoan);
             });
-            window.onload = Finalpayment;
-        })
+        });
+
+        function Finalpayment(ptthanhtoan) {
+            var productList = document.getElementById("thanhtoan");
+            productList.innerHTML = '';
+            if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
+
+                var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+
+                // Duyệt qua tất cả các phần tử trong local storage
+                var soluongton = 0;
+                for (var int = 0; int < objarray.length; int++) {
+                    var object = objarray[int];
+                    // Tạo các thẻ HTML để hiển thị thông tin của đối tượng
+                    var tr = document.createElement("tr");
+
+                    tr.innerHTML = `<tr>
+                                    <td>
+                                        <div class="d-flex px-2 py-1">
+
+                                            <div style="overflow: hidden" height="auto" width="136px">
+                                                <img src="${object.linkanh}"
+                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user1"
+                                                        id="thongtin" style="display: block; width: 150px; height: 150px; object-fit: contain;">
+                                            </div>
+                                            <div class="w-100 d-flex align-items-center">
+                                                <p class="text-xs text-secondary mb-0" id="${object.tensp},${int}">
+                                                    ${object.tensp}</p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs text-secondary mb-0" >
+                                            $${object.gia.toFixed(2)}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs text-secondary mb-0" id="${object.soLuong},${int}">
+                                            ${object.soLuong}</p>
+                                    </td>
+                                    <td class="align-middle text-center">
+                                        <p class="text-xs text-secondary mb-0" id="${(object.soLuong * object.gia)},${int}">
+                                            $${(object.soLuong * object.gia).toFixed(2)}</p>
+                                    </td>
+
+                                </tr>
+                    `;
+                    var tennguoidung = $('#name').text();
+                    var sdt = $('#sdt').text();
+                    var diachi = $('#diachi').val();
+                    var id = $('#id').text();
+                    document.getElementById("thanhtoan").appendChild(tr);
+                    capNhatTienTong();
+                    var tongThanhToanID = $('#TongThanhToan').text();
+                    var tongThanhToan = parseFloat(tongThanhToanID.substring(1)).toFixed(2) //tiền tổng thanh toán
+                    soluongton += object.soLuong;
+                    const extractedData = objarray.map(item => ({
+                        price: item.gia,
+                        productId: item.idproductt,
+                        quantity: item.soLuong
+                    }));
+                    getInfoCard(object.tensp, soluongton, (object.soLuong * object.gia).toFixed(2), tennguoidung, sdt, diachi, id, ptthanhtoan, tongThanhToan, extractedData);
+                    //kiem tra sdt co rong
+                    if (sdt === "") {
+                        Swal.fire({
+                            title: 'Thông Báo từ hệ thống',
+                            text: 'Số điện thoại không được để trống!',
+                            icon: 'error', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                            confirmButtonText: 'Xác nhận',
+                            allowOutsideClick: false,
+
+                        }).then((result) => {
+                            window.location.href = "/userprofile";
+                        })
+                    }
+                }
+            }
+        }
+
+        function capNhatTienTong() {
+            var tongTien = 0;
+            var discount = sessionStorage.getItem("tienvoucher");
+            if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
+                var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+                // Duyệt qua tất cả các phần tử trong local storage
+                for (var int = 0; int < objarray.length; int++) {
+
+                    var object = objarray[int];
+
+                    tongTien += object.soLuong * object.gia;
+                }
+
+                var cacPhanTu = document.querySelectorAll(".tienThanhToan");
+                // Lặp qua từng phần tử và cập nhật giá trị mới
+                cacPhanTu.forEach(function (element) {
+                    element.textContent = "$" + tongTien.toFixed(2); // Cập nhật giá trị mới, ở đây là tổng tiền
+                });
+                var discountthtml = document.getElementById("discount");
+                discountthtml.textContent = "$" + discount; // giam gia trong localStorage
+
+                var tongthanhtoan = document.getElementById("TongThanhToan");
+
+                tongthanhtoan.textContent = "$" + ((parseFloat(tongTien.toFixed(2)) + parseFloat(2) - discount));
+
+            }
+        }
+
+
+        var spxannhan;
+
+        function getInfoCard(name, soluongton, tien, tennguoidung, sdt, diachi, id, ptthanhtoan, tongThanhToan, objarray) {
+            var voucher = sessionStorage.getItem("voucherdetill");
+
+            if (voucher === null) {
+                voucher = null;
+            } else {
+                var voucherID = JSON.parse(sessionStorage.getItem("voucherdetill"));
+                voucher = parseFloat(voucherID.voucherID);
+
+            }
+
+            var sp = {
+                phoneNumber: sdt,
+                deliveryAddress: diachi,
+                paymentMethod: ptthanhtoan,
+                totalAmount: parseFloat(tongThanhToan).toFixed(2),
+                orderStatus: "Need approved",
+                countSp: soluongton,
+                voucherId: voucher,
+                orderDetails: objarray
+            };
+
+            spxannhan = sp;
+        }
+
+
+        function thanhtoan() {
+
+            Swal.fire({
+                title: 'Thông Báo từ hệ thống',
+                text: 'Cảm ơn bạn đã thanh toán hóa đơn!, Vui lòng chờ đơn hàng được xác nhận!',
+                icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                confirmButtonText: 'Xác nhận',
+                allowOutsideClick: false,
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: '/api-product/createOrder',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify(spxannhan),
+                        success: (redirectURL) => {
+                            console.log("lưu thành công")
+                            localStorage.removeItem(sessionStorage.getItem("tendn"))
+                            setTimeout(function () {
+
+                                window.location.href = "/userprofile";
+                            }, 1000);
+                        },
+                        error: (xhr, status, error) => {
+                            console.error("Đã xảy ra lỗi khi gọi API: " + error);
+                        }
+                    });
+                }
+            });
+        }
+
+
+        // })
     </script>
 </head>
 
 <body>
-    <!-- mobileNav -->
-    <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
-    <!-- body -->
-    <div class="container-fluid main-container">
+<!-- mobileNav -->
+<div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
+<!-- body -->
+<div class="main-container">
+    <div class="container-fluid">
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div id="tooltip-bar" class="row row-cols-2 row-cols-md-4 text-center mt-2">
                     <div class="col">
-                        <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='                    
+                        <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='
                     <div class="card text-bg-light">
                         <div class="card-header my-0 pb-0">
                             <div class="card-title border-bottom fw-bolder">No hidden fee</div>
@@ -212,7 +232,7 @@
                             shipping</a>
                     </div>
                     <div class="col">
-                        <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='                   
+                        <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='
                         <div class="card text-bg-light">
                             <div class="card-header my-0 pb-0">
                                 <div class="card-title border-bottom fw-bolder">Tech has to work</div>
@@ -220,11 +240,11 @@
                             <div class="pt-0 card-body">No broken screens, blocked phones, or scammers. We have strict condition requirements, and real people verify listings before they go live.
                             </div>
                         </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
-                            class="text-primary"><i class="fa-solid fa-ban"></i> No
+                           class="text-primary"><i class="fa-solid fa-ban"></i> No
                             Junks, No Jerks</a>
                     </div>
                     <div class="col">
-                        <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='                   
+                        <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='
                         <div class="card text-bg-light">
                             <div class="card-header my-0 pb-0">
                                 <div class="card-title border-bottom fw-bolder">We’re here to help</div>
@@ -232,11 +252,11 @@
                             <div class="pt-0 card-body">Our support team typically responds in 20 minutes or less. Really!
                             </div>
                         </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
-                            class="text-primary"><i class="fa-solid fa-envelope-open-text"></i>
+                           class="text-primary"><i class="fa-solid fa-envelope-open-text"></i>
                             24/7/350 Supports</a>
                     </div>
                     <div class="col">
-                        <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='                   
+                        <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='
                         <div class="card text-bg-light">
                             <div class="card-header my-0 pb-0">
                                 <div class="card-title border-bottom fw-bolder">Sell with confidence</div>
@@ -244,7 +264,7 @@
                             <div class="pt-0 card-body">We use PayPal for payments because they provide extensive buyer and seller protections. Get paid directly to your PayPal account as soon as your item sells.
                             </div>
                         </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip"
-                            class="text-primary"><i class="fa-brands fa-paypal"></i>
+                           class="text-primary"><i class="fa-brands fa-paypal"></i>
                             Paypal Protection</a>
                     </div>
                 </div>
@@ -264,31 +284,31 @@
                         <table class="table">
 
                             <tbody>
-                                <tr>
-                                    <!--                                    nếu có update vui lòng không đổi tên id tránh bị lỗi do call api-->
+                            <tr>
+                                <!--                                    nếu có update vui lòng không đổi tên id tránh bị lỗi do call api-->
 
-                                    <th>
-                                        <div id="name" class="d-flex justify-content-center align-items-center"
-                                            th:text="${user.getEmail()}"></div>
-                                    </th>
-                                    <td>
-                                        <div class="d-flex justify-content-center align-items-center"
-                                            th:text="${user.getFullname()}"></div>
-                                    </td>
-                                    <td>
-                                        <div class="d-flex justify-content-center align-items-center" id="sdt"
-                                            th:text="${user.getSdt()}"></div>
-                                    </td>
-                                    <td class="input-group ">
-                                        <input type="text" class="form-control" disabled style="width: 90%" id="diachi"
-                                            value="Cà Phê Phố Hiến, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh">
-                                    </td>
-                                    <td>
-                                        <div class="d-flex justify-content-center align-items-center">
-                                            <a id="text" style="cursor: pointer" onclick="editAddress()">Edit</a>
-                                        </div>
-                                    </td>
-                                </tr>
+                                <th>
+                                    <div id="name" class="d-flex justify-content-center align-items-center"
+                                         th:text="${user.getEmail()}"></div>
+                                </th>
+                                <td>
+                                    <div class="d-flex justify-content-center align-items-center"
+                                         th:text="${user.getFullname()}"></div>
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center align-items-center" id="sdt"
+                                         th:text="${user.getSdt()}"></div>
+                                </td>
+                                <td class="input-group ">
+                                    <input type="text" class="form-control" disabled style="width: 90%" id="diachi"
+                                           value="Cà Phê Phố Hiến, Phường Trung Mỹ Tây, Quận 12, TP. Hồ Chí Minh">
+                                </td>
+                                <td>
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <a id="text" style="cursor: pointer" onclick="editAddress()">Edit</a>
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -303,47 +323,47 @@
                     <div class="col-12">
                         <table class="table">
                             <thead>
-                                <tr>
-                                    <th colspan="2">
-                                        <div class="ms-5"><strong>List of products</strong></div>
-                                    </th>
-                                    <th class="align-middle text-center">Price</th>
-                                    <th class="align-middle text-center">Quantity</th>
-                                    <th class="align-middle text-center">total payment</th>
-                                </tr>
+                            <tr>
+                                <th colspan="2">
+                                    <div class="ms-5"><strong>List of products</strong></div>
+                                </th>
+                                <th class="align-middle text-center">Price</th>
+                                <th class="align-middle text-center">Quantity</th>
+                                <th class="align-middle text-center">total payment</th>
+                            </tr>
                             </thead>
                             <tbody id="thanhtoan">
-                                <!--                                <tr>-->
-                                <!--                                    <td>-->
-                                <!--                                        <div class="d-flex px-2 py-1">-->
+                            <!--                                <tr>-->
+                            <!--                                    <td>-->
+                            <!--                                        <div class="d-flex px-2 py-1">-->
 
-                                <!--                                            <div>-->
-                                <!--                                                <img src="https://placehold.co/36x36/"-->
-                                <!--                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user1"-->
-                                <!--                                                    id="thongtin">-->
-                                <!--                                            </div>-->
-                                <!--                                            <div class="w-100 d-flex align-items-center">-->
-                                <!--                                                <p class="text-xs text-secondary mb-0">-->
-                                <!--                                                    Loại: Mặt Đen 80x20cm,....</p>-->
-                                <!--                                            </div>-->
-                                <!--                                        </div>-->
-                                <!--                                    </td>-->
-                                <!--                                    <td class="align-middle text-center">-->
-                                <!--                                    </td>-->
-                                <!--                                    <td class="align-middle text-center">-->
-                                <!--                                        <p class="text-xs text-secondary mb-0" >-->
-                                <!--                                            100$</p>-->
-                                <!--                                    </td>-->
-                                <!--                                    <td class="align-middle text-center">-->
-                                <!--                                        <p class="text-xs text-secondary mb-0" >-->
-                                <!--                                            2</p>-->
-                                <!--                                    </td>-->
-                                <!--                                    <td class="align-middle text-center">-->
-                                <!--                                        <p class="text-xs text-secondary mb-0" >-->
-                                <!--                                            200$</p>-->
-                                <!--                                    </td>-->
+                            <!--                                            <div>-->
+                            <!--                                                <img src="https://placehold.co/36x36/"-->
+                            <!--                                                    class="avatar avatar-sm me-3 border-radius-lg" alt="user1"-->
+                            <!--                                                    id="thongtin">-->
+                            <!--                                            </div>-->
+                            <!--                                            <div class="w-100 d-flex align-items-center">-->
+                            <!--                                                <p class="text-xs text-secondary mb-0">-->
+                            <!--                                                    Loại: Mặt Đen 80x20cm,....</p>-->
+                            <!--                                            </div>-->
+                            <!--                                        </div>-->
+                            <!--                                    </td>-->
+                            <!--                                    <td class="align-middle text-center">-->
+                            <!--                                    </td>-->
+                            <!--                                    <td class="align-middle text-center">-->
+                            <!--                                        <p class="text-xs text-secondary mb-0" >-->
+                            <!--                                            100$</p>-->
+                            <!--                                    </td>-->
+                            <!--                                    <td class="align-middle text-center">-->
+                            <!--                                        <p class="text-xs text-secondary mb-0" >-->
+                            <!--                                            2</p>-->
+                            <!--                                    </td>-->
+                            <!--                                    <td class="align-middle text-center">-->
+                            <!--                                        <p class="text-xs text-secondary mb-0" >-->
+                            <!--                                            200$</p>-->
+                            <!--                                    </td>-->
 
-                                <!--                                </tr>-->
+                            <!--                                </tr>-->
 
                             </tbody>
                         </table>
@@ -362,15 +382,16 @@
                             <div class="col-7">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item d-flex">
-                                        <div class="p-2 flex-fill"> <strong>Shipping Unit</strong></div>
+                                        <div class="p-2 flex-fill"><strong>Shipping Unit</strong></div>
                                         <div class="p-2 me-5 flex-fill align-middle text-center">Fast</div>
                                         <div class="p-2 me-4 flex-fill align-middle text-center">
                                             <a href="" class="text-danger pointeredit">Edit</a>
                                         </div>
                                         <div class="p-2 me-4 flex-fill align-middle text-center">$2</div>
                                     </li>
-                                    <li class=" list-group-item text-success"> <i class="fa-solid fa-truck-moving"></i>
-                                        Orders will be received on April 30</li>
+                                    <li class=" list-group-item text-success"><i class="fa-solid fa-truck-moving"></i>
+                                        Orders will be received on April 30
+                                    </li>
                                     <li class="list-group-item"></li>
                                 </ul>
                             </div>
@@ -426,14 +447,14 @@
                                             <div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" value="PayPal"
-                                                        name="flexRadioDefault">
+                                                           name="flexRadioDefault">
                                                     <label class="form-check-label">
                                                         PayPal (thanh toán bằng ngân hàng)
                                                     </label>
                                                 </div>
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="radio" value="Cod"
-                                                        name="flexRadioDefault">
+                                                           name="flexRadioDefault">
                                                     <label class="form-check-label">
                                                         Cod (thanh toán bằng tiền mặt)
                                                     </label>
@@ -480,7 +501,8 @@
                         <div class="row">
                             <div class="col-4 ms-auto">
                                 <button type="button" class="btn btn-outline-success " id="submitBtn">Xác nhận thanh
-                                    toán</button>
+                                    toán
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -488,66 +510,36 @@
             </div>
         </main>
     </div>
-    <footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
-    <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
-    <script src="/assests/js/app_admin.js"></script>
-    <script src="/assests/js/script.js"></script>
-    <script src="/assests/js/jsAll.js"></script>
-    <script>
-        function editAddress() {
+</div>
+<footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+<script src="/assests/js/app_admin.js"></script>
+<script src="/assests/js/script.js"></script>
+<!--    <script src="/assests/js/jsAll.js"></script>-->
+<script>
+    function editAddress() {
 
-            var input = document.getElementById("diachi");
-            var text = document.getElementById("text");
-            if (input.disabled) {
-                input.disabled = false; // Bỏ disabled nếu đã có
-                console.log("mở")
-                text.textContent = "Save";
-            } else {
-                input.disabled = true; // Kích hoạt disabled nếu chưa có
-                Swal.fire({
-                    title: 'Thông Báo từ hệ thống',
-                    text: "Bạn có chắc muốn địa chỉ đã sửa?",
-                    icon: 'success',
-                    confirmButtonText: 'Xác nhận',
-                    allowOutsideClick: false,
-                }).then((result) => {
-                    text.textContent = "Edit";
-                })
-            }
-
-            // // Lấy nội dung hiện tại của ô chứa địa chỉ
-            // var currentAddress = document.getElementById('diachi').textContent;
-            //
-            // // Tạo một ô input để người dùng nhập địa chỉ mới
-            // var inputElement = document.createElement('input');
-            // inputElement.setAttribute('type', 'text');
-            // inputElement.setAttribute('class', 'form-control');
-            // inputElement.setAttribute('id', 'newAddress');
-            // inputElement.value = currentAddress;
-            //
-            // // Thay thế ô chứa địa chỉ bằng ô input
-            // document.getElementById('diachi').innerHTML = '';
-            // document.getElementById('diachi').appendChild(inputElement);
-            //
-            // // Tạo một nút Save để lưu thay đổi
-            // var saveButton = document.createElement('button');
-            // saveButton.setAttribute('class', 'btn btn-primary');
-            // saveButton.textContent = 'Save';
-            // saveButton.onclick = function() {
-            //     // Lấy địa chỉ mới từ ô input
-            //     var newAddress = document.getElementById('newAddress').value;
-            //
-            //     // Thay đổi nội dung của ô chứa địa chỉ
-            //     document.getElementById('diachi').textContent = newAddress;
-            // };
-            //
-            // // Thêm nút Save vào ô tiếp theo của hàng
-            // var tdElement = document.createElement('td');
-            // tdElement.appendChild(saveButton);
-            // document.getElementById('diachi').parentNode.nextElementSibling.appendChild(tdElement);
+        var input = document.getElementById("diachi");
+        var text = document.getElementById("text");
+        if (input.disabled) {
+            input.disabled = false; // Bỏ disabled nếu đã có
+            console.log("mở")
+            text.textContent = "Save";
+        } else {
+            input.disabled = true; // Kích hoạt disabled nếu chưa có
+            Swal.fire({
+                title: 'Thông Báo từ hệ thống',
+                text: "Bạn có chắc muốn địa chỉ đã sửa?",
+                icon: 'success',
+                confirmButtonText: 'Xác nhận',
+                allowOutsideClick: false,
+            }).then((result) => {
+                text.textContent = "Edit";
+            })
         }
-    </script>
+    }
+</script>
 </body>
 
 </html>
