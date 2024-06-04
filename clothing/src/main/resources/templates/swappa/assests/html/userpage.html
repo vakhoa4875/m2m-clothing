@@ -847,6 +847,7 @@
     const logout = () => {
         let agreed = confirm("Logout from M2M-Clothing?");
         if (agreed) {
+            sessionStorage.setItem("tendn","");
             window.location.href = "/account/logout"
         }
     }

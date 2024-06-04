@@ -23,6 +23,14 @@
             width: auto; /* Chiều rộng tự động điều chỉnh để duy trì tỷ lệ khung hình */
         }
 
+        #cart {
+            position: fixed;
+        }
+        .fly-to-cart {
+            position: fixed;
+            transition: transform 1s, opacity 1s;
+            z-index: 1000;
+        }
     </style>
 </head>
 <body>
@@ -347,12 +355,12 @@
                             <div class="col-lg-2 col-md-3 col-sm-4" th:each="product : ${listProduct}">
                                 <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
                                     <!-- Only wrap the elements that you want to be clickable with the anchor tag -->
-                                    <a th:href="@{'/product?slug_url=' + ${product.slug}}">
+                                    <a th:href="@{'/product?slug_url=' + ${product.slug}}" class="product">
                                         <!-- Hiển thị thông tin sản phẩm -->
                                         <div th:if="${product.getSale()}" style="position: absolute">
                                             <span class="badge text-bg-danger" th:text="${product.sale.salePercent + '%'}"></span>
                                         </div>
-                                        <div class="img-container">
+                                        <div class="img-container" >
                                             <img th:src="@{'../media/' + ${product.pictures.split(',')[0]}}" class="img-fluid mt-2 mb-3" alt="">
                                         </div>
                                         <div class="w-100">
@@ -360,7 +368,7 @@
                                         </div>
                                         <div class="w-100">
                                             <div class="d-flex justify-content-around">
-                                                <div th:if="${product.getSale}" th:id="'sale_'+${product.getProductId()}" class="d-flex justify-content-around w-100">
+                                                <div th:if="${product.getSale}"  class="d-flex justify-content-around w-100">
                                                     <del th:text="${product.price}"></del>
                                                     <span id="giasanphamsale" style="color:#c07d4b; font-weight: bolder" th:text="${(product.getSale()!= null? #numbers.formatDecimal(product.getPrice().intValue() - (product.getSale.getSalePercent() / 100.00 * product.getPrice().intValue()), 1, 'DEFAULT', 2,'DEFAULT') : product.getPrice())}"></span>
                                                 </div>
@@ -369,9 +377,19 @@
                                         </div>
                                     </a>
                                     <!-- Button should be outside the anchor tag -->
-                                    <button class="rounded-bottom-3 w-100 fw-bolder text-white" th:onclick="|getIdSanPham(${product.getProductId()})|" style="background-color: rgb(224, 150, 150); border-color: rgba(0,0,0,0)" >
+                                    <button class="rounded-bottom-3 w-100 fw-bolder text-white"
+                                            th:attr="
+                                                data-product-id=${product.getProductId()},
+                                                data-product-name=${product.name},
+                                                data-product-sale=${(product.getSale()!= null? #numbers.formatDecimal(product.getPrice().intValue() - (product.getSale.getSalePercent() / 100.00 * product.getPrice().intValue()), 1, 'DEFAULT', 2,'DEFAULT') : product.getPrice())},
+                                                data-product-price=${product.price},
+                                                data-product-Anh=@{'../media/' + ${product.pictures.split(',')[0]}},
+                                                data-product-sale-on = ${(product.getSale()!= null ? '1' : '0')},
+                                                onclick='getIdSanPham(this.getAttribute(&quot;data-product-id&quot;), this.getAttribute(&quot;data-product-name&quot;), this.getAttribute(&quot;data-product-sale&quot;), this.getAttribute(&quot;data-product-price&quot;), this.getAttribute(&quot;data-product-Anh&quot;), this.getAttribute(&quot;data-product-sale-on&quot;))'"
+                                                style="background-color: rgb(224, 150, 150); border-color: rgba(0,0,0,0)" >
                                         Mua ngay
                                     </button>
+                                    <div style="display:none;" id="activeLogin" th:text="${activeLogin}"></div>
                                 </div>
                             </div>
                         </div>
@@ -384,34 +402,9 @@
 <!-- footer -->
 <footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
 <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
 <script src="/assests/js/jsAll.js"></script>
-<script>
-
-    //kiểm tra xem sản phẩm đó có giảm giá khong
-    const saleDiv = document.getElementById(`sale_${product.id}`);
-    const productId = document.getElementById(product.id).getAttribute('data-product-id');
-    const summedId = `sum_${productId}`;
-
-
-
-    //thông tin của sản phẩm
-    var giaspso = document.getElementById("")
-
-    function getIdSanPham (int){
-        console.log(int)
-        $.ajax({
-            url: '/findcategorynamebyproductidapi'+int,
-            type: 'GET',
-            success: function (data) {
-                console.log(data)
-            },
-            error: function (xhr, status, error) {
-                console.error("Đã xảy ra lỗi khi gọi API: " + error);
-            }
-        })
-
-    }
-</script>
+<script src="/assests/js/animation_add_Item.js"></script>
 </body>
 </html>

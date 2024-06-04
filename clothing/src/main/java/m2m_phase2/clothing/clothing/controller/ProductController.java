@@ -32,6 +32,7 @@ public class ProductController {
 		List<ProductM> products	= productServiceImpl.findBycategory(categoryId);
 		model.addAttribute("listProduct",products);
 		model.addAttribute("active",categoryId);
+		model.addAttribute("activeLogin",session.getAttribute("email"));
 		return "swappa/assests/html/productAll";
 	}
 
@@ -40,6 +41,7 @@ public class ProductController {
 		List<ProductM> products	= productServiceImpl.findAll();
 		model.addAttribute("listProduct",products);
 		model.addAttribute("active",7); // hiện bản cateory ở trạng thái trọn All
+		model.addAttribute("activeLogin",session.getAttribute("email"));
 		return "swappa/assests/html/productAll";
 	}
 
