@@ -28,6 +28,12 @@
             color: white;
             cursor: pointer;
         }
+        .link-body-emphasis:hover{
+            color: rgba(178, 169, 169, 0.96) !important;
+            font-weight: bolder!important;
+            text-decoration: underline!important;
+            text-decoration-color: white!important;
+        }
     </style>
 </head>
 
@@ -53,7 +59,7 @@
                                 </h3>
                             </div>
                             <div class="big_image bgg-cf-100 rounded">
-                                <a href="/allproduct" class="d-block h3 stretched-link" title="Buy and sell phones">
+                                <a href="/AllcategoryType" class="d-block h3 stretched-link" title="Buy and sell phones">
                                     <img src="/assests/images/banner_3.jpg" class="img-fluid"
                                          alt="Used and refurbished phones">
                                 </a>
@@ -76,7 +82,7 @@
                                 </h3>
                             </div>
                             <div class="big_image bgg-cf-100 rounded">
-                                <a href="/allproduct" class="d-block h3 stretched-link" title="Buy and sell phones">
+                                <a href="/AllcategoryType" class="d-block h3 stretched-link" title="Buy and sell phones">
                                     <img src="/assests/images/banner_2.jpg" class="img-fluid"
                                          alt="Used and refurbished phones">
                                 </a>
@@ -101,7 +107,7 @@
                                 </h3>
                             </div>
                             <div class="big_image bgg-cf-100 rounded">
-                                <a href="/allproduct" class="d-block h3 stretched-link" title="Buy and sell phones">
+                                <a href="/AllcategoryType" class="d-block h3 stretched-link" title="Buy and sell phones">
                                     <img src="/assests/images/banner_1.jpg" class="img-fluid"
                                          alt="Used and refurbished phones">
                                 </a>
@@ -356,13 +362,6 @@
         }
     });
 </script>
-<script>
-    var duongdan  = sessionStorage.getItem("duongdan");
-    if(duongdan != null){
-        window.location.href = sessionStorage.getItem("duongdan");
-    }else {
-
-    }
-</script>
+<script th:src="@{/assests/js/TimKiemSpAndShop.js}"></script>
 </body>
 </html>
