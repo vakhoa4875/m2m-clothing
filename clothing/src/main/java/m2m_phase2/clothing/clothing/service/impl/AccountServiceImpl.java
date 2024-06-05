@@ -31,8 +31,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountGGRepo accountGGRepo;
     @Autowired
     private JavaMailSender emailSender;
-    @Autowired
-    private HttpSession session;
+    private final HttpSession session;
 //    private final UserService userService;
 
     @Override
@@ -53,6 +52,7 @@ public class AccountServiceImpl implements AccountService {
         return repo.findByusername(username);
     }
 
+    @Override
     public void sendOTPEmail(String toEmail, String otp) {
         try {
             MimeMessage message = emailSender.createMimeMessage();
@@ -75,6 +75,7 @@ public class AccountServiceImpl implements AccountService {
         return sessionOtp != null && sessionOtp.equals(otp);
     }
 
+    @Override
     public String generateOTP() {
         SecureRandom random = new SecureRandom();
         int otpValue = 100000 + random.nextInt(900000);
@@ -90,6 +91,7 @@ public class AccountServiceImpl implements AccountService {
         return true;
     }
 
+    @Override
     public boolean checkEmail(Account account, Model model) {
         if (findByemail(account.getEmail()) != null) {
             String messError = "Email already exists";
@@ -99,6 +101,7 @@ public class AccountServiceImpl implements AccountService {
         return true;
     }
 
+    @Override
     public boolean checkFillRegister(Model model, String... args) {
         for (String string : args) {
             if (string.equals("")) {
@@ -111,6 +114,7 @@ public class AccountServiceImpl implements AccountService {
 
     }
 
+    @Override
     public boolean checkFillOtp(Model model, String... args) {
         for (String string : args) {
             if (string.equals("")) {
@@ -122,6 +126,7 @@ public class AccountServiceImpl implements AccountService {
         return true;
     }
 
+    @Override
     public String concatOtp(String... args) {
         String otpConcatSuccess = "";
         for (int i = 0; i < args.length; i++) {
@@ -147,7 +152,7 @@ public class AccountServiceImpl implements AccountService {
 //		return UserM.convertListAccountToListUserM(listAccount);
 //	}
 
-
+    @Override
     public void sendLinkEmail(String toEmail, String resetPasswordUrl) {
         try {
             MimeMessage message = emailSender.createMimeMessage();
@@ -165,13 +170,14 @@ public class AccountServiceImpl implements AccountService {
         }
     }
 
+    @Override
     public String sendUrl() {
 
         String resetPasswordUrl = "http://localhost:8083/ConfirmPassword-Forgot-mk";
         return resetPasswordUrl;
     }
 
-
+    @Override
     public String submitLogin(Account accountRequest, Model model) throws SQLException {
 //        var loginUserDto = new UserDto();
 //        loginUserDto.setEmail(accountRequest.getEmail());
@@ -198,8 +204,11 @@ public class AccountServiceImpl implements AccountService {
         // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
         session.setAttribute("loggedInUser", accountRequest.getEmail());
         StaticVariable.sessionEmail = accountRequest.getEmail();
-        model.addAttribute("iduser",existingAccount.getUserId());
+        model.addAttribute("iduser", existingAccount.getUserId());
+        model.addAttribute("email", existingAccount.getEmail());
         session.setAttribute("iduser", existingAccount.getUserId());
+        session.setAttribute("email", existingAccount.getEmail());
+        PasswordEncoderUtil.email = accountRequest.getEmail();
         return "swappa/assests/html/trangchu";
     }
 
@@ -241,6 +250,7 @@ public class AccountServiceImpl implements AccountService {
         return totalAccountsFromAccount;
     }
 
+    @Override
     public boolean isLoggedIn(HttpSession session) {
         // Lấy thông tin người dùng từ session
         Object loggedInUser = session.getAttribute("loggedInUser");

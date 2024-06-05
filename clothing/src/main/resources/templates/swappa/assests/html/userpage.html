@@ -385,6 +385,10 @@
                                     data-bs-toggle="pill" data-bs-target="#v-pills-AllVoucher" type="button" role="tab"
                                     aria-controls="v-pills-AllVoucher" aria-selected="false">Sale
                             </button>
+                            <button class="nav-link mt-1 text-black" id="v-pills-home-shop"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-shop" type="button" role="tab"
+                                    aria-controls="v-pills-shop" aria-selected="false">Shop
+                            </button>
                             <a class="nav-link mt-1 text-black" href="#" onclick="logout()">Log Out</a>
                         </div>
                     </div>
@@ -425,13 +429,14 @@
                                                             $("#qrImg").attr("src", qrUrl);
                                                         }
 
-                                                        $(document).ready(function() {
-                                                            $("#generateQRBtn").click(function(e) {
+                                                        $(document).ready(function () {
+                                                            $("#generateQRBtn").click(function (e) {
                                                                 e.preventDefault();
                                                                 $("#captchaContainer").show(); // Hiển thị reCAPTCHA khi nhấp vào nút "Generate QR Code"
                                                             });
 
                                                         });
+
                                                         function xuLyCaptchaThanhCong() {
                                                             console.log("Captcha đã được xác nhận thành công!");
                                                             generateQRCode();
@@ -494,10 +499,13 @@
                                             <div class=" my-3 row d-flex" style="margin-right: 10px;">
                                                 <span id="generateQRBtn" class="col-3 me-3">Generate QR Code</span>
                                                 <div id="captchaContainer" style="display: none;" class="col-9">
-                                                    <div class="g-recaptcha" data-sitekey="6LdatOcpAAAAANmoLRJRie7PC1wg-H7FJ5NRb-cd" data-callback="xuLyCaptchaThanhCong"></div>
+                                                    <div class="g-recaptcha"
+                                                         data-sitekey="6LdatOcpAAAAANmoLRJRie7PC1wg-H7FJ5NRb-cd"
+                                                         data-callback="xuLyCaptchaThanhCong"></div>
                                                 </div>
                                             </div>
-                                            <p id="iduser" th:text="${userM.getId()}" style="position: absolute; top: 95px; left: 11px; color: white"></p>
+                                            <p id="iduser" th:text="${userM.getId()}"
+                                               style="position: absolute; top: 95px; left: 11px; color: white"></p>
                                             <div class="mb-3 row alert alert-success" id="updateSuccess"></div>
                                             <div class="mb-3 row my-3 alert alert-danger" id="updateError"></div>
                                         </div>
@@ -591,6 +599,31 @@
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane" id="v-pills-shop" role="tabpanel"
+                     aria-labelledby="v-pills-home-status" tabindex="0">
+                    <div class="card ">
+
+                        <div class="card-body p-0 mx-3 pb-2">
+                            <div class="table-responsive p-0">
+                                <div class="header mt-1 mb-1">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item bg-body-secondary rounded-3">
+                                            <h3 class="m-0">Register to become a Seller</h3>
+                                            <!--                                            <span>Manage profile information for account security</span>-->
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="container">
+                                    <div class="row text-center justify-content-center">
+                                        <h3>Welcome to M2M Clothing</h3>
+                                        <h5>Click submit if you want to become a seller</h5>
+                                        <button id="submitShop" class="btn btn-primary w-25">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -622,6 +655,8 @@
 <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/assests/js/SignUpShop.js"></script>
 
 <!--<script th:src="@{/assests/js/userpage.js}"></script>-->
 <script>
@@ -750,21 +785,21 @@
                         </td>
                         <td class="text-center">$${order.totalAmount}</td>
                         <td class="text-center">
-                            <div class="${order.orderStatus == 'Approved'     ? 'badge text-bg-success' : 'badge text-bg-warning'} ">${order.orderStatus}</div>
+                            <div class="${order.orderStatus == 'Approved' ? 'badge text-bg-success' : 'badge text-bg-warning'} ">${order.orderStatus}</div>
                         </td>
                         <td class="text-center">
                             <button class="btn btn-success" ${
-                                            (() => {
-                                                switch (true) {
-                                                    case ((order.paymentMethod === 'Cod' && (order.orderStatus === 'Approved' || order.orderStatus === 'Need approved'))):
-                                                        return 'disabled';
-                                                    case ((order.paymentMethod === 'Paypal' || order.orderStatus === 'Need approved')):
-                                                        return 'disabled';
-                                                    case ((order.paymentMethod === 'Paypal' && order.orderStatus === 'Approved')):
-                                                        return "";
-                                                }
-                                            })()
-                                        }
+                        (() => {
+                            switch (true) {
+                                case ((order.paymentMethod === 'Cod' && (order.orderStatus === 'Approved' || order.orderStatus === 'Need approved'))):
+                                    return 'disabled';
+                                case ((order.paymentMethod === 'Paypal' || order.orderStatus === 'Need approved')):
+                                    return 'disabled';
+                                case ((order.paymentMethod === 'Paypal' && order.orderStatus === 'Approved')):
+                                    return "";
+                            }
+                        })()
+                    }
                             onclick="payWithPaypal(${order.totalAmount}, ${order.orderId})">Pay with paypal</button>
                         </td>
                     </tr>
@@ -812,6 +847,7 @@
     const logout = () => {
         let agreed = confirm("Logout from M2M-Clothing?");
         if (agreed) {
+            sessionStorage.setItem("tendn","");
             window.location.href = "/account/logout"
         }
     }
@@ -868,7 +904,7 @@
 
 
 </script>
-<script >
+<script>
     $(document).ready(function () {
 
         $('#xoathongbao').click(function () {
@@ -880,7 +916,7 @@
 
         var id = $('#iduser').text();
         $.ajax({
-            url: '/finduseridwitchNotification?id='+id,
+            url: '/finduseridwitchNotification?id=' + id,
             type: 'GET',
             contentType: 'application/json',
             success: function (data) {
@@ -900,9 +936,9 @@
             }
         });
 
-        function xoathongbao(id){
+        function xoathongbao(id) {
             $.ajax({
-                url: '/deleteNotification?id='+id,
+                url: '/deleteNotification?id=' + id,
                 type: 'GET',
                 contentType: 'application/json',
                 success: function (data) {
@@ -949,5 +985,4 @@
     });
 </script>
 </body>
-
 </html>

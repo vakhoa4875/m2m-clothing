@@ -2,6 +2,7 @@ package m2m_phase2.clothing.clothing.api;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.OrderDto;
+import m2m_phase2.clothing.clothing.data.mgt.ResponseObject;
 import m2m_phase2.clothing.clothing.service.OrderDetailService;
 import m2m_phase2.clothing.clothing.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,7 +76,7 @@ public class OrderApi {
             dto.setDeliveryAddress((String) obj[4]);
             dto.setPaymentMethod((String) obj[5]);
             dto.setTotalAmount(Float.valueOf((float) ((Double) obj[6]).doubleValue()));
-            dto.setSoluong(String.valueOf(obj[7]));
+            dto.setCountSp((Integer) obj[7]);
             dto.setOrderStatus((String) obj[8]);
             dtos.add(dto);
         }
@@ -95,17 +96,17 @@ public class OrderApi {
         return ResponseEntity.ok(orderDto);
     }
 
-    @PostMapping("/insertOderdetail")
-    public ResponseEntity<?> insertOder(@RequestBody OrderDto orderDto) {
-        orderDto.setOrderId(orderDetailService.getLastInsertedOrderId());
-        try {
-            orderDetailService.UpdateOderDetail(orderDto);
-        } catch (Exception e) {
-            System.out.println("Call API Failed: /api/orders/saveOder");
-            throw new RuntimeException(e);
-        }
-        return ResponseEntity.ok(orderDto);
-    }
+//    @PostMapping("/insertOderdetail")
+//    public ResponseEntity<?> insertOder(@RequestBody OrderDto orderDto) {
+//        orderDto.setOrderId(orderDetailService.getLastInsertedOrderId());
+//        try {
+//            orderDetailService.UpdateOderDetail(orderDto);
+//        } catch (Exception e) {
+//            System.out.println("Call API Failed: /api/orders/saveOder");
+//            throw new RuntimeException(e);
+//        }
+//        return ResponseEntity.ok(orderDto);
+//    }
 
     @GetMapping("/updateOderUser")
     public ResponseEntity<?> updateOdeUserfromAdmin(@Param("idProduct") Integer idProduct, @Param("OrderStatus") String OrderStatus) {
@@ -116,6 +117,22 @@ public class OrderApi {
             System.out.println("Call API Failed: /api/orders/saveOder");
             throw new RuntimeException(e);
         }
+    }
+
+    @PostMapping("/createOrder")
+    public ResponseObject<?> doPostCreateOrder(@RequestBody OrderDto orderDto) {
+        var response = new ResponseObject<>();
+        try {
+            var data = orderService.saveOrder(orderDto);
+            response.setData(data);
+            response.setStatus("Succeed");
+            response.setMessage("Created new order successfully!");
+        } catch (Exception e) {
+            response.setStatus("Failed");
+            response.setMessage("An error occurred during progress!");
+            e.printStackTrace();
+        }
+        return response;
     }
 
 }

@@ -9,6 +9,17 @@
     <link rel="shortcut icon" th:href="@{/assests/srcPic/x.png}" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        #cart {
+            position: fixed;
+        }
+        .fly-to-cart {
+            position: fixed;
+            transition: transform 1s, opacity 1s;
+            z-index: 1000;
+
+        }
+    </style>
     <script>
         $(document).ready(function () {
             $("#submitButtonNhanXet").click(function () {
@@ -77,8 +88,11 @@
                         <ol class="breadcrumb mb-2">
                             <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
                             <li class="breadcrumb-item"><a href="#" th:text="${listProduct.getName()}"></a></li>
-                            <div style="color: #ff000000">
+                            <div style="color: #ff000000; display: none">
                                 <span id="dn" th:text="${checklogin}"></span>
+                            </div>
+                            <div style="color: #ff000000; display: none">
+                                <span id="idproduct" th:text="${listProduct.getProductId()}"></span>
                             </div>
                         </ol>
                     </nav>
@@ -91,14 +105,14 @@
                 <div class="row mt-3">
                     <div class="col-12 col-md-12 col-lg-12">
                         <div id="myCarousel" class="carousel slide d-flex justify-content-center"
-                             data-bs-ride="carousel" th:with="chuoiAnh=${listProduct.getPictures()}">
+                              th:with="chuoiAnh=${listProduct.getPictures()}">
                             <!-- Carousel indicators -->
                             <!-- Wrapper for carousel items -->
-                            <div class="carousel-inner h-50 w-50"
+                            <div class="carousel-inner h-50 w-50 "
                                  th:with="mangAnh=${#strings.arraySplit(chuoiAnh, ',')}">
-                                <div class="carousel-item active">
+                                <div class="carousel-item active product" >
                                     <img th:src="@{'../media/'+${mangAnh[0]}}" class="d-block w-100" alt="Slide 1"
-                                         id="productAnh" style="object-fit: contain; width: 340px; height: 420px;">
+                                         id="productAnh" style="object-fit: contain; width: 340px; height: 420px;" data-id="1">
                                 </div>
                                 <div class="carousel-item" th:if="${mangAnh.length  > 1}">
                                     <img th:src="@{'../media/'+${mangAnh[1]}}" class="d-block w-100" alt="Slide 2"

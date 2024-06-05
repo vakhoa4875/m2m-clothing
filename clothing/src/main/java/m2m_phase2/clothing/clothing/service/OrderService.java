@@ -23,6 +23,6 @@ public interface OrderService {
 
     List<Object[]> findAllUser();
 
-
+    Order saveOrder(OrderDto orderDto);
 
 }
