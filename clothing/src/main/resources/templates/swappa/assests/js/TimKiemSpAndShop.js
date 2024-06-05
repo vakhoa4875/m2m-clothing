@@ -51,11 +51,13 @@ $(document).ready(function () {
 
                 if (keyword.length > 0) {
                     $inputContainer.css('display', 'block');
+                    $('#tenSp').html('');
+                    $('#tenShop').html('');
                     mangMoi.forEach(function (value, index) {
-                        if (index == 0) {
+                        if (index === 0) {
                             $('#tenShop').append(`
                                     <a href="#" class="ms-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover w-100" >
-                                                ${value.ten_sp_shop}
+                                        ${value.ten_sp_shop}
                                     </a>`
                             );
                         }
