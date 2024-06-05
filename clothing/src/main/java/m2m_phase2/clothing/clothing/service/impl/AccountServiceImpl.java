@@ -205,7 +205,9 @@ public class AccountServiceImpl implements AccountService {
         session.setAttribute("loggedInUser", accountRequest.getEmail());
         StaticVariable.sessionEmail = accountRequest.getEmail();
         model.addAttribute("iduser", existingAccount.getUserId());
+        model.addAttribute("email", existingAccount.getEmail());
         session.setAttribute("iduser", existingAccount.getUserId());
+        session.setAttribute("email", existingAccount.getEmail());
         PasswordEncoderUtil.email = accountRequest.getEmail();
         return "swappa/assests/html/trangchu";
     }
