@@ -49,7 +49,6 @@ loadSearchRecommendation = () => {
 
 $(document).ready(async () => {
     await getListProducts();
-    console.dir(listSearchRecommendation);
 })
 searchInput.on('input', () => {
     loadSearchRecommendation();
