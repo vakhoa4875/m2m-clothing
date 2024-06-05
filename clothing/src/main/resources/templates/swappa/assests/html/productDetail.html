@@ -68,6 +68,14 @@
             });
         });
     </script>
+    <style>
+        .link-body-emphasis:hover{
+            color: rgba(178, 169, 169, 0.96) !important;
+            font-weight: bolder!important;
+            text-decoration: underline!important;
+            text-decoration-color: white!important;
+        }
+    </style>
 </head>
 <body>
 <div id="fb-root"></div>
@@ -374,6 +382,7 @@
         return number.toFixed(2);
     }
 </script>
+<script th:src="@{/assests/js/searchRcmd.js}"></script>
 <script>
     $(document).ready(function () {
         $('#navbar_search_input').on('keydown', function (e) {
