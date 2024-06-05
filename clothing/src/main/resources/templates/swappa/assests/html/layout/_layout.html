@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Layout</title>
+
 </head>
 <body>
 <div th:fragment="header" class="sticky-lg-top">
@@ -51,12 +52,18 @@
                             </li>
                         </ul>
                         <div class="flex-grow-1">
-                            <form action="" class="d-flex align-items-center position-relative h-100">
-                                <!-- {{keyword}} -->
-                                <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
-                                <input type="search" class="form-control rounded-0" id="navbar_search_input"
-                                       name="q" ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
-                                <!-- </a> -->
+                            <form class="d-flex align-items-center position-relative h-100" onsubmit="return false;">
+                                <input type="search" class="form-control rounded-0" id="navbar_search_input" name="keyword"
+                                       placeholder="Find a good deal" autocomplete="off">
+                                <select class="form-select rounded-0" id="select_loai" name="type" style="width: 100px">
+                                    <option value="All">All</option>
+                                    <option value="Outerwear">Outerwear</option>
+                                    <option value="Tops">Tops</option>
+                                    <option value="Bottoms">Bottoms</option>
+                                    <option value="Jewels & Accessories">Jewels & Accessories</option>
+                                    <option value="Headwear">Headwear</option>
+                                    <option value="Footwear">Footwear</option>
+                                </select>
                             </form>
                         </div>
                         <ul class="navbar-nav" role="presentation">
