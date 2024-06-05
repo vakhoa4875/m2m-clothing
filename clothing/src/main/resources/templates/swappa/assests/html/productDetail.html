@@ -57,6 +57,14 @@
             });
         });
     </script>
+    <style>
+        .link-body-emphasis:hover{
+            color: rgba(178, 169, 169, 0.96) !important;
+            font-weight: bolder!important;
+            text-decoration: underline!important;
+            text-decoration-color: white!important;
+        }
+    </style>
 </head>
 <body>
 <div id="fb-root"></div>
@@ -65,7 +73,7 @@
 <!-- header -->
 <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
 <!-- body -->
-<div class="container-fluid bg-semiBlack">
+<div class="container-fluid bg-semiBlack main-container">
     <main class="flex-shrink-0">
         <div id="main_container" class="container text-bg-cf pt-1 pb-2">
             <!-- content-top -->
@@ -363,5 +371,6 @@
         return number.toFixed(2);
     }
 </script>
+<script th:src="@{/assests/js/searchRcmd.js}"></script>
 </body>
 </html>

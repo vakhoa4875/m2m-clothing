@@ -66,4 +66,12 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     Long countByCategory(@Param("categoryId") Integer categoryId);
 
     Product findByProductIdOrSlugUrl(Integer productId, String slugUrl);
+
+    @Query("SELECT p FROM Product p WHERE p.category.category_id = :categoryId and p.shopE.userE.email = :email")
+    List<Product> findProductByShopCategory(@Param("categoryId") Integer categoryId,
+                                            @Param("email") String email);
+
+    @Query("select p.productName, p.slugUrl from Product p")
+    List<String[]> getAllProducts();
+
 }
