@@ -53,6 +53,6 @@ $(document).ready(async () => {
 searchInput.on('input', () => {
     loadSearchRecommendation();
 });
-searchInput.blur(() => {
-    searchRecommendationContainer.css('display', 'none');
-});
+// searchInput.blur(() => {
+//     searchInput.val('');
+// }
