@@ -11,7 +11,7 @@
 </head>
 <body>
     <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
-    <div class="container-fluid bg-semiBlack p-0">
+    <div class="container-fluid bg-semiBlack p-0 main-container">
 
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-4 pb-2 mb-2"
@@ -227,7 +227,7 @@
                                         </div>
                                         <div class="col-md-6 col-sm-6 d-flex flex-column">
                                             <span class="ms-5 w-25 tienCanTra"></span>
-                                            <span class="ms-5 w-25 tiengiam"></span>
+                                            <span id="tiengiamgia" class="ms-5 w-25 tiengiam"></span>
                                             <span class="ms-5 w-25 fw-bold tienThanhToan"
                                                 style="color: rgb(251, 67, 67);"></span>
                                         </div>
@@ -260,4 +260,8 @@
 <script src="/assests/js/app_admin.js"></script>
 <script src="/assests/js/script.js"></script>
 <script src="/assests/js/jsAll.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/assests/js/searchRcmd.js}"></script>
 </html>

@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tổng sản phẩm</title>
+    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/css/style.css">
+    <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        .img-container {
+            height: 200px; /* Điều chỉnh chiều cao tùy theo nhu cầu */
+            display: flex; /* Sử dụng flexbox để căn chỉnh hình ảnh */
+            align-items: center; /* Căn chỉnh hình ảnh theo trục dọc */
+            justify-content: center; /* Căn chỉnh hình ảnh theo trục ngang */
+            overflow: hidden; /* Đảm bảo ảnh không bị tràn ra ngoài */
+        }
+
+        .img-container img {
+            max-height: 100%; /* Đảm bảo chiều cao của ảnh không vượt quá container */
+            width: auto; /* Chiều rộng tự động điều chỉnh để duy trì tỷ lệ khung hình */
+        }
+    </style>
+</head>
+<body>
+<!-- header -->
+<div>
+    <!-- mobileNav -->
+    <div class="d-block d-lg-none">
+        <div id="mobileNav"  style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
+            <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
+                <div class="container-sm">
+
+                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_menu"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+
+                    <a href="/trangchu" class="navbar-brand" title="Swappa">
+                        <img class="img-fluid"
+                             src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                             alt="Swappa Logo">
+                    </a>
+
+                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas" data-bs-target="#slide_search"
+                            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Search">
+                        <i class="fa-solid fa-search" aria-hidden="true"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+    </div>
+    <!-- mainNav -->
+    <div class="d-none d-lg-block">
+        <!-- first-nav -->
+        <div class="stNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);" >
+            <nav class="navbar navbar-expand-lg  navbar-dark pb-0">
+                <div class="container d-block">
+                    <div class="d-flex gap-3">
+                        <ul class="navbar-nav" role="presentation">
+                            <li class="nav-item">
+                                <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
+                                    <img class="img-fluid"
+                                         src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
+                                         width="167px" height="35px" alt="Bootstrap">
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="flex-grow-1">
+                            <form class="d-flex align-items-center position-relative h-100" onsubmit="return false;">
+                                <input type="search" class="form-control rounded-0" id="navbar_search_input" name="keyword"
+                                       placeholder="Find a good deal" autocomplete="off">
+                                <select class="form-select rounded-0" id="select_loai" name="type" style="width: 100px">
+                                    <option value="All">All</option>
+                                    <option value="Outerwear">Outerwear</option>
+                                    <option value="Tops">Tops</option>
+                                    <option value="Bottoms">Bottoms</option>
+                                    <option value="Jewels&Accessories">Jewels & Accessories</option>
+                                    <option value="Headwear">Headwear</option>
+                                    <option value="Footwear">Footwear</option>
+                                </select>
+                            </form>
+
+
+                        </div>
+                        <ul class="navbar-nav" role="presentation">
+                            <li class="d-flex align-items-center justify-content-center">
+                                <div class="">
+                                    <a href="/userprofile">
+                                        <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="ms-3 d-flex align-items-center justify-content-center">
+                                <a href="/giohang" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
+                                    <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
+                                      0
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="d-flex justify-content-around pb-1" id="userListCategory">
+                        <!-- api -->
+                    </div>
+                </div>
+            </nav>
+        </div>
+        <!-- second-nav -->
+    </div>
+</div>
+<!-- main -->
+<div class="flex-shrink-0 " style="min-height: 800px;">
+    <div class="d-flex flex-column">
+        <!-- body -->
+        <div id="main_container" class="container-fluid text-bg-cf p-0 pt-3">
+            <!-- content-top -->
+            <!-- tooltip-bar -->
+            <div id="tooltip-bar" class="row row-cols-2 row-cols-md-4 text-center">
+                <div class="col">
+                    <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='
+                                <div class="card text-bg-light">
+                                    <div class="card-header my-0 pb-0">
+                                        <div class="card-title border-bottom fw-bolder">No hidden fee</div>
+                                    </div>
+                                    <div class="pt-0 card-body">Standard shipping is included in the listing price. You pay what you see.
+                                    </div>
+                                </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" class="text-primary"><i
+                            class="fa-solid fa-dolly"></i> Free
+                        shipping</a>
+                </div>
+                <div class="col">
+                    <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='
+                                    <div class="card text-bg-light">
+                                        <div class="card-header my-0 pb-0">
+                                            <div class="card-title border-bottom fw-bolder">Tech has to work</div>
+                                        </div>
+                                        <div class="pt-0 card-body">No broken screens, blocked phones, or scammers. We have strict condition requirements, and real people verify listings before they go live.
+                                        </div>
+                                    </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" class="text-primary"><i
+                            class="fa-solid fa-ban"></i> No
+                        Junks, No Jerks</a>
+                </div>
+                <div class="col">
+                    <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='
+                                    <div class="card text-bg-light">
+                                        <div class="card-header my-0 pb-0">
+                                            <div class="card-title border-bottom fw-bolder">We’re here to help</div>
+                                        </div>
+                                        <div class="pt-0 card-body">Our support team typically responds in 20 minutes or less. Really!
+                                        </div>
+                                    </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" class="text-primary"><i
+                            class="fa-solid fa-envelope-open-text"></i>
+                        24/7/365 Supports</a>
+                </div>
+                <div class="col">
+                    <a href="#" data-bs-toggle="tooltip" data-bs-html="true" title='
+                                    <div class="card text-bg-light">
+                                        <div class="card-header my-0 pb-0">
+                                            <div class="card-title border-bottom fw-bolder">Sell with confidence</div>
+                                        </div>
+                                        <div class="pt-0 card-body">We use PayPal for payments because they provide extensive buyer and seller protections. Get paid directly to your PayPal account as soon as your item sells.
+                                        </div>
+                                    </div>' data-bs-placement="bottom" data-bs-custom-class="custom-tooltip" class="text-primary"><i
+                            class="fa-brands fa-paypal"></i>
+                        Paypal Protection</a>
+                </div>
+            </div>
+            <!-- breadcrumb-bar -->
+            <div id="breadcrumb-bar" class="ms-3 mt-3">
+                <nav aria-label="breadcrumb">
+                    <ul class="breadcrumb mb-2" th:switch="${active}">
+                                    <span th:case="1" class="d-flex">
+                                      <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                                      <li class="breadcrumb-item"><a href="/categoryType?categoryId=1">Outerwear</a></li>
+                                    </span>
+                        <div th:case="2" class="d-flex">
+                            <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/categoryType?categoryId=2">Tops</a></li>
+                        </div>
+                        <div th:case="3" class="d-flex">
+                            <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/categoryType?categoryId=3" >Bottoms</a></li>
+                        </div>
+                        <div th:case="4" class="d-flex">
+                            <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/categoryType?categoryId=4" >Jewels & Accessories</a></li>
+                        </div>
+                        <div th:case="5" class="d-flex">
+                            <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/categoryType?categoryId=5" >Headwear</a></li>
+                        </div>
+                        <div th:case="6" class="d-flex">
+                            <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/categoryType?categoryId=6" >Footwear</a></li>
+                        </div>
+                    </ul>
+                </nav>
+            </div>
+
+            <!-- product -->
+            <section class="container">
+                <div class="row ms-1 me-1">
+                    <div class="col-lg-12 col-md-12">
+                        <div class="row" id="product_list">
+                            <!-- Sản phẩm sẽ được thêm vào đây -->
+                        </div>
+                        <div class="col-lg-12 col-md-12 alert alert-warning" role="alert" id="no_products_message" style="display: none;">
+                            <p class="text-center">Không tìm thấy sản phẩm</p>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+<!-- footer -->
+<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
+    <div class="container pt-2 pb-2">
+        <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
+
+        </div>
+        <div class="row row-cols-1 row-cols-md-3">
+            <div class="col d-flex justify-content-center align-items-center">
+                <div class=" text-white">
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-facebook fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-instagram fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-youtube fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-linkedin fs-1"></i>
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=100031628760243" style="color: white">
+                        <i class="fa-brands fa-square-reddit fs-1"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="col text-center ">
+                <a href="paypal/index.html"><img
+                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg" class="img-fluid"
+                        alt=""></a>
+            </div>
+            <div class="col text-center text-white d-flex justify-content-center align-items-center">
+                <p class="fs-5">Copyright © 2023-2024 -M2M-</p>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="/node_modules/angular/angular.min.js"></script>
+<script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
+<script src="/assests/js/jsAll.js"/></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#navbar_search_input').on('keypress', function(e) {
+            if (e.which == 13) { // Khi nhấn phím Enter
+                e.preventDefault(); // Ngăn chặn form submit
+                searchProducts();
+            }
+        });
+
+        function searchProducts() {
+            var keyword = $('#navbar_search_input').val();
+            var type = $('#select_loai').val();
+
+            $.ajax({
+                url: '/api/search',
+                type: 'POST',
+                data: {
+                    keyword: keyword,
+                    type: type
+                },
+                success: function(response) {
+                    if (response.success) {
+                        console.log('Gọi API thành công:', response.data);
+                        displayProducts(response.data);
+                    } else {
+                        console.log('Gọi API thất bại:', response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.log('Lỗi:', error);
+                }
+            });
+        }
+
+        function displayProducts(products) {
+            $('#product_list').empty(); // Xóa sản phẩm cũ
+
+            if (products.length === 0) {
+                $('#no_products_message').show(); // Hiển thị thông báo
+            } else {
+                $('#no_products_message').hide(); // Ẩn thông báo nếu có sản phẩm
+
+                products.forEach(function(product) {
+                    var saleBadge = product.sale ? `<span class="badge text-bg-danger">${product.sale.salePercent}%</span>` : '';
+                    var productImage = product.pictures.split(',')[0];
+                    var originalPrice = product.price;
+                    var salePrice = product.sale ? (product.price - (product.sale.salePercent / 100.0 * product.price)).toFixed(2) : '';
+
+                    var productHTML = `
+                        <div class="col-lg-2 col-md-3 col-sm-4">
+                            <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
+                                <a href="/product?slug_url=${product.slug}" class="stretched-link">
+                                    <div style="position: absolute">
+                                        ${saleBadge}
+                                    </div>
+                                    <div class="img-container">
+                                        <img src="../media/${productImage}" class="img-fluid mt-2 mb-3" alt="${product.name}">
+                                    </div>
+                                    <div class="w-100">
+                                        <span class="d-inline-block text-truncate" style="max-width: 90%;">${product.name}</span>
+                                    </div>
+                                    <div class="w-100">
+                                        <div class="d-flex justify-content-around">
+                                            <div class="d-flex justify-content-around w-100">
+                                                ${product.sale ? `<del>${originalPrice}</del>` : ''}
+                                                <span style="color:#c07d4b; font-weight: bolder">${salePrice || originalPrice}</span>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
+                                                <div class="text-white fw-bolder">Mua ngay</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    `;
+
+                    $('#product_list').append(productHTML);
+                });
+            }
+        }
+    });
+</script>
+
+
+</html>

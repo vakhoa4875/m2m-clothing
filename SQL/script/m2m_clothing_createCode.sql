@@ -51,10 +51,6 @@ CREATE TABLE Sale
     sale_End     date,
 )
 
-
-
-
-
 create table [user]
 (
     id          int primary key identity (1,1),
@@ -438,9 +434,8 @@ FROM Category c
 LEFT JOIN Product p ON c.category_id = p.category_id
 GROUP BY c.category_name;
 
-
-
-
+select * from Product
+SELECT * FROM Product WHERE shop_id = 1;
 
 
 

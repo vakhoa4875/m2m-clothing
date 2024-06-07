@@ -9,6 +9,17 @@
     <link rel="shortcut icon" th:href="@{/assests/srcPic/x.png}" type="image/x-icon">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <style>
+        #cart {
+            position: fixed;
+        }
+        .fly-to-cart {
+            position: fixed;
+            transition: transform 1s, opacity 1s;
+            z-index: 1000;
+
+        }
+    </style>
     <script>
         $(document).ready(function () {
             $("#submitButtonNhanXet").click(function () {
@@ -57,6 +68,14 @@
             });
         });
     </script>
+    <style>
+        .link-body-emphasis:hover{
+            color: rgba(178, 169, 169, 0.96) !important;
+            font-weight: bolder!important;
+            text-decoration: underline!important;
+            text-decoration-color: white!important;
+        }
+    </style>
 </head>
 <body>
 <div id="fb-root"></div>
@@ -65,7 +84,7 @@
 <!-- header -->
 <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
 <!-- body -->
-<div class="container-fluid bg-semiBlack">
+<div class="container-fluid bg-semiBlack main-container">
     <main class="flex-shrink-0">
         <div id="main_container" class="container text-bg-cf pt-1 pb-2">
             <!-- content-top -->
@@ -77,8 +96,11 @@
                         <ol class="breadcrumb mb-2">
                             <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
                             <li class="breadcrumb-item"><a href="#" th:text="${listProduct.getName()}"></a></li>
-                            <div style="color: #ff000000">
+                            <div style="color: #ff000000; display: none">
                                 <span id="dn" th:text="${checklogin}"></span>
+                            </div>
+                            <div style="color: #ff000000; display: none">
+                                <span id="idproduct" th:text="${listProduct.getProductId()}"></span>
                             </div>
                         </ol>
                     </nav>
@@ -91,14 +113,14 @@
                 <div class="row mt-3">
                     <div class="col-12 col-md-12 col-lg-12">
                         <div id="myCarousel" class="carousel slide d-flex justify-content-center"
-                             data-bs-ride="carousel" th:with="chuoiAnh=${listProduct.getPictures()}">
+                              th:with="chuoiAnh=${listProduct.getPictures()}">
                             <!-- Carousel indicators -->
                             <!-- Wrapper for carousel items -->
-                            <div class="carousel-inner h-50 w-50"
+                            <div class="carousel-inner h-50 w-50 "
                                  th:with="mangAnh=${#strings.arraySplit(chuoiAnh, ',')}">
-                                <div class="carousel-item active">
+                                <div class="carousel-item active product" >
                                     <img th:src="@{'../media/'+${mangAnh[0]}}" class="d-block w-100" alt="Slide 1"
-                                         id="productAnh" style="object-fit: contain; width: 340px; height: 420px;">
+                                         id="productAnh" style="object-fit: contain; width: 340px; height: 420px;" data-id="1">
                                 </div>
                                 <div class="carousel-item" th:if="${mangAnh.length  > 1}">
                                     <img th:src="@{'../media/'+${mangAnh[1]}}" class="d-block w-100" alt="Slide 2"
@@ -354,11 +376,49 @@
 <script src="/assests/js/app.js"></script>
 <script src="/assests/js/script.js"></script>
 <script src="/assests/js/jsAll.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/assests/js/searchRcmd.js}"></script>
 <script th:inline="javascript">
     /* Định nghĩa hàm formatNumber để format số thành chuỗi với số lượng chữ số thập phân cho trước */
     function formatNumber(number) {
         return number.toFixed(2);
     }
+</script>
+<script th:src="@{/assests/js/searchRcmd.js}"></script>
+<script>
+    $(document).ready(function () {
+        $('#navbar_search_input').on('keydown', function (e) {
+            if (e.which == 13) {
+                searchProducts();
+            }
+        });
+        function searchProducts() {
+            var keyword = $('#navbar_search_input').val();
+            var type = $('#select_loai').val();
+            $.ajax({
+                url: '/api/search',
+                type: 'POST',
+                data: {
+                    keyword: keyword,
+                    type: type
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Gọi API thành công:', response.data);
+                        sessionStorage.setItem('searchResults', JSON.stringify(response.data));
+                        window.location.href = '/search-Product';
+                    } else {
+                        console.log('Gọi API thất bại:', response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Lỗi:', error);
+                }
+            });
+        }
+    });
 </script>
 </body>
 </html>

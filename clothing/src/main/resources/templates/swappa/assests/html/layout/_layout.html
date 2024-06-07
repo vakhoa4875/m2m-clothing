@@ -6,6 +6,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Layout</title>
+
 </head>
 <body>
 <div th:fragment="header" class="sticky-lg-top">
@@ -50,14 +51,57 @@
                                 </a>
                             </li>
                         </ul>
-                        <div class="flex-grow-1">
-                            <form action="" class="d-flex align-items-center position-relative h-100">
-                                <!-- {{keyword}} -->
-                                <!-- <a ng-href="#!/searchResult" class="d-flex align-items-center position-relative h-100"> -->
-                                <input type="search" class="form-control rounded-0" id="navbar_search_input"
-                                       name="q" ng-model="keyword" placeholder="Find a good deal" autocomplete="off">
-                                <!-- </a> -->
+                        <div class="flex-grow-1" style="position: relative">
+                            <form class="d-flex align-items-center position-relative h-100" onsubmit="return false;">
+                                <input type="search" class="form-control rounded-0 fosus_input" id="navbar_search_input" name="keyword"
+                                       placeholder="Find a good deal">
+                                <select class="form-select rounded-0" id="select_loai" name="type" style="width: 100px">
+                                    <option value="All">All</option>
+                                    <option value="Outerwear">Outerwear</option>
+                                    <option value="Tops">Tops</option>
+                                    <option value="Bottoms">Bottoms</option>
+                                    <option value="Jewels & Accessories">Jewels & Accessories</option>
+                                    <option value="Headwear">Headwear</option>
+                                    <option value="Footwear">Footwear</option>
+                                </select>
                             </form>
+                            <div style="position: absolute; display: none" class="w-100 fosus_input_timkiem" id="input-container">
+                                <div style="background: rgb(18 17 13 / 97%)" class="p-1">
+                                    <div class="d-flex w-100">
+                                        <div>
+                                            <span class="ms-2">
+                                                <i class="fa-solid fa-house-user"></i>
+                                            </span>
+                                        </div>
+                                        <div id="tenShop">
+<!--                                            <a href="#" class="ms-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover w-100" >-->
+<!--                                                tên của shop-->
+<!--                                            </a>-->
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <hr style="margin: 5px" class="mt-2">
+                                    </div>
+                                </div>
+                                <div style="background: rgb(18 17 13 / 97%)" class="p-0 d-flex flex-column rounded-3 rounded-top-0" id="tenSp">
+<!--                                    <a href="#" class="ms-2 p-1 pb-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">-->
+<!--                                        tên sản phẩm sẽ nằm ở đây 1-->
+<!--                                    </a>-->
+<!--                                    <a href="#" class="ms-2 p-1 pb-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">-->
+<!--                                        tên sản phẩm sẽ nằm ở đây 2-->
+<!--                                    </a>-->
+<!--                                    <a href="#" class="ms-2 p-1 pb-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">-->
+<!--                                        tên sản phẩm sẽ nằm ở đây 3-->
+<!--                                    </a>-->
+
+<!--                                    <a href="#" class="ms-2 p-1 pb-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">-->
+<!--                                        tên sản phẩm sẽ nằm ở đây 4-->
+<!--                                    </a>-->
+<!--                                    <a href="#" class="ms-2 p-1 pb-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">-->
+<!--                                        tên sản phẩm sẽ nằm ở đây 5-->
+<!--                                    </a>-->
+                                </div>
+                            </div>
                         </div>
                         <ul class="navbar-nav" role="presentation">
                             <li class="d-flex align-items-center justify-content-center">
@@ -74,7 +118,7 @@
                             </li>
                             <li class="ms-3 d-flex align-items-center justify-content-center">
                                 <a href="/giohang" class="border border-0 position-relative"
-                                   style="background-color: rgb(18,17,13) !important;">
+                                   style="background-color: rgb(18,17,13) !important;"  id="cart">
                                     <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;"
                                        aria-hidden="true"></i>
                                     <span
@@ -94,7 +138,6 @@
                                 </a>
                                 <div class="dropdown-menu" style="top: 35px">
                                     <div id="thongbao"></div>
-                                    -->
                                 </div>
                                 <div class="dropdown-item">
                                     <div class="text-center">
@@ -116,7 +159,7 @@
 </div>
 
 <footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);" th:fragment="footer">
-    <div class="container pt-2 pb-2">
+    <div class="container pt-4 pb-2">
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
         </div>
         <div class="row row-cols-1 row-cols-md-3">
@@ -141,7 +184,8 @@
             </div>
             <div class="col text-center ">
                 <a href="./index.html"><img
-                        src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff.svg"
+                        th:src="@{../assests/images/mini-logo-white.png}"
+                        style="height: 50px; margin: auto"
                         class="img-fluid" alt=""></a>
             </div>
             <div class="col text-center text-white d-flex justify-content-center align-items-center">
@@ -151,4 +195,5 @@
     </div>
 </footer>
 </body>
+
 </html>
