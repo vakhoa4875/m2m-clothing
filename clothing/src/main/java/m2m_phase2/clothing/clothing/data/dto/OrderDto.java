@@ -1,8 +1,21 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import m2m_phase2.clothing.clothing.data.entity.Order;
+import m2m_phase2.clothing.clothing.repository.OrderRepo;
+import m2m_phase2.clothing.clothing.repository.ProductRepo;
+import m2m_phase2.clothing.clothing.repository.UserRepo;
+import m2m_phase2.clothing.clothing.repository.VoucherRepo;
+import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 import java.util.Date;
+import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class OrderDto {
     private Integer orderId;
     private String username;
@@ -13,95 +26,37 @@ public class OrderDto {
     private Float totalAmount;
     private String orderStatus;
     private String soluong;
+    private Integer countSp;
+    private String orderCode;
+    // 034_Khoa
+    private Integer voucherId;
+    private List<OrderDetailDto> orderDetails;
 
-
-
-    public OrderDto() {
+    public static Order convertOrderDtoToOrder(
+            OrderDto orderDto,
+//            HttpSession session,
+            UserRepo userRepo,
+            VoucherRepo voucherRepo,
+            OrderRepo orderRepo,
+            ProductRepo productRepo
+    ) {
+        return Order.builder()
+                .customer(userRepo.getUserByEmail(PasswordEncoderUtil.email))
+                .orderDate(new Date())
+                .phoneNumber(orderDto.phoneNumber)
+                .deliveryAddress(orderDto.deliveryAddress)
+                .paymentMethod(orderDto.paymentMethod)
+                .totalAmount(orderDto.totalAmount)
+                .orderStatus(orderDto.orderStatus)
+                .countSp(orderDto.countSp)
+                .orderCode(orderDto.orderCode)
+                .voucher(voucherRepo.findByVoucherID(orderDto.voucherId))
+                .orderDetails(OrderDetailDto.convertListOrderDetailDtoToListOrderDetailE(orderDto.orderDetails, orderRepo, productRepo))
+                .build();
     }
 
-    public OrderDto(Integer orderId, String username, String orderDate, String phoneNumber, String deliveryAddress, String paymentMethod, Float totalAmount, String orderStatus) {
-        this.orderId = orderId;
-        this.username = username;
-        this.orderDate = orderDate;
-        this.phoneNumber = phoneNumber;
-        this.deliveryAddress = deliveryAddress;
-        this.paymentMethod = paymentMethod;
-        this.totalAmount = totalAmount;
-        this.orderStatus = orderStatus;
-    }
-    // Getters and setters
-
-
-    public String getSoluong() {
-        return soluong;
-    }
-
-    public void setSoluong(String soluong) {
-        this.soluong = soluong;
-    }
-
-    public Integer getOrderId() {
-        return orderId;
-    }
-
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getOrderDate() {
-        return orderDate;
-    }
-
-    public void setOrderDate(String orderDate) {
-        this.orderDate = orderDate;
-    }
-
-    public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getDeliveryAddress() {
-        return deliveryAddress;
-    }
-
-    public void setDeliveryAddress(String deliveryAddress) {
-        this.deliveryAddress = deliveryAddress;
-    }
-
-    public String getPaymentMethod() {
-        return paymentMethod;
-    }
-
-    public void setPaymentMethod(String paymentMethod) {
-        this.paymentMethod = paymentMethod;
-    }
-
-    public Float getTotalAmount() {
-        return totalAmount;
-    }
-
-    public void setTotalAmount(Float totalAmount) {
-        this.totalAmount = totalAmount;
-    }
-
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
+    public void setOrderCode() {
+        this.orderCode = PasswordEncoderUtil.email + new Date();
     }
 }
 

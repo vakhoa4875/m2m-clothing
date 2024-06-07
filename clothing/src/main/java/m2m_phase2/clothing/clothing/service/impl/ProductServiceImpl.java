@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -144,6 +145,11 @@ public class ProductServiceImpl implements ProductService {
 		return repo.findProductByShopCategory(categoryId,email);
 	}
 
+	@Override
+	public List<String[]> getProductsInfoForSearchRecommend() throws SQLException {
+		return repo.getAllProducts();
+	}
+
 	private void saveImageAndVideoSentFromClient(String nameImage,String base64FromFileImg) throws FileNotFoundException {
 		if(base64FromFileImg != null && !base64FromFileImg.isEmpty()){
 			byte[] bytes = Base64.decodeBase64(base64FromFileImg);
@@ -155,7 +161,6 @@ public class ProductServiceImpl implements ProductService {
 			} catch (Exception e) {
 				throw new RuntimeException(e);
 			}
-
 		}
 	}
 

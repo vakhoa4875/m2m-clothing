@@ -28,6 +28,12 @@
             color: white;
             cursor: pointer;
         }
+        .link-body-emphasis:hover{
+            color: rgba(178, 169, 169, 0.96) !important;
+            font-weight: bolder!important;
+            text-decoration: underline!important;
+            text-decoration-color: white!important;
+        }
     </style>
 </head>
 
@@ -53,7 +59,7 @@
                                 </h3>
                             </div>
                             <div class="big_image bgg-cf-100 rounded">
-                                <a href="/allproduct" class="d-block h3 stretched-link" title="Buy and sell phones">
+                                <a href="/AllcategoryType" class="d-block h3 stretched-link" title="Buy and sell phones">
                                     <img src="/assests/images/banner_3.jpg" class="img-fluid"
                                          alt="Used and refurbished phones">
                                 </a>
@@ -76,7 +82,7 @@
                                 </h3>
                             </div>
                             <div class="big_image bgg-cf-100 rounded">
-                                <a href="/allproduct" class="d-block h3 stretched-link" title="Buy and sell phones">
+                                <a href="/AllcategoryType" class="d-block h3 stretched-link" title="Buy and sell phones">
                                     <img src="/assests/images/banner_2.jpg" class="img-fluid"
                                          alt="Used and refurbished phones">
                                 </a>
@@ -101,7 +107,7 @@
                                 </h3>
                             </div>
                             <div class="big_image bgg-cf-100 rounded">
-                                <a href="/allproduct" class="d-block h3 stretched-link" title="Buy and sell phones">
+                                <a href="/AllcategoryType" class="d-block h3 stretched-link" title="Buy and sell phones">
                                     <img src="/assests/images/banner_1.jpg" class="img-fluid"
                                          alt="Used and refurbished phones">
                                 </a>
@@ -203,8 +209,10 @@
             <section class="mb-2 pt-2 text-center container text-bg-cf p-0">
                 <!-- more-info -->
                 <div class="mt-4">
-                    <h2 class="text-center mb-1">Why Swappa? <p id="iduser" th:text="${iduser}"
-                                                                style="font-size: 1px"></p></h2>
+                    <h2 class="text-center mb-1">Why Swappa?
+                        <p id="iduser" th:text="${iduser}" style="display: none"></p>
+                        <p id="email" th:text="${email}" style="display: none"></p>
+                    </h2>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center gy-3">
                         <div class="col text-center">
                             <div class="h1"><i class="fa-solid fa-handshake" style="color: #005eff;"></i>
@@ -311,9 +319,12 @@
 <!--<script src="/node_modules/angular/angular.min.js"></script>-->
 <script th:src="@{/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js}"></script>
 <script th:src="@{https://kit.fontawesome.com/c22bed0de0.js}" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
 <script th:src="@{/assests/js/jsAll.js}"></script>
 <script>
     $(document).ready(function () {
+        var email = $('#email').text();
+        sessionStorage.setItem("tendn",email)
         $('#xoathongbaooo').click(function () {
             var id = $('#iduser').text();
             xoathongbao(id);
@@ -356,6 +367,7 @@
         }
     });
 </script>
+<script th:src="@{/assests/js/searchRcmd.js}"></script>
 <script>
     var duongdan  = sessionStorage.getItem("duongdan");
     if(duongdan != null){
@@ -363,6 +375,39 @@
     }else {
 
     }
+</script>
+<script>
+    $(document).ready(function () {
+        $('#navbar_search_input').on('keydown', function (e) {
+            if (e.which == 13) {
+                searchProducts();
+            }
+        });
+        function searchProducts() {
+            var keyword = $('#navbar_search_input').val();
+            var type = $('#select_loai').val();
+            $.ajax({
+                url: '/api/search',
+                type: 'POST',
+                data: {
+                    keyword: keyword,
+                    type: type
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Gọi API thành công:', response.data);
+                        sessionStorage.setItem('searchResults', JSON.stringify(response.data));
+                        window.location.href = '/search-Product';
+                    } else {
+                        console.log('Gọi API thất bại:', response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Lỗi:', error);
+                }
+            });
+        }
+    });
 </script>
 </body>
 </html>
