@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang chủ</title>
+    <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assests/css/style.css">
+    <link rel="shortcut icon" href="assests/srcPic/x.png" type="image/x-icon">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
+    <style>
+        .background-image {
+            background-image: url(assests/images/apple-macbook-pro-stock-2021-apple-event-2021-dark-mode-3840x2160-6759.jpg);
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-attachment: fixed;
+            border-radius: 4px;
+            min-height: 84vh;
+        }
+
+        .btn-custom {
+            --bs-btn-color: #ffffff;
+            --bs-btn-bg: #00143a;
+            --bs-btn-border-color: none;
+            --bs-btn-hover-color: #ffffff;
+            --bs-btn-hover-bg: #1f1d8f;
+            --bs-btn-hover-border-color: none;
+            --bs-btn-focus-shadow-rgb: 217, 164, 6;
+            --bs-btn-active-color: #ffffff;
+            --bs-btn-active-bg: #002e83;
+            --bs-btn-active-border-color: none;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #ffffff;
+            --bs-btn-disabled-bg: #7c7c7c;
+            --bs-btn-disabled-border-color: #ffc107;
+        }
+
+        .shop-bar {
+            background-color: rgba(245, 245, 245, 0.05);
+            backdrop-filter: blur(16px);
+            width: 1100px;
+        }
+    </style>
+</head>
+
+<body>
+<!-- header -->
+<div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
+<!-- main -->
+<div class="bg-semiBlack text-white">
+    <div class="container d-flex flex-column justify-content-center gap-3 align-items-center background-image py-3">
+        <h3 class="bg-semiBlack rounded-1 px-3 py-2">Shops related to "search keyword"</h3>
+        <div class="p-3 rounded-1 shop-bar">
+            <div class="row align-items-center">
+                <div class="col-md-4 d-flex flex-row gap-md-2 align-items-center">
+                    <img class="rounded-circle img-fluid" src="assests/images/anh-avatar-noel-meo-vo-tri-cute-nhat.jpg"
+                         alt="" style="max-height: 64px; max-width: 64px; object-fit: contain">
+                    <div class="d-flex flex-column">
+                        <div>This is your fucking shop name</div>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-custom">
+                                <i class="fa-solid fa-store"></i> View shop
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col">Products count: xx</div>
+                        <div class="col">Orders per month: 2,1k</div>
+                        <div class="col">Joined: 19/05/2024</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Comments count: 89,6k</div>
+                        <div class="col">Categories count: 1k</div>
+                        <div class="col">Total like count: 56M</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-3 rounded-1 shop-bar">
+            <div class="row align-items-center">
+                <div class="col-md-4 d-flex flex-row gap-md-2 align-items-center">
+                    <img class="rounded-circle img-fluid" src="assests/images/anh-avatar-noel-meo-vo-tri-cute-nhat.jpg"
+                         alt="" style="max-height: 64px; max-width: 64px; object-fit: contain">
+                    <div class="d-flex flex-column">
+                        <div>This is your fucking shop name</div>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-custom">
+                                <i class="fa-solid fa-store"></i> View shop
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col">Products count: xx</div>
+                        <div class="col">Orders per month: 2,1k</div>
+                        <div class="col">Joined: 19/05/2024</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Comments count: 89,6k</div>
+                        <div class="col">Categories count: 1k</div>
+                        <div class="col">Total like count: 56M</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-3 rounded-1 shop-bar">
+            <div class="row align-items-center">
+                <div class="col-md-4 d-flex flex-row gap-md-2 align-items-center">
+                    <img class="rounded-circle img-fluid" src="assests/images/anh-avatar-noel-meo-vo-tri-cute-nhat.jpg"
+                         alt="" style="max-height: 64px; max-width: 64px; object-fit: contain">
+                    <div class="d-flex flex-column">
+                        <div>This is your fucking shop name</div>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-custom">
+                                <i class="fa-solid fa-store"></i> View shop
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col">Products count: xx</div>
+                        <div class="col">Orders per month: 2,1k</div>
+                        <div class="col">Joined: 19/05/2024</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Comments count: 89,6k</div>
+                        <div class="col">Categories count: 1k</div>
+                        <div class="col">Total like count: 56M</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-3 rounded-1 shop-bar">
+            <div class="row align-items-center">
+                <div class="col-md-4 d-flex flex-row gap-md-2 align-items-center">
+                    <img class="rounded-circle img-fluid" src="assests/images/anh-avatar-noel-meo-vo-tri-cute-nhat.jpg"
+                         alt="" style="max-height: 64px; max-width: 64px; object-fit: contain">
+                    <div class="d-flex flex-column">
+                        <div>This is your fucking shop name</div>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-custom">
+                                <i class="fa-solid fa-store"></i> View shop
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col">Products count: xx</div>
+                        <div class="col">Orders per month: 2,1k</div>
+                        <div class="col">Joined: 19/05/2024</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Comments count: 89,6k</div>
+                        <div class="col">Categories count: 1k</div>
+                        <div class="col">Total like count: 56M</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-3 rounded-1 shop-bar">
+            <div class="row align-items-center">
+                <div class="col-md-4 d-flex flex-row gap-md-2 align-items-center">
+                    <img class="rounded-circle img-fluid" src="assests/images/anh-avatar-noel-meo-vo-tri-cute-nhat.jpg"
+                         alt="" style="max-height: 64px; max-width: 64px; object-fit: contain">
+                    <div class="d-flex flex-column">
+                        <div>This is your fucking shop name</div>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-custom">
+                                <i class="fa-solid fa-store"></i> View shop
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col">Products count: xx</div>
+                        <div class="col">Orders per month: 2,1k</div>
+                        <div class="col">Joined: 19/05/2024</div>
+                    </div>
+                    <div class="row">
+                        <div class="col">Comments count: 89,6k</div>
+                        <div class="col">Categories count: 1k</div>
+                        <div class="col">Total like count: 56M</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- footer -->
+<footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
+<!--<script src="/node_modules/angular/angular.min.js"></script>-->
+<script th:src="@{/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js}"></script>
+<script th:src="@{https://kit.fontawesome.com/c22bed0de0.js}" crossorigin="anonymous"></script>
+<script th:src="@{/assests/js/searchRcmd.js}"></script>
+<script th:src="@{/assests/js/jsAll.js}"></script>
+</body>
+
+</html>

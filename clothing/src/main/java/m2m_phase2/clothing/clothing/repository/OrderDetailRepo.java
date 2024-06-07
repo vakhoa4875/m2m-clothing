@@ -10,10 +10,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderDetailRepo extends JpaRepository<Order, Integer> {
-
     @Modifying
     @Transactional
-    @Query(value = "UPDATE [OrderDetail] SET nameproduct = :nameproduct, quatity = :quatity, toal_product = :toal_product WHERE order_id_detail = :order_id_detail", nativeQuery = true)
+    @Query(value = "UPDATE [order_detail] SET nameproduct = :nameproduct, quatity = :quatity, toal_product = :toal_product WHERE order_id_detail = :order_id_detail", nativeQuery = true)
     void UpdateOderDetail(@Param("order_id_detail") Integer order_id_detail, @Param("nameproduct") String nameproduct, @Param("quatity") Integer quatity, @Param("toal_product") Float toal_product);
-
 }

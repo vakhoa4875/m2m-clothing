@@ -51,10 +51,6 @@ CREATE TABLE Sale
     sale_End     date,
 )
 
-
-
-
-
 create table [user]
 (
     id          int primary key identity (1,1),
