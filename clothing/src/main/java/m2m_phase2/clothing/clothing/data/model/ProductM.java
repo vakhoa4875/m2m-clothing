@@ -5,6 +5,7 @@ import lombok.Data;
 import m2m_phase2.clothing.clothing.data.entity.Category;
 import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.entity.Sale;
+import m2m_phase2.clothing.clothing.data.entity.ShopE;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +23,7 @@ public class ProductM {
     private String slug;
     private Category category;
     private Sale sale;
+    private ShopE shop;
 
 
     public static ProductM convertProductEToProductM(Product productE){
@@ -36,6 +38,7 @@ public class ProductM {
                 .productId(productE.getProductId())
                 .category(productE.getCategory())
                 .sale(productE.getSale())
+                .shop(productE.getShopE())
                 .build();
     }
 
