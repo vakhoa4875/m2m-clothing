@@ -656,8 +656,8 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script th:src="@{/assests/js/searchRcmd.js}"></script>
 <script src="/assests/js/SignUpShop.js"></script>
-
 <!--<script th:src="@{/assests/js/userpage.js}"></script>-->
 <script>
     $(document).ready(function () {
@@ -705,7 +705,6 @@
         });
     });
 </script>
-
 
 <script>
 
@@ -847,6 +846,7 @@
     const logout = () => {
         let agreed = confirm("Logout from M2M-Clothing?");
         if (agreed) {
+            sessionStorage.setItem("tendn","");
             window.location.href = "/account/logout"
         }
     }
@@ -950,6 +950,38 @@
         }
     });
 </script>
-
+<script>
+    $(document).ready(function () {
+        $('#navbar_search_input').on('keydown', function (e) {
+            if (e.which == 13) {
+                searchProducts();
+            }
+        });
+        function searchProducts() {
+            var keyword = $('#navbar_search_input').val();
+            var type = $('#select_loai').val();
+            $.ajax({
+                url: '/api/search',
+                type: 'POST',
+                data: {
+                    keyword: keyword,
+                    type: type
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Gọi API thành công:', response.data);
+                        sessionStorage.setItem('searchResults', JSON.stringify(response.data));
+                        window.location.href = '/search-Product';
+                    } else {
+                        console.log('Gọi API thất bại:', response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Lỗi:', error);
+                }
+            });
+        }
+    });
+</script>
 </body>
 </html>

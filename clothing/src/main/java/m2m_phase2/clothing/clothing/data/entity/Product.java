@@ -16,45 +16,40 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class Product implements Serializable {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "product_id")
+    private int productId;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int productId;
+    @Column(name = "product_name", nullable = false)
+    private String productName;
 
-	@Column(name = "product_name" , nullable = false)
-	private String productName ;
+    @Column(name = "price")
+    private float price;
 
-	@Column(name = "price")
-	private float price;
-
-	@Column(name = "quantity")
+    @Column(name = "quantity")
     private int quantity;
-	
-	@Column(name = "description")
-    private String description;
-	
-	@Column(name = "average_rate")
-		private float averageRate;
-	
-	@Column(name = "rate_count")
-    private int rateCount;
-	
-	@Column(name = "sold")
-    private int sold;
-	
-	@Column(name = "pictures")
-    private String pictures;
-	
-	@Column(name = "videos")
-    private String videos;
-	
-	@Column(name = "slug_url")
-	private String slugUrl;
-	
-	@ManyToOne()
-	@JoinColumn(name = "category_id")
-	private Category category;
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "average_rate")
+    private float averageRate;
+
+    @Column(name = "rate_count")
+    private int rateCount;
+
+    @Column(name = "sold")
+    private int sold;
+
+    @Column(name = "pictures")
+    private String pictures;
+
+    @Column(name = "videos")
+    private String videos;
+
+    @Column(name = "slug_url")
+    private String slugUrl;
 	@ManyToOne
 	@JoinColumn(name = "shop_id")
 	@JsonBackReference
@@ -64,10 +59,17 @@ public class Product implements Serializable {
 	@JoinColumn(name = "sale_ID")
 	private Sale sale;
 
-	@OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
-	@JsonIgnore
-	List<CommentE> comments;
+    @ManyToOne()
+    @JoinColumn(name = "category_id")
+    private Category category;
 
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<CommentE> comments;
+
+    @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonIgnore
+    List<OrderDetailE> orderDetails;
 //	@ManyToOne(fetch = FetchType.EAGER)
 //	@JsonIgnore
 //	@JoinColumn(name = "shop_id")

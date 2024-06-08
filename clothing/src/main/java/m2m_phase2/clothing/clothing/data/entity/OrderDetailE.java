@@ -2,29 +2,33 @@ package m2m_phase2.clothing.clothing.data.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Table(name = "OrderDetail")
 @Entity
+@Table(name = "order_detail")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class OrderDetailE {
     @Id
-    @Column(name = "order_id_detail")
-    private int order_id_detail;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "order_detail_id")
+    private Integer orderDetailId;
 
-    @Column(name = "nameproduct")
-    private String nameproduct;
+    @ManyToOne
+    @JoinColumn(name = "product_id", referencedColumnName = "product_id")
+    private Product product;
 
-    @Column(name = "quatity")
-    private int quatity;
+    @ManyToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "order_id")
+    private Order order;
 
-    @Column(name = "toal_product")
-    private Float toal_product;
+    @Column(name = "price", nullable = false)
+    private Double price;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "orderId")
-    private Order orderDetail;
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 }
