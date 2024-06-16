@@ -213,6 +213,48 @@
                                 </div>
                             </div>
 
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-3 d-flex">
+                                        <div class="d-flex align-items-center">
+                                            <div class="flex-shrink-0 my-3">
+                                                <img src="../shopImg/" id="logoShop" alt="..." style="width: 113px; height: 113px; border-radius: 100%; border: gray solid 1px">
+                                            </div>
+                                            <div class="flex-grow-1 ms-3" id="NameShop"></div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 d-flex" style="font-size: 13px">
+                                        <div class="d-flex text-secondary flex-column my-2 w-50 my-4">
+                                            <div class="flex-grow-1">Total Product</div>
+                                            <div class="flex-grow-1">Orders sold within 1 month</div>
+                                        </div>
+                                        <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
+                                            <div class="flex-grow-1" id="total-product">0 Product</div>
+                                            <div class="flex-grow-1" id="orders-sold">0 Order</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 d-flex" style="font-size: 13px">
+                                        <div class="d-flex text-secondary flex-column my-2 w-50 my-4">
+                                            <div class="flex-grow-1">Joined</div>
+                                            <div class="flex-grow-1">Total comments</div>
+                                        </div>
+                                        <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
+                                            <div class="flex-grow-1" id="joined">0 Date</div>
+                                            <div class="flex-grow-1" id="total-comments">0 Comment</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 d-flex" style="font-size: 13px">
+                                        <div class="d-flex text-secondary flex-column my-2 w-50 my-4">
+                                            <div class="flex-grow-1">Total product category</div>
+                                            <div class="flex-grow-1">Total likes of all products</div>
+                                        </div>
+                                        <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
+                                            <div class="flex-grow-1" id="total-categories">0 Category</div>
+                                            <div class="flex-grow-1" id="total-likes">0 <i class="fa-solid fa-heart" style="color: #ff0000;"></i></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="mt-2">
 
                                 <div class="row d-flex justify-content-center">
@@ -367,10 +409,85 @@
         <textarea name="" id="" ng-model="firstname" cols="30" rows="10"></textarea>
         <button type="button" ng-click="test()">asd</button>
     </div> -->
-
 </div>
 
 <footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
+<script>
+    $(document).ready(function() {
+        // Hàm lấy tham số từ URL
+        function getQueryParam(name) {
+            let url = new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+
+        // Lấy slug_url từ URL hiện tại
+        var slugUrl = getQueryParam('slug_url');
+        console.log('Slug URL:', slugUrl);
+
+        if (slugUrl) {
+            // Gọi AJAX đầu tiên để lấy product_id dựa trên slug_url
+            $.ajax({
+                url: '/findbyproductidapi',
+                type: 'GET',
+                data: { slug_url: slugUrl },
+                success: function(productResponse) {
+                    console.log('Product Response:', productResponse);
+                    if (productResponse && productResponse.productId) {
+                        var productId = productResponse.productId;
+                        // Gọi AJAX thứ hai để lấy shop_id dựa trên product_id
+                        $.ajax({
+                            url: '/product-shop',
+                            type: 'GET',
+                            data: { productId: productId },
+                            success: function(shopResponse) {
+                                console.log('Shop Response:', shopResponse);
+                                if (shopResponse && shopResponse.shop_id) {
+                                    var shopId = shopResponse.shop_id;
+                                    // Gọi AJAX thứ ba để lấy thông tin shop dựa trên shop_id
+                                    $.ajax({
+                                        url: '/shop',
+                                        type: 'GET',
+                                        data: { shop_id: shopId },
+                                        success: function(shopDetailsResponse) {
+                                            console.log('Shop Details Response:', shopDetailsResponse);
+                                            if (shopDetailsResponse && shopDetailsResponse.length > 0) {
+                                                var shopDetails = shopDetailsResponse[0];
+                                                $('#logoShop').attr('src', '/assests/shopImg/' + shopDetails[0]);
+                                                $('#NameShop').text(shopDetails[1]);
+                                                $('#total-product').text(shopDetails[2] + ' Product');
+                                                $('#orders-sold').text(shopDetails[3] + ' Order');
+                                                $('#joined').text(shopDetails[4] + ' Date');
+                                                $('#total-comments').text(shopDetails[5] + ' Comment');
+                                                $('#total-categories').text(shopDetails[6] + ' Category');
+                                                $('#total-likes').text(shopDetails[7] + ' ').append('<i class="fa-solid fa-heart" style="color: #ff0000;"></i>');
+                                            }
+                                        },
+                                        error: function(shopDetailsError) {
+                                            console.error("Lỗi khi lấy thông tin shop:", shopDetailsError);
+                                        }
+                                    });
+                                } else {
+                                    console.error("Không tìm thấy shop_id trong phản hồi");
+                                }
+                            },
+                            error: function(shopError) {
+                                console.error("Lỗi khi lấy shop_id:", shopError);
+                            }
+                        });
+                    } else {
+                        console.error("Không tìm thấy product_id trong phản hồi");
+                    }
+                },
+                error: function(error) {
+                    console.error("Lỗi khi lấy product_id:", error);
+                }
+            });
+        } else {
+            console.error("Tham số slug_url bị thiếu trong URL");
+        }
+    });
+
+</script>
 <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
 <script src="/assests/js/app.js"></script>
