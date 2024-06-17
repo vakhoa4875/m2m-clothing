@@ -3,6 +3,7 @@ package m2m_phase2.clothing.clothing.controller;
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.entity.Account;
+import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.service.AccountService;
@@ -115,8 +116,26 @@ public class HomeController {
         return "redirect:/";
     }
 
+    @GetMapping("/searchProduct")
+    public String search( Model model){
+        return "swappa/assests/html/searchProduct";
+    }
+
     @GetMapping("/vouchers")
     public String doGetViewAllVouchers() {
         return "swappa/assests/html/vouchers";
     }
+    @GetMapping("/viewSearchShop")
+    public String doGetViewSearchedShop() {
+        return "swappa/assests/html/searchShop";
+    }
+
+    @GetMapping("/search-Product")
+    public String searchProduct(Model model, HttpSession session) {
+        @SuppressWarnings("unchecked")
+        List<Product> listProduct = (List<Product>) session.getAttribute("searchResults");
+        model.addAttribute("listProduct", listProduct);
+        return "swappa/assests/html/productAll";
+    }
+
 }

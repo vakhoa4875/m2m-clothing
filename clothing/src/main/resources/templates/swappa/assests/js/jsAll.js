@@ -22,7 +22,7 @@ function compareData() {
                                         <th scope="row">
                                             <li style="overflow: hidden" height="auto" width="136px" class="d-flex align-items-center ms-4">
 <!--                                                <input class="form-check-input me-2" type="checkbox" id="checkboxNoLabel" value="" aria-label="..." >-->
-                                                <img src="${object.linkanh}" alt="" style="display: block; width: 150px; height: 150px; object-fit: contain;">
+                                                <img src="${object.linkanh}" alt="" style="display: block; width: 150px; height: 150px; object-fit: contain;" >
                                                 <span class="ms-3">${object.tensp}</span>
                                             </li>
                                         </th>
@@ -524,98 +524,147 @@ let btnCart = document.getElementById("soLuong");
 var soLuong = 0;
 
 btnCart.addEventListener("click", function() {
+    const productImage = document.querySelector(`.product img[data-id="${1}"]`);
+    const cart = document.getElementById('cart');
+    const productRect = productImage.getBoundingClientRect();
+    const cartRect = cart.getBoundingClientRect();
 
-    if(dangnhap.innerHTML === ""){
-        const currentUrl = window.location.href;
-        const url = new URL(currentUrl);
-        const pathAndQuery = url.pathname + url.search;
-        sessionStorage.setItem("duongdan", pathAndQuery);
-        window.location.href = "/loginacount";
-        return;
-    }else {
-        sessionStorage.removeItem("duongdan");
-        sessionStorage.setItem("tendn",dangnhap.innerText);
-    }
+    const productClone = productImage.cloneNode(true);
+    productClone.classList.add('fly-to-cart');
+    productClone.style.left = `${productRect.left-400}px`;
+    productClone.style.top = `${productRect.top}px`;
+    productClone.style.position = 'fixed';
+    productClone.style.width = `${productRect.width}px`;
+    productClone.style.height = `${productRect.height}px`;
+    document.body.appendChild(productClone);
 
-    var sanPhamMoi = {
-        gia: giaSo,
-        tensp: tensp.textContent,
-        linkanh: srcAnh,
-        idproductt : idproductstring,
-        soLuong: 1
-    };
-
-    var arrayObj = []
-
-    if(localStorage.getItem(sessionStorage.getItem("tendn")) == null){
-        arrayObj.push(sanPhamMoi);
-        localStorage.setItem(dangnhap.innerText, JSON.stringify(arrayObj));
-    }else {
-        var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
-        var found = false;
-        objArrya.forEach(function(obj, index) {
-            if(sanPhamMoi.tensp === obj.tensp){
-                obj.soLuong++;
-                localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
-                found = true;
+    requestAnimationFrame(() => {
+        productClone.style.transform = `translate(${(cartRect.left - productRect.left)-200}px, ${(cartRect.top - productRect.top)-300}px) scale(0.1)`;
+        productClone.style.opacity = '0';
+    });
+    let flag = false;
+    productClone.addEventListener('transitionend', () => {
+        if (!flag) { //dùng để check và cho hàm này được hoạt động 1 lần duy nhất(vì hàm hoạt động 2 lần)
+            if(dangnhap.innerHTML === ""){
+                alert("Có vẻ như bạn chưa đăng nhập, vui lòng đăng nhập!");
+                const currentUrl = window.location.href;
+                const url = new URL(currentUrl);
+                const pathAndQuery = url.pathname + url.search;
+                sessionStorage.setItem("duongdan", pathAndQuery);
+                window.location.href = "/loginacount";
                 return;
+            }else {
+                sessionStorage.removeItem("duongdan");
+                sessionStorage.setItem("tendn",dangnhap.innerText);
             }
-        });
-        if (!found){
-            objArrya.push(sanPhamMoi);
-            localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
+
+            var sanPhamMoi = {
+                gia: giaSo,
+                tensp: tensp.textContent,
+                linkanh: srcAnh,
+                idproductt : idproductstring,
+                soLuong: 1
+            };
+
+            var arrayObj = []
+
+            if(localStorage.getItem(sessionStorage.getItem("tendn")) == null){
+                arrayObj.push(sanPhamMoi);
+                localStorage.setItem(dangnhap.innerText, JSON.stringify(arrayObj));
+            }else {
+                var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+                var found = false;
+                objArrya.forEach(function(obj, index) {
+                    if(sanPhamMoi.tensp === obj.tensp){
+                        obj.soLuong++;
+                        localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
+                        found = true;
+                        return;
+                    }
+                });
+                if (!found){
+                    objArrya.push(sanPhamMoi);
+                    localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
+                }
+            }
+            layTongSoLuong();
+            flag = true;
         }
-    }
-    layTongSoLuong();
+    });
 });
 
 
 let btnBuyNow = document.getElementById("buynow");
 btnBuyNow.addEventListener("click",function (){
 
-    if(dangnhap.innerHTML === ""){
-        const currentUrl = window.location.href;
-        const url = new URL(currentUrl);
-        const pathAndQuery = url.pathname + url.search;
-        sessionStorage.setItem("duongdan", pathAndQuery);
-        window.location.href = "/loginacount";
-        return;
-    }else {
-        sessionStorage.removeItem("duongdan")
-        sessionStorage.setItem("tendn",dangnhap.innerText);
-    }
+    const productImage = document.querySelector(`.product img[data-id="${1}"]`);
+    const cart = document.getElementById('cart');
+    const productRect = productImage.getBoundingClientRect();
+    const cartRect = cart.getBoundingClientRect();
 
-    var sanPhamMoi = {
-        gia: giaSo,
-        tensp: tensp.textContent,
-        linkanh: srcAnh,
-        idproductt : idproductstring,
-        soLuong: 1
-    };
+    const productClone = productImage.cloneNode(true);
+    productClone.classList.add('fly-to-cart');
+    productClone.style.left = `${productRect.left-400}px`;
+    productClone.style.top = `${productRect.top}px`;
+    productClone.style.position = 'fixed';
+    productClone.style.width = `${productRect.width}px`;
+    productClone.style.height = `${productRect.height}px`;
+    document.body.appendChild(productClone);
 
-    var arrayObj = []
+    requestAnimationFrame(() => {
+        productClone.style.transform = `translate(${(cartRect.left - productRect.left)-200}px, ${(cartRect.top - productRect.top)-300}px) scale(0.1)`;
+        productClone.style.opacity = '0';
+    });
 
-    if(localStorage.getItem(sessionStorage.getItem("tendn")) == null){
-        arrayObj.push(sanPhamMoi);
-        localStorage.setItem(dangnhap.innerText, JSON.stringify(arrayObj));
-        window.location.href = "/giohang";
-    }else {
-        var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
-        var found = false;
-        objArrya.forEach(function(obj, index) {
-            if(sanPhamMoi.tensp === obj.tensp){
-                obj.soLuong++;
-                localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
-                found = true;
-                window.location.href = "/giohang";
+    let flag = false;
+    productClone.addEventListener('transitionend', () => {
+        if (!flag) { //dùng để check và cho hàm này được hoạt động 1 lần duy nhất(vì hàm hoạt động 2 lần)
+            if(dangnhap.innerHTML === ""){
+                alert("Có vẻ như bạn chưa đăng nhập, vui lòng đăng nhập!");
+                const currentUrl = window.location.href;
+                const url = new URL(currentUrl);
+                const pathAndQuery = url.pathname + url.search;
+                sessionStorage.setItem("duongdan", pathAndQuery);
+                window.location.href = "/loginacount";
                 return;
+            }else {
+                sessionStorage.removeItem("duongdan")
+                sessionStorage.setItem("tendn",dangnhap.innerText);
             }
-        });
-        if (!found){
-            objArrya.push(sanPhamMoi);
-            localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
-            window.location.href = "/giohang";
+
+            var sanPhamMoi = {
+                gia: giaSo,
+                tensp: tensp.textContent,
+                linkanh: srcAnh,
+                idproductt : idproductstring,
+                soLuong: 1
+            };
+
+            var arrayObj = []
+
+            if(localStorage.getItem(sessionStorage.getItem("tendn")) == null){
+                arrayObj.push(sanPhamMoi);
+                localStorage.setItem(dangnhap.innerText, JSON.stringify(arrayObj));
+                window.location.href = "/giohang";
+            }else {
+                var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+                var found = false;
+                objArrya.forEach(function(obj, index) {
+                    if(sanPhamMoi.tensp === obj.tensp){
+                        obj.soLuong++;
+                        localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
+                        found = true;
+                        window.location.href = "/giohang";
+                        return;
+                    }
+                });
+                if (!found){
+                    objArrya.push(sanPhamMoi);
+                    localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
+                    window.location.href = "/giohang";
+                }
+            }
+            layTongSoLuong();
         }
-    }
-    layTongSoLuong();
+    })
 })

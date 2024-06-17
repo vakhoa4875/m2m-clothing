@@ -276,6 +276,13 @@ public class ShopApi {
         }
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/api/shop")
+    public ResponseEntity<List<Object[]>> doGetShopDetails(@RequestParam("shop_id") Integer shop_id) {
+        var shop = shopService.getShopDetails(shop_id);
+        return ResponseEntity.ok(shop);
+    }
+
 //    @PostMapping("/download")
 //    @ResponseStatus(HttpStatus.CREATED)
 //    public Product downloadShopAdmin(@RequestBody ShopAdminDto shopAdminDto,
