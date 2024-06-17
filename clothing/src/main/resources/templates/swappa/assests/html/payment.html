@@ -190,10 +190,8 @@
                         contentType: 'application/json',
                         data: JSON.stringify(spxannhan),
                         success: (redirectURL) => {
-                            console.log("lưu thành công")
                             localStorage.removeItem(sessionStorage.getItem("tendn"))
                             setTimeout(function () {
-
                                 window.location.href = "/userprofile";
                             }, 1000);
                         },
@@ -524,7 +522,6 @@
         var text = document.getElementById("text");
         if (input.disabled) {
             input.disabled = false; // Bỏ disabled nếu đã có
-            console.log("mở")
             text.textContent = "Save";
         } else {
             input.disabled = true; // Kích hoạt disabled nếu chưa có

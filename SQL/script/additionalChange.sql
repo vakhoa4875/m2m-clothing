@@ -134,8 +134,8 @@ Create table order_detail
 go
 alter table [Order]
 add order_code nvarchar(127) unique ;
-truncate table Cart;
-go
+-- truncate table Cart;
+-- go
 insert into Shop(logo, name_shop, date_established, id) values
     ('', 'niggaonsale', '2024-05-25', 3)
 
@@ -198,7 +198,7 @@ insert into Shop(logo, name_shop, date_established, id) values
 --         set date_updated = getdate()
 --         where sys_payment_id = (select i.sys_payment_id from inserted i)
 --     end
-go
+-- go
 -- ALTER TABLE [user]
 -- DROP COLUMN gg_token, hashed_pass;
 -- ALTER TABLE [user]

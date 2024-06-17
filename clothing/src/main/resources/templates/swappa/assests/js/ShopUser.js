@@ -5,7 +5,6 @@ $(document).ready(function () {
         await axios.get('/get-shop-by-user-email')
             .then(response => {
                 shopInfoContainer.html('');
-                console.log(response.data)
                 let responseData = response.data.data;
                 let formattedDate = moment(responseData.dateEstablished).format('DD-MM-YYYY');
                 let html = `
@@ -42,8 +41,6 @@ $(document).ready(function () {
             </div>
                     `
                 shopInfoContainer.append(html);
-
-                console.log(response.data.data);
             })
             .catch(error => {
                 alert(error);
@@ -56,7 +53,6 @@ $(document).ready(function () {
         await axios.get('/get-category-by-shop-user-email')
             .then(response => {
                 categoryShopContainer.html('');
-                console.log(response.data)
                 let responseData = response.data.data;
                 responseData.forEach((e, index) => {
                     let html = `
@@ -81,7 +77,6 @@ $(document).ready(function () {
                 if (firstCategory.length) {
                     firstCategory.click();
                 }
-                console.log(response.data.data);
             })
             .catch(error => {
                 alert(error);
@@ -91,7 +86,6 @@ $(document).ready(function () {
 
 
     const getProductByCategoryAndShopEmail = async (categoryId) => {
-        console.log(categoryId);
         let getProductByCategoryAndShopEmailContainer = $('#getProductByCategoryAndShopEmailContainer');
         await axios
             .get('/api-public-getListProductByCategoryAndShopEmail',{
@@ -101,7 +95,6 @@ $(document).ready(function () {
             })
             .then(response => {
                 getProductByCategoryAndShopEmailContainer.html('');
-                console.log(response.data)
                 let responseData = response.data.data;
 
 
@@ -145,9 +138,6 @@ $(document).ready(function () {
                     `
                     getProductByCategoryAndShopEmailContainer.append(html);
                 })
-
-
-                console.log(response.data.data);
             })
             .catch(error => {
                 alert(error);
