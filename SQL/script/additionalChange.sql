@@ -203,4 +203,90 @@ go
 -- DROP COLUMN gg_token, hashed_pass;
 -- ALTER TABLE [user]
 -- ADD is_disable bit default 0;
+-- procedure shopdetail 
+CREATE PROCEDURE GetShopDetails
+    @shop_id int
+AS
+BEGIN
+    -- Shop Details
+    ;WITH ShopDetails AS (
+        SELECT 
+            s.logo AS ShopLogo,
+            s.name_shop AS ShopName
+        FROM 
+            Shop s
+        WHERE 
+            s.shop_id = @shop_id
+    ),
+    TotalProducts AS (
+        SELECT 
+            COUNT(p.product_id) AS TotalProducts
+        FROM 
+            Product p
+        WHERE 
+            p.shop_id = @shop_id
+    ),
+    OrdersSoldInOneMonth AS (
+        SELECT 
+            COUNT(od.order_id_detail) AS OrdersSoldInOneMonth
+        FROM 
+            [Order] o
+            JOIN OrderDetail od ON o.order_id = od.order_id_detail
+        WHERE 
+            o.customer_id IN (SELECT u.id FROM [user] u WHERE u.id = @shop_id)
+            AND o.order_date >= DATEADD(MONTH, -1, GETDATE())
+    ),
+    ShopParticipation AS (
+        SELECT 
+            DATEDIFF(DAY, MIN(u.dob), GETDATE()) AS DaysParticipated
+        FROM 
+            [user] u
+        WHERE 
+            u.id = @shop_id
+    ),
+    TotalComments AS (
+        SELECT 
+            COUNT(c.comment_id) AS TotalComments
+        FROM 
+            Comment c
+        WHERE 
+            c.product_id IN (SELECT p.product_id FROM Product p WHERE p.shop_id = @shop_id)
+    ),
+    TotalCategories AS (
+        SELECT 
+            COUNT(DISTINCT p.category_id) AS TotalCategories
+        FROM 
+            Product p
+        WHERE 
+            p.shop_id = @shop_id
+    ),
+    TotalLikes AS (
+        SELECT 
+            SUM(p.sold) AS TotalLikes
+        FROM 
+            Product p
+        WHERE 
+            p.shop_id = @shop_id
+    )
+
+    SELECT
+        sd.ShopLogo,
+        sd.ShopName,
+        tp.TotalProducts,
+        osm.OrdersSoldInOneMonth,
+        sp.DaysParticipated,
+        tc.TotalComments,
+        tcat.TotalCategories,
+        tl.TotalLikes
+    FROM
+        ShopDetails sd
+        CROSS JOIN TotalProducts tp
+        CROSS JOIN OrdersSoldInOneMonth osm
+        CROSS JOIN ShopParticipation sp
+        CROSS JOIN TotalComments tc
+        CROSS JOIN TotalCategories tcat
+        CROSS JOIN TotalLikes tl;
+
+END
+GO
 
