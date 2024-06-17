@@ -306,7 +306,7 @@ $(document).ready(function () {
         },
         error: function (xhr, status, error) {
             alert("Tải dữ liệu thất bại");
-            console.log(error);
+            console.error(error);
         }
     });
 
@@ -328,7 +328,7 @@ $(document).ready(function () {
         },
         error: function (xhr, status, error) {
             alert("Tải dữ liệu thất bại");
-            console.log(error);
+            console.error(error);
         }
     });
 
@@ -350,8 +350,7 @@ $(document).ready(function () {
             $("#userListCategory").append(div);
             link.on("click", function() {
                 // Lấy giá trị của thuộc tính "value" của thẻ <a>
-                selectedCategoryId = $(this).attr("data-category-id");
-                console.log(selectedCategoryId);
+                selectedCategoryId = $(this).attr("data-category-id")
                 window.location.href = "/categoryType?categoryId="+(index+1);
             });
         });
@@ -408,7 +407,6 @@ $(document).ready(function () {
             type: 'GET',
             success: function (data) {
                 sessionStorage.setItem("tienvoucher",0);
-                console.log(data);
                 $('#modalBodyVoucherInCart').empty();
 
                 // Lưu trữ ID của voucher đã được chọn trước đó (nếu có)
@@ -482,7 +480,6 @@ $(document).ready(function () {
                         $('#addVoucherText').removeClass('d-none').addClass('d-block');
                         capNhatTienTong();
                         let tiengiam = $('#tiengiamgia').text();
-                        console.log(tiengiam)
                         sessionStorage.setItem("tienvoucher",tiengiam.slice(1));
                     }
                 });

@@ -216,10 +216,9 @@ angular.module("myApp", ["ngRoute"])
                         }
                     }
                 }
-                console.log($rootScope.allMiniItems);
             },
             (res) => {
-                console.log("ERROR LOADING DATA FROM JSON FILE.");
+                console.error("ERROR LOADING DATA FROM JSON FILE.");
             }
         )
 
@@ -240,7 +239,6 @@ angular.module("myApp", ["ngRoute"])
             //                 name2: item.name2,
             //                 name3: ite.name
             //             });
-            //             console.log(ite);
             //         }
             //     } else {
             //         for (ite of item.series) {
@@ -252,7 +250,6 @@ angular.module("myApp", ["ngRoute"])
             //                     name2: item.name2,
             //                     name3: ite.name
             //                 });
-            //                 console.log(ite);
             //             }
             //         }
             //     }
@@ -263,7 +260,6 @@ angular.module("myApp", ["ngRoute"])
                     || item.name2.toLowerCase().indexOf(keyword.toLowerCase()) !== -1
                     || item.name3.toLowerCase().indexOf(keyword.toLowerCase()) !== -1) {
                     $rootScope.searchRes.push(item);
-                    // console.log(item);
                 }
             }
 
@@ -304,7 +300,6 @@ angular.module("myApp", ["ngRoute"])
                     }
                 }
             }
-            console.log($rootScope.cart);
             $rootScope.cartLen = $rootScope.cart.length;
         }
 
@@ -387,27 +382,22 @@ angular.module("myApp", ["ngRoute"])
         // $rootScope.user = true;
         //firstname sign up
         $scope.isInvalidFirstName = function () {
-            // console.log($scope.firstName);
             return $scope.formSignUp.firstName.$invalid && $scope.firstNameBlurred;
         };
         //lastname sign up
         $scope.isInvalidLastName = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.lastName.$invalid && $scope.lastNameBlurred;
         };
         //email2 sign up
         $scope.isInvalidEmail2 = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.email2.$invalid && $scope.email2Blurred;
         };
         //password21 sign up
         $scope.isInvalidPassword21 = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.password21.$invalid && $scope.password21Blurred;
         };
         //email21 sign up
         $scope.isInvalidPassword22 = function () {
-            console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.password22.$invalid && $scope.password22Blurred;
         };
 
@@ -486,8 +476,7 @@ angular.module("myApp", ["ngRoute"])
             $scope.thoiGian = 5;
             $rootScope.user = null;
             // $rootScope.createAccount();
-            if($rootScope.createAccount() == true){
-                
+            if($rootScope.createAccount() === true){
                 var demThoiGian = function() {
                     if ($scope.thoiGian > 0) {
                         // Nếu thời gian lớn hơn 0 giây, giảm thời gian đi 1 giây
@@ -501,12 +490,7 @@ angular.module("myApp", ["ngRoute"])
                     }
                 }
                 demThoiGian();
-            }else{
-                console.log("sai");
             }
-
-            
-            console.log($scope.textStatus2);
 
         }
 
@@ -542,27 +526,22 @@ angular.module("myApp", ["ngRoute"])
 
          //firstname sign up
          $scope.isInvalidFirstName = function () {
-            // console.log($scope.firstName);
             return $scope.formSignUp.firstName.$invalid && $scope.firstNameBlurred;
         };
         //lastname sign up
         $scope.isInvalidLastName = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.lastName.$invalid && $scope.lastNameBlurred;
         };
         //email2 sign up
         $scope.isInvalidEmail2 = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.email2.$invalid && $scope.email2Blurred;
         };
         //password21 sign up
         $scope.isInvalidPassword21 = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.password21.$invalid && $scope.password21Blurred;
         };
         //email21 sign up
         $scope.isInvalidPassword22 = function () {
-            console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.password22.$invalid && $scope.password22Blurred;
         };
         /*
@@ -592,10 +571,8 @@ angular.module("myApp", ["ngRoute"])
             let count = 0;
             let total = 0;
             for (sp of $rootScope.cart) {
-                console.log($rootScope.cart);
                 if (!sp.buy) {
                     $scope.isTickAll = false;
-                    console.log($scope.isTickAll);
                 }
                 count = (sp.buy) ? ++count : count;
                 total = (sp.buy) ? total + sp.price : total;
@@ -671,7 +648,6 @@ angular.module("myApp", ["ngRoute"])
                 for (let i = 0; i < $rootScope.allMiniItems.length; i++) {
                     if ($scope.boughtItemsID.indexOf($rootScope.allMiniItems.id) !== -1) {
                         $rootScope.allMiniItems.splice(i, 1);
-                        console.log('del: ' + i);
                     }
                 }
             }
@@ -772,7 +748,6 @@ angular.module("myApp", ["ngRoute"])
                         $scope.storages.push({ key: prod.storage, value: prod.storage });
                     }
                 }
-                console.log(item);
                 break;
             }
         }
@@ -792,7 +767,6 @@ angular.module("myApp", ["ngRoute"])
 
         var appendToPageList = () => {
             $scope.pageList = [];
-            // console.log(maxPage);
             for (let i = 1; i <= $scope.maxPage; i++) {
                 $scope.pageList.push(i);
             }
@@ -802,7 +776,6 @@ angular.module("myApp", ["ngRoute"])
 
         $scope.setTempList = (arr) => {
             $scope.tempList = arr;
-            console.log(arr);
             updatePagination();
         }
 
@@ -859,7 +832,6 @@ angular.module("myApp", ["ngRoute"])
                     break;
                 }
             }
-            console.log('error');
         }
         loadItems();
 
@@ -881,7 +853,6 @@ angular.module("myApp", ["ngRoute"])
             for (cmt of $scope.prod.discussion) {
                 if (cmt.id == id) {
                     $scope.toWhom = cmt.name;
-                    console.log($scope.toWhom);
                     return;
                 }
             }
@@ -900,10 +871,6 @@ angular.module("myApp", ["ngRoute"])
         };
 
         $scope.postComment = function (content) {
-            // console.log("Abc");
-            // alert($scope.content);
-            // angular.element(document.getElementById("textboxContent")).html("");
-
             if (!$rootScope.isLogin) {
                 let check = confirm('You\ve not login yet? Login Now?');
                 if (check) {
@@ -913,8 +880,7 @@ angular.module("myApp", ["ngRoute"])
                 return;
             }
 
-            if (content.length == 0) {
-                console.log(content);
+            if (content.length === 0) {
                 alert('please enter the content of your comment');
                 return;
             }
@@ -935,8 +901,7 @@ angular.module("myApp", ["ngRoute"])
                         return;
                     }
                     for (cmt of item.discussion) {
-                        if ($scope.replyTo == cmt.id) {
-                            console.log(cmt.inner);
+                        if ($scope.replyTo === cmt.id) {
                             if (cmt.inner == null) {
                                 cmt.inner = [];
                             }
@@ -947,9 +912,7 @@ angular.module("myApp", ["ngRoute"])
                                 content: content,
                                 date: new Date()
                             });
-                            console.log(cmt.inner);
                             $scope.content = "";
-                            // document.querySelector('#content').innerHTML = '';
                             return;
                         }
                     }

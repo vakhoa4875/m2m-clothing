@@ -151,7 +151,6 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            console.log("Test kinda done")
             services.loadInit();
             productservices.loadInit();
         })
@@ -580,10 +579,7 @@
                 return response.json();
             })
             .then(data => {
-                console.log('Success:', data);
                 alert('Sản phẩm đã được lưu thành công!');
-
-
                 const productList = document.getElementById('productList');
                 if (productList) {
                     const newProduct = document.createElement('li');
@@ -648,8 +644,6 @@
         axios.get(`http://localhost:8083/product/${productId}`)
             .then(response => {
                 const product = response.data;
-                console.dir(response);
-
                 document.getElementById('updateNameProduct').value = product.productName;
                 document.getElementById('updatePriceProduct').value = product.price;
                 document.getElementById('updateQuantityProduct').value = product.quantity;
@@ -659,8 +653,7 @@
                 let formSelect = document.getElementById('formSelectUpdate');
                 let options = formSelect.options;
                 for (let i = 0; i < options.length; i++) {
-                    if (options[i].value == product.category.category_id) {
-                        console.log(options[i].value, product.category.category_id);
+                    if (options[i].value === product.category.category_id) {
                         formSelect.selectedIndex = i;
                         break;
                     }
@@ -743,7 +736,6 @@
         })
             .then(response => response.json())
             .then(data => {
-                console.log('Success:', data);
                 $('#exampleModalUpdateProduct').modal('hide');
                 alert("Lưu thành công !");
                 window.location.reload();

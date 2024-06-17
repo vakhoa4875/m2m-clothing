@@ -23,32 +23,19 @@
     <script>
         $(document).ready(function () {
             $("#submitButtonNhanXet").click(function () {
-                // Lấy nội dung của nhận xét
                 var commentText = $("#commentText").val();
-
-                // Lấy slugUrl từ URL hiện tại
                 var urlString = window.location.href;
-                // Phân tách URL để lấy phần query string
                 var urlParts = urlString.split('?');
-                // Lấy query string
                 var queryString = urlParts[1];
-                // Phân tách query string để lấy phần sau dấu bằng
                 var queryParams = queryString.split('=');
-                // Lấy giá trị sau dấu bằng
                 var slugUrl = queryParams[1];
-
-                console.log(slugUrl);
-
-                // Tạo ngày hiện tại
                 var currentDate = new Date();
-
                 // Tạo một đối tượng CommentDTO
                 var commentDTO = {
                     comment: commentText,
                     slugUrl: slugUrl, // Sửa từ slug_url thành slugUrl để trùng với tên trường trong DTO
                     createDate: currentDate
                 };
-
                 // Thực hiện AJAX request để tạo nhận xét
                 $.ajax({
                     url: "/createComment",
@@ -56,7 +43,6 @@
                     contentType: "application/json",
                     data: JSON.stringify(commentDTO),
                     success: function (response) {
-                        console.log("Nhận xét được tạo thành công.", response)
                         $("#commentText").val("");
                         location.reload();
                     },
