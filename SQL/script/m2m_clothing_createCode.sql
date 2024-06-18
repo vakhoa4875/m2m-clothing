@@ -438,32 +438,3 @@ select * from Product
 SELECT * FROM Product WHERE shop_id = 1;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
