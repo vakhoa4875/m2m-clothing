@@ -24,7 +24,9 @@ public class ProductM {
     private Category category;
     private Sale sale;
     private ShopE shop;
-
+    private float averageRate;
+    private int rateCount;
+    private int sold;
 
     public static ProductM convertProductEToProductM(Product productE){
         return ProductM.builder()
@@ -39,6 +41,9 @@ public class ProductM {
                 .category(productE.getCategory())
                 .sale(productE.getSale())
                 .shop(productE.getShopE())
+                .averageRate(productE.getAverageRate())
+                .rateCount(productE.getRateCount())
+                .sold(productE.getSold())
                 .build();
     }
 
