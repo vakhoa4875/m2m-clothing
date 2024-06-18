@@ -290,3 +290,10 @@ BEGIN
 END
 GO
 
+create table Favorite
+(
+    id int identity primary key,
+    user_id int foreign key references [user] (id),
+    product_id int foreign key references Product (product_id),
+    date_created datetime default getdate()
+)
