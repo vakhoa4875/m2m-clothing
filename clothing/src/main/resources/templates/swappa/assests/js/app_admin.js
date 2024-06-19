@@ -72,27 +72,22 @@ angular.module("myApp", ["ngRoute"])
         // $rootScope.user = true;
         //firstname sign up
         $scope.isInvalidFirstName = function () {
-            // console.log($scope.firstName);
             return $scope.formSignUp.firstName.$invalid && $scope.firstNameBlurred;
         };
         //lastname sign up
         $scope.isInvalidLastName = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.lastName.$invalid && $scope.lastNameBlurred;
         };
         //email2 sign up
         $scope.isInvalidEmail2 = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.email2.$invalid && $scope.email2Blurred;
         };
         //password21 sign up
         $scope.isInvalidPassword21 = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.password21.$invalid && $scope.password21Blurred;
         };
         //email21 sign up
         $scope.isInvalidPassword22 = function () {
-            console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.password22.$invalid && $scope.password22Blurred;
         };
         /*
@@ -138,7 +133,6 @@ angular.module("myApp", ["ngRoute"])
                     }
                 }
             }
-            console.log(log);
             $scope.textStatus = log;
             $rootScope.isLogin = true;
             $timeout(() => {
@@ -160,27 +154,22 @@ angular.module("myApp", ["ngRoute"])
         // $rootScope.user = true;
         //firstname sign up
         $scope.isInvalidFirstName = function () {
-            // console.log($scope.firstName);
             return $scope.formSignUp.firstName.$invalid && $scope.firstNameBlurred;
         };
         //lastname sign up
         $scope.isInvalidLastName = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.lastName.$invalid && $scope.lastNameBlurred;
         };
         //email2 sign up
         $scope.isInvalidEmail2 = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.email2.$invalid && $scope.email2Blurred;
         };
         //password21 sign up
         $scope.isInvalidPassword21 = function () {
-            // console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.password21.$invalid && $scope.password21Blurred;
         };
         //email21 sign up
         $scope.isInvalidPassword22 = function () {
-            console.log($scope.password21 + " | " + $scope.password22);
             return $scope.formSignUp.password22.$invalid && $scope.password22Blurred;
         };
         /*

@@ -5,11 +5,10 @@ $(document).ready(function () {
         await axios.get('/get-shop-by-user-email')
             .then(response => {
                 shopInfoContainer.html('');
-                console.log(response.data)
                 let responseData = response.data.data;
                 let formattedDate = moment(responseData.dateEstablished).format('DD-MM-YYYY');
                 let html = `
-           <div class="col-4">
+           <div class="col-3">
                 <div class="row rounded-right p-2" style="background-color: rgba(164,162,162,0.42)">
                     <div class="col-4 pr-0" style="">
                         <img class="rounded-circle img-fluid" src="${'/assests/shopImg/' + responseData.logo}" alt="" style="height: 106px; width: 106px; object-fit: contain">
@@ -19,31 +18,48 @@ $(document).ready(function () {
                     </div>
                 </div>
             </div>
-            <div class="col-8">
-                <div class="row p-2">
-                    <div class="col-6">
-                        <div class="d-flex justify-content-start mb-2">
-                            <div>
-                                <i class="fa-regular fa-user"></i>
-                            </div>
-                            <div class="pl-2">Chủ Shop : </div>
-                            <div class="pl-1" style="color: red">${responseData.userE.fullname}</div>
-                        </div>
-                        <div class="d-flex justify-content-start mb-2">
-                            <div>
-                                <i class="fa-solid fa-calendar-days"></i>
-                            </div>
-                            <div class="pl-2">Ngày thành lập : </div>
-                            <div class="pl-1" style="color: red">${formattedDate}</div>
-                        </div>
-                    </div>
-                    <div class="col-6"></div>
+           <div class="col-3 d-flex" style="font-size: 13px">
+            <div class="d-flex text-secondary flex-column my-2 w-50 my-4">
+                    <div class="flex-grow-1">Shop Owner:</div>
+                    <div class="flex-grow-1">Date setting:</div>
+                </div>
+                <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
+                    <div class="flex-grow-1">${responseData.userE.fullname}</div>
+                    <div class="flex-grow-1">${formattedDate}</div>
+                </div>
+            </div>
+            <div class="col-2 d-flex" style="font-size: 13px">
+                <div class="d-flex text-secondary flex-column my-2 w-50 my-4">
+                    <div class="flex-grow-1">Total Product</div>
+                    <div class="flex-grow-1">Orders sold within 1 month</div>
+                </div>
+                <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
+                    <div class="flex-grow-1" id="total-product">0 Product</div>
+                    <div class="flex-grow-1" id="orders-sold">0 Order</div>
+                </div>
+            </div>
+            <div class="col-2 d-flex" style="font-size: 13px">
+                <div class="d-flex text-secondary flex-column my-2 w-50 my-4">
+                    <div class="flex-grow-1">Joined</div>
+                    <div class="flex-grow-1">Total comments</div>
+                </div>
+                <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
+                    <div class="flex-grow-1" id="joined">0 Date</div>
+                    <div class="flex-grow-1" id="total-comments">0 Comment</div>
+                </div>
+            </div>
+            <div class="col-2 d-flex" style="font-size: 13px">
+                <div class="d-flex text-secondary flex-column my-2 w-50 my-4">
+                    <div class="flex-grow-1">Total product category</div>
+                    <div class="flex-grow-1">Total likes of all products</div>
+                </div>
+                <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
+                    <div class="flex-grow-1" id="total-categories">0 Category</div>
+                    <div class="flex-grow-1" id="total-likes">0 <i class="fa-solid fa-heart" style="color: #ff0000;"></i></div>
                 </div>
             </div>
                     `
                 shopInfoContainer.append(html);
-
-                console.log(response.data.data);
             })
             .catch(error => {
                 alert(error);
@@ -56,7 +72,6 @@ $(document).ready(function () {
         await axios.get('/get-category-by-shop-user-email')
             .then(response => {
                 categoryShopContainer.html('');
-                console.log(response.data)
                 let responseData = response.data.data;
                 responseData.forEach((e, index) => {
                     let html = `
@@ -81,7 +96,6 @@ $(document).ready(function () {
                 if (firstCategory.length) {
                     firstCategory.click();
                 }
-                console.log(response.data.data);
             })
             .catch(error => {
                 alert(error);
@@ -91,7 +105,6 @@ $(document).ready(function () {
 
 
     const getProductByCategoryAndShopEmail = async (categoryId) => {
-        console.log(categoryId);
         let getProductByCategoryAndShopEmailContainer = $('#getProductByCategoryAndShopEmailContainer');
         await axios
             .get('/api-public-getListProductByCategoryAndShopEmail',{
@@ -101,7 +114,6 @@ $(document).ready(function () {
             })
             .then(response => {
                 getProductByCategoryAndShopEmailContainer.html('');
-                console.log(response.data)
                 let responseData = response.data.data;
 
 
@@ -145,9 +157,6 @@ $(document).ready(function () {
                     `
                     getProductByCategoryAndShopEmailContainer.append(html);
                 })
-
-
-                console.log(response.data.data);
             })
             .catch(error => {
                 alert(error);

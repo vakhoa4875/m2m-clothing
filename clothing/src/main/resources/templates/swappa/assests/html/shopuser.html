@@ -38,48 +38,6 @@
 
         </div>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-3 d-flex">
-                <div class="d-flex align-items-center">
-                    <div class="flex-shrink-0 my-3">
-                        <img src="../shopImg/" id="logoShop" alt="..." style="width: 113px; height: 113px; border-radius: 100%; border: gray solid 1px">
-                    </div>
-                    <div class="flex-grow-1 ms-3" id="NameShop"></div>
-                </div>
-            </div>
-            <div class="col-3 d-flex" style="font-size: 13px">
-                <div class="d-flex text-secondary flex-column my-2 w-50 my-4">
-                    <div class="flex-grow-1">Total Product</div>
-                    <div class="flex-grow-1">Orders sold within 1 month</div>
-                </div>
-                <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
-                    <div class="flex-grow-1" id="total-product">0 Product</div>
-                    <div class="flex-grow-1" id="orders-sold">0 Order</div>
-                </div>
-            </div>
-            <div class="col-3 d-flex" style="font-size: 13px">
-                <div class="d-flex text-secondary flex-column my-2 w-50 my-4">
-                    <div class="flex-grow-1">Joined</div>
-                    <div class="flex-grow-1">Total comments</div>
-                </div>
-                <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
-                    <div class="flex-grow-1" id="joined">0 Date</div>
-                    <div class="flex-grow-1" id="total-comments">0 Comment</div>
-                </div>
-            </div>
-            <div class="col-3 d-flex" style="font-size: 13px">
-                <div class="d-flex text-secondary flex-column my-2 w-50 my-4">
-                    <div class="flex-grow-1">Total product category</div>
-                    <div class="flex-grow-1">Total likes of all products</div>
-                </div>
-                <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
-                    <div class="flex-grow-1" id="total-categories">0 Category</div>
-                    <div class="flex-grow-1" id="total-likes">0 <i class="fa-solid fa-heart" style="color: #ff0000;"></i></div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <div class="container" style="margin-top: 50px">
         <div class="text-uppercase " style="font-weight: bolder; color: #808080FF; font-size: 15px">
@@ -193,6 +151,43 @@
                 }
             });
         }
+        $.ajax({
+            url: '/get-shop-by-user-email',
+            type: 'GET',
+            success: function(response) {
+                console.log('Phản hồi API lấy Shop theo email:', response);
+                if (response && response.status && response.data) {
+                    var shopId = response.data.shopId; // Điều chỉnh dựa trên cấu trúc thực tế của phản hồi
+                    // Sau đó, lấy chi tiết cửa hàng bằng shop ID vừa lấy được
+                    console.log(response.data.shopId);
+                    $.ajax({
+                        url: '/shop',
+                        type: 'GET',
+                        data: { shop_id: shopId },
+                        success: function(shopDetailsResponse) {
+                            console.log('Phản hồi chi tiết cửa hàng:', shopDetailsResponse);
+                            if (shopDetailsResponse && shopDetailsResponse.length > 0) {
+                                var shopDetails = shopDetailsResponse[0];
+                                $('#total-product').text(shopDetails[2] + ' Product');
+                                $('#orders-sold').text(shopDetails[3] + ' Order');
+                                $('#joined').text(shopDetails[4] + ' Date');
+                                $('#total-comments').text(shopDetails[5] + ' Comment');
+                                $('#total-categories').text(shopDetails[6] + ' Category');
+                                $('#total-likes').text(shopDetails[7] + ' ').append('<i class="fa-solid fa-heart" style="color: #ff0000;"></i>');
+                            }
+                        },
+                        error: function(shopDetailsError) {
+                            console.error("Lỗi khi lấy chi tiết cửa hàng:", shopDetailsError);
+                        }
+                    });
+                }
+            },
+            error: function(error) {
+                console.error("Lỗi khi lấy thông tin shop từ email người dùng:", error);
+            }
+        });
     });
+
 </script>
+
 </html>

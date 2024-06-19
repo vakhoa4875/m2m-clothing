@@ -51,7 +51,7 @@ class productManagement{
                 list.html(htmlString);
             },
             error: function (xhr, status, error) {
-                console.log(error);
+                console.error(error);
             }
         });
     }
@@ -74,7 +74,6 @@ class productManagement{
             success: function (data) {
                 let imagesString = data.pictures;
                 let modelProduct = $('#updateProductModalBody');
-                console.log(data)
                 modelProduct.empty();
                 let html = '';
                 html += `
@@ -147,7 +146,7 @@ class productManagement{
                 productservices.forImages(imagesString);
             },
             error: (error) => {
-                console.log("error" + error)
+                console.error("error" + error)
             }
         })
     }
@@ -202,8 +201,6 @@ class productManagement{
         const validFileNames = fileNames.filter(fileName => fileName);
         const imagesString = validFileNames.join(",");
         var selectedValue = $('#formSelect option:selected').val();
-
-        console.log(selectedValue);
 
         let productupdate = {
             "name": name,
@@ -277,7 +274,6 @@ class productManagement{
     }
     inSertProduct = async () => {
         let product = this.createProductObject();
-        console.log(product)
         await $.ajax({
             type: 'POST',
             contentType: 'application/json',
@@ -286,13 +282,9 @@ class productManagement{
             dataType: 'text',
             processData: false,
             success: function (data) {
-                console.log(data)
                 alert("Insert product success");
             },
             error: function (xhr, status, error) {
-                console.log(xhr.responseText);
-                console.log(status);
-                console.log(error);
                 alert("Đã xảy ra lỗi khi thêm sản phẩm.");
             }
         })
@@ -313,15 +305,6 @@ class productManagement{
         let img3 = $('#fileInput3').val();
         let videos = $('#fileInput4').val();
 
-        console.log(img1);
-        console.log(img2);
-        console.log(img3);
-
-        console.log(self.fileImg1);
-        console.log(self.fileImg2);
-        console.log(self.fileImg3);
-        console.log(self.fileVideo);
-
         let fileName1 = this.getFileNameFromPath(img1);
         let fileName2 = this.getFileNameFromPath(img2);
         let fileName3 = this.getFileNameFromPath(img3);
@@ -333,10 +316,6 @@ class productManagement{
         const imagesString = validFileNames.join(",");
         let slug = this.convertToSlug(name);
         var selectedValue = $('#formSelectIns option:selected').val();
-
-        console.log(selectedValue);
-
-
         let product = {
             "name": name,
             "price": price,
@@ -360,20 +339,15 @@ class productManagement{
 
     updateProduct = async  () => {
         let productUpdate = this.createProductObjectUpdate();
-        console.log(productUpdate)
         await $.ajax({
             type: 'POST',
             contentType: 'application/json',
             url: 'http://localhost:8083/updateProduct',
             data: JSON.stringify(productUpdate),
             success: function (data) {
-                console.log(data)
                 alert("update product success");
             },
             error: function (xhr, status, error) {
-                console.log(xhr.responseText);
-                console.log(status);
-                console.log(error);
                 alert("Đã xảy ra lỗi khi sua sản phẩm.");
             }
         })
@@ -384,12 +358,8 @@ class productManagement{
             url: '/products/' + productId,
             type: 'DELETE',
             success: function(response) {
-                console.log('Xóa sản phẩm thành công.');
             },
             error: function (xhr, status, error) {
-                console.log(xhr.responseText);
-                console.log(status);
-                console.log(error);
                 alert("Đã xảy ra lỗi khi xoa sản phẩm.");
             }
         });
