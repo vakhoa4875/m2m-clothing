@@ -16,6 +16,27 @@ getListProducts = async () => {
         })
 }
 
+searchFunction = (array, keyword) => {
+    let idealResults = [];
+    let alternativeResult = [];
+    array.forEach((value, index) => {
+        let val = value[0].toLowerCase();
+        if (val.startsWith(keyword)) {
+            if (idealResults.length < 4) {
+                idealResults.push(value);
+                if (idealResults.length === 4) return idealResults;
+            }
+        }
+        if (val.includes(keyword)) {
+            if (alternativeResult.length < 4) {
+                alternativeResult.push(value);
+            }
+        }
+    });
+    idealResults.push(...alternativeResult);
+    return idealResults.length > 4 ? idealResults.slice(0, 4) : idealResults;
+}
+
 loadSearchRecommendation = () => {
     tenSp.html('');
     tenShop.html('');
@@ -24,15 +45,8 @@ loadSearchRecommendation = () => {
     var keyword = searchInput.val().trim();
     if (keyword.length > 0) {
         searchRecommendationContainer.css('display', 'block');
-        console.dir(listSearchRecommendation);
-        listSearchRecommendation.forEach((value, index) => {
-            if (value[0].toLowerCase().includes(keyword)) {
-                if (matchedSearch.length < 4) {
-                    matchedSearch.push(value);
-                }
-            }
-        });
-        tenShop.append(`<a href="#" onclick="searchShop('${keyword}')" class="ms-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover w-100">
+        matchedSearch = searchFunction(listSearchRecommendation, keyword);
+        tenShop.append(`<a href="/home" class="ms-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover w-100" >
                             ${keyword}
                         </a>`
         );
@@ -65,6 +79,3 @@ $(document).ready(async () => {
 searchInput.on('input', () => {
     loadSearchRecommendation();
 });
-// searchInput.blur(() => {
-//     searchInput.val('');
-// }

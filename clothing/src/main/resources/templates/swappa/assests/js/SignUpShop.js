@@ -4,14 +4,6 @@ $(document).ready(function () {
         await axios
             .post('/api/public/shopSignUp')
             .then(response => {
-                console.log('Response:', response.data);
-                if (response.data.status) {
-                    console.log('Thành công:', response.data.message);
-                    // Xử lý dữ liệu trả về từ API
-                    console.log('Data:', response.data.data);
-                } else {
-                    console.log('Thất bại:', response.data.message);
-                }
             })
             .catch(error => {
                 alert(error);

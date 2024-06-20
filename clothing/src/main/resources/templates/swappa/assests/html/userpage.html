@@ -224,7 +224,6 @@
                 if (nameImg && path) {
                     avatar = nameImg + "," + path; // Nếu đã chọn ảnh mới, sử dụng giá trị mới cho avatar
                 }
-                console.log(avatar);
                 let userData = {
                     username: username,
                     email: email,
@@ -238,7 +237,6 @@
                     contentType: 'application/json',
                     data: JSON.stringify(userData),
                     success: function (response) {
-                        console.log(response === 1 ? 'Cập nhật thành công' : 'Cập nhật thất bại');
                         if (response === 1) {
                             $('#updateError').hide();
                             $('#updateSuccess').text('Update successful').show();
@@ -339,7 +337,6 @@
                     type: 'GET',
                     contentType: 'application/json',
                     success: function (data) {
-                        console.log("xóa thành công")
                     },
                     error: function (jqXHR, textStatus, errorThrown) {
                         console.error('Error:', errorThrown);
@@ -438,7 +435,6 @@
                                                         });
 
                                                         function xuLyCaptchaThanhCong() {
-                                                            console.log("Captcha đã được xác nhận thành công!");
                                                             generateQRCode();
                                                             $("#captchaContainer").hide();
                                                             $("#generateQRBtn").hide();
@@ -726,7 +722,6 @@
             if (nameImg && path) {
                 avatar = nameImg + "," + path; // Nếu đã chọn ảnh mới, sử dụng giá trị mới cho avatar
             }
-            console.log(avatar);
             let userData = {
                 username: username,
                 email: email,
@@ -740,7 +735,6 @@
                 contentType: 'application/json',
                 data: JSON.stringify(userData),
                 success: function (response) {
-                    console.log(response === 1 ? 'Cập nhật thành công' : 'Cập nhật thất bại');
                     if (response === 1) {
                         $('#updateError').hide();
                         $('#updateSuccess').text('Update successful').show();
@@ -835,7 +829,6 @@
                     openInNewPopup(data, orderId);
                 },
                 error: (error) => {
-                    console.log('>>error:', error);
                 }
             });
         } catch (error) {
@@ -872,19 +865,14 @@
             // Mở cửa sổ pop-up
             var newPopup = window.open(url, '_blank', popupConfig);
             if (newPopup) {
-                console.log('x');
                 newPopup.focus();
-                console.log('y');
                 window.addEventListener('message', function (event) {
-                    console.log('a');
                     // Kiểm tra xem thông điệp có phải từ cửa sổ pop-up PayPal không
                     if (event.source === popupWindow) {
-                        console.log('b');
                         // Thực hiện các hành động khi thanh toán thành công
                         // Lấy URL của cửa sổ pop-up
                         var popupUrl = popupWindow.location.href;
                         if (popupUrl.contains('/payment/paypal/')) {
-                            console.log('c');
                             var status = url.substring(url.lastIndexOf("/") + 1)
                             popupWindow.close();
                             window.location.href = '/userprofile?tab=order&paymentId=' + orderId + '&status=' + status;
@@ -941,7 +929,6 @@
                 type: 'GET',
                 contentType: 'application/json',
                 success: function (data) {
-                    console.log("xóa thành công")
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error('Error:', errorThrown);

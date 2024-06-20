@@ -7,13 +7,12 @@ $(document).ready(function () {
                 $('#nameShop').val(shopInfo.nameShop);
                 $('#emailShop').val(email);
                 let formattedDate = moment(shopInfo.dateEstablished).format('DD-MM-YYYY');
-                console.log(formattedDate)
                 $('#dateEst').val(shopInfo.dateEstablished);
                 $('#previewImage').attr("src", "/assests/shopImg/" + shopInfo.logo);
                 $('#previewImage').attr("data-logo", shopInfo.logo);
             })
             .catch(error => {
-                console.log(error);
+                console.error(error);
             })
     }
     getShopByUserEmail();
@@ -39,11 +38,8 @@ $(document).ready(function () {
 
         await axios.post('/api/public/updateShopInfo', formData)
             .then(response => {
-                console.log(response.data.data);
-                console.log(response.data.message);
             })
             .catch(error => {
-                console.log(error);
             })
     }
     $('#submitShopBtn').click(function () {

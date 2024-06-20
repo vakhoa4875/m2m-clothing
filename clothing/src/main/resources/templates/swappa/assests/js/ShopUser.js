@@ -11,7 +11,6 @@ $(document).ready(function () {
         await axios.get(`/get-shop-by-user-id?shopId=${shopId}`)
             .then(response => {
                 shopInfoContainer.html('');
-                console.log(response.data);
                 let responseData = response.data.data;
                 let formattedDate = moment(responseData.dateEstablished).format('DD-MM-YYYY');
                 let html = `
@@ -67,8 +66,6 @@ $(document).ready(function () {
             </div>
                     `;
                 shopInfoContainer.append(html);
-
-                console.log(response.data.data);
             })
             .catch(error => {
                 alert(error);
@@ -89,7 +86,6 @@ $(document).ready(function () {
         await axios.get(`/get-category-by-shop-user-shopId?shopId=${shopId}`)
             .then(response => {
                 categoryShopContainer.html('');
-                console.log(response.data);
                 let responseData = response.data.data;
                 responseData.forEach((e, index) => {
                     let html = `
@@ -114,7 +110,6 @@ $(document).ready(function () {
                 if (firstCategory.length) {
                     firstCategory.click();
                 }
-                console.log(response.data.data);
             })
             .catch(error => {
                 alert(error);
@@ -184,11 +179,13 @@ $(document).ready(function () {
                             </div>
                         </div>
                     </div>
+
                 `;
                     getProductByCategoryAndShopIdContainer.append(html);
                 });
 
                 console.log(response.data.data);
+
             })
             .catch(error => {
                 alert(error);

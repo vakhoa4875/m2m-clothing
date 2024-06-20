@@ -26,12 +26,6 @@ class Statistic {
         let voucherSelect = $('#select-voucher-period');
         await axios.get('/api-admin/getActiveMonths')
             .then((response) => {
-                console.log('>>response ' + response.data);
-
-                // this.listActiveMonths = response.data.map(e => {
-                //     var split = e.split('/');
-                //     return this.getMonthsName(split[0]) + ' ' + split[1];
-                // });
                 response.data.forEach((e, index) => {
                     var split = e.split('/');
                     var monthName = this.getMonthsName(split[0]) + ' ' + split[1];
@@ -39,7 +33,6 @@ class Statistic {
                     voucherSelect.append(`<option value="` + e + `" ${index === 0 ? 'selected' : ''}>` + monthName + `</option>`);
                 })
                 this.listActiveMonths = response.data;
-                console.log('>>active ' + this.listActiveMonths);
                 this.hadSelect = true;
             })
             .catch((error) => {
@@ -49,7 +42,6 @@ class Statistic {
     renderTop10MostSoldProducts = async () => {
         let productsContainer = $('#top-10-sold-product-container');
         let selectedValue = $('#select-period').val().split('/');
-        console.log(selectedValue);
         let month = selectedValue[0];
         let year = selectedValue[1];
         await axios
@@ -62,7 +54,6 @@ class Statistic {
             .then(response => {
                 productsContainer.html('');
                 response.data.forEach((e, index) => {
-                    console.log('>>element: ' + e + ' |>>index: ' + index);
                     let thumbnail = (e.pictures.split(','))[0];
                     let html = `<tr class="text-center">
                                                 <th class="align-middle" scope="row">${index + 1}</th>
@@ -97,7 +88,6 @@ class Statistic {
                     chartData.labels.push(e[0].voucherName);
                     chartData.data.push(e[1]);
                 });
-                console.log(chartData);
             })
             .catch(error => {
                 console.error(error);
@@ -147,7 +137,6 @@ class Statistic {
                     chartData.labels.push(monthName);
                     chartData.data.push(e[1]);
                 });
-                console.log(chartData);
             })
             .catch(error => {
                 console.error(error);
