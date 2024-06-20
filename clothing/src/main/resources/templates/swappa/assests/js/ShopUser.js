@@ -192,8 +192,7 @@ $(document).ready(function () {
             });
     };
 
-// Sử dụng hàm mới
-    getProductByCategoryAndShopId(categoryId);
+
 
 
 
