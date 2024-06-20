@@ -4,6 +4,7 @@ import m2m_phase2.clothing.clothing.data.dto.ShopDto;
 import m2m_phase2.clothing.clothing.data.entity.ShopE;
 import m2m_phase2.clothing.clothing.data.model.ShopM;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
+import m2m_phase2.clothing.clothing.repository.SearchShopRepo;
 import m2m_phase2.clothing.clothing.repository.ShopRepo;
 import m2m_phase2.clothing.clothing.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,9 @@ public class ShopServiceImpl implements ShopService {
 
     @Autowired
     ProductRepo productRepo;
+
+    @Autowired
+    SearchShopRepo searchShopRepo;
 
     @Override
     public ShopM findShopByUser(String email) {
@@ -43,6 +47,12 @@ public class ShopServiceImpl implements ShopService {
     @Override
     public List<Object[]> getShopDetails(int shopId) {
         return productRepo.GetShopDetails(shopId);
+    }
+
+    @Override
+    public ShopM getShopById(int shopId) {
+        ShopE shopE = searchShopRepo.findById(shopId);
+        return ShopM.convertShopEToShopM(shopE);
     }
 
 
