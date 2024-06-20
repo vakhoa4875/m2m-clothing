@@ -35,4 +35,6 @@ public interface ProductService {
     List<Product> findProductByShopCategory(Integer categoryId, String email);
 
     List<String[]> getProductsInfoForSearchRecommend() throws SQLException;
+
+    List<Product> findProductByShopCategoryShopId(Integer categoryId, int shopId);
 }

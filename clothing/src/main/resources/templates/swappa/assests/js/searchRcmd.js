@@ -60,7 +60,19 @@ loadSearchRecommendation = () => {
         searchRecommendationContainer.css('display', 'none');
     }
 }
-
+searchShop = async (nameShop) => {
+    try {
+        const response = await axios.get(`/search-shop?nameShop=${nameShop}`);
+        const shopData = {
+            keyword: nameShop,
+            data: response.data.data
+        };
+        localStorage.setItem('shopData', JSON.stringify(shopData));
+        window.location.href = '/viewSearchShop';
+    } catch (error) {
+        console.error(error);
+    }
+}
 $(document).ready(async () => {
     await getListProducts();
 })
