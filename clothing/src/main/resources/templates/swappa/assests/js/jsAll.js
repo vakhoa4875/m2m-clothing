@@ -290,7 +290,7 @@ $(document).ready(function () {
     //Trang chủ
     $.ajax({
         type: "get",
-        url: "http://localhost:8083/allcategoryapi",
+        url: "/allcategoryapi",
         data: "data",
         dataType: "json",
         success: function (response) {
@@ -312,7 +312,7 @@ $(document).ready(function () {
 
     $.ajax({
         type: "get",
-        url: "http://localhost:8083/findTop6ByOrderByGiaBanDesc",
+        url: "/findTop6ByOrderByGiaBanDesc",
         data: "data",
         dataType: "json",
         success: function (response) {
