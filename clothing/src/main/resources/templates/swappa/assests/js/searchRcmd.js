@@ -46,7 +46,7 @@ loadSearchRecommendation = () => {
     if (keyword.length > 0) {
         searchRecommendationContainer.css('display', 'block');
         matchedSearch = searchFunction(listSearchRecommendation, keyword);
-        tenShop.append(`<a href="/home" class="ms-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover w-100" >
+        tenShop.append(`<a onclick="searchShop('${keyword}')" class="ms-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover w-100" >
                             ${keyword}
                         </a>`
         );
