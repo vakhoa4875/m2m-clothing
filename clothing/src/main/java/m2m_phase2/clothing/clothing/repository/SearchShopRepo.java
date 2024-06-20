@@ -13,4 +13,6 @@ import java.util.List;
 public interface SearchShopRepo extends JpaRepository<ShopE,Integer> {
     @Query("SELECT s FROM ShopE s WHERE LOWER(s.nameShop) LIKE %:nameShop%")
     List<ShopE> searchShopsByName(@Param("nameShop") String nameShop);
+
+    ShopE findById(int shopId);
 }

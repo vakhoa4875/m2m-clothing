@@ -209,4 +209,19 @@ public class ProductApi {
 		var shop = shopService.getShopDetails(shop_id);
 		return ResponseEntity.ok(shop);
 	}
+
+    @GetMapping("/api-public-getListProductByCategoryAndShopId")
+    public ResponseEntity<?> findProductByShopCategoryShopId(@RequestParam Integer categoryId, @RequestParam int shopId) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            result.put("data", productService.findProductByShopCategoryShopId(categoryId, shopId));
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
 }

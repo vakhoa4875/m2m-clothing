@@ -1,17 +1,23 @@
 $(document).ready(function () {
 
-    const getShopByUserEmail = async () => {
+    const getShopByUserId = async () => {
         let shopInfoContainer = $('#shopInfoContainer');
-        await axios.get('/get-shop-by-user-email')
+        let shopId = localStorage.getItem('shopId');
+        if (!shopId) {
+            alert('Shop ID not found in local storage');
+            return;
+        }
+
+        await axios.get(`/get-shop-by-user-id?shopId=${shopId}`)
             .then(response => {
                 shopInfoContainer.html('');
-                console.log(response.data)
+                console.log(response.data);
                 let responseData = response.data.data;
                 let formattedDate = moment(responseData.dateEstablished).format('DD-MM-YYYY');
                 let html = `
            <div class="col-3">
                 <div class="row rounded-right p-2" style="background-color: rgba(164,162,162,0.42)">
-                    <div class="col-4 pr-0" style="">
+                    <div class="col-4 pr-0">
                         <img class="rounded-circle img-fluid" src="${'/assests/shopImg/' + responseData.logo}" alt="" style="height: 106px; width: 106px; object-fit: contain">
                     </div>
                     <div class="col-8 d-flex align-items-center">
@@ -59,41 +65,49 @@ $(document).ready(function () {
                     <div class="flex-grow-1" id="total-likes">0 <i class="fa-solid fa-heart" style="color: #ff0000;"></i></div>
                 </div>
             </div>
-                    `
+                    `;
                 shopInfoContainer.append(html);
 
                 console.log(response.data.data);
             })
             .catch(error => {
                 alert(error);
-            })
-    }
-    getShopByUserEmail();
+            });
+    };
 
-    const getCategoryByShopEmail = async () => {
+    getShopByUserId();
+
+
+    const getCategoryByShopUserShopId = async () => {
         let categoryShopContainer = $('#categoryShopContainer');
-        await axios.get('/get-category-by-shop-user-email')
+        let shopId = localStorage.getItem('shopId');
+        if (!shopId) {
+            alert('Shop ID not found in local storage');
+            return;
+        }
+
+        await axios.get(`/get-category-by-shop-user-shopId?shopId=${shopId}`)
             .then(response => {
                 categoryShopContainer.html('');
-                console.log(response.data)
+                console.log(response.data);
                 let responseData = response.data.data;
                 responseData.forEach((e, index) => {
                     let html = `
-                    <div style="margin-left: 10px">
-                        <div class="active-category-hover" style="margin-bottom: 10px">
-                            <a href="#" class="d-inline-block text-truncate text-decoration-none" id="${e.category_id}" data-id="${e.category_id}">
-                                ${e.category_name}
-                            </a>
-                        </div>
+                <div style="margin-left: 10px">
+                    <div class="active-category-hover" style="margin-bottom: 10px">
+                        <a href="#" class="d-inline-block text-truncate text-decoration-none" id="${e.category_id}" data-id="${e.category_id}">
+                            ${e.category_name}
+                        </a>
                     </div>
-                    `
+                </div>
+                `;
                     categoryShopContainer.append(html);
-                })
+                });
                 // Gắn sự kiện click cho tất cả các thẻ <a> sau khi chúng được thêm vào DOM
                 $('#categoryShopContainer').on('click', 'a', function(event) {
                     event.preventDefault();
                     let categoryId = $(this).data('id');
-                    getProductByCategoryAndShopEmail(categoryId);
+                    getProductByCategoryAndShopId(categoryId);
                 });
                 // Tự động click vào thẻ <a> đầu tiên sau khi các thẻ được thêm vào DOM
                 const firstCategory = $('#categoryShopContainer a').first();
@@ -104,30 +118,39 @@ $(document).ready(function () {
             })
             .catch(error => {
                 alert(error);
-            })
-    }
-    getCategoryByShopEmail();
+            });
+    };
+
+    getCategoryByShopUserShopId();
 
 
-    const getProductByCategoryAndShopEmail = async (categoryId) => {
+
+
+    const getProductByCategoryAndShopId = async (categoryId) => {
         console.log(categoryId);
-        let getProductByCategoryAndShopEmailContainer = $('#getProductByCategoryAndShopEmailContainer');
+        let getProductByCategoryAndShopIdContainer = $('#getProductByCategoryAndShopIdContainer');
+        let shopId = localStorage.getItem('shopId');
+        if (!shopId) {
+            alert('Shop ID not found in local storage');
+            return;
+        }
+
         await axios
-            .get('/api-public-getListProductByCategoryAndShopEmail',{
+            .get('/api-public-getListProductByCategoryAndShopId', {
                 params: {
-                    categoryId: categoryId
+                    categoryId: categoryId,
+                    shopId: shopId
                 }
             })
             .then(response => {
-                getProductByCategoryAndShopEmailContainer.html('');
-                console.log(response.data)
+                getProductByCategoryAndShopIdContainer.html('');
+                console.log(response.data);
                 let responseData = response.data.data;
-
 
                 responseData.forEach((e, index) => {
                     let picture = e.pictures.split(",")[0];
                     let originalPrice = e.price;
-                    let salePercent = e.sale.salePercent;
+                    let salePercent = e.sale ? e.sale.salePercent : 0; // Kiểm tra nếu e.sale tồn tại trước khi truy cập vào salePercent
                     let priceAfterDiscount = originalPrice * (1 - salePercent / 100);
                     let html = `
                     <div class="col-2 d-flex flex-column justify-content-around align-items-center mb-3"
@@ -138,7 +161,7 @@ $(document).ready(function () {
                         </div>
                         <div style="position: absolute; top: 0px; right: 15px">
                             <span class="badge rounded-pill text-bg-warning "
-                                  style="background-color: #ababab; color: black; padding: 6px">${e.sale.salePercent}%</span>
+                                  style="background-color: #ababab; color: black; padding: 6px">${salePercent}%</span>
                         </div>
                         <div style="width: 100%; height: 150px; display: flex; justify-content: center; align-items: center;">
                             <a href="/product?slug_url=${e.slugUrl}" style="height: 200px">
@@ -161,17 +184,20 @@ $(document).ready(function () {
                             </div>
                         </div>
                     </div>
-                    `
-                    getProductByCategoryAndShopEmailContainer.append(html);
-                })
-
+                `;
+                    getProductByCategoryAndShopIdContainer.append(html);
+                });
 
                 console.log(response.data.data);
             })
             .catch(error => {
                 alert(error);
-            })
-    }
+            });
+    };
+
+// Sử dụng hàm mới
+    getProductByCategoryAndShopId(categoryId);
+
 
 
 

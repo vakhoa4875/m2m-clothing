@@ -82,41 +82,86 @@
                 shopElement.classList.add('p-3', 'rounded-1', 'shop-bar');
 
                 shopElement.innerHTML = `
-                        <div class="row align-items-center">
-                            <div class="col-md-4 d-flex flex-row gap-md-2 align-items-center">
-                                <img class="rounded-circle img-fluid" src="${shop.logo || 'default-logo-path'}"
-                                    alt="Logo shop" style="max-height: 64px; max-width: 64px; object-fit: contain">
-                                <div class="d-flex flex-column">
-                                    <div>${shop.nameShop || 'Không có tên shop'}</div>
-                                    <div class="d-flex justify-content-center">
-                                        <button class="btn btn-custom">
-                                            <i class="fa-solid fa-store"></i> View shop
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="row">
-                                    <div class="col">Products count: <span id="products-count">xx</span></div>
-                                    <div class="col">Orders per month: <span id="orders-per-month">2,1k</span></div>
-                                    <div class="col">Joined: <span id="joined-date">19/05/2024</span></div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">Comments count: <span id="comments-count">89,6k</span></div>
-                                    <div class="col">Categories count: <span id="categories-count">1k</span></div>
-                                    <div class="col">Total like count: <span id="total-likes">56M</span></div>
-                                </div>
+                <div class="row align-items-center">
+                    <div class="col-md-4 d-flex flex-row gap-md-2 align-items-center">
+                        <img class="rounded-circle img-fluid" src="${shop.logo || 'default-logo-path'}"
+                            alt="Logo shop" style="max-height: 64px; max-width: 64px; object-fit: contain">
+                        <div class="d-flex flex-column">
+                            <div>${shop.nameShop || 'Không có tên shop'}</div>
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn-custom" onclick="viewShop(${shop.shopId})">
+                                    <i class="fa-solid fa-store"></i> View shop
+                                </button>
                             </div>
                         </div>
-                    `;
+                    </div>
+                    <div class="col-md-8" id="shop-details-${shop.shopId}">
+                        <div class="row">
+                            <div class="col">Products count: <span id="products-count-${shop.shopId}">xx</span></div>
+                            <div class="col">Orders per month: <span id="orders-per-month-${shop.shopId}">2,1k</span></div>
+                            <div class="col">Joined: <span id="joined-date-${shop.shopId}">19/05/2024</span></div>
+                        </div>
+                        <div class="row">
+                            <div class="col">Comments count: <span id="comments-count-${shop.shopId}">89,6k</span></div>
+                            <div class="col">Categories count: <span id="categories-count-${shop.shopId}">1k</span></div>
+                            <div class="col">Total like count: <span id="total-likes-${shop.shopId}">56M</span></div>
+                        </div>
+                    </div>
+                </div>
+            `;
 
                 shopDetailsContainer.appendChild(shopElement);
+
+                // Gọi API để lấy chi tiết cửa hàng
+                getShopDetails(shop.shopId);
             });
-            sessionStorage.removeItem('shopData');
         } else {
             document.getElementById('shop-details-container').innerHTML = '<p>Không có dữ liệu để hiển thị.</p>';
         }
     });
+
+    function getShopDetails(shopId) {
+        $.ajax({
+            url: '/shop',
+            type: 'GET',
+            data: { shop_id: shopId },
+            success: function(shopDetailsResponse) {
+                console.log('Phản hồi chi tiết cửa hàng:', shopDetailsResponse);
+                if (shopDetailsResponse && shopDetailsResponse.length > 0) {
+                    var shopDetails = shopDetailsResponse[0];
+                    $('#products-count-' + shopId).text(shopDetails[2] + ' Product');
+                    $('#orders-per-month-' + shopId).text(shopDetails[3] + ' Order');
+                    $('#joined-date-' + shopId).text(shopDetails[4] + ' Date');
+                    $('#comments-count-' + shopId).text(shopDetails[5] + ' Comment');
+                    $('#categories-count-' + shopId).text(shopDetails[6] + ' Category');
+                    $('#total-likes-' + shopId).text(shopDetails[7] + ' ').append('<i class="fa-solid fa-heart" style="color: #ff0000;"></i>');
+                }
+            },
+            error: function(shopDetailsError) {
+                console.error("Lỗi khi lấy chi tiết cửa hàng:", shopDetailsError);
+            }
+        });
+    }
+
+
+
+
+    // khi bấm vô view shop thì nó lưu id shop lên local đem qua trang bên kia
+    function viewShop(shopId) {
+        fetch(`/view-shop?shopId=${shopId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Shop Details:', data.data);
+                    localStorage.setItem('shopId', shopId);
+                    window.location.href = '/user/shop';
+                } else {
+                    console.error('Error fetching shop details:', data.message);
+                }
+            })
+            .catch(error => console.error('Fetch error:', error));
+    }
+
 </script>
 </body>
 

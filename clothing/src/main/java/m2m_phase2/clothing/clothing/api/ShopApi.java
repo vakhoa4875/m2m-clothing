@@ -363,6 +363,19 @@ public class ShopApi {
 //
 //        return shopAdminService.saveProduct(shopAdminDto);
 //    }
-
-
+        @GetMapping("/get-shop-by-user-id")
+        public ResponseEntity<?> getShopById(@RequestParam int shopId) {
+            ShopM shopM = shopService.getShopById(shopId);
+            Map<String, Object> result = new HashMap<>();
+            try {
+                result.put("status", true);
+                result.put("message", "Call Api Success");
+                result.put("data", shopM);
+            } catch (Exception e) {
+                result.put("status", false);
+                result.put("message", "Call Api Fail");
+                result.put("data", null);
+            }
+            return ResponseEntity.ok(result);
+        }
 }

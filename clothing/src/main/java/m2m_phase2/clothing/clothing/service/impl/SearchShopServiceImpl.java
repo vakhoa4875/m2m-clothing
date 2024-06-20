@@ -2,6 +2,7 @@ package m2m_phase2.clothing.clothing.service.impl;
 
 import m2m_phase2.clothing.clothing.data.entity.ShopE;
 import m2m_phase2.clothing.clothing.data.model.SearchShopM;
+import m2m_phase2.clothing.clothing.data.model.ShowShopSearchM;
 import m2m_phase2.clothing.clothing.repository.SearchShopRepo;
 import m2m_phase2.clothing.clothing.service.SearchShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,5 +21,11 @@ public class SearchShopServiceImpl implements SearchShopService {
     public List<SearchShopM> searchShop(String nameShop) {
         List<ShopE> shopEList = searchShopRepo.searchShopsByName(nameShop.toLowerCase());
         return SearchShopM.converListShopEToSearchShopM(shopEList);
+    }
+
+    @Override
+    public ShowShopSearchM showShopSearch(int shopId) {
+        ShopE showShop = searchShopRepo.findById(shopId);
+        return ShowShopSearchM.convertShopEToShowShopSearchM(showShop);
     }
 }
