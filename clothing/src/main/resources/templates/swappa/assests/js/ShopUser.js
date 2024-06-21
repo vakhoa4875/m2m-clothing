@@ -1,5 +1,5 @@
-$(document).ready(function () {
-
+$(document).ready(async function () {
+    let listProductForShop =[];
     const getShopByUserId = async () => {
         let shopInfoContainer = $('#shopInfoContainer');
         let shopId = localStorage.getItem('shopId');
@@ -139,53 +139,9 @@ $(document).ready(function () {
             })
             .then(response => {
                 getProductByCategoryAndShopIdContainer.html('');
-                console.log(response.data);
                 let responseData = response.data.data;
-
-                responseData.forEach((e, index) => {
-                    let picture = e.pictures.split(",")[0];
-                    let originalPrice = e.price;
-                    let salePercent = e.sale ? e.sale.salePercent : 0; // Kiểm tra nếu e.sale tồn tại trước khi truy cập vào salePercent
-                    let priceAfterDiscount = originalPrice * (1 - salePercent / 100);
-                    let html = `
-                    <div class="col-2 d-flex flex-column justify-content-around align-items-center mb-3"
-                         style="overflow: hidden; position: relative; padding-top: 30px;">
-                        <div style="position: absolute; top: 0px; left: 15px">
-                            <span class="badge rounded-pill text-bg-warning "
-                                  style="background-color: #fc1e1e; color: white; padding: 6px">New</span>
-                        </div>
-                        <div style="position: absolute; top: 0px; right: 15px">
-                            <span class="badge rounded-pill text-bg-warning "
-                                  style="background-color: #ababab; color: black; padding: 6px">${salePercent}%</span>
-                        </div>
-                        <div style="width: 100%; height: 150px; display: flex; justify-content: center; align-items: center;">
-                            <a href="/product?slug_url=${e.slugUrl}" style="height: 200px">
-                                <img src="../media/${picture}" alt="" class="img-fluid"
-                                     style="object-fit: revert; width: 100%; height: 100%;">
-                            </a>
-                        </div>
-
-                        <div style="margin-top: 20px">
-                            <div class="d-inline-block text-truncate p-1" style="font-weight: 500; max-width: 150px;">
-                                ${e.productName}
-                            </div>
-                            <div class="d-flex">
-                                <div style="color: red">
-                                    $${priceAfterDiscount.toFixed(2)}
-                                </div>
-                                <div style="color: gray; margin-left: 5px;">
-                                    <del style="font-size: 13px;">$${e.price}</del>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                `;
-                    getProductByCategoryAndShopIdContainer.append(html);
-                });
-
-                console.log(response.data.data);
-
+                listProductForShop = response.data.data;
+                displayProducts(responseData);
             })
             .catch(error => {
                 alert(error);
@@ -193,10 +149,103 @@ $(document).ready(function () {
     };
 
 // Sử dụng hàm mới
-    getProductByCategoryAndShopId(categoryId);
 
+    function filterMostPurchasedProducts() {
+        let sortedProducts = listProductForShop.sort((a, b) => b.rateCount - a.rateCount);
+        let mostPurchasedProducts = sortedProducts.slice(0, 12);
+        console.log(sortedProducts)
+        displayProducts(sortedProducts);
+    }
+    $('#moinhat').click(function() {
+        fiterSanPhamPhoBienNhat();
+    });
+    $('#phobien').click(function() {
+        filterMostPurchasedProducts();
+    });
+    $('#banchay').click(function() {
+        filterBestSellingProducts();
+    });
+    $('#selectSort').change(function (){
+        handleSelectChange(this);
+    })
+    function filterBestSellingProducts() {
+        let sortedBestSellingProducts = listProductForShop.sort((a, b) => b.sold - a.sold);
+        let bestSellingProducts = sortedBestSellingProducts.slice(0, 12);
+        console.log(sortedBestSellingProducts)
+        displayProducts(sortedBestSellingProducts);
+    }
 
+    function handleSelectChange(selectElement) {
+        var selectedOption = selectElement.value;
+        if (selectedOption === 'lowToHigh') {
+            filterProductsByPriceLowToHigh();
+        } else if (selectedOption === 'highToLow') {
+            filterProductsByPriceHighToLow();
+        }
+    }
+    function filterProductsByPriceLowToHigh() {
+        let sortedProducts = listProductForShop.sort((a, b) => a.price - b.price);
+        displayProducts(sortedProducts);
+    }
+    function filterProductsByPriceHighToLow() {
+        let sortedProducts = listProductForShop.sort((a, b) => b.price - a.price);
+        displayProducts(sortedProducts);
+    }
 
+    function fiterSanPhamPhoBienNhat(){
+        let sortedProducts = listProductForShop.sort((a, b) => b.productId - a.productId);
+        let newestProducts = sortedProducts.slice(0, 12);
+        console.log(sortedProducts)
+        displayProducts(sortedProducts);
+    }
 
+    function displayProducts(products) {
+        let resultsContainer = $('#getProductByCategoryAndShopIdContainer');
+        resultsContainer.empty();
+        console.log(123)
+        products.forEach(function(product,index) {
+            console.log(index)
+            let badgeHtml = '';
+            if (index < 6) {
+                badgeHtml = `<span class="badge text-bg-danger text-end">Top ${index + 1}</span>`;
+            }
+            let productHtml = `
+                <div class="col-lg-2 col-md-3 col-sm-4">
+                    <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
+                        <a href="/product?slug_url=${product.slug}" class="stretched-link">
+                            <div style="position: absolute">
+                                ${product.sale ? `<span class="badge text-bg-danger">${product.sale.salePercent}%</span>` : ''}
+                               
+                            </div>
+                            <div  class="float-end">
+                                ${badgeHtml}
+                            </div>
+                            <div class="img-container">
+                                <img src="../media/${product.pictures.split(',')[0]}" class="img-fluid mt-2 mb-3" alt="">
+                            </div>
+                            <div class="w-100">
+                                <span class="d-inline-block text-truncate" style="max-width: 90%;">${product.productName}</span>
+                            </div>
+                            <div class="w-100">
+                                <div class="d-flex justify-content-around">
+                                    ${product.sale ? `
+                                        <del>${product.price}</del>
+                                        <span style="color:#c07d4b; font-weight: bolder">
+                                            ${product.price - (product.sale.salePercent / 100 * product.price)}
+                                        </span>` : `${product.price}`}
+                                </div>
+                            </div>
+                            <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
+                                <div class="text-white fw-bolder">Mua ngay</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            `;
+            resultsContainer.append(productHtml);
+        });
+    }
 
 });
+
+

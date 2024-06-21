@@ -7,39 +7,25 @@ function loadAllProduct () {
         .then(response => {
             products = response.data;
             console.log(products)
-
             let categoryId = window.location.pathname.split('/')[2];
             fiterByCategory(categoryId)
         })
 }
 function filterMostPurchasedProducts() {
-    // Sắp xếp mảng sản phẩm theo số lượng người mua (giả định rằng bạn có thuộc tính `soldCount` trong dữ liệu sản phẩm)
     let sortedProducts = products.sort((a, b) => b.rateCount - a.rateCount);
-
-    // Lọc ra những sản phẩm có nhiều người mua nhất (ví dụ: 10 sản phẩm có nhiều người mua nhất)
     let mostPurchasedProducts = sortedProducts.slice(0, 12);
-
-    // Hiển thị những sản phẩm có nhiều người mua nhất
     displayProducts(mostPurchasedProducts);
 }
-
 function filterBestSellingProducts() {
-    // Sắp xếp mảng sản phẩm theo số lượng sản phẩm đã bán (giả định rằng bạn có thuộc tính `soldCount` trong dữ liệu sản phẩm)
     let sortedProducts = products.sort((a, b) => b.sold - a.sold);
-
-    // Lọc ra những sản phẩm bán chạy nhất (ví dụ: 10 sản phẩm bán chạy nhất)
     let bestSellingProducts = sortedProducts.slice(0, 12);
-
-    // Hiển thị những sản phẩm bán chạy nhất
     displayProducts(bestSellingProducts);
 }
-
 function handleSelectChange(selectElement) {
     var selectedOption = selectElement.value;
     if (selectedOption === 'lowToHigh') {
         filterProductsByPriceLowToHigh();
     } else if (selectedOption === 'highToLow') {
-        // Thêm hàm để xử lý việc sắp xếp sản phẩm từ cao đến thấp tại đây
         filterProductsByPriceHighToLow();
     }
 }
@@ -56,7 +42,6 @@ function fiterSanPhamPhoBienNhat(){
     let newestProducts = sortedProducts.slice(0, 12);
     displayProducts(newestProducts);
 }
-
 function fiterByCategory(categoryId){
     console.log(categoryId)
     if(!categoryId){
