@@ -443,7 +443,6 @@
     $(document).ready(function () {
         fetchVouchers();
         fetchOrders();
-        fetchNotifications();
 
         $('#submitBtn').click(function () {
             updateUser();
@@ -451,7 +450,6 @@
         });
 
         $('#fileInput').change(handleFileInputChange);
-        $('#xoathongbao').click(handleNotificationClear);
         $('#navbar_search_input').keydown(function (e) {
             if (e.which === 13) {
                 searchProducts();
@@ -461,34 +459,34 @@
         $('#updateSuccess').hide();
     });
 
-    function loadSwalForPaypalContainer() {
+    function loadSwalForPaypalContainer(id, amount) {
         Swal.fire({
             html: `<div id="paypal-button-container"></div>`,
             showConfirmButton: false
         });
-        paypalButtonRendering('#paypal-button-container', 0.02);
+        paypalButtonRendering('#paypal-button-container', id, amount);
     }
 
-    function paypalButtonRendering(btn, amount) {
+    function paypalButtonRendering(btn, id, amount) {
         paypal.Buttons({
             createOrder: function (data, actions) {
-                console.dir(data);
-                console.dir(actions);
-                return actions.order.create({
+                let obj = actions.order.create({
                     purchase_units: [{
                         amount: {
                             value: amount
                         }
                     }]
-                }).then(response => {
-                    console.log('>>create state: ');
-                    console.dir(response);
                 });
+                obj.then(res => console.dir(res));
+                return obj;
             },
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
-                    console.log('>>capture: ');
-                    console.dir(details);
+                    console.dir({
+                        data: data,
+                        actions: actions,
+                        details: details
+                    });
                 });
             },
             onError: function (err) {
@@ -496,15 +494,6 @@
             },
             onCancel: function (data) {
                 alert('Transaction was cancelled');
-            },
-            onClick: function (data, actions) {
-                console.log('Button clicked');
-            },
-            style: {
-                layout: 'vertical',  // horizontal | vertical
-                color: 'gold',       // gold | blue | silver | black
-                shape: 'rect',       // rect | pill
-                label: 'paypal'      // paypal | checkout | buynow | pay | installment
             }
         }).render(btn); // Render the PayPal button into #paypal-button-container
     }
@@ -565,7 +554,7 @@
                                 <div class="${order.orderStatus === 'Approved' ? 'badge text-bg-success' : 'badge text-bg-warning'}">${order.orderStatus}</div>
                             </td>
                             <td class="text-center">
-                                <button class="btn btn-success" ${getButtonState(order)} onclick="loadSwalForPaypalContainer(${order})">Pay with PayPal</button>
+                                <button class="btn btn-success" ${getButtonState(order)} onclick="loadSwalForPaypalContainer(${order.orderId}, ${order.totalAmount})">Pay with PayPal</button>
                             </td>
                         </tr>`);
                 });
@@ -633,38 +622,6 @@
             }
             reader.readAsDataURL(file);
         }
-    }
-
-    function handleNotificationClear() {
-        const id = $('#iduser').text();
-        clearNotification(id);
-    }
-
-    function clearNotification(id) {
-        axios.post(`/api-user/thongbao/xoathongbao/${id}`, id)
-            .then(function () {
-                console.log("Notification cleared");
-                $('#tbodythongbao').html("");
-            })
-            .catch(function (error) {
-                console.error('Error:', error);
-            });
-    }
-
-    function fetchNotifications() {
-        const id = $('#iduser').text();
-        axios.get(`/api-user/thongbao/xemthongbao/${id}`)
-            .then(function (response) {
-                const tbody = $("#tbodythongbao");
-                tbody.empty();
-                response.data.forEach(function (thongbao) {
-                    const date = new Date(thongbao.ngayTao).toLocaleDateString();
-                    tbody.append(`<tr><td>${date}</td><td>${thongbao.noiDung}</td></tr>`);
-                });
-            })
-            .catch(function (error) {
-                console.error('Error:', error);
-            });
     }
 
     function generateQRCode() {
