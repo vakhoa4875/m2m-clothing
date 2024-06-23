@@ -204,6 +204,15 @@ insert into Shop(logo, name_shop, date_established, id) values
 -- ALTER TABLE [user]
 -- ADD is_disable bit default 0;
 -- procedure shopdetail 
+
+create table Favorite
+(
+    id int identity primary key,
+    user_id int foreign key references [user] (id),
+    product_id int foreign key references Product (product_id),
+    date_created datetime default getdate()
+)
+
 CREATE PROCEDURE GetShopDetails
     @shop_id int
 AS
@@ -228,10 +237,10 @@ BEGIN
     ),
     OrdersSoldInOneMonth AS (
         SELECT 
-            COUNT(od.order_id_detail) AS OrdersSoldInOneMonth
+            COUNT(od.order_detail_id) AS OrdersSoldInOneMonth
         FROM 
             [Order] o
-            JOIN OrderDetail od ON o.order_id = od.order_id_detail
+            JOIN order_detail od ON o.order_id = od.order_detail_id
         WHERE 
             o.customer_id IN (SELECT u.id FROM [user] u WHERE u.id = @shop_id)
             AND o.order_date >= DATEADD(MONTH, -1, GETDATE())
@@ -260,15 +269,22 @@ BEGIN
         WHERE 
             p.shop_id = @shop_id
     ),
-    TotalLikes AS (
+    --TotalLikes AS (
+    --    SELECT 
+    --        SUM(p.sold) AS TotalLikes
+    --    FROM 
+    --        Product p
+    --    WHERE 
+    --        p.shop_id = @shop_id
+    --)
+	    TotalLikes AS (
         SELECT 
-            SUM(p.sold) AS TotalLikes
+            COUNT(f.id) AS TotalLikes
         FROM 
-            Product p
+            Favorite f
         WHERE 
-            p.shop_id = @shop_id
+            f.product_id IN (SELECT p.product_id FROM Product p WHERE p.shop_id = @shop_id)
     )
-
     SELECT
         sd.ShopLogo,
         sd.ShopName,
@@ -289,11 +305,3 @@ BEGIN
 
 END
 GO
-
-create table Favorite
-(
-    id int identity primary key,
-    user_id int foreign key references [user] (id),
-    product_id int foreign key references Product (product_id),
-    date_created datetime default getdate()
-)
