@@ -21,6 +21,7 @@ import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -57,6 +58,21 @@ public class ProductApi {
     @GetMapping("/findbyproductidapi")
     public ProductM getfindbyproductid(@RequestParam String slug_url) {
         return productService.findByslug_url(slug_url);
+    }
+
+    @GetMapping("/find-products-by-category")
+    public ResponseEntity<?> getcategoryType(@RequestParam Integer categoryId) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            result.put("data", productService.findBycategory(categoryId));
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/findcategorynamebyproductidapi")
@@ -209,4 +225,19 @@ public class ProductApi {
 		var shop = shopService.getShopDetails(shop_id);
 		return ResponseEntity.ok(shop);
 	}
+
+    @GetMapping("/api-public-getListProductByCategoryAndShopId")
+    public ResponseEntity<?> findProductByShopCategoryShopId(@RequestParam Integer categoryId, @RequestParam int shopId) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            result.put("data", productService.findProductByShopCategoryShopId(categoryId, shopId));
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
 }

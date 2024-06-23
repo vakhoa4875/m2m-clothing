@@ -334,11 +334,20 @@ $(document).ready(function () {
 
 
     function appendCategoriesToList(categories) {
+        console.log(categories)
         $.each(categories, function (index, category) {
             // Tạo một thẻ li mới cho mỗi đối tượng user
-            var link = $("<a>").attr("id", "category_" + index).addClass("rounded-1 btn text-white hoverbutton nghe").css("width", "120px").text(category);
+            var link = $("<a>")
+                .attr("id", "category_" + index)
+                .addClass("rounded-1 btn text-white hoverbutton nghe")
+                .css("width", "120px")
+                .text(category)
+                .click(function() {
+                    console.log(index);
+                    window.location.href = "/AllcategoryType/"+(index+1);
+                });
+            ;
             var div = $("<div>").append(link);
-
             if (category == "Jewels & Accessories") {
                 div.addClass("special-category");
                 link.css("width", "200px");
@@ -348,11 +357,6 @@ $(document).ready(function () {
 
             // Thêm thẻ li vào danh sách
             $("#userListCategory").append(div);
-            link.on("click", function() {
-                // Lấy giá trị của thuộc tính "value" của thẻ <a>
-                selectedCategoryId = $(this).attr("data-category-id")
-                window.location.href = "/categoryType?categoryId="+(index+1);
-            });
         });
     }
 
