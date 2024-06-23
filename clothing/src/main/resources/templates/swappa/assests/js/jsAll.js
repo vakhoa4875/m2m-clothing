@@ -306,7 +306,7 @@ $(document).ready(function () {
         },
         error: function (xhr, status, error) {
             alert("Tải dữ liệu thất bại");
-            console.log(error);
+            console.error(error);
         }
     });
 
@@ -328,17 +328,26 @@ $(document).ready(function () {
         },
         error: function (xhr, status, error) {
             alert("Tải dữ liệu thất bại");
-            console.log(error);
+            console.error(error);
         }
     });
 
 
     function appendCategoriesToList(categories) {
+        console.log(categories)
         $.each(categories, function (index, category) {
             // Tạo một thẻ li mới cho mỗi đối tượng user
-            var link = $("<a>").attr("id", "category_" + index).addClass("rounded-1 btn text-white hoverbutton nghe").css("width", "120px").text(category);
+            var link = $("<a>")
+                .attr("id", "category_" + index)
+                .addClass("rounded-1 btn text-white hoverbutton nghe")
+                .css("width", "120px")
+                .text(category)
+                .click(function() {
+                    console.log(index);
+                    window.location.href = "/AllcategoryType/"+(index+1);
+                });
+            ;
             var div = $("<div>").append(link);
-
             if (category == "Jewels & Accessories") {
                 div.addClass("special-category");
                 link.css("width", "200px");
@@ -348,12 +357,6 @@ $(document).ready(function () {
 
             // Thêm thẻ li vào danh sách
             $("#userListCategory").append(div);
-            link.on("click", function() {
-                // Lấy giá trị của thuộc tính "value" của thẻ <a>
-                selectedCategoryId = $(this).attr("data-category-id");
-                console.log(selectedCategoryId);
-                window.location.href = "/categoryType?categoryId="+(index+1);
-            });
         });
     }
 
@@ -408,7 +411,6 @@ $(document).ready(function () {
             type: 'GET',
             success: function (data) {
                 sessionStorage.setItem("tienvoucher",0);
-                console.log(data);
                 $('#modalBodyVoucherInCart').empty();
 
                 // Lưu trữ ID của voucher đã được chọn trước đó (nếu có)
@@ -482,7 +484,6 @@ $(document).ready(function () {
                         $('#addVoucherText').removeClass('d-none').addClass('d-block');
                         capNhatTienTong();
                         let tiengiam = $('#tiengiamgia').text();
-                        console.log(tiengiam)
                         sessionStorage.setItem("tienvoucher",tiengiam.slice(1));
                     }
                 });

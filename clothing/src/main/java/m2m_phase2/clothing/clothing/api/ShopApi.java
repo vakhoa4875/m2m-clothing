@@ -276,6 +276,13 @@ public class ShopApi {
         }
         return ResponseEntity.ok(result);
     }
+
+    @GetMapping("/api/shop")
+    public ResponseEntity<List<Object[]>> doGetShopDetails(@RequestParam("shop_id") Integer shop_id) {
+        var shop = shopService.getShopDetails(shop_id);
+        return ResponseEntity.ok(shop);
+    }
+
 //    @PostMapping("/download")
 //    @ResponseStatus(HttpStatus.CREATED)
 //    public Product downloadShopAdmin(@RequestBody ShopAdminDto shopAdminDto,
@@ -356,6 +363,19 @@ public class ShopApi {
 //
 //        return shopAdminService.saveProduct(shopAdminDto);
 //    }
-
-
+        @GetMapping("/get-shop-by-user-id")
+        public ResponseEntity<?> getShopById(@RequestParam int shopId) {
+            ShopM shopM = shopService.getShopById(shopId);
+            Map<String, Object> result = new HashMap<>();
+            try {
+                result.put("status", true);
+                result.put("message", "Call Api Success");
+                result.put("data", shopM);
+            } catch (Exception e) {
+                result.put("status", false);
+                result.put("message", "Call Api Fail");
+                result.put("data", null);
+            }
+            return ResponseEntity.ok(result);
+        }
 }
