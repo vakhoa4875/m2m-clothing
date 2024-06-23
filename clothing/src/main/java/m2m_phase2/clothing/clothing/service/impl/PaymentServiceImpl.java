@@ -24,10 +24,9 @@ public class PaymentServiceImpl implements PaymentService {
         }
         var payment = PaymentMapper.toEntity(paymentDTO, orderService);
         var result = paymentRepo.save(payment);
-        if (result != null) {
+        if (result != null && payment.getPaymentStatus().equals("COMPLETED")) {
             orderService.paidOrder(paymentDTO.getOrderId());
         }
-        System.out.println(result);
         return 0;
     }
 
