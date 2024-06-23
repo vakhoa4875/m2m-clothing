@@ -76,7 +76,6 @@ public class HomeController {
             model.addAttribute("user", userM);
             return "swappa/assests/html/payment";
         } else {
-            System.out.println("wtf ");
             return "redirect:/userprofile";
         }
     }

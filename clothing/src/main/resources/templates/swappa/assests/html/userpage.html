@@ -343,19 +343,16 @@
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                         <tr class="text-center">
-                                            <!--                                            <th scope="col" >Order ID</th>-->
-                                            <th scope="col">Customer</th>
-                                            <th scope="col">Date created</th>
+                                            <th scope="col">Status</th>
+                                            <th scope="col">Date ordered</th>
                                             <th scope="col">Phone</th>
                                             <th scope="col">Shipping address</th>
                                             <th scope="col">Payment method</th>
-                                            <th scope="col">Total amount</th>
-                                            <th scope="col">Order status</th>
+                                            <th scope="col">Total</th>
                                             <th scope="col"></th>
                                         </tr>
                                         </thead>
                                         <tbody id="TableStatusUser">
-
                                         </tbody>
                                     </table>
                                 </div>
@@ -469,7 +466,7 @@
 
     function paypalButtonRendering(btn, id, amount) {
         paypal.Buttons({
-            createOrder: function (data, actions) {
+            createOrder: (data, actions) => {
                 let obj = actions.order.create({
                     purchase_units: [{
                         amount: {
@@ -480,25 +477,13 @@
                 obj.then(res => initPayment(res, id, amount));
                 return obj;
             },
-            onApprove: function (data, actions) {
-                return actions.order.capture().then(function (details) {
-                    succeedPayment();
-                    console.dir({
-                        data: data,
-                        actions: actions,
-                        details: details
-                    });
+            onApprove: (data, actions) => {
+                return actions.order.capture().then(details => {
+                    succeedPayment(details, data, id);
                 });
             },
-            onError: function (err) {
-                errorPayment();
-                console.error('An error occurred during the transaction', err);
-            },
-            onCancel: function (data) {
-                canceledPayment();
-                console.log(new Date());
-                console.dir(data)
-            }
+            onError: err => errorPayment(err),
+            onCancel: data => cancelledPayment(data)
         }).render(btn); // Render the PayPal button into #paypal-button-container
     }
 
@@ -510,7 +495,7 @@
             "currency": "USD",
             "method": "paypal",
             "description": "Payment for order #" + orderID,
-            "paymentStatus": "Pending",
+            "paymentStatus": "PENDING",
             "dateCreated": currentTime,
             "orderId": orderID
         }
@@ -526,16 +511,58 @@
             .catch(error => {
                 console.error(error);
             })
-        console.log('initPayment')
     }
-    succeedPayment = () => {
-        console.log('succeedPayment')
+    succeedPayment = (details, data, orderID) => {
+        let payload = {
+            "paymentId": details.id,
+            "payerId": data.payerID,
+            "totalAmount": details.purchase_units[0].amount.value,
+            "currency": details.purchase_units[0].amount.currency_code,
+            "intent": details.intent,
+            "method": data.paymentSource,
+            "description": "Payment for order #" + orderID,
+            "paymentStatus": details.status,
+            "dateCreated": details.create_time,
+            "dateUpdated": details.update_time,
+            "orderId": orderID
+        }
+        let config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        axios.post('/api-user/payment/save', payload, config)
+            .then(response => {
+                $('.swal2-container').remove();
+                Swal.fire({
+                    title: 'Order has paid successfully!\nWill be delivered to your hands soon :>',
+                    icon: 'success'
+                })
+            })
+            .catch(error => {
+                console.error(error);
+            })
     }
-    errorPayment = () => {
-        console.log('errorPayment');
+    errorPayment = (err) => {
+        console.error('An error occurred during the transaction', err);
     }
-    canceledPayment = () => {
-        console.log('canceledPayment');
+    cancelledPayment = (data) => {
+        let config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        axios.patch('/api-user/payment/cancel', {paymentId: data.orderID}, config)
+            .then(response => {
+                $('.swal2-container').remove();
+                Swal.fire({
+                    title: response.data.message,
+                    icon: 'success'
+                })
+            })
+            .catch(error => {
+                console.error(error)
+            })
     }
 
     function getCurrentFormattedTime() {
@@ -550,8 +577,6 @@
 
         return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
     }
-
-    console.log(getCurrentFormattedTime());
 
 
     function fetchVouchers() {
@@ -598,19 +623,20 @@
                     const formattedDate = new Date(order.orderDate).toLocaleDateString();
                     $('#TableStatusUser').append(`
                         <tr class="align-middle">
-                            <td class="text-center">${order.username}</td>
+                            <td class="text-center">
+                                <div class="${order.orderStatus.includes('Need') ? 'badge text-bg-warning' : 'badge text-bg-primary'}">${order.orderStatus}</div>
+                            </td>
                             <td class="text-center">${formattedDate}</td>
                             <td class="text-center">${order.phoneNumber}</td>
                             <td class="text-center">${order.deliveryAddress}</td>
                             <td class="text-center">
-                                <div class="badge text-bg-secondary">${order.paymentMethod}</div>
+                                <div class="badge text-bg-${order.paymentMethod.toLowerCase() === 'paypal' ? 'primary' : 'secondary'}">
+                                    ${order.paymentMethod}
+                                </div>
                             </td>
                             <td class="text-center">$${order.totalAmount}</td>
                             <td class="text-center">
-                                <div class="${order.orderStatus === 'Approved' ? 'badge text-bg-success' : 'badge text-bg-warning'}">${order.orderStatus}</div>
-                            </td>
-                            <td class="text-center">
-                                <button class="btn btn-success" ${getButtonState(order)} onclick="loadSwalForPaypalContainer(${order.orderId}, ${order.totalAmount})">Pay with PayPal</button>
+                                <button class="btn btn-success" ${getButtonState(order)} onclick="loadSwalForPaypalContainer(${order.orderId}, ${order.totalAmount})">Pay now</button>
                             </td>
                         </tr>`);
                 });
@@ -622,13 +648,7 @@
     }
 
     function getButtonState(order) {
-        if (order.paymentMethod === 'Cod' && (order.orderStatus === 'Approved' || order.orderStatus === 'Need approved')) {
-            return 'disabled';
-        }
-        if (order.paymentMethod === 'Paypal' || order.orderStatus === 'Need approved') {
-            return 'disabled';
-        }
-        return '';
+        return (order.paymentMethod === 'Cod' || order.orderStatus === 'Need payment') ? '' : 'disabled';
     }
 
     function updateUser() {
