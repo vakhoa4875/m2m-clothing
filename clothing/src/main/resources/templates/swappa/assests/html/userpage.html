@@ -477,11 +477,12 @@
                         }
                     }]
                 });
-                obj.then(res => console.dir(res));
+                obj.then(res => initPayment(res, id, amount));
                 return obj;
             },
             onApprove: function (data, actions) {
                 return actions.order.capture().then(function (details) {
+                    succeedPayment();
                     console.dir({
                         data: data,
                         actions: actions,
@@ -490,13 +491,68 @@
                 });
             },
             onError: function (err) {
+                errorPayment();
                 console.error('An error occurred during the transaction', err);
             },
             onCancel: function (data) {
-                alert('Transaction was cancelled');
+                canceledPayment();
+                console.log(new Date());
+                console.dir(data)
             }
         }).render(btn); // Render the PayPal button into #paypal-button-container
     }
+
+    initPayment = (paymentID, orderID, totalAmount) => {
+        let currentTime = getCurrentFormattedTime();
+        let payload = {
+            "paymentId": paymentID,
+            "totalAmount": totalAmount,
+            "currency": "USD",
+            "method": "paypal",
+            "description": "Payment for order #" + orderID,
+            "paymentStatus": "Pending",
+            "dateCreated": currentTime,
+            "orderId": orderID
+        }
+        let config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        axios.post('/api-user/payment/save', payload, config)
+            .then(response => {
+                console.dir(response.data);
+            })
+            .catch(error => {
+                console.error(error);
+            })
+        console.log('initPayment')
+    }
+    succeedPayment = () => {
+        console.log('succeedPayment')
+    }
+    errorPayment = () => {
+        console.log('errorPayment');
+    }
+    canceledPayment = () => {
+        console.log('canceledPayment');
+    }
+
+    function getCurrentFormattedTime() {
+        const date = new Date();
+
+        const year = date.getUTCFullYear();
+        const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const day = String(date.getUTCDate()).padStart(2, '0');
+        const hours = String(date.getUTCHours()).padStart(2, '0');
+        const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+        const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+
+        return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
+    }
+
+    console.log(getCurrentFormattedTime());
+
 
     function fetchVouchers() {
         $.ajax({
