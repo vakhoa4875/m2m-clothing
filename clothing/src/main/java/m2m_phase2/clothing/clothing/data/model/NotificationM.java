@@ -1,15 +1,13 @@
 package m2m_phase2.clothing.clothing.data.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import m2m_phase2.clothing.clothing.data.entity.NotificationE;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -26,7 +24,7 @@ public class NotificationM {
     }
 
     public static List<NotificationM> converListNotificationEToListNotificationM(List<NotificationE> notificationE) {
-        return  notificationE.stream()
+        return notificationE.stream()
                 .map(e -> convertNotificationEToNotificationM(e))
                 .collect(Collectors.toList());
     }

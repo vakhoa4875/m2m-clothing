@@ -2,12 +2,14 @@ package m2m_phase2.clothing.clothing.data.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Table(name = "VoucherDetails")
+@Table(name = "voucher_details")
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class VoucherDetailsE {

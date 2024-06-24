@@ -1,9 +1,11 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
-@Data
+@Getter
+@Setter
 public class UserDto {
     private String username;
     private String email;
