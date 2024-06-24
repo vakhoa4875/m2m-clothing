@@ -145,6 +145,9 @@
             color: white;
             cursor: pointer;
         }
+        #v-pills-favorite {
+            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
+        }
     </style>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -386,6 +389,10 @@
                                     data-bs-toggle="pill" data-bs-target="#v-pills-shop" type="button" role="tab"
                                     aria-controls="v-pills-shop" aria-selected="false">Shop
                             </button>
+                            <button class="nav-link mt-1 text-black" id="v-pills-home-favorite"
+                                    data-bs-toggle="pill" data-bs-target="#v-pills-favorite" type="button" role="tab"
+                                    aria-controls="v-pills-favorite" aria-selected="false">Favorite
+                            </button>
                             <a class="nav-link mt-1 text-black" href="#" onclick="logout()">Log Out</a>
                         </div>
                     </div>
@@ -614,6 +621,51 @@
                                         <h3>Welcome to M2M Clothing</h3>
                                         <h5>Click submit if you want to become a seller</h5>
                                         <button id="submitShop" class="btn btn-primary w-25">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane" id="v-pills-favorite" role="tabpanel"
+                     aria-labelledby="v-pills-home-status" tabindex="0">
+                    <div class="card ">
+                        <div class="card-body p-0 mx-3 pb-2">
+                            <div class="table-responsive p-0">
+                                <div class="header mt-1 mb-1">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item bg-body-secondary rounded-3">
+                                            <h3 class="m-0">Favorite</h3>
+                                            <!--                                            <span>Manage profile information for account security</span>-->
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="container-fluid">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-10">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                <tr class="text-center">
+                                                    <th scope="col">#</th>
+                                                    <th scope="col">Product Name</th>
+                                                    <th scope="col">Image</th>
+                                                    <th scope="col">Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody id="favoriteList">
+                                                <!-- Dữ liệu sản phẩm yêu thích sẽ được thêm vào đây -->
+                                                </tbody>
+                                            </table>
+                                            <div id="noFavoriteMessage" class="text-center mt-3" style="display: none;">
+                                                <p>No favorite products found.</p>
+                                            </div>
+                                            <nav aria-label="Page navigation example">
+                                                <ul id="pagination" class="pagination justify-content-end">
+                                                    <!-- Các thẻ li sẽ được tạo bởi JavaScript -->
+                                                </ul>
+                                            </nav>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -970,5 +1022,6 @@
         }
     });
 </script>
+<script src="/assests/js/FavoriteProduct.js"></script>
 </body>
 </html>
