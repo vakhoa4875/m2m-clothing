@@ -568,7 +568,7 @@
         const form = document.getElementById('productForm');
         const formData = new FormData(form);
 
-        fetch('http://localhost:8083/saveShopAdmin', {
+        fetch('/saveShopAdmin', {
             method: 'POST',
             body: formData
         })
@@ -599,7 +599,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        axios.get('http://localhost:8083/products')
+        axios.get('/products')
             .then(response => {
                 const products = response.data;
                 const productTableBody = document.getElementById('ProductTableBody');
@@ -641,7 +641,7 @@
     });
 
     function loadProductData(productId) {
-        axios.get(`http://localhost:8083/product/${productId}`)
+        axios.get(`/product/${productId}`)
             .then(response => {
                 const product = response.data;
                 document.getElementById('updateNameProduct').value = product.productName;
@@ -730,7 +730,7 @@
             formData.append('video', videoInput.files[0]);
         }
 
-        fetch('http://localhost:8083/editProductShop', {
+        fetch('/editProductShop', {
             method: 'POST',
             body: formData
         })

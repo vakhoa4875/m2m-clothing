@@ -13,19 +13,19 @@ public interface VoucherDetailsRepo extends JpaRepository<VoucherDetailsE, Integ
 
     @Modifying
     @Transactional
-    @Query(value = "insert into VoucherDetails (voucher_id, user_id) values (:voucherID,:userID)", nativeQuery = true)
+    @Query(value = "insert into voucher_details (voucher_id, user_id) values (:voucherID,:userID)", nativeQuery = true)
     void insertVoucherDetails(@Param("voucherID")Integer voucherID,
                        @Param("userID")Long userID);
 
     @Modifying
     @Transactional
-    @Query(value = "delete from VoucherDetails WHERE voucher_id = :voucherID AND user_id = :userID", nativeQuery = true)
+    @Query(value = "delete from voucher_details WHERE voucher_id = :voucherID AND user_id = :userID", nativeQuery = true)
     void deleteVoucherDetails(@Param("voucherID")Integer voucherID,
                               @Param("userID")Long userID);
 
     @Query( value =
             "select * " +
-                    "from VoucherDetails vd " +
+                    "from voucher_details vd " +
                     "where (vd.voucher_id = :voucherID) " +
                     "       and (vd.user_id = :userID) " , nativeQuery = true)
     VoucherDetailsE getVoucherDetailsByVoucherIDAndUserID(@Param("voucherID")Integer voucherID,@Param("userID")Long userID);

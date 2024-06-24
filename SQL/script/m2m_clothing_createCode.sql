@@ -144,7 +144,7 @@ create table Voucher
 )
 go
 
-create table VoucherDetails
+create table voucher_details
 (
     voucher_details_id int IDENTITY (1,1) primary key,
     voucher_id         int,
@@ -214,7 +214,7 @@ CREATE OR ALTER TRIGGER trigger_before_delete_voucher
 BEGIN
     BEGIN TRANSACTION;
     BEGIN TRY
-        DELETE FROM VoucherDetails WHERE voucher_id IN (SELECT voucher_id FROM deleted);
+        DELETE FROM voucher_details WHERE voucher_id IN (SELECT voucher_id FROM deleted);
         DELETE FROM Voucher WHERE voucher_id IN (SELECT voucher_id FROM deleted);
         COMMIT TRANSACTION;
     END TRY
@@ -281,7 +281,7 @@ end
 go
 
 CREATE OR ALTER TRIGGER trigger_after_insert_voucherdetails
-    ON VoucherDetails
+    ON voucher_details
     for INSERT
     AS
 BEGIN
