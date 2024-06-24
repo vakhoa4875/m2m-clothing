@@ -152,29 +152,31 @@
                                     <div>
                                         <ul>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2" onclick="fiterByCategory(1)"> Outerwear </a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory()"> All Product </a>
                                             </li>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2 " onclick="fiterByCategory(2)"> Tops </a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(1)"> Outerwear </a>
                                             </li>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2" onclick="fiterByCategory(3)">Bottoms</a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(2)"> Tops </a>
                                             </li>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2" onclick="fiterByCategory(4)">Jewels & Accessories</a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(3)">Bottoms</a>
                                             </li>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2" onclick="fiterByCategory(5)">Headwear</a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(4)">Jewels & Accessories</a>
                                             </li>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2" onclick="fiterByCategory(6)">Footwear</a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(5)">Headwear</a>
+                                            </li>
+                                            <li class="p-0">
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(6)">Footwear</a>
                                             </li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <hr class="border border-black border-1 opacity-75 mt-1 mb-1">
 <!--                        <div class="shadow-sm bg-body-tertiary" style="background-color: rgba(128, 128, 128, 0.085);">-->
 <!--                            <div class="list-group">-->
 <!--                                <div href="#"-->
@@ -204,25 +206,48 @@
 
                     <div class="col-lg-9 col-md-7">
                         <div class="row pb-3">
-                            <div  class="col-2 p-0">
-                                <p>Sắp xếp theo</p>
-                            </div >
-                            <div class="col-2 p-0">
-                                <button class="btn btn-danger" onclick="filterMostPurchasedProducts()">Phổ biến</button>
+                            <div class="col-9">
+                                <div class="row">
+                                    <div class="col-2 p-0">
+                                        <p>Sort by</p>
+                                    </div >
+                                    <div class="col-2 p-0">
+                                        <button class="btn btn-danger button" onclick="filterMostPurchasedProducts()">Relevance</button>
+                                    </div>
+                                    <div class="col-2 p-0">
+                                        <button class="btn button" onclick="fiterSanPhamPhoBienNhat()">Latest</button>
+                                    </div>
+                                    <div class="col-2 p-0">
+                                        <button class="btn button" onclick="filterBestSellingProducts()">Top Sales</button>
+                                    </div>
+                                    <script>
+                                        $(document).ready(function(){
+                                            $('.button').click(function(){
+                                                $('.button').removeClass("btn-danger");
+                                                $(this).addClass("btn-danger");
+                                            });
+                                            $('.button-category').click(function() {
+                                                $('.button-category').removeClass("text-danger");
+                                                $(this).addClass("text-danger");
+                                            });
+                                        })
+                                    </script>
+                                    <div class="col-3 p-0">
+                                        <select class="form-select " aria-label="Sort Product" onchange="handleSelectChange(this)">
+                                            <option selected style="display: none">Price</option>
+                                            <option value="lowToHigh">Low To High</option>
+                                            <option value="highToLow">High To Low</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-2 p-0">
-                                <button class="btn btn-danger " onclick="fiterSanPhamPhoBienNhat()">Mới nhất</button>
-                            </div>
-                            <div class="col-2 p-0">
-                                <button class="btn btn-danger " onclick="filterBestSellingProducts()">Bán Chạy</button>
-                            </div>
-                            <div class="col-3 p-0">
-                                <select class="form-select " onchange="handleSelectChange(this)">
-                                    <option value="lowToHigh" >Từ thấp đến cao</option>
-                                    <option value="highToLow">Từ cao đến thấp</option>
-                                </select>
+                            <div class="col-3 text-end">
+                                <span id="page-info"></span>
+                                <button class="btn" onclick="handlerPageNumberNext()"> <span aria-hidden="true">&laquo;</span> </button>
+                                <button class="btn" onclick="handlerPageNumberPrev()"> <span aria-hidden="true">&raquo;</span> </button>
                             </div>
                         </div>
+
                         <div class="row" id="search-results">
                             <!-- Vòng lặp Thymeleaf để duyệt qua từng sản phẩm -->
                             <div class="col-lg-2 col-md-3 col-sm-4" th:each="product : ${listProduct}">

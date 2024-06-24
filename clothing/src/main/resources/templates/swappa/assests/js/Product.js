@@ -1,7 +1,13 @@
 $(document).ready(async function(){
     await loadAllProduct()
 })
-let products =[]
+let productsByCategory = [];
+let products = [];
+let currentPage = 1; // page hiện tại
+let perPage = 12; // item number in page
+let totalPage = 0;
+let perProducts = [];
+let pageTam=[];
 function loadAllProduct () {
     return axios.get("/allproductapi")
         .then(response => {
@@ -11,13 +17,33 @@ function loadAllProduct () {
             fiterByCategory(categoryId)
         })
 }
+function updatePage(){
+    let start = (currentPage - 1) * perPage;
+    let end = start + perPage;
+    perProducts = pageTam.slice(start, end);
+    $("#page-info").text(currentPage + "/" + totalPage);
+    displayProducts(perProducts);
+}
+
+function handlerPageNumberNext (){
+    if(totalPage !== currentPage){
+        currentPage += 1;
+    }
+    updatePage();
+}
+function handlerPageNumberPrev (){
+    if(currentPage !== 1){
+        currentPage -= 1;
+    }
+    updatePage();
+}
 function filterMostPurchasedProducts() {
-    let sortedProducts = products.sort((a, b) => b.rateCount - a.rateCount);
+    let sortedProducts = productsByCategory.sort((a, b) => b.rateCount - a.rateCount);
     let mostPurchasedProducts = sortedProducts.slice(0, 12);
     displayProducts(mostPurchasedProducts);
 }
 function filterBestSellingProducts() {
-    let sortedProducts = products.sort((a, b) => b.sold - a.sold);
+    let sortedProducts = productsByCategory.sort((a, b) => b.sold - a.sold);
     let bestSellingProducts = sortedProducts.slice(0, 12);
     displayProducts(bestSellingProducts);
 }
@@ -29,27 +55,43 @@ function handleSelectChange(selectElement) {
         filterProductsByPriceHighToLow();
     }
 }
+function culculateFinalPrice(product){
+    if(product.sale != null){
+        return product.price - (product.sale.salePercent / 100 * product.price)
+    }
+    return product.price
+}
 function filterProductsByPriceLowToHigh() {
-    let sortedProducts = products.sort((a, b) => a.price - b.price);
-    displayProducts(sortedProducts);
+    let sortedProducts = productsByCategory.sort((a, b) => culculateFinalPrice(a) - culculateFinalPrice(b));
+    let sortedProductss = sortedProducts.slice(0, 12);
+    displayProducts(sortedProductss);
 }
 function filterProductsByPriceHighToLow() {
-    let sortedProducts = products.sort((a, b) => b.price - a.price);
-    displayProducts(sortedProducts);
+    let sortedProducts = productsByCategory.sort((a, b) => culculateFinalPrice(b) - culculateFinalPrice(a));
+    let sortedProductss = sortedProducts.slice(0, 12);
+    displayProducts(sortedProductss);
 }
 function fiterSanPhamPhoBienNhat(){
-    let sortedProducts = products.sort((a, b) => b.productId - a.productId);
+    let sortedProducts = productsByCategory.sort((a, b) => b.productId - a.productId);
     let newestProducts = sortedProducts.slice(0, 12);
     displayProducts(newestProducts);
 }
 function fiterByCategory(categoryId){
     console.log(categoryId)
     if(!categoryId){
-        displayProducts(products);
+        pageTam = products;
+        totalPage = Math.ceil(products.length / perPage);
+        productsByCategory = products;
+        updatePage()
     }else{
+
         console.log(products)
         let filterProducts = products.filter(product => product.category.category_id === Number(categoryId));
-        displayProducts(filterProducts);
+        productsByCategory = filterProducts;
+        pageTam = productsByCategory
+        totalPage = Math.ceil(productsByCategory.length / perPage);
+        console.log(productsByCategory)
+        updatePage()
     }
 }
 function displayProducts(products) {
