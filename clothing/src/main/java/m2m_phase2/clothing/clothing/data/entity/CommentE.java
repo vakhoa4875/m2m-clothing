@@ -1,15 +1,16 @@
 package m2m_phase2.clothing.clothing.data.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Table(name = "Comment")
-@Data
 @Getter
 @Setter
 @AllArgsConstructor
@@ -36,7 +37,4 @@ public class CommentE implements Serializable {
     @Temporal(TemporalType.DATE)
     @Column(name = "create_date")
     private Date createDate;
-
-
-
 }

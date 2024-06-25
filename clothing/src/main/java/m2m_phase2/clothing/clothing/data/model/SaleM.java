@@ -1,15 +1,16 @@
 package m2m_phase2.clothing.clothing.data.model;
 
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import m2m_phase2.clothing.clothing.data.entity.Sale;
 
 import java.sql.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-@Data
+@Getter
+@Setter
 @Builder
 public class SaleM {
     private int saleId;
@@ -18,7 +19,7 @@ public class SaleM {
     private Date slateStart;
     private Date saleEnd;
 
-    public static SaleM convertSaleEToSaleM(Sale saleE){
+    public static SaleM convertSaleEToSaleM(Sale saleE) {
         return SaleM.builder()
                 .saleId(saleE.getSaleId())
                 .saleName(saleE.getSaleName())
@@ -28,9 +29,9 @@ public class SaleM {
                 .build();
     }
 
-    public static List<SaleM> convertListSaleEToListSaleM(List<Sale> listSaleE){
-        return  listSaleE.stream()
-                .map(e ->convertSaleEToSaleM(e))
+    public static List<SaleM> convertListSaleEToListSaleM(List<Sale> listSaleE) {
+        return listSaleE.stream()
+                .map(e -> convertSaleEToSaleM(e))
                 .collect(Collectors.toList());
     }
 }

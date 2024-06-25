@@ -1,11 +1,12 @@
 use m2m_clothing
 go
-
+drop table if exists Payment
+go
 create table [Payment]
 (
     sys_payment_id int primary key identity,
     payment_id     nvarchar(255) unique,
-    payer_id       nvarchar(255) not null,
+    payer_id       nvarchar(255),
     total_amount   float         not null,
     currency       nvarchar(10)           default 'USD',
     method         nvarchar(20)           default 'Paypal',
@@ -16,42 +17,45 @@ create table [Payment]
     date_updated   datetime,
     order_id       int foreign key references [Order] (order_id)
 )
+go
 
 Alter table [Order]
     add voucher_id int foreign key references [Voucher] (voucher_id) NULL;
 go
-ALTER table [OrderDetail]
-    add product_id int foreign key references [Product] (product_id) NULL,
-        order_id int foreign key references [Order] (order_id) NULL,
-        sub_total float;
+-- create table order_detail
+drop trigger if exists trigger_after_create_Order;
 go
--- Tạo 5 bản ghi cho bảng [Order]
--- INSERT INTO [Order] (customer_id, phone_number, delivery_address, payment_method, total_amount, order_status, count_sp)
--- VALUES (1, '1234567890', '123 Street, City, Country', 'Credit Card', 100.00, 'Pending', 3),
---        (2, '0987654321', '456 Avenue, City, Country', 'PayPal', 75.50, 'Delivered', 2),
---        (3, '5555555555', '789 Road, City, Country', 'Cash on Delivery', 150.25, 'Processing', 1),
---        (4, '1111111111', '321 Lane, City, Country', 'Bank Transfer', 200.75, 'Cancelled', 1),
---        (1, '9999999999', '654 Boulevard, City, Country', 'Credit Card', 80.00, 'Completed', 4);
--- go
--- Tạo 5 bản ghi cho bảng [OrderDetail]
--- INSERT INTO [OrderDetail] (order_id_detail, nameproduct, quatity, toal_product, product_id, order_id, sub_total)
--- VALUES (1, 'Product A', 2, 50.00, 15, 1, 100.00),
---        (2, 'Product B', 1, 30.00, 12, 1, 30.00),
---        (3, 'Product C', 3, 20.00, 10, 2, 60.00),
---        (4, 'Product D', 4, 15.00, 14, 3, 60.00),
---        (5, 'Product E', 1, 100.00, 5, 4, 100.00);
--- go
+drop table if exists OrderDetail;
+go
+Create table order_detail
+(
+    order_detail_id int identity (1,1) primary key,
+    product_id      int foreign key references Product (product_id),
+    order_id        int foreign key references [Order] (order_id),
+    price           float not null,
+    quantity        int   not null
+);
+go
+alter table [Order]
+add order_code nvarchar(127) unique ;
+--! create table order_detail
+-- template data for shop
+insert into Shop(logo, name_shop, date_established, id) values
+    ('m2mlogo.png', 'm2mClothing.official', '2024-05-25', 3)
+go
+--! template data for shop
+-- thong ke voucher
 update Product
 set sold = 0
 where 1 = 1
 go
 create or alter trigger triggerOnCreateOrder
-    on OrderDetail
+    on Order_Detail
     for INSERT
     as
 begin
     update p
-    set p.sold += i.quatity
+    set p.sold += i.quantity
     from Product p
              join inserted i on p.product_id = i.product_id
 end
@@ -62,7 +66,7 @@ as
 begin
     select top 10 p.product_id
     from Product p
-             left join [OrderDetail] od on p.product_id = od.product_id
+             left join [Order_Detail] od on p.product_id = od.product_id
              left join [Order] o on o.order_id = od.order_id
     where month(o.order_date) = @month
       and year(o.order_date) = @year
@@ -245,13 +249,21 @@ BEGIN
             o.customer_id IN (SELECT u.id FROM [user] u WHERE u.id = @shop_id)
             AND o.order_date >= DATEADD(MONTH, -1, GETDATE())
     ),
-    ShopParticipation AS (
+    --ShopParticipation AS (
+    --    SELECT 
+    --        DATEDIFF(DAY, MIN(u.dob), GETDATE()) AS DaysParticipated
+    --    FROM 
+    --        [user] u
+    --    WHERE 
+    --        u.id = @shop_id
+    --),
+	    ShopParticipation AS (
         SELECT 
-            DATEDIFF(DAY, MIN(u.dob), GETDATE()) AS DaysParticipated
+             s.date_established AS DaysParticipated
         FROM 
-            [user] u
+            Shop s
         WHERE 
-            u.id = @shop_id
+            s.shop_id = @shop_id
     ),
     TotalComments AS (
         SELECT 
@@ -269,14 +281,6 @@ BEGIN
         WHERE 
             p.shop_id = @shop_id
     ),
-    --TotalLikes AS (
-    --    SELECT 
-    --        SUM(p.sold) AS TotalLikes
-    --    FROM 
-    --        Product p
-    --    WHERE 
-    --        p.shop_id = @shop_id
-    --)
 	    TotalLikes AS (
         SELECT 
             COUNT(f.id) AS TotalLikes

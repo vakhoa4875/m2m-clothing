@@ -1,8 +1,9 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import m2m_phase2.clothing.clothing.data.entity.Order;
 import m2m_phase2.clothing.clothing.repository.OrderRepo;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
@@ -13,7 +14,8 @@ import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 import java.util.Date;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderDto {

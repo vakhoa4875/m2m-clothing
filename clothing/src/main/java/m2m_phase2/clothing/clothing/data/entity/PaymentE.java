@@ -2,14 +2,15 @@ package m2m_phase2.clothing.clothing.data.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "Payment")
@@ -23,7 +24,7 @@ public class PaymentE {
     @Column(name = "payment_id", unique = true)
     private String paymentId;
 
-    @Column(name = "payer_id", nullable = false)
+    @Column(name = "payer_id")
     private String payerId;
 
     @Column(name = "total_amount", nullable = false)
@@ -45,34 +46,12 @@ public class PaymentE {
     private String paymentStatus;
 
     @Column(name = "date_created", columnDefinition = "datetime default getdate()")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateCreated;
+    private LocalDateTime dateCreated;
 
     @Column(name = "date_updated")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date dateUpdated;
+    private LocalDateTime dateUpdated;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
     private Order order;
-    @Override
-    public String toString() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("PaymentE {")
-                .append("sysPaymentId=").append(sysPaymentId)
-                .append(", paymentId='").append(paymentId).append('\'')
-                .append(", payerId='").append(payerId).append('\'')
-                .append(", totalAmount=").append(totalAmount)
-                .append(", currency='").append(currency).append('\'')
-                .append(", method='").append(method).append('\'')
-                .append(", intent='").append(intent).append('\'')
-                .append(", description='").append(description).append('\'')
-                .append(", paymentStatus='").append(paymentStatus).append('\'')
-//                .append(", dateCreated=").append(dateFormat.format(dateCreated))
-//                .append(", dateUpdated=").append(dateFormat.format(dateUpdated))
-                .append(", orderId=").append(order.getOrderId())
-                .append('}');
-        return stringBuilder.toString();
-    }
 }

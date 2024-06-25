@@ -132,6 +132,7 @@ public class OrderApi {
             response.setMessage("An error occurred during progress!");
             e.printStackTrace();
         }
+        System.out.println(response.getData());
         return response;
     }
 

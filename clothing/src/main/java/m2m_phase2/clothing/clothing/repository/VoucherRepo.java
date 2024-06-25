@@ -51,7 +51,7 @@ public interface VoucherRepo extends JpaRepository<VoucherE, Integer> {
             "              v.quantity," +
             "              v.start_day," +
             "              v.end_day from Voucher v " +
-            "       join VoucherDetails vd on v.voucher_id = vd.voucher_id " +
+            "       join voucher_details vd on v.voucher_id = vd.voucher_id " +
             "       join [user] u on u.id = vd.user_id"+
             "       where u.email = :email AND v.end_day > GETDATE()", nativeQuery = true)
     List<VoucherE> findVouchersInfoByEmail(@Param("email") String email);

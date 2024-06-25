@@ -19,4 +19,6 @@ public interface ShopService {
 
     List<Object[]> getShopDetails(int shopId);
 
+    ShopM getShopById(int shopId);
+
 }
