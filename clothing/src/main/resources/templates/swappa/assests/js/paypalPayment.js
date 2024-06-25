@@ -119,3 +119,17 @@ getCurrentFormattedTime = () => {
     const seconds = String(date.getUTCSeconds()).padStart(2, '0');
     return `${year}-${month}-${day}T${hours}:${minutes}:${seconds}Z`;
 }
+activateTab = (index) => {
+    const navPills = document.getElementById('v-pills-tab');
+    const buttons = navPills.querySelectorAll('button');
+
+    for (let i = 0; i < buttons.length; i++) {
+        buttons[i].classList.remove('active');
+        buttons[i].setAttribute('aria-selected', 'false');
+    }
+
+    if (buttons[index]) {
+        buttons[index].classList.add('active');
+        buttons[index].setAttribute('aria-selected', 'true');
+    }
+}

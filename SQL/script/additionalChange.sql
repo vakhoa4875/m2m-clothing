@@ -111,105 +111,6 @@ end
 go
 drop table if exists Cart;
 
--- create or alter trigger slugUrlGenerator
---     on Product
---     after insert
---     as
--- begin
---     update Product
---     set slug_url = ()
---     from Product p
---              join inserted i on i.product_id = p.product_id
---     where p.slug_url = ''
---        or p.slug_url is null;
--- end
-go
-drop trigger if exists trigger_after_create_Order;
-go
-drop table if exists OrderDetail;
-go
-Create table order_detail
-(
-    order_detail_id int identity (1,1) primary key,
-    product_id      int foreign key references Product (product_id),
-    order_id        int foreign key references [Order] (order_id),
-    price           float not null,
-    quantity        int   not null
-);
-go
-alter table [Order]
-add order_code nvarchar(127) unique ;
--- truncate table Cart;
--- go
-insert into Shop(logo, name_shop, date_established, id) values
-    ('', 'niggaonsale', '2024-05-25', 3)
-
--- go
--- exec dbo.getTopUsedVoucher 5, 2024;
--- select top 10 od.product_id, sum(od.quatity) as sold
--- from OrderDetail od
---          join [Order] o on od.order_id = o.order_id
---          join [Product] p on p.product_id = od.product_id
--- where month(o.order_date) = @month
---   and year(o.order_date) = @year
--- group by od.product_id
--- order by sum(od.quatity) desc
---
--- select top 10 od.product_id, p.pictures, p.slug_url, p.product_name, p.price, sum(od.quatity) as sold
--- from OrderDetail od
---          join [Order] o on od.order_id = o.order_id
---          join [Product] p on p.product_id = od.product_id
--- where month(o.order_date) = 5
---   and year(o.order_date) = 2024
--- group by od.product_id, p.slug_url, p.pictures, p.product_name, p.price
--- order by sum(od.quatity) desc, p.price desc
---     exec dbo.getTop10SoldProduct 5, 2024;
-
--- select top 10 p.*
--- from Product p
---          join [OrderDetail] od on p.product_id = od.product_id
---          join [Order] o on o.order_id = od.order_id
--- where month(o.order_date) = @month
---   and year(o.order_date) = @year
--- order by p.sold desc
-
--- select top 10 od.product_id, sum(od.quatity) as sold
---         from OrderDetail od
---                  join [Order] o on od.order_id = o.order_id
---                  join [Product] p on p.product_id = od.product_id
---         where month(o.order_date) = @month
---           and year(o.order_date) = @year
---         group by od.product_id
---         order by sum(od.quatity) desc-- CREATE OR ALTER TRIGGER trigger_insert_payment
---     ON Payment
---     AFTER INSERT
--- AS
--- BEGIN
---     UPDATE p
---     SET user_id = o.customer_id
---     FROM Payment p
---     JOIN inserted i ON p.sys_payment_id = i.sys_payment_id
---     JOIN [Order] o ON i.order_id = o.order_id;
--- END;
---
--- drop trigger if exists trigger_insert_payment;
-
--- create or alter trigger trigger_update_payment
---     on Payment
---     after update
---     as
---     begin
---         update Payment
---         set date_updated = getdate()
---         where sys_payment_id = (select i.sys_payment_id from inserted i)
---     end
--- go
--- ALTER TABLE [user]
--- DROP COLUMN gg_token, hashed_pass;
--- ALTER TABLE [user]
--- ADD is_disable bit default 0;
--- procedure shopdetail 
-
 create table Favorite
 (
     id int identity primary key,
@@ -217,7 +118,7 @@ create table Favorite
     product_id int foreign key references Product (product_id),
     date_created datetime default getdate()
 )
-
+go
 CREATE PROCEDURE GetShopDetails
     @shop_id int
 AS
@@ -250,14 +151,6 @@ BEGIN
             o.customer_id IN (SELECT u.id FROM [user] u WHERE u.id = @shop_id)
             AND o.order_date >= DATEADD(MONTH, -1, GETDATE())
     ),
-    --ShopParticipation AS (
-    --    SELECT 
-    --        DATEDIFF(DAY, MIN(u.dob), GETDATE()) AS DaysParticipated
-    --    FROM 
-    --        [user] u
-    --    WHERE 
-    --        u.id = @shop_id
-    --),
 	    ShopParticipation AS (
         SELECT 
              s.date_established AS DaysParticipated
@@ -310,11 +203,3 @@ BEGIN
 
 END
 GO
-
-create table Favorite
-(
-    id int identity primary key,
-    user_id int foreign key references [user] (id),
-    product_id int foreign key references Product (product_id),
-    date_created datetime default getdate()
-)
