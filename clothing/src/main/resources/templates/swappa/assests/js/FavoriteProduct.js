@@ -26,14 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
                             const firstPicture = pictures.split(',')[0].trim();
                             const pictureUrl = `../media/${firstPicture}`;
                             const rowHtml = `
-                                    <tr class="text-center">
+                                    <tr class="text-center align-middle">
                                         <th scope="row">${startIndex + index + 1}</th>
                                         <td>${productName}</td>
                                         <td><img src="${pictureUrl}" class="img-fluid " style="max-width: 70px; max-height: 70px;" alt="${productName}"></td>
                                         <td>
-                                            <a href="/product?slug_url=${slugUrl}" class="btn btn-outline-success btn-sm mr-2">View</a>
-                                            <button class="btn btn-outline-danger btn-sm favorite-btn" data-id="${id}" data-product-id="${productId}">
-                                                <i class="fa-solid fa-x"></i>
+                                            <a href="/product?slug_url=${slugUrl}" class="btn btn-outline-info btn-sm mr-2">
+                                                <i class="fa-regular fa-eye"></i> View
+                                            </a>
+                                            <button class="btn btn-danger btn-sm favorite-btn" data-id="${id}" data-product-id="${productId}">
+                                                <i class="fa-solid fa-xmark"></i>
                                             </button>
                                         </td>
                                     </tr>
