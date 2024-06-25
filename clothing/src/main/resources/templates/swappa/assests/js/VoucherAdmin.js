@@ -4,7 +4,6 @@ $(document).ready(function () {
             url: '/api-public/vouchers/getAllVouchers',
             type: 'GET',
             success: function (data) {
-                console.log(data);
                 $('#voucherTableBody').empty();
                 // Định dạng ngày bằng Moment.js
 
@@ -106,7 +105,6 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(voucherData),
             success: function (response) {
-                console.log(response === 1 ? 'Thêm thành công' : 'Thêm thất bại');
                 Swal.fire({
                     title: 'Notifications',
                     text: "Voucher added successfully",
@@ -211,7 +209,6 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(voucherData),
             success: function (response) {
-                console.log(response === 1 ? 'Cập nhật thành công' : 'Cập nhật thất bại');
                 Swal.fire({
                     title: 'Notifications',
                     text: "Voucher update successfully",
@@ -240,7 +237,6 @@ $(document).ready(function () {
             success: function (data) {
                 allUser = [];
                 allUser.push(data);
-                console.log(allUser);
                 $('#userOnVoucher').empty();
 
                 $.each(data,function (index,u){
@@ -294,7 +290,6 @@ $(document).ready(function () {
                             selectedUserIDs.splice(index, 1);
                         }
                     }
-                    console.log(selectedUserIDs);
                 });
             },
             error: function (xhr, status, error) {
@@ -312,7 +307,6 @@ $(document).ready(function () {
             success: function (data) {
                 listUserByVoucherID = [];
                 listUserByVoucherID.push(data);
-                console.log(listUserByVoucherID);
                 compareAndMarkUsers(allUser, listUserByVoucherID);
             },
             error: function (xhr, status, error) {
@@ -322,7 +316,6 @@ $(document).ready(function () {
     }
     function compareAndMarkUsers(allUsers, usersNotInVoucher) {
         if (allUsers.length === 0 || usersNotInVoucher.length === 0) {
-            console.log("Không nhận được dữ liệu từ API.");
             return;
         }
 
@@ -381,7 +374,6 @@ $(document).ready(function () {
                     icon: 'success',
                     allowOutsideClick: true,
                 })
-                console.log(response >= 1 ? 'Thành công' : 'Thất bại');
             },
             error: function (xhr, status, error) {
                 console.error("Đã xảy ra lỗi khi gọi API: " + error);
@@ -389,7 +381,6 @@ $(document).ready(function () {
         });
     }
     $(document).on('click', '#saveVoucherDetails', function() {
-        console.log(voucherIDForVoucherDetails);
         saveVoucherDetails(voucherIDForVoucherDetails);
     });
 

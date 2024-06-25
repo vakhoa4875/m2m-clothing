@@ -8,16 +8,20 @@ import m2m_phase2.clothing.clothing.data.entity.Category;
 import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.mgt.ResponseObject;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
+import m2m_phase2.clothing.clothing.repository.ProductRepo;
+import m2m_phase2.clothing.clothing.service.ShopService;
 import m2m_phase2.clothing.clothing.service.ProductService;
 import m2m_phase2.clothing.clothing.service.impl.CategoryImpl;
 import m2m_phase2.clothing.clothing.service.impl.CommentServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -37,6 +41,11 @@ public class ProductApi {
     @Autowired
     private CommentServiceImpl commentService;
 
+	@Autowired
+	private ProductRepo productRepo;
+
+	@Autowired
+	private ShopService shopService;
 
     @Autowired
     private CategoryImpl categoryimpl;
@@ -49,6 +58,21 @@ public class ProductApi {
     @GetMapping("/findbyproductidapi")
     public ProductM getfindbyproductid(@RequestParam String slug_url) {
         return productService.findByslug_url(slug_url);
+    }
+
+    @GetMapping("/find-products-by-category")
+    public ResponseEntity<?> getcategoryType(@RequestParam Integer categoryId) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            result.put("data", productService.findBycategory(categoryId));
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/findcategorynamebyproductidapi")
@@ -169,6 +193,17 @@ public class ProductApi {
         return ResponseEntity.ok(result);
     }
 
+	@GetMapping("/product-shop")
+	public ResponseEntity<Map<String, Integer>> getShopIdByProductId(@RequestParam("productId") Integer productId) {
+		Integer shopId = productRepo.findShopIdByProductId(productId);
+		if (shopId != null) {
+			Map<String, Integer> response = new HashMap<>();
+			response.put("shop_id", shopId);
+			return ResponseEntity.ok(response);
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+	}
     @GetMapping("/api-public/getProductsInfoForSearchRecommend")
     public ResponseObject<?> doGetProductsInfoForSearchRecommend() {
         var response = new ResponseObject<>();
@@ -185,4 +220,24 @@ public class ProductApi {
         return response;
     }
 
+	@GetMapping("/shop")
+	public ResponseEntity<List<Object[]>> doGetShopDetails(@RequestParam("shop_id") Integer shop_id) {
+		var shop = shopService.getShopDetails(shop_id);
+		return ResponseEntity.ok(shop);
+	}
+
+    @GetMapping("/api-public-getListProductByCategoryAndShopId")
+    public ResponseEntity<?> findProductByShopCategoryShopId(@RequestParam Integer categoryId, @RequestParam int shopId) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            result.put("data", productService.findProductByShopCategoryShopId(categoryId, shopId));
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
 }

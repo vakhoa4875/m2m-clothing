@@ -66,21 +66,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public void paidOrder(Integer orderId) {
         String orderStatus = OrderStatus.DELIVERING.getValue();
-        var rowsEffected = repo.updateOrderStatus(orderId, orderStatus);
-        System.out.println(">> paid order row effected: " + rowsEffected);
+        repo.updateOrderStatus(orderId, orderStatus);
     }
 
     @Override
     public void updateOrderStatusByOrderId(Integer orderId, String orderStatus) {
-        var rowsEffected = repo.updateOrderStatus(orderId, orderStatus);
-        System.out.println(">> update order status row effected: " + rowsEffected);
+        repo.updateOrderStatus(orderId, orderStatus);
     }
-
-//    @Override
-//    public byte updatePaymentStatusByOrderId(OrderDto orderDto) {
-//        String paymentMethod = OrderStatus.PAID.getValue();
-//        Integer orderId = orderDto.getOrderId();
-//        return repo.updatePaymentStatusByOrderId(paymentMethod, orderId);
-//    }
-
 }

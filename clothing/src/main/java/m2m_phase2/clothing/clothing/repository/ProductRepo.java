@@ -71,7 +71,15 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     List<Product> findProductByShopCategory(@Param("categoryId") Integer categoryId,
                                             @Param("email") String email);
 
+    @Query("SELECT p.shopE.shopId FROM Product p WHERE p.productId = :productId")
+    Integer findShopIdByProductId(@Param("productId") Integer productId);
+
+    @Query(nativeQuery = true, value = "exec dbo.GetShopDetails :shop_id")
+    List<Object[]> GetShopDetails(@Param("shop_id") int shop_id);
     @Query("select p.productName, p.slugUrl from Product p")
     List<String[]> getAllProducts();
 
+    @Query("SELECT p FROM Product p WHERE p.category.category_id = :categoryId and p.shopE.shopId = :shopId")
+    List<Product> findProductByShopCategoryShopId(@Param("categoryId") Integer categoryId,
+                                            @Param("shopId") int shopId);
 }

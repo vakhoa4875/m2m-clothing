@@ -37,11 +37,10 @@ class UserManagement {
     getListUser = async () => {
         await $.ajax({
             type: 'GET',
-            url: 'http://localhost:8083/api-public/users/getAllUsers',
+            url: '/api-public/users/getAllUsers',
             contentType: 'application/json',
             success: function (data) {
                 this.listUser = data;
-                console.log(data)
             }.bind(this),
             error: (xhr, status, error) => {
                 console.error('Error: ' + error);
@@ -116,7 +115,6 @@ class UserManagement {
             },
             success: function (apiResult) {
                 this.user = apiResult;
-                console.log(this.user)
             }.bind(this),
             error: (error) => {
                 console.error("Error:", error);
@@ -202,7 +200,6 @@ class UserManagement {
     updateUser = async () => {
         let username = $('#upUsername').text();
         let email = $('#upEmail').text();
-        // let password = $('#upPass').val();
         let fullname = $('#upFullname').val();
         let dob = $('#upBirth').val();
         let gender = $('input[name="gender"]:checked').val();
@@ -211,18 +208,6 @@ class UserManagement {
         let jobTitle = $('#upJobTitle').val();
         let description = $('#upDescription').text();
         let avatar = $('#previewImage').attr('src');
-
-        console.log('Username:', username);
-        console.log('Email:', email);
-        // console.log('Password:', password);
-        console.log('Fullname:', fullname);
-        console.log('Date of Birth:', dob);
-        console.log('Gender:', gender);
-        console.log('Role ID:', roleId);
-        console.log('Role Name:', roleName);
-        console.log('Job Title:', jobTitle);
-        console.log('Description:', description);
-        console.log('Avatar:', avatar);
 
         let userData = {
             username: username,
@@ -243,7 +228,6 @@ class UserManagement {
             data: JSON.stringify(userData),
             contentType: 'application/json',
             success: function (updateStatus) {
-                console.log(updateStatus === 1 ? 'update succeed' : 'update failed')
                 Swal.fire({
                     title: 'System Announcement',
                     text: 'Update user information successfully!',
@@ -287,7 +271,6 @@ class UserManagement {
             contentType: 'application/json',
             data: JSON.stringify(userData),
             success: (insertStatus) => {
-                console.log(insertStatus);
                 var icon =
                     insertStatus.includes('success') ? 'success'
                         : insertStatus.includes('error') ? 'error'
@@ -320,10 +303,16 @@ class UserManagement {
             data: JSON.stringify(this.userIdentifier),
             contentType: 'application/json',
             success: (deleteStatus) => {
-                console.log(deleteStatus === 1 ? 'delete succeed' : 'delete failed');
+                Swal.fire({
+                    title: 'Disable user successfully!',
+                    icon: 'success'
+                })
             },
             error: (error) => {
-                console.error(">>>Error: " + error);
+                Swal.fire({
+                    title: 'Error occurring during the process',
+                    icon: 'error'
+                })
             }
         })
         this.userIdentifier = undefined;

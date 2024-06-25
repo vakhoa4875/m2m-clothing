@@ -151,7 +151,6 @@
     </script>
     <script type="text/javascript">
         $(document).ready(function () {
-            console.log("Test kinda done")
             services.loadInit();
             productservices.loadInit();
         })
@@ -569,7 +568,7 @@
         const form = document.getElementById('productForm');
         const formData = new FormData(form);
 
-        fetch('http://localhost:8083/saveShopAdmin', {
+        fetch('/saveShopAdmin', {
             method: 'POST',
             body: formData
         })
@@ -580,10 +579,7 @@
                 return response.json();
             })
             .then(data => {
-                console.log('Success:', data);
                 alert('Sản phẩm đã được lưu thành công!');
-
-
                 const productList = document.getElementById('productList');
                 if (productList) {
                     const newProduct = document.createElement('li');
@@ -603,7 +599,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        axios.get('http://localhost:8083/products')
+        axios.get('/products')
             .then(response => {
                 const products = response.data;
                 const productTableBody = document.getElementById('ProductTableBody');
@@ -645,11 +641,9 @@
     });
 
     function loadProductData(productId) {
-        axios.get(`http://localhost:8083/product/${productId}`)
+        axios.get(`/product/${productId}`)
             .then(response => {
                 const product = response.data;
-                console.dir(response);
-
                 document.getElementById('updateNameProduct').value = product.productName;
                 document.getElementById('updatePriceProduct').value = product.price;
                 document.getElementById('updateQuantityProduct').value = product.quantity;
@@ -659,8 +653,7 @@
                 let formSelect = document.getElementById('formSelectUpdate');
                 let options = formSelect.options;
                 for (let i = 0; i < options.length; i++) {
-                    if (options[i].value == product.category.category_id) {
-                        console.log(options[i].value, product.category.category_id);
+                    if (options[i].value === product.category.category_id) {
                         formSelect.selectedIndex = i;
                         break;
                     }
@@ -737,13 +730,12 @@
             formData.append('video', videoInput.files[0]);
         }
 
-        fetch('http://localhost:8083/editProductShop', {
+        fetch('/editProductShop', {
             method: 'POST',
             body: formData
         })
             .then(response => response.json())
             .then(data => {
-                console.log('Success:', data);
                 $('#exampleModalUpdateProduct').modal('hide');
                 alert("Lưu thành công !");
                 window.location.reload();

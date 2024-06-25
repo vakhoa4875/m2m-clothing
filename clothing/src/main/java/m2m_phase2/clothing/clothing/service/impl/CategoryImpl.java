@@ -50,4 +50,9 @@ public class CategoryImpl implements CategoryService {
 		return repo.findCategoryByShop(email);
 	}
 
+	@Override
+	public List<Category> findCategoryByShopId(int shopId) {
+		return repo.findCategoryByShopId(shopId);
+	}
+
 }

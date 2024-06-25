@@ -71,15 +71,14 @@ function getidProduct(id){
 
 function updateStatus(){
     $.ajax({
-        url: "/api-product/updateOderUser?idProduct="+idprocudt+"&OrderStatus="+"Approved",
+        url: "/api-product/updateOderUser?idProduct="+idprocudt+"&OrderStatus="+"Need payment",
         type: 'Get',
         contentType: 'application/json',
         success: function(data) {
             Swal.fire({
-                title: 'Thông Báo từ hệ thống',
-                text: 'Xác nhận đơn hàng thành công',
+                title: 'Order approved successfully!',
                 icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-                confirmButtonText: 'Xác nhận',
+                confirmButtonText: 'OK',
                 allowOutsideClick: false,
             }).then((result) => {
                 location.reload();

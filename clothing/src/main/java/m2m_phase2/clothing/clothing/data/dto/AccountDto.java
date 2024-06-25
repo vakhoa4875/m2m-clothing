@@ -1,13 +1,12 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import m2m_phase2.clothing.clothing.data.entity.Account;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 
-@Data
-//@Builder
+@Getter
+@Setter
 public class AccountDto {
     private String username;
     private String email;

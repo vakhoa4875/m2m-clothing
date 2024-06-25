@@ -1,15 +1,17 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import m2m_phase2.clothing.clothing.data.entity.OrderDetailE;
 import m2m_phase2.clothing.clothing.repository.OrderRepo;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
 
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class OrderDetailDto {
