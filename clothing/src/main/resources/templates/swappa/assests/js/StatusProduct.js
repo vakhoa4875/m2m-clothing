@@ -43,7 +43,7 @@ function loadStatusProduct(){
                         <td class="align-middle text-center">
                             <button class="btn border-0 rounded btn-success btn-click-product"
                                     data-bs-toggle="modal" data-bs-target="#exampleModalAccpectProduct"
-                                    onclick="getIdProduct(${order.orderId}, ${order.paymentMethod})"
+                                    onclick="getIdProduct(${order.orderId}, '${order.paymentMethod}')"
                                     ${order.orderStatus === "Need approved" ? '' : 'disabled'}>
                                     <i class="fa-regular fa-circle-check"></i> Approve
                             </button>
@@ -73,7 +73,7 @@ const orderStatus = {
 }
 
 function getIdProduct(id, paymentMethod){
-    updatedOrderPayload = {
+    this.updatedOrderPayload = {
         idProduct: id,
         OrderStatus: paymentMethod === 'Cod' ? orderStatus.delivering : orderStatus.needPayment
     }
@@ -83,9 +83,10 @@ function updateStatus(){
     $.ajax({
         url: "/api-product/updateOrderUser",
         type: 'Get',
-        data: updatedOrderPayload,
+        data: this.updatedOrderPayload,
         contentType: 'application/json',
         success: function(data) {
+            console.log(updatedOrderPayload);
             Swal.fire({
                 title: 'Order approved successfully!',
                 icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
