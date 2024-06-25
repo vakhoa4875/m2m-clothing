@@ -140,13 +140,21 @@ BEGIN
             o.customer_id IN (SELECT u.id FROM [user] u WHERE u.id = @shop_id)
             AND o.order_date >= DATEADD(MONTH, -1, GETDATE())
     ),
-    ShopParticipation AS (
+    --ShopParticipation AS (
+    --    SELECT 
+    --        DATEDIFF(DAY, MIN(u.dob), GETDATE()) AS DaysParticipated
+    --    FROM 
+    --        [user] u
+    --    WHERE 
+    --        u.id = @shop_id
+    --),
+	    ShopParticipation AS (
         SELECT 
-            DATEDIFF(DAY, MIN(u.dob), GETDATE()) AS DaysParticipated
+             s.date_established AS DaysParticipated
         FROM 
-            [user] u
+            Shop s
         WHERE 
-            u.id = @shop_id
+            s.shop_id = @shop_id
     ),
     TotalComments AS (
         SELECT 
@@ -164,13 +172,13 @@ BEGIN
         WHERE 
             p.shop_id = @shop_id
     ),
-    TotalLikes AS (
+	    TotalLikes AS (
         SELECT 
-            SUM(p.sold) AS TotalLikes
+            COUNT(f.id) AS TotalLikes
         FROM 
-            Product p
+            Favorite f
         WHERE 
-            p.shop_id = @shop_id
+            f.product_id IN (SELECT p.product_id FROM Product p WHERE p.shop_id = @shop_id)
     )
 
     SELECT
