@@ -2,10 +2,7 @@ package m2m_phase2.clothing.clothing.data.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Date;
 import java.util.List;
@@ -13,7 +10,8 @@ import java.util.List;
 @Entity
 @Table(name = "Sale", schema = "dbo", catalog = "m2m_clothing")
 @Builder
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Sale {
@@ -31,7 +29,7 @@ public class Sale {
     @Column(name = "sale_End")
     private Date saleEnd;
     @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonIgnore 
+    @JsonIgnore
     private List<Product> produtss;
 
 }

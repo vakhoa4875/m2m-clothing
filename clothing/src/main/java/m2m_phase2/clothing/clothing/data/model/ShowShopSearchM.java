@@ -1,16 +1,14 @@
 package m2m_phase2.clothing.clothing.data.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import m2m_phase2.clothing.clothing.data.entity.ShopE;
 
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -20,7 +18,7 @@ public class ShowShopSearchM {
     private String shopName;
     private Date dateEstablished;
 
-    public static ShowShopSearchM convertShopEToShowShopSearchM(ShopE shopE){
+    public static ShowShopSearchM convertShopEToShowShopSearchM(ShopE shopE) {
         return ShowShopSearchM.builder()
                 .shopId(shopE.getShopId())
                 .logo(shopE.getLogo())
@@ -30,7 +28,7 @@ public class ShowShopSearchM {
     }
 
     public static List<ShowShopSearchM> converListShopEToListShowShopSearchM(List<ShopE> listShopE) {
-        return  listShopE.stream()
+        return listShopE.stream()
                 .map(e -> convertShopEToShowShopSearchM(e))
                 .collect(Collectors.toList());
     }

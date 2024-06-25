@@ -37,7 +37,7 @@ class UserManagement {
     getListUser = async () => {
         await $.ajax({
             type: 'GET',
-            url: 'http://localhost:8083/api-public/users/getAllUsers',
+            url: '/api-public/users/getAllUsers',
             contentType: 'application/json',
             success: function (data) {
                 this.listUser = data;

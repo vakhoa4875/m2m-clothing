@@ -4,8 +4,9 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,7 +15,8 @@ import java.util.List;
 @Table(name = "Product")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
+@Getter
+@Setter
 public class Product implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -50,14 +52,14 @@ public class Product implements Serializable {
 
     @Column(name = "slug_url")
     private String slugUrl;
-	@ManyToOne
-	@JoinColumn(name = "shop_id")
-	@JsonBackReference
-	private ShopE shopE;
+    @ManyToOne
+    @JoinColumn(name = "shop_id")
+    @JsonBackReference
+    private ShopE shopE;
 
-	@ManyToOne()
-	@JoinColumn(name = "sale_ID")
-	private Sale sale;
+    @ManyToOne()
+    @JoinColumn(name = "sale_ID")
+    private Sale sale;
 
     @ManyToOne()
     @JoinColumn(name = "category_id")
@@ -70,14 +72,10 @@ public class Product implements Serializable {
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     List<OrderDetailE> orderDetails;
-//	@ManyToOne(fetch = FetchType.EAGER)
-//	@JsonIgnore
-//	@JoinColumn(name = "shop_id")
-//	private ShopE shopE;
 
-	@Override
-	public String toString() {
-	    return productName;
-	}
+    @Override
+    public String toString() {
+        return productName;
+    }
 
 }
