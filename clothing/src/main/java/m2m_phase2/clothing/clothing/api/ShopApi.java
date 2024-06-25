@@ -12,6 +12,7 @@ import m2m_phase2.clothing.clothing.data.model.ShopM;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.repository.CategoryRepo;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
+import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.service.ShopAdminService;
 import m2m_phase2.clothing.clothing.service.ShopService;
 import m2m_phase2.clothing.clothing.service.UserService;
@@ -42,6 +43,7 @@ public class ShopApi {
 
     @Autowired
     UserService userService;
+    @Autowired
     private HttpSession session;
     @Autowired
     private ShopService shopService;
@@ -49,6 +51,8 @@ public class ShopApi {
     private ProductRepo productRepo;
     @Autowired
     private CategoryRepo categoryRepo;
+    @Autowired
+    private AccountService accountService;
 
     @PostMapping("/saveShopAdmin")
     public Product saveShopAdmin(@RequestParam("pictures") MultipartFile[] pictures,
@@ -259,14 +263,14 @@ public class ShopApi {
             result.put("status", true);
             result.put("message", "Call Api Success");
             ShopM shopM = shopService.findShopByUser(emailShop);
-            if(shopM.getLogo() != file.getOriginalFilename()) {
-            try {
-                Path path = CURRENT_FOLDER.resolve("src\\main\\resources\\templates\\swappa\\assests\\shopImg").resolve(file.getOriginalFilename());
-                Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
-            } catch (IOException e) {
-                e.printStackTrace();
-                throw new RuntimeException("Failed to store picture", e);
-            }
+            if (shopM.getLogo() != file.getOriginalFilename()) {
+                try {
+                    Path path = CURRENT_FOLDER.resolve("src\\main\\resources\\templates\\swappa\\assests\\shopImg").resolve(file.getOriginalFilename());
+                    Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("Failed to store picture", e);
+                }
             }
             result.put("data", shopService.updateShop(nameShop, file.getOriginalFilename(), emailShop));
         } catch (Exception e) {
@@ -283,7 +287,7 @@ public class ShopApi {
         return ResponseEntity.ok(shop);
     }
 
-//    @PostMapping("/download")
+    //    @PostMapping("/download")
 //    @ResponseStatus(HttpStatus.CREATED)
 //    public Product downloadShopAdmin(@RequestBody ShopAdminDto shopAdminDto,
 //                                     @RequestPart MultipartFile[] images) throws IOException {
@@ -363,19 +367,63 @@ public class ShopApi {
 //
 //        return shopAdminService.saveProduct(shopAdminDto);
 //    }
-        @GetMapping("/get-shop-by-user-id")
-        public ResponseEntity<?> getShopById(@RequestParam int shopId) {
-            ShopM shopM = shopService.getShopById(shopId);
-            Map<String, Object> result = new HashMap<>();
-            try {
-                result.put("status", true);
-                result.put("message", "Call Api Success");
-                result.put("data", shopM);
-            } catch (Exception e) {
-                result.put("status", false);
-                result.put("message", "Call Api Fail");
-                result.put("data", null);
-            }
-            return ResponseEntity.ok(result);
+    @GetMapping("/get-shop-by-user-id")
+    public ResponseEntity<?> getShopById(@RequestParam int shopId) {
+        ShopM shopM = shopService.getShopById(shopId);
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            result.put("data", shopM);
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
         }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/get-shop-by-user-email-and-send-otp")
+    public ResponseEntity<?> getShopByUserEmailAndSendOtp() {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            String otp = accountService.generateOTP();
+            accountService.sendOTPEmail(sessionEmail, otp, "OTP for Sign Up Shop");
+            session.setAttribute("otp", otp);
+            session.setAttribute("otpCreationTime", System.currentTimeMillis());
+            // Thiết lập thời gian hết hạn cho session (tính bằng giây)
+            session.setMaxInactiveInterval(60); // 1 phút
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            result.put("data", shopService.findShopByUser(sessionEmail));
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/api/user/verify-otp")
+    public ResponseEntity<?> shopOtp(@RequestParam("otp") String otp) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            String sessionOtp = (String) session.getAttribute("otp");
+            Long otpCreationTime = (Long) session.getAttribute("otpCreationTime");
+            if (otp.equals(sessionOtp) && System.currentTimeMillis() - otpCreationTime <= 60000) {
+                result.put("status", true);
+                result.put("message", "OTP is correct");
+            } else if (System.currentTimeMillis() - otpCreationTime > 60000) {
+                result.put("status", false);
+                result.put("message", "OTP is expired");
+            } else {
+                result.put("status", false);
+                result.put("message", "OTP is incorrect");
+            }
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+        }
+        return ResponseEntity.ok(result);
+    }
 }

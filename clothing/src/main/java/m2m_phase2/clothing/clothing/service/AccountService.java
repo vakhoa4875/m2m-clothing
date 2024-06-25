@@ -16,7 +16,7 @@ public interface AccountService {
     Account findByemail(String email);
 
 
-    void sendOTPEmail(String toEmail, String otp);
+    void sendOTPEmail(String toEmail, String otp,String subject);
 
     String generateOTP();
 

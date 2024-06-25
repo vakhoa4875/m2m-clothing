@@ -28,6 +28,11 @@ public class ShopController {
         return "swappa/assests/html/admin_shop";
     }
 
+    @GetMapping("/admin/shop/otp")
+    public String shopOtp() {
+        return "swappa/assests/html/acc_register_shop_OTP";
+    }
+
     @GetMapping("/user/shop")
     public String shopUser() {
         return "swappa/assests/html/shopuser";
