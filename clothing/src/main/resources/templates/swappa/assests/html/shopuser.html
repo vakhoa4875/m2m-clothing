@@ -59,7 +59,27 @@
                 </div>
             </div>
             <div class="col-10">
-                <div class="row" id="getProductByCategoryAndShopEmailContainer">
+                <div class="row pb-3">
+                    <div  class="col-2 p-0">
+                        <p>Sắp xếp theo</p>
+                    </div >
+                    <div class="col-2 p-0">
+                        <button class="btn btn-danger" id="phobien">Phổ biến</button>
+                    </div>
+                    <div class="col-2 p-0">
+                        <button class="btn btn-danger " id="moinhat">Mới nhất</button>
+                    </div>
+                    <div class="col-2 p-0">
+                        <button class="btn btn-danger " id="banchay">Bán Chạy</button>
+                    </div>
+                    <div class="col-3 p-0">
+                        <select class="form-select " id="selectSort">
+                            <option value="lowToHigh" >Từ thấp đến cao</option>
+                            <option value="highToLow">Từ cao đến thấp</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row" id="getProductByCategoryAndShopIdContainer">
 
 
                 </div>
@@ -73,44 +93,50 @@
 </body>
 <script>
     $(document).ready(function() {
-        // Đầu tiên, lấy shop ID bằng email người dùng
-        $.ajax({
-            url: '/get-shop-by-user-email',
-            type: 'GET',
-            success: function(response) {
-                console.log('Phản hồi API lấy Shop theo email:', response);
-                if (response && response.status && response.data) {
-                    var shopId = response.data.shopId; // Điều chỉnh dựa trên cấu trúc thực tế của phản hồi
+        // Lấy shop ID từ localStorage
+        var shopId = localStorage.getItem('shopId');
+        if (shopId) {
+            $.ajax({
+                url: '/get-shop-by-user-id',
+                type: 'GET',
+                data: { shopId: shopId }, // Thêm tham số shopId vào yêu cầu
+                success: function(response) {
+                    console.log('Phản hồi API lấy Shop theo ID:', response);
+                    if (response && response.status && response.data) {
+                        var shopId = response.data.shopId; // Điều chỉnh dựa trên cấu trúc thực tế của phản hồi
 
-                    // Sau đó, lấy chi tiết cửa hàng bằng shop ID vừa lấy được
-                    $.ajax({
-                        url: '/shop',
-                        type: 'GET',
-                        data: { shopId: shopId },
-                        success: function(shopDetailsResponse) {
-                            console.log('Phản hồi chi tiết cửa hàng:', shopDetailsResponse);
-                            if (shopDetailsResponse && shopDetailsResponse.length > 0) {
-                                var shopDetails = shopDetailsResponse[0];
-                                $('#logoShop').attr('src', '/assests/shopImg/' + shopDetails.ShopLogo);
-                                $('#NameShop').text(shopDetails.ShopName);
-                                $('#total-product').text(shopDetails.TotalProducts + ' Product');
-                                $('#orders-sold').text(shopDetails.OrdersSoldInOneMonth + ' Order');
-                                $('#joined').text(shopDetails.DaysParticipated + ' Days');
-                                $('#total-comments').text(shopDetails.TotalComments + ' Comment');
-                                $('#total-categories').text(shopDetails.TotalCategories + ' Category');
-                                $('#total-likes').text(shopDetails.TotalLikes + ' ').append('<i class="fa-solid fa-heart" style="color: #ff0000;"></i>');
+                        // Sau đó, lấy chi tiết cửa hàng bằng shop ID vừa lấy được
+                        $.ajax({
+                            url: '/shop',
+                            type: 'GET',
+                            data: { shop_id: shopId },
+                            success: function(shopDetailsResponse) {
+                                console.log('Phản hồi chi tiết cửa hàng:', shopDetailsResponse);
+                                if (shopDetailsResponse && shopDetailsResponse.length > 0) {
+                                    var shopDetails = shopDetailsResponse[0];
+                                    $('#total-product').text(shopDetails[2] + ' Product');
+                                    $('#orders-sold').text(shopDetails[3] + ' Order');
+                                    $('#joined').text(shopDetails[4] + ' Date');
+                                    $('#total-comments').text(shopDetails[5] + ' Comment');
+                                    $('#total-categories').text(shopDetails[6] + ' Category');
+                                    $('#total-likes').text(shopDetails[7] + ' ').append('<i class="fa-solid fa-heart" style="color: #ff0000;"></i>');
+                                }
+                            },
+                            error: function(shopDetailsError) {
+                                console.error("Lỗi khi lấy chi tiết cửa hàng:", shopDetailsError);
                             }
-                        },
-                        error: function(shopDetailsError) {
-                            console.error("Lỗi khi lấy chi tiết cửa hàng:", shopDetailsError);
-                        }
-                    });
+                        });
+                    } else {
+                        console.error('Không có dữ liệu shop hợp lệ trong phản hồi.');
+                    }
+                },
+                error: function(error) {
+                    console.error("Lỗi khi lấy thông tin shop từ shop ID:", error);
                 }
-            },
-            error: function(error) {
-                console.error("Lỗi khi lấy thông tin shop từ email người dùng:", error);
-            }
-        });
+            });
+        } else {
+            console.error("Không tìm thấy shopId trong localStorage");
+        }
     });
 </script>
 <script src="https://kit.fontawesome.com/fe7d543762.js" crossorigin="anonymous"></script>
@@ -151,41 +177,50 @@
                 }
             });
         }
-        $.ajax({
-            url: '/get-shop-by-user-email',
-            type: 'GET',
-            success: function(response) {
-                console.log('Phản hồi API lấy Shop theo email:', response);
-                if (response && response.status && response.data) {
-                    var shopId = response.data.shopId; // Điều chỉnh dựa trên cấu trúc thực tế của phản hồi
-                    // Sau đó, lấy chi tiết cửa hàng bằng shop ID vừa lấy được
-                    console.log(response.data.shopId);
-                    $.ajax({
-                        url: '/shop',
-                        type: 'GET',
-                        data: { shop_id: shopId },
-                        success: function(shopDetailsResponse) {
-                            console.log('Phản hồi chi tiết cửa hàng:', shopDetailsResponse);
-                            if (shopDetailsResponse && shopDetailsResponse.length > 0) {
-                                var shopDetails = shopDetailsResponse[0];
-                                $('#total-product').text(shopDetails[2] + ' Product');
-                                $('#orders-sold').text(shopDetails[3] + ' Order');
-                                $('#joined').text(shopDetails[4] + ' Date');
-                                $('#total-comments').text(shopDetails[5] + ' Comment');
-                                $('#total-categories').text(shopDetails[6] + ' Category');
-                                $('#total-likes').text(shopDetails[7] + ' ').append('<i class="fa-solid fa-heart" style="color: #ff0000;"></i>');
+        var shopId = localStorage.getItem('shopId');
+
+        if (shopId) {
+            // Gửi yêu cầu AJAX để lấy chi tiết cửa hàng bằng shop ID
+            $.ajax({
+                url: '/get-shop-by-user-id',
+                type: 'GET',
+                data: { shopId: localStorage.getItem('shopId') },
+                success: function(response) {
+                    console.log('Phản hồi API lấy Shop theo ID:', response);
+                    if (response && response.status && response.data) {
+                        // Lấy chi tiết cửa hàng từ phản hồi API
+                        var shopId = localStorage.getItem('shopId'); // Điều chỉnh dựa trên cấu trúc thực tế của phản hồi
+                        console.log(localStorage.getItem('shopId'));
+
+                        $.ajax({
+                            url: '/shop',
+                            type: 'GET',
+                            data: { shop_id: shopId },
+                            success: function(shopDetailsResponse) {
+                                console.log('Phản hồi chi tiết cửa hàng:', shopDetailsResponse);
+                                if (shopDetailsResponse && shopDetailsResponse.length > 0) {
+                                    var shopDetails = shopDetailsResponse[0];
+                                    $('#total-product').text(shopDetails[2] + ' Product');
+                                    $('#orders-sold').text(shopDetails[3] + ' Order');
+                                    $('#joined').text(shopDetails[4] + ' Date');
+                                    $('#total-comments').text(shopDetails[5] + ' Comment');
+                                    $('#total-categories').text(shopDetails[6] + ' Category');
+                                    $('#total-likes').text(shopDetails[7] + ' ').append('<i class="fa-solid fa-heart" style="color: #ff0000;"></i>');
+                                }
+                            },
+                            error: function(shopDetailsError) {
+                                console.error("Lỗi khi lấy chi tiết cửa hàng:", shopDetailsError);
                             }
-                        },
-                        error: function(shopDetailsError) {
-                            console.error("Lỗi khi lấy chi tiết cửa hàng:", shopDetailsError);
-                        }
-                    });
+                        });
+                    }
+                },
+                error: function(error) {
+                    console.error("Lỗi khi lấy thông tin shop theo ID:", error);
                 }
-            },
-            error: function(error) {
-                console.error("Lỗi khi lấy thông tin shop từ email người dùng:", error);
-            }
-        });
+            });
+        } else {
+            console.error("Không tìm thấy shopId trong local storage");
+        }
     });
 
 </script>

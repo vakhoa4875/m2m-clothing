@@ -1,17 +1,15 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import m2m_phase2.clothing.clothing.data.entity.AccountGGE;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class AccountGGDTO {
-//    private int userIdGG;
+    //    private int userIdGG;
     private String accessTokenGG;
     private String subGG;
     private String usernameGG;
@@ -19,7 +17,7 @@ public class AccountGGDTO {
     private boolean isDisableGG = false;
     private boolean isAdminGG = false;
 
-    public static AccountGGE converAccountggdtoToAccountgge(AccountGGDTO accountGGDTO){
+    public static AccountGGE converAccountggdtoToAccountgge(AccountGGDTO accountGGDTO) {
         return AccountGGE.builder()
                 .accessTokenGG(accountGGDTO.getAccessTokenGG())
                 .subGG(accountGGDTO.getSubGG())

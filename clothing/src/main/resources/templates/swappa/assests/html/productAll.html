@@ -106,11 +106,10 @@
             <div id="breadcrumb-bar" class="ms-3 mt-3">
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb mb-2" th:switch="${active}">
-                                    <span th:case="1" class="d-flex">
-                                      <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
-                                      <li class="breadcrumb-item"><a
-                                              href="/categoryType?categoryId=1">Outerwear</a></li>
-                                    </span>
+                        <span th:case="1" class="d-flex">
+                          <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
+                          <li class="breadcrumb-item"><a href="/categoryType?categoryId=1">Outerwear</a></li>
+                        </span>
                         <div th:case="2" class="d-flex">
                             <li class="breadcrumb-item"><a href="/trangchu">Home</a></li>
                             <li class="breadcrumb-item"><a href="/categoryType?categoryId=2">Tops</a></li>
@@ -150,211 +149,80 @@
                                     LIST OF PRODUCTS
                                 </div>
                                 <div>
-                                    <div th:if="${menu}">
+                                    <div>
                                         <ul>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=1" class=""> Outerwear </a>
+                                            <li class="p-0">
+                                                <a class="btn border-0 pb-2" onclick="fiterByCategory(1)"> Outerwear </a>
                                             </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=2" class=""> Tops </a>
+                                            <li class="p-0">
+                                                <a class="btn border-0 pb-2 " onclick="fiterByCategory(2)"> Tops </a>
                                             </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=3">Bottoms</a>
+                                            <li class="p-0">
+                                                <a class="btn border-0 pb-2" onclick="fiterByCategory(3)">Bottoms</a>
                                             </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=4">Jewels & Accessories</a>
+                                            <li class="p-0">
+                                                <a class="btn border-0 pb-2" onclick="fiterByCategory(4)">Jewels & Accessories</a>
                                             </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=5">Headwear</a>
+                                            <li class="p-0">
+                                                <a class="btn border-0 pb-2" onclick="fiterByCategory(5)">Headwear</a>
                                             </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=6">Footwear</a>
+                                            <li class="p-0">
+                                                <a class="btn border-0 pb-2" onclick="fiterByCategory(6)">Footwear</a>
                                             </li>
                                         </ul>
                                     </div>
-                                    <ul th:switch="${active}">
-                                        <div th:case="1">
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=1" class="active-custom">
-                                                    Outerwear </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=2" class=""> Tops </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=3">Bottoms</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=4">Jewels & Accessories</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=5">Headwear</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=6">Footwear</a>
-                                            </li>
-                                        </div>
-
-                                        <div th:case="2">
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=1" class=""> Outerwear </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=2" class="active-custom"> Tops </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=3">Bottoms</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=4">Jewels & Accessories</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=5">Headwear</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=6">Footwear</a>
-                                            </li>
-                                        </div>
-
-                                        <div th:case="3">
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=1" class=""> Outerwear </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=2" class=""> Tops </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=3" class="active-custom">Bottoms</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=4">Jewels & Accessories</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=5">Headwear</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=6">Footwear</a>
-                                            </li>
-                                        </div>
-
-                                        <div th:case="4">
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=1" class=""> Outerwear </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=2" class=""> Tops </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=3" class="">Bottoms</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=4" class="active-custom">Jewels &
-                                                    Accessories</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=5">Headwear</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=6">Footwear</a>
-                                            </li>
-                                        </div>
-
-                                        <div th:case="5">
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=1" class=""> Outerwear </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=2" class=""> Tops </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=3" class="">Bottoms</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=4">Jewels & Accessories</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=5" class="active-custom">Headwear</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=6">Footwear</a>
-                                            </li>
-                                        </div>
-
-                                        <div th:case="6">
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=1" class=""> Outerwear </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=2" class=""> Tops </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=3" class="">Bottoms</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=4">Jewels & Accessories</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=5">Headwear</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=6" class="active-custom">Footwear</a>
-                                            </li>
-                                        </div>
-
-                                        <div th:case="7">
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=1" class=""> Outerwear </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=2" class=""> Tops </a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=3">Bottoms</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=4">Jewels & Accessories</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=5">Headwear</a>
-                                            </li>
-                                            <li class="pt-1 pb-1">
-                                                <a href="/categoryType?categoryId=6">Footwear</a>
-                                            </li>
-                                        </div>
-
-                                    </ul>
                                 </div>
                             </div>
                         </div>
                         <hr class="border border-black border-1 opacity-75 mt-1 mb-1">
-                        <div class="shadow-sm bg-body-tertiary" style="background-color: rgba(128, 128, 128, 0.085);">
-                            <div class="list-group">
-                                <div href="#"
-                                     class="list-group-item list-group-item-action text-bg-dark text-center rounded-0"
-                                     aria-current="true">
-                                    SIZE
-                                </div>
-                                <div>
-                                    <ul>
-                                        <input type="radio" class="mt-3 mb-3" name="size"> XS
-                                        <br>
-                                        <input type="radio" class="mt-3 mb-3" name="size"> S
-                                        <br>
-                                        <input type="radio" class="mt-3 mb-3" name="size"> M
-                                        <br>
-                                        <input type="radio" class="mt-3 mb-3" name="size"> L
-                                        <br>
-                                        <input type="radio" class="mt-3 mb-3" name="size"> XL
-                                        <br>
-                                        <input type="radio" class="mt-3 mb-3" name="size"> XXl
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+<!--                        <div class="shadow-sm bg-body-tertiary" style="background-color: rgba(128, 128, 128, 0.085);">-->
+<!--                            <div class="list-group">-->
+<!--                                <div href="#"-->
+<!--                                     class="list-group-item list-group-item-action text-bg-dark text-center rounded-0"-->
+<!--                                     aria-current="true">-->
+<!--                                    SIZE-->
+<!--                                </div>-->
+<!--                                <div>-->
+<!--                                    <ul>-->
+<!--                                        <input type="radio" class="mt-3 mb-3" name="size"> XS-->
+<!--                                        <br>-->
+<!--                                        <input type="radio" class="mt-3 mb-3" name="size"> S-->
+<!--                                        <br>-->
+<!--                                        <input type="radio" class="mt-3 mb-3" name="size"> M-->
+<!--                                        <br>-->
+<!--                                        <input type="radio" class="mt-3 mb-3" name="size"> L-->
+<!--                                        <br>-->
+<!--                                        <input type="radio" class="mt-3 mb-3" name="size"> XL-->
+<!--                                        <br>-->
+<!--                                        <input type="radio" class="mt-3 mb-3" name="size"> XXl-->
+<!--                                    </ul>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
                     </div>
 
 
                     <div class="col-lg-9 col-md-7">
+                        <div class="row pb-3">
+                            <div  class="col-2 p-0">
+                                <p>Sắp xếp theo</p>
+                            </div >
+                            <div class="col-2 p-0">
+                                <button class="btn btn-danger" onclick="filterMostPurchasedProducts()">Phổ biến</button>
+                            </div>
+                            <div class="col-2 p-0">
+                                <button class="btn btn-danger " onclick="fiterSanPhamPhoBienNhat()">Mới nhất</button>
+                            </div>
+                            <div class="col-2 p-0">
+                                <button class="btn btn-danger " onclick="filterBestSellingProducts()">Bán Chạy</button>
+                            </div>
+                            <div class="col-3 p-0">
+                                <select class="form-select " onchange="handleSelectChange(this)">
+                                    <option value="lowToHigh" >Từ thấp đến cao</option>
+                                    <option value="highToLow">Từ cao đến thấp</option>
+                                </select>
+                            </div>
+                        </div>
                         <div class="row" id="search-results">
                             <!-- Vòng lặp Thymeleaf để duyệt qua từng sản phẩm -->
                             <div class="col-lg-2 col-md-3 col-sm-4" th:each="product : ${listProduct}">
@@ -417,7 +285,7 @@
 <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
 <script src="/assests/js/jsAll.js"></script>
 <script th:src="@{/assests/js/searchRcmd.js}"></script>
-
+<script th:src="@{/assests/js/Product.js}"></script>
 <script>
     $(document).ready(function () {
         $('#navbar_search_input').on('keydown', function (e) { // Sử dụng sự kiện keydown thay vì keypress

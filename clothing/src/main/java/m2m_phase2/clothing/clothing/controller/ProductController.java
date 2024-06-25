@@ -36,7 +36,7 @@ public class ProductController {
 		return "swappa/assests/html/productAll";
 	}
 
-	@GetMapping("/AllcategoryType")
+	@GetMapping({"/AllcategoryType/{id}", "/AllcategoryType"})
 	public String getAllcategory(Model model) {
 		List<ProductM> products	= productServiceImpl.findAll();
 		model.addAttribute("listProduct",products);

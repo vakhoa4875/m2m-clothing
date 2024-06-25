@@ -11,4 +11,5 @@ public interface CategoryService {
 	Long Category();
 	Map<String, Long> getProductCountPerCategory();
 	List<Category> findCategoryByShop(String email) throws SQLException;
+	List<Category> findCategoryByShopId(int shopId) ;
 }

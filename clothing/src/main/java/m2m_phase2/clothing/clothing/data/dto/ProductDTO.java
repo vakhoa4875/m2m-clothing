@@ -1,13 +1,13 @@
 package m2m_phase2.clothing.clothing.data.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import m2m_phase2.clothing.clothing.data.entity.ShopE;
 
-import java.io.File;
-
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProductDTO {

@@ -14,4 +14,7 @@ public interface CategoryRepo extends JpaRepository<Category, Integer> {
 
 	@Query(value = "select c from Category c join Product p on p.category.category_id = c.category_id where p.shopE.userE.email = :email")
 	List<Category> findCategoryByShop(@Param("email") String email);
+
+	@Query(value = "select c from Category c join Product p on p.category.category_id = c.category_id where p.shopE.shopId = :shopId")
+	List<Category> findCategoryByShopId(@Param("shopId") int shopId);
 }
