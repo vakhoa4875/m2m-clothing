@@ -1,0 +1,22 @@
+body {
+    background-image: url('/assests/images/s.webp');
+    background-size: cover; /* This makes the background cover the entire body */
+    background-repeat: no-repeat; /* This prevents the image from repeating */
+    background-position: center; /* This centers the image */
+}
+.btn-success {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #8B4513; /* Retro brown color for the background */
+    --bs-btn-border-color: #8B4513; /* Retro brown color for the border */
+    --bs-btn-hover-color: #fff;
+    --bs-btn-hover-bg: #A0522D; /* Slightly lighter brown for the hover background */
+    --bs-btn-hover-border-color: #A0522D; /* Slightly lighter brown for the hover border */
+    --bs-btn-focus-shadow-rgb: 139, 69, 19; /* RGB for retro brown */
+    --bs-btn-active-color: #fff;
+    --bs-btn-active-bg: #5A3315; /* Darker brown for the active background */
+    --bs-btn-active-border-color: #5A3315; /* Darker brown for the active border */
+    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+    --bs-btn-disabled-color: #fff;
+    --bs-btn-disabled-bg: #8B4513; /* Retro brown for the disabled background */
+    --bs-btn-disabled-border-color: #8B4513; /* Retro brown for the disabled border */
+}

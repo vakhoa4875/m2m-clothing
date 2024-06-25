@@ -55,7 +55,8 @@ create or alter trigger triggerOnCreateOrder
     as
 begin
     update p
-    set p.sold += i.quantity
+    set p.sold += i.quantity,
+        p.quantity -= i.quantity
     from Product p
              join inserted i on p.product_id = i.product_id
 end
@@ -202,15 +203,3 @@ create table Favorite
     product_id int foreign key references Product (product_id),
     date_created datetime default getdate()
 )
--- paypal payment
--- create or alter trigger updateOrderStatus
---     on Payment
---     after update, insert
---     as
---     begin
---         set nocount on;
---
---         update [Order]
---         set order_status
---     end
---! paypal payment

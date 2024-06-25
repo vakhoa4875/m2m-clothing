@@ -2,12 +2,10 @@ package m2m_phase2.clothing.clothing.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.constant.OrderStatus;
+import m2m_phase2.clothing.clothing.data.dto.OrderDetailDto;
 import m2m_phase2.clothing.clothing.data.dto.OrderDto;
 import m2m_phase2.clothing.clothing.data.entity.Order;
-import m2m_phase2.clothing.clothing.repository.OrderRepo;
-import m2m_phase2.clothing.clothing.repository.ProductRepo;
-import m2m_phase2.clothing.clothing.repository.UserRepo;
-import m2m_phase2.clothing.clothing.repository.VoucherRepo;
+import m2m_phase2.clothing.clothing.repository.*;
 import m2m_phase2.clothing.clothing.service.OrderService;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +19,7 @@ public class OrderServiceImpl implements OrderService {
     private final VoucherRepo voucherRepo;
     private final OrderRepo orderRepo;
     private final ProductRepo productRepo;
+    private final OrderDetailRepo orderDetailRepo;
 
     @Override
     public List<Order> findAllOrders() {
@@ -32,13 +31,6 @@ public class OrderServiceImpl implements OrderService {
     public List<Object[]> findOrdersWithUsernameByEmail(String email) {
         return repo.findOrdersWithUsernameByEmail(email);
     }
-
-//    @Override
-//    public byte updatePaymentStatusByOrderId(OrderDto orderDto) {
-//        String paymentMethod = OrderStatus.PAID.getValue();
-//        Integer orderId = orderDto.getOrderId();
-//        return repo.(paymentMethod, orderId);
-//    }
 
     @Override
     public void inserOder(OrderDto orderDto) {
@@ -53,9 +45,15 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order saveOrder(OrderDto orderDto) {
         orderDto.setOrderCode();
+        var order = OrderDto.convertOrderDtoToOrder(orderDto, userRepo, voucherRepo);
         orderDto.getOrderDetails().forEach(e -> e.setOrderCode(orderDto.getOrderCode()));
-        var order = OrderDto.convertOrderDtoToOrder(orderDto, userRepo, voucherRepo, orderRepo, productRepo);
-        return orderRepo.save(order);
+        var savedOrder = orderRepo.save(order);
+        var listOrderDetailE = OrderDetailDto.convertListOrderDetailDtoToListOrderDetailE(
+                orderDto.getOrderDetails(),
+                orderRepo,
+                productRepo);
+        orderDetailRepo.saveAll(listOrderDetailE);
+        return savedOrder;
     }
 
     public Order findOrderByOrderId(Integer orderId) {

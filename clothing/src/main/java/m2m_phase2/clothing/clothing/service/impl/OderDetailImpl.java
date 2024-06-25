@@ -21,7 +21,7 @@ public class OderDetailImpl implements OrderDetailService {
 
     @Override
     public void UpdateOderDetail(OrderDto orderDto) {
-        orderDetailRepo.UpdateOderDetail(orderDto.getOrderId(),orderDto.getUsername(), Integer.valueOf(orderDto.getSoluong()), Float.valueOf("100.0"));
+//        orderDetailRepo.UpdateOderDetail(orderDto.getOrderId(),orderDto.getUsername(), Integer.valueOf(orderDto.getSoluong()), Float.valueOf("100.0"));
     }
 
     /**

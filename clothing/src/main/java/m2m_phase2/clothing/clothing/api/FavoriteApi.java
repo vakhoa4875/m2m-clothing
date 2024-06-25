@@ -91,4 +91,35 @@ public class FavoriteApi {
         }
         return ResponseEntity.ok(response);
     }
+
+
+    @GetMapping("/show-favorite")
+    public ResponseEntity<?> showFavorite(){
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("status", true);
+            result.put("message", "Favorite show successfully");
+            result.put("data",favoriteService.getFavoritesByEmail(sessionEmail));
+        }catch (Exception e){
+            result.put("status", false);
+            result.put("message", "Favorite show successfully");
+            result.put("data",null);
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/delete-favorite")
+    public ResponseEntity<?> deleteFavorite(@RequestParam("id") int id,@RequestParam("productId") int productId) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("status", true);
+            result.put("message", "Delete successfully");
+            result.put("data",favoriteService.deleteFavoriteProduct(id, productId));
+        }catch (Exception e){
+            result.put("status", false);
+            result.put("message", "Delete no successfully");
+            result.put("data",null);
+        }
+        return ResponseEntity.ok(result);
+    }
 }
