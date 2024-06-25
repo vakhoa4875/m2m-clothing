@@ -46,6 +46,7 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
     //    @Override
     Optional<Order> findById(Integer id);
 
+    @Transactional
     Order save(Order order);
 
     Order findByOrderCode(String orderCode);
