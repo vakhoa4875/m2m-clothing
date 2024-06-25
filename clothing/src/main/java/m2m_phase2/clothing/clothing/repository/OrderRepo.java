@@ -33,7 +33,19 @@ public interface OrderRepo extends JpaRepository<Order, Integer> {
 
 
     @Modifying
-    @Query(value = "select o.order_id, u.username, o.order_date, o.phone_number, o.delivery_address, o.payment_method, ROUND(o.total_amount, 2), o.count_sp, o.order_status from [Order] o left join dbo.order_detail od on o.order_id = od.order_detail_id join dbo.[user] u on u.id = o.customer_id", nativeQuery = true)
+    @Query(value = "select o.order_id, " +
+            "u.fullname, " +
+            "o.order_date, " +
+            "o.phone_number, " +
+            "o.delivery_address, " +
+            "o.payment_method, " +
+            "ROUND(o.total_amount, 2), " +
+            "o.count_sp, " +
+            "o.order_status " +
+            "from [Order] o " +
+            "left join dbo.order_detail od on o.order_id = od.order_detail_id " +
+            "join dbo.[user] u on u.id = o.customer_id",
+            nativeQuery = true)
     List<Object[]> findAllUser();
 
     @Modifying
