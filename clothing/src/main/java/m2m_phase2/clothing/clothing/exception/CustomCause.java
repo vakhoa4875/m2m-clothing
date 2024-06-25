@@ -1,17 +1,19 @@
 package m2m_phase2.clothing.clothing.exception;
 
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 public enum CustomCause {
-    BOARD404(1001, "Không tìm thấy bảng tương ứng"),
-    UNAUTHORIZED_MEMBER(1003, "Thiếu quyền truy cập, vui lòng liên hệ người sở hữu"),
-    DUPLICATE_TITLE(1002, "Tên danh sách đã được sử dụng, vui lòng thử lại!");
-    private final int code;
-    private final String message;
+    ERROR(1001, "Error occurred while processing"),
+    INVALID_QUANTITY(1004, "Invalid product quantity, only 1 left stocks");
+    private int code;
+    @Setter
+    private String message;
 
     CustomCause(int code, String message) {
         this.code = code;
         this.message = message;
     }
+
 }

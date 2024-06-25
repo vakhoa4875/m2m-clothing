@@ -36,6 +36,6 @@ public class PaymentServiceImpl implements PaymentService {
         if (rowsEffected > 0) {
             return rowsEffected;
         }
-        throw new CustomException(CustomCause.BOARD404);
+        throw new CustomException(CustomCause.ERROR);
     }
 }

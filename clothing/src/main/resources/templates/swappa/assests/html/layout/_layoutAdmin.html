@@ -12,23 +12,13 @@
     <!-- mobileNav -->
     <div class="d-block">
         <div id="mobileNav" style="background-color: rgb(18,17,13); color: rgb(231,227,223);">
-            <nav class="navbar  navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
-                <div class="container-fluid">
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
-                            data-bs-target="#slide_menu" aria-controls="navbarSupportedContent" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <i class="fa-solid fa-bars"></i>
-                    </button>
+            <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Mobile Navigation">
+                <div class="container-fluid d-flex align-items-center justify-content-center">
                     <a href="/trangchu" class="navbar-brand" title="Swappa">
                         <img class="img-fluid" th:src="@{../assests/images/mini-logo-white.png}"
                              style="height:50px; margin: auto;"
-                             alt="Swappa Logo">
+                             alt="m2m Clothing">
                     </a>
-                    <button type="button" class="navbar-toggler" data-bs-toggle="offcanvas"
-                            data-bs-target="#slide_search" aria-controls="navbarSupportedContent" aria-expanded="false"
-                            aria-label="Search">
-                        <i class="fa-solid fa-search" aria-hidden="true"></i>
-                    </button>
                 </div>
             </nav>
         </div>
@@ -36,8 +26,8 @@
     </div>
 </div>
 
-<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);" th:fragment="footer" class="">
-    <div class="container pt-2 pb-2">
+<footer style="background-color: rgb(18,17,13); color: rgb(231,227,223);" th:fragment="footer">
+    <div class="container pt-4 pb-2">
         <div class="row row-cols-2 row-cols-md-3 row-cols-lg-6">
         </div>
         <div class="row row-cols-1 row-cols-md-3">

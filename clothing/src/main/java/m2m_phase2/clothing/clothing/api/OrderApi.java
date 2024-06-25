@@ -108,7 +108,7 @@ public class OrderApi {
 //        return ResponseEntity.ok(orderDto);
 //    }
 
-    @GetMapping("/updateOderUser")
+    @GetMapping("/updateOrderUser")
     public ResponseEntity<?> updateOdeUserfromAdmin(@Param("idProduct") Integer idProduct, @Param("OrderStatus") String OrderStatus) {
         try {
             orderService.updateOrderStatusByOrderId(idProduct, OrderStatus);

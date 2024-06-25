@@ -7,6 +7,7 @@
     <title>Đăng ký</title>
     <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assests/css/style.css">
+    <link rel="stylesheet" href="/assests/css/login.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
@@ -14,18 +15,17 @@
 <body ng-app="myApp" ng-controller="accountCtrl">
 <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
 <!-- main -->
-<div class="main-container">
+<div>
     <!-- body -->
     <main class="container pt-5 pb-5">
         <!-- Section: Design Block -->
         <div class="row">
             <section class="text-center d-flex justify-content-center">
                 <div class="card shadow-5-strong w-50" style="
-                background: hsla(0,0%,0%,0.5);
+                background: hsla(0,0%,100%,0.1);
                 backdrop-filter: blur(50px);
                 ">
                     <div class="card-body py-5">
-
                         <div class="d-flex justify-content-center">
                             <div class="">
                                 <h2 class="fw-bold mb-5 text-white">SIGN UP</h2>
@@ -52,7 +52,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <!-- Email input -->
                                     <div class="form-outline mb-4">
                                         <input th-field="${email}" type="email" id="email2" name="email2"
@@ -64,8 +63,6 @@
                                             sure it's written correctly.
                                         </div>
                                     </div>
-                                    <div></div>
-
                                     <div class="row row-cols-md-2">
                                         <div class="col">
                                             <div class="form-outline mb-4">
@@ -99,55 +96,30 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
-
-
                                     <div class="alert alert-danger" style="display: none;" id="errorMess"
                                          role="alert">
                                     </div>
-
-
+                                    <!-- Submit button -->
+                                    <div class="d-flex flex-column align-items-center">
+                                        <button type="button" id="signupBtn"
+                                                class="btn btn-success fw-bold btn-block px-5 rounded-5 w-75"
+                                                onclick="callByUsernameAndEmail()">
+                                            Sign up
+                                        </button>
+                                        <a href="/login" class="btn btn-success btn-block rounded-5 w-50 mt-3">Return
+                                            Login</a>
+                                    </div>
+                                </form>
                             </div>
                         </div>
-
-                        <!-- <div class="form-check  mb-4">
-                                        <div class="d-flex justify-content-center">
-                                            <input class="form-check-input me-2 text-bg-success" type="radio" value=""
-                                                id="form2Example33" name="gioitinh" />
-                                            <label class="form-check-label" for="form2Example33">
-                                                Nam
-                                            </label>
-
-                                            <input class="form-check-input ms-4 me-2 text-bg-success" type="radio" value=""
-                                                id="form2Example33" name="gioitinh" />
-                                            <label class="form-check-label" for="form2Example33">
-                                                Nu
-                                            </label>
-                                        </div>
-                                        <div class="d-flex">
-
-                                        </div>
-                                    </div> -->
-
-                        <!-- Submit button -->
-                        <div class="d-flex flex-column align-items-center">
-                            <button type="button" id="signupBtn"
-                                    class="btn btn-success fw-bold btn-block px-5 rounded-5 w-75"
-                                    onclick="callByUsernameAndEmail()">
-                                Sign up
-                            </button>
-                            <a href="/login" class="btn btn-success btn-block rounded-5 w-50 mt-3">Return
-                                Login</a>
-                        </div>
-                        </form>
                     </div>
                 </div>
             </section>
         </div>
     </main>
 </div>
-<footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
+<footer class="fixed-bottom" th:insert="~{swappa/assests/html/layout/_layout::footer}"></footer>
 </body>
 <script src="/node_modules/angular/angular.min.js"></script>
 <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
@@ -188,6 +160,7 @@
                 searchProducts();
             }
         });
+
         function searchProducts() {
             var keyword = $('#navbar_search_input').val();
             var type = $('#select_loai').val();

@@ -55,7 +55,8 @@ create or alter trigger triggerOnCreateOrder
     as
 begin
     update p
-    set p.sold += i.quantity
+    set p.sold += i.quantity,
+        p.quantity -= i.quantity
     from Product p
              join inserted i on p.product_id = i.product_id
 end
@@ -309,3 +310,11 @@ BEGIN
 
 END
 GO
+
+create table Favorite
+(
+    id int identity primary key,
+    user_id int foreign key references [user] (id),
+    product_id int foreign key references Product (product_id),
+    date_created datetime default getdate()
+)
