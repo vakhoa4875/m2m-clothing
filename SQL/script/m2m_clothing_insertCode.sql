@@ -836,7 +836,7 @@ VALUES (N'Mã giảm giá Xuân', 15, 15, '2024-03-01', '2024-03-31'),
        (N'Mã giảm giá Đông', 25, 15, '2024-12-01', '2025-02-28'),
        (N'Mã giảm giá Tết', 30, 15, '2025-01-01', '2025-01-31');
 
-INSERT INTO VoucherDetails
+INSERT INTO voucher_details
 VALUES (1, 1),
        (2, 1),
        (3, 2),
@@ -844,7 +844,7 @@ VALUES (1, 1),
        (5, 4)
 select *
 from [user] u
-where u.id not in (select distinct v.user_id from VoucherDetails v where v.voucher_id = 1)
+where u.id not in (select distinct v.user_id from voucher_details v where v.voucher_id = 1)
 
 
 

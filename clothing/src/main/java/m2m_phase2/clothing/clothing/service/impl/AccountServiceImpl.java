@@ -173,7 +173,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public String sendUrl() {
 
-        String resetPasswordUrl = "http://localhost:8083/ConfirmPassword-Forgot-mk";
+        String resetPasswordUrl = "/ConfirmPassword-Forgot-mk";
         return resetPasswordUrl;
     }
 
