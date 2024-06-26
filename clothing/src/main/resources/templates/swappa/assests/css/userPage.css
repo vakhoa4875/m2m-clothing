@@ -1,0 +1,135 @@
+.perfect-container {
+    max-height: 68vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+#orderstatus {
+    max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+
+#orderstatus tbody {
+    overflow-y: auto; /* Hiển thị thanh cuộn dọc */
+}
+
+#orderstatus tbody tr {
+    width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
+}
+
+#orderstatus thead th:nth-child(1) {
+    width: 5%;
+}
+
+#orderstatus thead th:nth-child(2) {
+    width: 15%;
+}
+
+#orderstatus thead th:nth-child(3) {
+    width: 8%;
+}
+
+#orderstatus thead th:nth-child(4) {
+    width: 35%;
+}
+
+#orderstatus thead th:nth-child(5) {
+    width: 8%;
+}
+
+#orderstatus thead th:nth-child(6) {
+    width: 5%;
+}
+
+#orderstatus thead th:nth-child(7) {
+    width: 12%;
+}
+
+#orderstatus thead th:nth-child(8) {
+    width: 20%;
+}
+
+#fileInput {
+    display: none;
+}
+
+.custom-file-label {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #909498;
+    color: #fff;
+}
+
+.custom-file-label:hover {
+    background-color: #9a9fa4;
+}
+
+#previewImage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-top: 20px;
+}
+
+#fileInput {
+    border: 2px solid #909498;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+#fileInput:hover {
+    border-color: #9a9fa4;
+}
+
+#fileInput:focus {
+    border-color: #9a9fa4;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
+}
+
+.custom-file-label {
+    cursor: pointer;
+    padding: 10px 20px;
+    background-color: #909498;
+    color: #fff;
+    border: 2px solid #909498;
+    border-radius: 5px;
+}
+
+.custom-file-label:hover {
+    background-color: #9a9fa4;
+}
+
+#previewImage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-top: 20px;
+    border: 2px solid #909498; /* Màu và độ dày của đường viền */
+    border-radius: 5px; /* Độ cong của các góc */
+}
+
+#previewImage {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-top: 20px;
+    border: 2px solid #909498; /* Màu và độ dày của đường viền */
+    border-radius: 5px; /* Độ cong của các góc */
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5); /* Hiệu ứng đổ bóng */
+}
+
+#previewImage:hover {
+    border-color: #9a9fa4; /* Thay đổi màu sắc của đường viền khi di chuột qua */
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7); /* Hiệu ứng đổ bóng khi di chuột qua */
+}
+
+.img-300 {
+    width: 300px;
+    height: auto;
+    margin: auto;
+}
+
+.dropdown-item:hover {
+    background-color: #b7b6b6; /* Màu nền khi hover */
+    color: white;
+    cursor: pointer;
+}

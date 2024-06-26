@@ -5,8 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import m2m_phase2.clothing.clothing.data.entity.Order;
-import m2m_phase2.clothing.clothing.repository.OrderRepo;
-import m2m_phase2.clothing.clothing.repository.ProductRepo;
 import m2m_phase2.clothing.clothing.repository.UserRepo;
 import m2m_phase2.clothing.clothing.repository.VoucherRepo;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
@@ -36,11 +34,8 @@ public class OrderDto {
 
     public static Order convertOrderDtoToOrder(
             OrderDto orderDto,
-//            HttpSession session,
             UserRepo userRepo,
-            VoucherRepo voucherRepo,
-            OrderRepo orderRepo,
-            ProductRepo productRepo
+            VoucherRepo voucherRepo
     ) {
         return Order.builder()
                 .customer(userRepo.getUserByEmail(PasswordEncoderUtil.email))
@@ -53,7 +48,6 @@ public class OrderDto {
                 .countSp(orderDto.countSp)
                 .orderCode(orderDto.orderCode)
                 .voucher(voucherRepo.findByVoucherID(orderDto.voucherId))
-                .orderDetails(OrderDetailDto.convertListOrderDetailDtoToListOrderDetailE(orderDto.orderDetails, orderRepo, productRepo))
                 .build();
     }
 

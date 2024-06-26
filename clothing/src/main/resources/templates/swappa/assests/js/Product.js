@@ -10,14 +10,30 @@ let perProducts = [];
 let pageTam=[];
 var dangnhap = sessionStorage.getItem("tendn");
 var activeLogin = $('#activeLogin').text();
+let url = new URL(window.location.href);
+let keyword = url.searchParams.get("key_search");
+let type = url.searchParams.get("type_search");
+let pathComponent = window.location.pathname.split('/')[2];
+let categoryType = pathComponent === undefined ? '' : decodeURIComponent(pathComponent);
 function loadAllProduct () {
     return axios.get("/allproductapi")
         .then(response => {
             products = response.data;
-            console.log(products)
             let categoryId = window.location.pathname.split('/')[2];
             fiterByCategory(categoryId)
+            if(keyword && type){
+                searchByKeywordAndCategory()
+            }
         })
+}
+//handle search funtion
+function searchByKeywordAndCategory(){
+    let filteredByCategory = type === 'All Product' ? products : products.filter(product => product.category.category_name === type);
+    let filteredByKeyword = filteredByCategory.filter(product => product.name.toLowerCase().includes(keyword.toLowerCase()));
+    pageTam = filteredByKeyword;
+    productsByCategory = filteredByKeyword;
+    totalPage = Math.ceil(filteredByKeyword.length / perPage);
+    updatePage()
 }
 function updatePage(){
     let start = (currentPage - 1) * perPage;
@@ -42,12 +58,18 @@ function handlerPageNumberPrev (){
 function filterMostPurchasedProducts() {
     let sortedProducts = productsByCategory.sort((a, b) => b.rateCount - a.rateCount);
     let mostPurchasedProducts = sortedProducts.slice(0, 12);
-    displayProducts(mostPurchasedProducts);
+    pageTam = sortedProducts;
+    totalPage = Math.ceil(sortedProducts.length / perPage);
+    productsByCategory = sortedProducts;
+    updatePage()
 }
 function filterBestSellingProducts() {
     let sortedProducts = productsByCategory.sort((a, b) => b.sold - a.sold);
     let bestSellingProducts = sortedProducts.slice(0, 12);
-    displayProducts(bestSellingProducts);
+    pageTam = sortedProducts;
+    totalPage = Math.ceil(sortedProducts.length / perPage);
+    productsByCategory = sortedProducts;
+    updatePage()
 }
 function handleSelectChange(selectElement) {
     var selectedOption = selectElement.value;
@@ -66,33 +88,39 @@ function culculateFinalPrice(product){
 function filterProductsByPriceLowToHigh() {
     let sortedProducts = productsByCategory.sort((a, b) => culculateFinalPrice(a) - culculateFinalPrice(b));
     let sortedProductss = sortedProducts.slice(0, 12);
-    displayProducts(sortedProductss);
+    pageTam = sortedProducts;
+    totalPage = Math.ceil(sortedProducts.length / perPage);
+    productsByCategory = sortedProducts;
+    updatePage()
 }
 function filterProductsByPriceHighToLow() {
     let sortedProducts = productsByCategory.sort((a, b) => culculateFinalPrice(b) - culculateFinalPrice(a));
     let sortedProductss = sortedProducts.slice(0, 12);
-    displayProducts(sortedProductss);
+    pageTam = sortedProducts;
+    totalPage = Math.ceil(sortedProducts.length / perPage);
+    productsByCategory = sortedProducts;
+    updatePage()
 }
 function fiterSanPhamPhoBienNhat(){
     let sortedProducts = productsByCategory.sort((a, b) => b.productId - a.productId);
     let newestProducts = sortedProducts.slice(0, 12);
-    displayProducts(newestProducts);
+    pageTam = sortedProducts;
+    totalPage = Math.ceil(sortedProducts.length / perPage);
+    productsByCategory = sortedProducts;
+    updatePage()
 }
 function fiterByCategory(categoryId){
-    console.log(categoryId)
     if(!categoryId){
         pageTam = products;
         totalPage = Math.ceil(products.length / perPage);
         productsByCategory = products;
         updatePage()
     }else{
-
-        console.log(products)
-        let filterProducts = products.filter(product => product.category.category_id === Number(categoryId));
+        let categoryName = decodeURIComponent(categoryId);
+        let filterProducts = products.filter(product => product.category.category_name === categoryName);
         productsByCategory = filterProducts;
         pageTam = productsByCategory
         totalPage = Math.ceil(productsByCategory.length / perPage);
-        console.log(productsByCategory)
         updatePage()
     }
 }
@@ -121,6 +149,9 @@ function displayProducts(products) {
                                            $${(product.price - (product.sale.salePercent / 100 * product.price)).toFixed(2)}
                                         </span>` : `$${product.price}`}
                                 </div>
+                            </div>
+                            <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
+                                <div class="text-white fw-bolder">Buy now</div>
                             </div>
                         </a>
                 <button class="rounded-bottom-3 w-100 fw-bolder text-white" onclick="getIdSanPham(${product.productId}, '${product.name}', '${product.sale ? (product.price - (product.sale.salePercent / 100 * product.price)).toFixed(2) : (product.price)} ', '${product.price}','../media/${product.pictures.split(',')[0]}', '${product.sale ? "1" : "0"}')" style="background-color: rgb(224, 150, 150); border-color: rgba(0,0,0,0)" >Buy Now</button>

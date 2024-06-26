@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -131,11 +132,8 @@ public class HomeController {
         return "swappa/assests/html/searchShop";
     }
 
-    @GetMapping("/search-Product")
-    public String searchProduct(Model model, HttpSession session) {
-        @SuppressWarnings("unchecked")
-        List<Product> listProduct = (List<Product>) session.getAttribute("searchResults");
-        model.addAttribute("listProduct", listProduct);
+    @GetMapping("/search_Product")
+    public String searchProduct(@RequestParam() String key_search, @RequestParam() String type_search) {
         return "swappa/assests/html/productAll";
     }
 

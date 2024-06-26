@@ -337,17 +337,17 @@ $(document).ready(function () {
         console.log(categories)
         $.each(categories, function (index, category) {
             // Tạo một thẻ li mới cho mỗi đối tượng user
-            var link = $("<a>")
+            let link = $("<a>")
                 .attr("id", "category_" + index)
                 .addClass("rounded-1 btn text-white hoverbutton nghe")
                 .css("width", "120px")
                 .text(category)
                 .click(function() {
                     console.log(index);
-                    window.location.href = "/AllcategoryType/"+(index+1);
+                    window.location.href = "/AllcategoryType/"+(category);
                 });
             ;
-            var div = $("<div>").append(link);
+            let div = $("<div>").append(link);
             if (category == "Jewels & Accessories") {
                 div.addClass("special-category");
                 link.css("width", "200px");
@@ -389,7 +389,7 @@ $(document).ready(function () {
                                             </div>
                                             <div class="">
                                                 <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                                    <div class="text-white fw-bolder ">Buy Now</div>
+                                                    <div class="text-white fw-bolder ">Buy now</div>
                                                 </div>
                                             </div>
                                         </div>

@@ -7,6 +7,7 @@
     <title>Admin</title>
     <link rel="stylesheet" th:href="@{/bootstrap-5.3.2-dist/css/bootstrap.min.css}">
     <link rel="stylesheet" th:href="@{/assests/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assests/css/adminPage.css}">
     <link rel="shortcut icon" th:href="@{/assests/srcPic/x.png}" type="image/x-icon">
     <link rel="stylesheet" href="/assests/css/admin-css.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -15,85 +16,6 @@
     <script th:src="@{/assests/js/UserManagement.js}"></script>
     <script th:src="@{/assests/js/productManagement.js}"></script>
     <script th:src="@{/assests/js/Statistic.js}"></script>
-    <style>
-        .max-width-col {
-            max-width: 128px;
-        }
-
-        .canvas-container {
-            /*position: relative;*/
-            /*width: 100%;*/
-            /*height: 100%;*/
-        }
-
-        canvas {
-            /*max-width: 80% !important;*/
-            /*max-height: 50% !important;*/
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .custom-file-label {
-            cursor: pointer;
-            padding: 10px 20px;
-            background-color: #909498;
-            color: #fff;
-        }
-
-        .custom-file-label:hover {
-            background-color: #9a9fa4;
-        }
-
-        #previewImage {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            margin-top: 20px;
-        }
-
-        .avatar {
-            width: 100%;
-            /* Đảm bảo ảnh chiếm toàn bộ chiều rộng của ô chứa */
-            height: auto;
-            /* Đảm bảo tỉ lệ khung hình được bảo toàn */
-            max-width: 150px;
-            /* Kích thước tối đa của ảnh */
-            max-height: 150px;
-            /* Kích thước tối đa của ảnh */
-        }
-
-        /* Tùy chỉnh kích thước của các ô */
-        .col {
-            width: 33.33%;
-            /* Chia đều không gian cho 3 ô */
-        }
-
-        /* Tùy chỉnh các thuộc tính */
-        .custom-bg-color {
-            background-color: #f0f0f0;
-            /* Màu nền */
-        }
-
-        .custom-border {
-            border: 1px solid #ccc;
-            /* Viền */
-        }
-
-        .custom-shadow {
-            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
-            /* Hiệu ứng bóng */
-        }
-
-        /* Đảm bảo các ô chiếm không gian chính xác */
-        .col {
-            margin: 10px;
-            width: 33.33%;
-            padding: 50px;
-            /* Khoảng cách bên trong ô */
-        }
-    </style>
     <script>
         const services = new UserManagement();
         const productservices = new productManagement();
@@ -112,49 +34,46 @@
         })
     </script>
 </head>
-
 <body class="bg-black">
-
     <div th:replace="~{swappa/assests/html/layout/_layoutAdmin::header}"></div>
-
-    <div class="container-fluid  bg-body-secondary main-container" style="height: 800px;">
+    <div class="container-fluid" style="height: 81vh; background-color: white;">
         <div class="row">
             <div class="col-xl-3 col-lg-12 mt-1 p-0">
-                <div class="card">
+                <div class="card mx-lg-3">
                     <div class="card-header bg-black text-center">
                         <a class="text-white bg-gradient-primary" href="#">
-                            <h5 class="m-0"><strong>APPLICATION MANAGEMENT</strong></h5>
+                            <h5 class="m-0"><strong>Application Management</strong></h5>
                         </a>
                     </div>
-                    <div class="card-body p-1">
+                    <div class="card-body bg-body-secondary rounded-bottom p-1">
                         <div class="align-items-start">
                             <div class="nav flex-column nav-pills " id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
                                 <button class="nav-link mt-1 text-black active" id="v-pills-home-tab"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab"
-                                    aria-controls="v-pills-home" aria-selected="true">ACCOUNT & USER MANAGEMENT
+                                    aria-controls="v-pills-home" aria-selected="true">Account & user management
                                 </button>
                                 <button class="nav-link mt-1 text-black" id="v-pills-home-sale" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-sale" type="button" role="tab" aria-controls="v-pills-sale"
-                                    aria-selected="false">SALE AND PRODUCT
+                                    aria-selected="false">Product management
                                 </button>
                                 <button class="nav-link mt-1 text-black" id="v-pills-home-voucher" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-voucher" type="button" role="tab"
-                                    aria-controls="v-pills-voucher" aria-selected="false">VOUCHER ACCOUNT
+                                    aria-controls="v-pills-voucher" aria-selected="false">Voucher management
                                 </button>
                                 <button class="nav-link mt-1 text-black" id="v-pills-home-status-product"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-status" type="button" role="tab"
-                                    aria-controls="v-pills-home-status" aria-selected="false">STATUS PRODUCT
+                                    aria-controls="v-pills-home-status" aria-selected="false">Order tracker
                                 </button>
                                 <button class="nav-link mt-1 text-black" id="v-pills-home-status-productSale"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-statusProductSale" type="button"
-                                    role="tab" aria-controls="v-pills-home-statusProductSale" aria-selected="false">SALE
+                                    role="tab" aria-controls="v-pills-home-statusProductSale" aria-selected="false">Sale & sale product management
                                 </button>
                                 <button class="nav-link mt-1 text-black" id="v-pills-home-status-statistical"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-home-statistical" type="button"
-                                    role="tab" aria-controls="v-pills-home-statistical" aria-selected="false">STATISTIC
+                                    role="tab" aria-controls="v-pills-home-statistical" aria-selected="false">Statistic
                                 </button>
-                                <a class="nav-link mt-1 text-black" href="/admin/logout">Log Out
+                                <a class="nav-link mt-1 text-black" href="/admin/logout">Log out
                                 </a>
                             </div>
                         </div>
@@ -169,7 +88,7 @@
                             <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                                 <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">Account Information
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">Account & user management
                                     </h5>
                                     <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggle" data-bs-toggle="modal"
@@ -190,7 +109,7 @@
                             <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                                 <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">SALE AND PRODUCT
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">Product management
                                     </h5>
                                     <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleProduct" data-bs-toggle="modal"
@@ -226,7 +145,7 @@
                             <div class="card-header p-0 bg-dark-subtle mt-2 mx-3 position-relative z-index-2">
                                 <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">VOUCHER ACCOUNT
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">Voucher management
                                     </h5>
                                     <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleVoucher" data-bs-toggle="modal"
@@ -262,7 +181,7 @@
                             <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                                 <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">STATUS PRODUCT
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">Order history
                                     </h5>
                                     <!--                                <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"-->
                                     <!--                                        data-bs-target="#exampleModalAccpectProduct" data-bs-toggle="modal"-->
@@ -278,12 +197,12 @@
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                             <tr class="text-center">
-                                                <th scope="col">Order number</th>
+                                                <th scope="col">#</th>
                                                 <th scope="col">Username</th>
                                                 <th scope="col">Phone</th>
-                                                <th scope="col">Payment method</th>
-                                                <th scope="col">Quantity of products</th>
-                                                <th scope="col">Payment status</th>
+                                                <th scope="col">Shipping address</th>
+                                                <th scope="col">Quantity</th>
+                                                <th scope="col">Status</th>
                                                 <th scope="col"></th>
                                             </tr>
                                         </thead>
@@ -301,7 +220,7 @@
                             <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                                 <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">Sale</h5>
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">Sale & sale product management</h5>
                                     <button type="button" class="btn btn-success mb-0 me-3 rounded-circle sidenav"
                                         data-bs-target="#exampleModalToggleSaleProduct" data-bs-toggle="modal"
                                         id="newInsButtonSale" style="padding: 7px 12px 7px 12px;">
@@ -375,7 +294,7 @@
                             <div class="card-header p-0 bg-dark-subtle position-relative mt-2 mx-3 z-index-2">
                                 <div
                                     class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3 d-flex justify-content-between">
-                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">STATISTIC</h5>
+                                    <h5 class="text-black ps-3 d-flex align-items-center mb-0">Statistic</h5>
                                 </div>
                             </div>
                             <ul class="nav nav-tabs mx-3 mt-1" id="myTab-ThongKe" role="tablist">
@@ -398,24 +317,22 @@
                                     <script src="https://www.gstatic.com/charts/loader.js"></script>
                                     <!-- Phần của bản 1 -->
                                     <div class="table-responsive p-0 " id="tableThongKeUser">
-                                        <div class=" container-fluid">
+                                        <div class=" container-fluid overflow-y-scroll overflow-x-hidden" style="max-height: 66vh">
                                             <div class="row">
                                                 <a href="#"
-                                                    class="col custom-bg-color custom-border custom-shadow bg-success rounded-2 text-decoration-none text-white">
+                                                    class="col custom-col custom-bg-color custom-border custom-shadow bg-success rounded-2 text-decoration-none text-white">
                                                     <div>Number of accounts: <span id="totalAccountsSpan"> </span></div>
                                                 </a>
                                                 <a href="#"
-                                                    class="col custom-bg-color custom-border custom-shadow bg-warning rounded-2 text-decoration-none text-white">
+                                                    class="col custom-col custom-bg-color custom-border custom-shadow bg-warning rounded-2 text-decoration-none text-white">
                                                     <div>Total product quantity: <span id="totalProductSpan"></span>
                                                     </div>
                                                 </a>
                                                 <a href="#"
-                                                    class="col custom-bg-color custom-border custom-shadow bg-info rounded-2 text-decoration-none text-white">
+                                                    class="col custom-col custom-bg-color custom-border custom-shadow bg-info rounded-2 text-decoration-none text-white">
                                                     <div>Product Type: <span id="totalCategorySpan"></span></div>
                                                 </a>
                                             </div>
-
-
                                             <div class="row mt-3 ">
                                                 <div class="col-xxl-6">
                                                     <div id="myChart1" style="width:99%; max-width:99%; height:99%;">
@@ -434,18 +351,16 @@
                                 </div>
                                 <div class="tab-pane fade" id="thongKeProduct" role="tabpanel"
                                     aria-labelledby="product-tab-thongKe">
-                                    <div class="container">
+                                    <div class="container overflow-y-scroll overflow-x-hidden" style="max-height: 66vh">
                                         <div class="row mx-lg-5 mb-0 d-flex justify-content-center align-items-end">
-                                            <div class="col canvas-container p-3 py-4"
-                                                style="background-color: #fff0d9 !important;">
+                                            <div class="col canvas-container p-3 py-4">
                                                 <select class="form-select mb-3" id="select-voucher-period"
                                                     aria-label="Select period">
                                                 </select>
                                                 <canvas id="myChart" class="mt-0"></canvas>
                                                 <h5 class="text-center">Top 10 most used vouchers</h5>
                                             </div>
-                                            <div class="col canvas-container px-3"
-                                                style="background-color: #fff0d9 !important;">
+                                            <div class="col canvas-container p-3 py-4">
                                                 <canvas id="monthVoucherChart" class="mt-0"></canvas>
                                                 <h5 class="text-center">Vouchers used by months</h5>
                                             </div>
@@ -488,7 +403,9 @@
         </div>
     </div>
 
-    <modalSection>
+    <!-- footer -->
+    <footer class="fixed-bottom" th:insert="~{swappa/assests/html/layout/_layout::footer}"></footer>
+    <div>
         <!--==================================================MODAL ACCOUNT INFORMATION==============================================-->
         <!--insert modal Account Information-->
         <div class="modal fade modal-lg" id="exampleModalToggle" aria-hidden="true"
@@ -1053,10 +970,8 @@
             </div>
         </div>
         <!--=========================================================================================================================-->
-    </modalSection>
+    </div>
 
-    <!-- footer -->
-    <footer th:replace="~{swappa/assests/html/layout/_layoutAdmin::footer}"></footer>
     <!-- script -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>

@@ -281,7 +281,7 @@ $(document).ready(async function () {
                                     </div>
                                 </div>
                                 <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                    <div class="text-white fw-bolder">Mua ngay</div>
+                                    <div class="text-white fw-bolder">Buy now</div>
                                 </div>
                             </div>
                             
