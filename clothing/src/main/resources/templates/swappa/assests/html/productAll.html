@@ -152,25 +152,25 @@
                                     <div>
                                         <ul>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory()"> All Product </a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory()" id="allProduct"> All Product </a>
                                             </li>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(1)"> Outerwear </a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory('Outerwear')"> Outerwear </a>
                                             </li>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(2)"> Tops </a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory('Tops')"> Tops </a>
                                             </li>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(3)">Bottoms</a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory('Bottoms')">Bottoms</a>
                                             </li>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(4)">Jewels & Accessories</a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory('Jewels & Accessories')">Jewels & Accessories</a>
                                             </li>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(5)">Headwear</a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory('Headwear')">Headwear</a>
                                             </li>
                                             <li class="p-0">
-                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory(6)">Footwear</a>
+                                                <a class="btn border-0 pb-2 button-category" onclick="fiterByCategory('Footwear')">Footwear</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -229,6 +229,27 @@
                                             $('.button-category').click(function() {
                                                 $('.button-category').removeClass("text-danger");
                                                 $(this).addClass("text-danger");
+                                            });
+
+                                            $('.button-category').each(function() {
+                                                if (categoryType == '' && type == null) {
+                                                    console.log("ecu")
+                                                    $('#allProduct').addClass("text-danger");
+                                                }
+                                                if(categoryType == ""){
+                                                    if ($(this).text().trim() === type) {
+                                                        $(this).addClass("text-danger");
+                                                    } else {
+                                                        $(this).removeClass("text-danger");
+                                                    }
+                                                }
+                                                else{
+                                                    if ($(this).text().trim() === categoryType) {
+                                                        $(this).addClass("text-danger");
+                                                    }else {
+                                                        $(this).removeClass("text-danger");
+                                                    }
+                                                }
                                             });
                                         })
                                     </script>
@@ -290,7 +311,7 @@
                                                 data-product-sale-on = ${(product.getSale()!= null ? '1' : '0')},
                                                 onclick='getIdSanPham(this.getAttribute(&quot;data-product-id&quot;), this.getAttribute(&quot;data-product-name&quot;), this.getAttribute(&quot;data-product-sale&quot;), this.getAttribute(&quot;data-product-price&quot;), this.getAttribute(&quot;data-product-Anh&quot;), this.getAttribute(&quot;data-product-sale-on&quot;))'"
                                                 style="background-color: rgb(224, 150, 150); border-color: rgba(0,0,0,0)" >
-                                        Mua ngay
+                                        Buy now
                                     </button>
                                     <div style="display:none;" id="activeLogin" th:text="${activeLogin}"></div>
                                 </div>
@@ -311,92 +332,7 @@
 <script src="/assests/js/jsAll.js"></script>
 <script th:src="@{/assests/js/searchRcmd.js}"></script>
 <script th:src="@{/assests/js/Product.js}"></script>
-<script>
-    $(document).ready(function () {
-        $('#navbar_search_input').on('keydown', function (e) { // Sử dụng sự kiện keydown thay vì keypress
-            if (e.which == 13) { // Khi nhấn phím Enter
-                searchProducts();
-            }
-        });
-
-        function searchProducts() {
-            var keyword = $('#navbar_search_input').val();
-            var type = $('#select_loai').val();
-
-            $.ajax({
-                url: '/api/search',
-                type: 'POST',
-                data: {
-                    keyword: keyword,
-                    type: type
-                },
-                success: function (response) {
-                    if (response.success) {
-                        console.log('Gọi API thành công:', response.data);
-                        sessionStorage.setItem('searchResults', JSON.stringify(response.data));
-                        window.location.href = '/search-Product';
-                    } else {
-                        console.log('Gọi API thất bại:', response.message);
-                    }
-                }
-                ,
-                error: function (xhr, status, error) {
-                    console.log('Lỗi:', error);
-                }
-            });
-        }
-    });
-</script>
-<script>
-    $(document).ready(function() {
-        var searchResults = sessionStorage.getItem('searchResults');
-        if (searchResults) {
-            searchResults = JSON.parse(searchResults);
-            if (searchResults.length > 0) {
-                displayProducts(searchResults);
-            } else {
-                $('#search-results').html('<div class="col-12 alert alert-warning" role="alert"><div>Không tìm thấy sản phẩm !</div></div>');
-            }
-            sessionStorage.removeItem('searchResults');
-        }
-    });
-    function displayProducts(products) {
-        var resultsContainer = $('#search-results');
-        resultsContainer.empty();
-        products.forEach(function(product) {
-            var productHtml = `
-                <div class="col-lg-2 col-md-3 col-sm-4">
-                    <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                        <a href="/product?slug_url=${product.slug}" class="stretched-link">
-                            <div style="position: absolute">
-                                ${product.sale ? `<span class="badge text-bg-danger">${product.sale.salePercent}%</span>` : ''}
-                            </div>
-                            <div class="img-container">
-                                <img src="../media/${product.pictures.split(',')[0]}" class="img-fluid mt-2 mb-3" alt="">
-                            </div>
-                            <div class="w-100">
-                                <span class="d-inline-block text-truncate" style="max-width: 90%;">${product.name}</span>
-                            </div>
-                            <div class="w-100">
-                                <div class="d-flex justify-content-around">
-                                    ${product.sale ? `
-                                        <del>${product.price}</del>
-                                        <span style="color:#c07d4b; font-weight: bolder">
-                                            ${product.price - (product.sale.salePercent / 100 * product.price)}
-                                        </span>` : `${product.price}`}
-                                </div>
-                            </div>
-                            <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                <div class="text-white fw-bolder">Mua ngay</div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            `;
-            resultsContainer.append(productHtml);
-        });
-    }
-</script>
 <script src="/assests/js/animation_add_Item.js"></script>
+<script th:src="@{/assests/js/SearchProduct.js}"></script>
 </body>
 </html>
