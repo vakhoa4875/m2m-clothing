@@ -408,6 +408,12 @@
 <script th:src="@{/assests/js/jsAll.js}"></script>
 <script th:src="@{/assests/js/searchRcmd.js}"></script>
 <script>
+    $(document).ready(async function(){
+        var tennguoidung = sessionStorage.getItem("tendn");
+        if (tennguoidung == null){
+            sessionStorage.setItem("tendn","")
+        }
+    })
     var duongdan  = sessionStorage.getItem("duongdan");
     if(duongdan != null){
         window.location.href = sessionStorage.getItem("duongdan");

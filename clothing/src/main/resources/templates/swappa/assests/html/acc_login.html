@@ -64,7 +64,7 @@
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <button type="submit"
+                                    <button type="submit" id="btnlogin"
                                             class="btn btn-success btn-block px-5 mb-4 rounded-5 ms-3">Login
                                     </button>
                                 </div>
@@ -102,4 +102,9 @@
 <script src="/assests/js/script.js"></script>
 <script src="/assests/js/jsAll.js"></script>
 <script th:src="@{/assests/js/SearchProduct.js}"></script>
+<script>
+    $('#btnlogin').click(function () {
+        sessionStorage.setItem("tendn", $('#inputMail').val());
+    })
+</script>
 </html>

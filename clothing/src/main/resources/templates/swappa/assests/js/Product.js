@@ -1,5 +1,6 @@
 $(document).ready(async function(){
     await loadAllProduct()
+    layTongSoLuong();
 })
 let productsByCategory = [];
 let products = [];
@@ -150,9 +151,6 @@ function displayProducts(products) {
                                         </span>` : `$${product.price}`}
                                 </div>
                             </div>
-                            <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                <div class="text-white fw-bolder">Buy now</div>
-                            </div>
                         </a>
                 <button class="rounded-bottom-3 w-100 fw-bolder text-white" onclick="getIdSanPham(${product.productId}, '${product.name}', '${product.sale ? (product.price - (product.sale.salePercent / 100 * product.price)).toFixed(2) : (product.price)} ', '${product.price}','../media/${product.pictures.split(',')[0]}', '${product.sale ? "1" : "0"}')" style="background-color: rgb(224, 150, 150); border-color: rgba(0,0,0,0)" >Buy Now</button>
                     </div>
@@ -163,14 +161,11 @@ function displayProducts(products) {
 }
 
 function getIdSanPham (int,name,sale,price,anh,sale_active) {
-    console.log(sale_active)
     //hiệu ứng add item
     const product = event.target.previousElementSibling;
     const productClone = product.cloneNode(true);
     const cart = document.getElementById('cart');
-    console.log(cart)
     const productRect = product.getBoundingClientRect();
-    console.log(productRect)
     const cartRect = cart.getBoundingClientRect();
 
 
@@ -241,21 +236,21 @@ function getIdSanPham (int,name,sale,price,anh,sale_active) {
                 localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
                 window.location.href = "/giohang";
             }
-            layTongSoLuong();
         }
 
-        function layTongSoLuong() {
-            var tongsp = document.getElementById("tongSoLuongSP");
-            var tongSoLuong = 0;
-            if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
-                var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
-                for (var int = 0; int < objarray.length; int++) {
-                    tongSoLuong = objarray.length;
-                }
-            }else {
-                tongsp.textContent = tongSoLuong;
-            }
-            tongsp.textContent = tongSoLuong;
-        }
+
     }
+}
+function layTongSoLuong() {
+    var tongsp = document.getElementById("tongSoLuongSP");
+    var tongSoLuong = 0;
+    if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
+        var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+        for (var int = 0; int < objarray.length; int++) {
+            tongSoLuong = objarray.length;
+        }
+    }else {
+        tongsp.textContent = tongSoLuong;
+    }
+    tongsp.textContent = tongSoLuong;
 }

@@ -190,6 +190,7 @@
 </html>
 <script>
     $(document).ready(async function(){
+        console.log("bac")
         var tongsp = document.getElementById("tongSoLuongSP");
         var tongSoLuong = 0;
         if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
@@ -202,48 +203,48 @@
         }
         tongsp.textContent = tongSoLuong;
 
-        $('#xoathongbaooo').click(function () {
-            var id = $('#iduser').text();
-            xoathongbao(id);
-        });
-
-        var soluong = 0;
-
-        var id = $('#iduser').text();
-        $.ajax({
-            url: '/finduseridwitchNotification?id='+id,
-            type: 'GET',
-            contentType: 'application/json',
-            success: function (data) {
-                soluong = data.length;
-                $('#soluongthongbao').text(soluong)
-                // Hiển thị dữ liệu trong bảng
-                data.forEach(function (order) {
-                    $('#thongbao').append(`
-                        <div class="dropdown-item">
-                           <div>Có mã giảm giá mới!</div>
-                        </div>
-                `);
-                });
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('Error:', errorThrown);
-            }
-        });
-
-        function xoathongbao(id){
-            $.ajax({
-                url: '/deleteNotification?id='+id,
-                type: 'GET',
-                contentType: 'application/json',
-                success: function (data) {
-                    console.log("xóa thành công")
-                    window.location.href = "/trangchu";
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error('Error:', errorThrown);
-                }
-            });
-        }
+        // $('#xoathongbaooo').click(function () {
+        //     var id = $('#iduser').text();
+        //     xoathongbao(id);
+        // });
+        //
+        // var soluong = 0;
+        //
+        // var id = $('#iduser').text();
+        // $.ajax({
+        //     url: '/finduseridwitchNotification?id='+id,
+        //     type: 'GET',
+        //     contentType: 'application/json',
+        //     success: function (data) {
+        //         soluong = data.length;
+        //         $('#soluongthongbao').text(soluong)
+        //         // Hiển thị dữ liệu trong bảng
+        //         data.forEach(function (order) {
+        //             $('#thongbao').append(`
+        //                 <div class="dropdown-item">
+        //                    <div>Có mã giảm giá mới!</div>
+        //                 </div>
+        //         `);
+        //         });
+        //     },
+        //     error: function (jqXHR, textStatus, errorThrown) {
+        //         console.error('Error:', errorThrown);
+        //     }
+        // });
+        //
+        // function xoathongbao(id){
+        //     $.ajax({
+        //         url: '/deleteNotification?id='+id,
+        //         type: 'GET',
+        //         contentType: 'application/json',
+        //         success: function (data) {
+        //             console.log("xóa thành công")
+        //             window.location.href = "/trangchu";
+        //         },
+        //         error: function (jqXHR, textStatus, errorThrown) {
+        //             console.error('Error:', errorThrown);
+        //         }
+        //     });
+        // }
     })
 </script>

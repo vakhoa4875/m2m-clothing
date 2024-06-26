@@ -11,8 +11,36 @@ function compareData() {
     div.innerHTML ='';
     // Kiểm tra xem local storage có dữ liệu không
     if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
-
         var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+
+        if (objarray.length == 0){
+            var tr = document.createElement("tr");
+            var productList = document.getElementById("productList");
+            productList.innerHTML = '';
+            var div = document.getElementById("thanhtoan");
+            div.innerHTML ='';
+            var tr = document.createElement("tr");
+            tr.innerHTML = `
+                    <td colspan="6" class="text-center">
+                        <div class="alert alert-info" role="alert">
+                            There's nothing in your cart!
+                        </div>
+                    </td>
+                `;
+            document.getElementById("productList").appendChild(tr);
+
+            var thanhtoan = $('#thanhtoan');
+            var div = `<a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Checkout cart</a>`;
+            thanhtoan.append(div);
+            if (thanhtoan.length == 1){
+                thanhtoan.removeChild(1);
+            }
+
+            $('#tiengiamgia').text("$0");
+            $('.tienCanTra').text("$0");
+            $('.tienThanhToan').text("$0");
+        }
+
         // Duyệt qua tất cả các phần tử trong local storage
         for (var int = 0; int < objarray.length; int++) {
             var object = objarray[int];
@@ -598,7 +626,7 @@ btnCart.addEventListener("click", function() {
 });
 
 
-let btnBuyNow = document.getElementById("buynow");
+let btnBuyNow = document.getElementById("mualien");
 btnBuyNow.addEventListener("click",function (){
 
     const productImage = document.querySelector(`.product img[data-id="${1}"]`);
@@ -650,11 +678,12 @@ btnBuyNow.addEventListener("click",function (){
                 arrayObj.push(sanPhamMoi);
                 localStorage.setItem(dangnhap.innerText, JSON.stringify(arrayObj));
                 window.location.href = "/giohang";
+                return;
             }else {
                 var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
                 var found = false;
                 objArrya.forEach(function(obj, index) {
-                    if(sanPhamMoi.tensp === obj.tensp){
+                    if(sanPhamMoi.tensp == obj.tensp){
                         obj.soLuong++;
                         localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
                         found = true;
@@ -665,10 +694,13 @@ btnBuyNow.addEventListener("click",function (){
                 if (!found){
                     objArrya.push(sanPhamMoi);
                     localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
+                    console.log(sanPhamMoi.soLuong + "san phan chu co")
                     window.location.href = "/giohang";
+                    return;
                 }
             }
             layTongSoLuong();
+            flag = true;
         }
     })
 })
