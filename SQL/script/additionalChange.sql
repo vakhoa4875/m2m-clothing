@@ -55,7 +55,8 @@ create or alter trigger triggerOnCreateOrder
     as
 begin
     update p
-    set p.sold += i.quantity
+    set p.sold += i.quantity,
+        p.quantity -= i.quantity
     from Product p
              join inserted i on p.product_id = i.product_id
 end
@@ -108,8 +109,17 @@ begin
     group by v.voucher_id
 end
 go
---! thong ke voucher
-CREATE OR ALTER PROCEDURE GetShopDetails
+drop table if exists Cart;
+
+create table Favorite
+(
+    id int identity primary key,
+    user_id int foreign key references [user] (id),
+    product_id int foreign key references Product (product_id),
+    date_created datetime default getdate()
+)
+go
+CREATE PROCEDURE GetShopDetails
     @shop_id int
 AS
 BEGIN
@@ -136,18 +146,18 @@ BEGIN
             COUNT(od.order_detail_id) AS OrdersSoldInOneMonth
         FROM 
             [Order] o
-            JOIN Order_Detail od ON o.order_id = od.order_detail_id
+            JOIN order_detail od ON o.order_id = od.order_detail_id
         WHERE 
             o.customer_id IN (SELECT u.id FROM [user] u WHERE u.id = @shop_id)
             AND o.order_date >= DATEADD(MONTH, -1, GETDATE())
     ),
-    ShopParticipation AS (
+	    ShopParticipation AS (
         SELECT 
-            DATEDIFF(DAY, MIN(u.dob), GETDATE()) AS DaysParticipated
+             s.date_established AS DaysParticipated
         FROM 
-            [user] u
+            Shop s
         WHERE 
-            u.id = @shop_id
+            s.shop_id = @shop_id
     ),
     TotalComments AS (
         SELECT 
@@ -165,15 +175,14 @@ BEGIN
         WHERE 
             p.shop_id = @shop_id
     ),
-    TotalLikes AS (
+	    TotalLikes AS (
         SELECT 
-            SUM(p.sold) AS TotalLikes
+            COUNT(f.id) AS TotalLikes
         FROM 
-            Product p
+            Favorite f
         WHERE 
-            p.shop_id = @shop_id
+            f.product_id IN (SELECT p.product_id FROM Product p WHERE p.shop_id = @shop_id)
     )
-
     SELECT
         sd.ShopLogo,
         sd.ShopName,
@@ -194,23 +203,3 @@ BEGIN
 
 END
 GO
-
-create table Favorite
-(
-    id int identity primary key,
-    user_id int foreign key references [user] (id),
-    product_id int foreign key references Product (product_id),
-    date_created datetime default getdate()
-)
--- paypal payment
--- create or alter trigger updateOrderStatus
---     on Payment
---     after update, insert
---     as
---     begin
---         set nocount on;
---
---         update [Order]
---         set order_status
---     end
---! paypal payment

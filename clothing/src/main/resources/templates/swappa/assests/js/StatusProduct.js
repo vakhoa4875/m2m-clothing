@@ -18,39 +18,37 @@ function loadStatusProduct(){
             data.forEach(function(order) {
                 var orderDateFormatted = new Date(order.orderDate);
                 var formattedDate = `${orderDateFormatted.getDate()}/${orderDateFormatted.getMonth() + 1}/${orderDateFormatted.getFullYear()}`;
-                if(order.orderStatus === "Approved"){
-                    return;
-                }
                 $('#TableStatusUser').append(`
                     <tr>
-                                        <td class="align-middle text-center text-sm">
-                                            <div class="d-flex w-100 flex-column justify-content-center">
-                                                <h6 class="mb-0 text-sm" id="${order.orderId}">${order.orderId}</h6>
-                                            </div>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">${order.username}</span>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">${order.phoneNumber}</span>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-secondary">${order.deliveryAddress}</span></span>
-                                        </td>
-                                        <td class="align-middle text-center text-sm">
-                                            <span class="text-secondary text-xs font-weight-bold">${order.countSp}</span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-warning">${order.orderStatus}</span></span>
-                                        </td>
-                                        <td class="align-middle text-center">
-                                            <button class="btn border-0 rounded btn-outline-info btn-click-product"
-                                                    data-bs-toggle="modal" data-bs-target="#exampleModalAccpectProduct"
-                                                    onclick="getidProduct(${order.orderId})">
-                                                    <i class="fa-regular fa-circle-check"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                        <td class="align-middle text-center text-sm">
+                            <div class="d-flex w-100 flex-column justify-content-center">
+                                <h6 class="mb-0 text-sm" id="${order.orderId}">${order.orderId}</h6>
+                            </div>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                            <span class="text-secondary text-xs font-weight-bold">${order.username}</span>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                            <span class="text-secondary text-xs font-weight-bold">${order.phoneNumber}</span>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                            <span class="text-secondary text-xs font-weight-bold">${order.deliveryAddress}</span>
+                        </td>
+                        <td class="align-middle text-center text-sm">
+                            <span class="text-secondary text-xs font-weight-bold">${order.countSp}</span>
+                        </td>
+                        <td class="align-middle text-center">
+                            <span class="text-secondary text-xs font-weight-bold"><span class="badge text-bg-warning">${order.orderStatus}</span></span>
+                        </td>
+                        <td class="align-middle text-center">
+                            <button class="btn border-0 rounded btn-success btn-click-product"
+                                    data-bs-toggle="modal" data-bs-target="#exampleModalAccpectProduct"
+                                    onclick="getIdProduct(${order.orderId}, '${order.paymentMethod}')"
+                                    ${order.orderStatus === "Need approved" ? '' : 'disabled'}>
+                                    <i class="fa-regular fa-circle-check"></i> Approve
+                            </button>
+                        </td>
+                    </tr>
                 `);
             });
         },
@@ -62,19 +60,33 @@ function loadStatusProduct(){
 
 }
 
-var idprocudt = '';
+let updatedOrderPayload = {
+    idProduct: undefined,
+    OrderStatus: undefined
+}
+const orderStatus = {
+    needPayment: "Need payment",
+    delivering: "Delivering",
+    approved: "Approved",
+    canceled: "Canceled",
+    denied: "Denied"
+}
 
-function getidProduct(id){
-    $('#idProduct').text(id);
-    idprocudt = id;
+function getIdProduct(id, paymentMethod){
+    this.updatedOrderPayload = {
+        idProduct: id,
+        OrderStatus: paymentMethod === 'Cod' ? orderStatus.delivering : orderStatus.needPayment
+    }
 }
 
 function updateStatus(){
     $.ajax({
-        url: "/api-product/updateOderUser?idProduct="+idprocudt+"&OrderStatus="+"Need payment",
+        url: "/api-product/updateOrderUser",
         type: 'Get',
+        data: this.updatedOrderPayload,
         contentType: 'application/json',
         success: function(data) {
+            console.log(updatedOrderPayload);
             Swal.fire({
                 title: 'Order approved successfully!',
                 icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'

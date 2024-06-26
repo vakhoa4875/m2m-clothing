@@ -179,10 +179,6 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public String submitLogin(Account accountRequest, Model model) throws SQLException {
-//        var loginUserDto = new UserDto();
-//        loginUserDto.setEmail(accountRequest.getEmail());
-//        loginUserDto.setUsername(accountRequest.getUsername());
-//        loginUserDto.setPassword(accountRequest.getHashedPassword());
         String email = accountRequest.getEmail();
         String password = accountRequest.getHashedPassword();
 
@@ -209,7 +205,7 @@ public class AccountServiceImpl implements AccountService {
         session.setAttribute("iduser", existingAccount.getUserId());
         session.setAttribute("email", existingAccount.getEmail());
         PasswordEncoderUtil.email = accountRequest.getEmail();
-        return "swappa/assests/html/trangchu";
+        return "redirect:/";
     }
 
     @Override
