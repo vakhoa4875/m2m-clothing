@@ -1,5 +1,9 @@
 $(document).ready(async function () {
     let listProductForShop =[];
+    let currentPage = 1; // page hiện tại
+    let perPage = 12; // item number in page
+    let totalPage = 0;
+    let perProducts = [];
     const getShopByUserId = async () => {
         let shopInfoContainer = $('#shopInfoContainer');
         let shopId = localStorage.getItem('shopId');
@@ -91,7 +95,7 @@ $(document).ready(async function () {
                     let html = `
                 <div style="margin-left: 10px">
                     <div class="active-category-hover" style="margin-bottom: 10px">
-                        <a href="#" class="d-inline-block text-truncate text-decoration-none" id="${e.category_id}" data-id="${e.category_id}">
+                        <a href="#" class="d-inline-block text-truncate text-decoration-none text-dark button-category" id="${e.category_id} " data-id="${e.category_id}">
                             ${e.category_name}
                         </a>
                     </div>
@@ -104,6 +108,9 @@ $(document).ready(async function () {
                     event.preventDefault();
                     let categoryId = $(this).data('id');
                     getProductByCategoryAndShopId(categoryId);
+
+                    $('.button-category').removeClass('text-danger').addClass('text-dark');
+                    $(this).removeClass('text-dark').addClass('text-danger');
                 });
                 // Tự động click vào thẻ <a> đầu tiên sau khi các thẻ được thêm vào DOM
                 const firstCategory = $('#categoryShopContainer a').first();
@@ -139,23 +146,34 @@ $(document).ready(async function () {
             })
             .then(response => {
                 getProductByCategoryAndShopIdContainer.html('');
-                let responseData = response.data.data;
+                // let responseData = response.data.data;
                 listProductForShop = response.data.data;
-                displayProducts(responseData);
+                totalPage = Math.ceil(listProductForShop.length / perPage);
+                updatePage();
             })
             .catch(error => {
                 alert(error);
             });
     };
-
-// Sử dụng hàm mới
-
-    function filterMostPurchasedProducts() {
-        let sortedProducts = listProductForShop.sort((a, b) => b.rateCount - a.rateCount);
-        let mostPurchasedProducts = sortedProducts.slice(0, 12);
-        console.log(sortedProducts)
-        displayProducts(sortedProducts);
+    function updatePage(){
+        let start = (currentPage - 1) * perPage;
+        let end = start + perPage;
+        perProducts = listProductForShop.slice(start, end);
+        $("#page-info-shop").text(currentPage + "/" + totalPage);
+        displayProducts(perProducts);
     }
+
+    //handler event button
+    $('.button').click(function(){
+        $('.button').removeClass("btn-danger");
+        $(this).addClass("btn-danger");
+    });
+    $('#handlerPageNumberPrev').click(function() {
+        handlerPageNumberPrev();
+    });
+    $('#handlerPageNumberNext').click(function() {
+        handlerPageNumberNext();
+    });
     $('#moinhat').click(function() {
         fiterSanPhamPhoBienNhat();
     });
@@ -168,13 +186,38 @@ $(document).ready(async function () {
     $('#selectSort').change(function (){
         handleSelectChange(this);
     })
+
+    //handler function pagination
+    function handlerPageNumberNext (){
+        if(totalPage !== currentPage){
+            currentPage += 1;
+        }
+        updatePage();
+    }
+    function handlerPageNumberPrev (){
+        if(currentPage !== 1){
+            currentPage -= 1;
+        }
+        updatePage();
+    }
+
+    //handler function Sort_products
+    function culculateFinalPrice(product){
+        if(product.sale != null){
+            return product.price - (product.sale.salePercent / 100 * product.price)
+        }
+        return product.price
+    }
+    function filterMostPurchasedProducts() {
+        let sortedProducts = listProductForShop.sort((a, b) => b.rateCount - a.rateCount);
+        let mostPurchasedProducts = sortedProducts.slice(0, 12);
+        displayProducts(mostPurchasedProducts);
+    }
     function filterBestSellingProducts() {
         let sortedBestSellingProducts = listProductForShop.sort((a, b) => b.sold - a.sold);
         let bestSellingProducts = sortedBestSellingProducts.slice(0, 12);
-        console.log(sortedBestSellingProducts)
-        displayProducts(sortedBestSellingProducts);
+        displayProducts(bestSellingProducts);
     }
-
     function handleSelectChange(selectElement) {
         var selectedOption = selectElement.value;
         if (selectedOption === 'lowToHigh') {
@@ -184,60 +227,64 @@ $(document).ready(async function () {
         }
     }
     function filterProductsByPriceLowToHigh() {
-        let sortedProducts = listProductForShop.sort((a, b) => a.price - b.price);
-        displayProducts(sortedProducts);
+        let sortedProducts = listProductForShop.sort((a, b) => culculateFinalPrice(a) - culculateFinalPrice(b));
+        let sortedProductss = sortedProducts.slice(0, 12);
+        displayProducts(sortedProductss);
     }
     function filterProductsByPriceHighToLow() {
-        let sortedProducts = listProductForShop.sort((a, b) => b.price - a.price);
-        displayProducts(sortedProducts);
+        let sortedProducts = listProductForShop.sort((a, b) => culculateFinalPrice(b) - culculateFinalPrice(a));
+        let sortedProductss = sortedProducts.slice(0, 12);
+        displayProducts(sortedProductss);
     }
-
     function fiterSanPhamPhoBienNhat(){
         let sortedProducts = listProductForShop.sort((a, b) => b.productId - a.productId);
         let newestProducts = sortedProducts.slice(0, 12);
         console.log(sortedProducts)
-        displayProducts(sortedProducts);
+        displayProducts(newestProducts);
     }
 
+    // function render products
     function displayProducts(products) {
         let resultsContainer = $('#getProductByCategoryAndShopIdContainer');
         resultsContainer.empty();
-        console.log(123)
         products.forEach(function(product,index) {
-            console.log(index)
             let badgeHtml = '';
             if (index < 6) {
-                badgeHtml = `<span class="badge text-bg-danger text-end">Top ${index + 1}</span>`;
+                badgeHtml = `<span class="badge text-bg-warning text-end">Top ${index + 1}</span>`;
             }
             let productHtml = `
                 <div class="col-lg-2 col-md-3 col-sm-4">
                     <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                        <a href="/product?slug_url=${product.slug}" class="stretched-link">
-                            <div style="position: absolute">
-                                ${product.sale ? `<span class="badge text-bg-danger">${product.sale.salePercent}%</span>` : ''}
-                               
-                            </div>
-                            <div  class="float-end">
-                                ${badgeHtml}
-                            </div>
-                            <div class="img-container">
-                                <img src="../media/${product.pictures.split(',')[0]}" class="img-fluid mt-2 mb-3" alt="">
-                            </div>
-                            <div class="w-100">
-                                <span class="d-inline-block text-truncate" style="max-width: 90%;">${product.productName}</span>
-                            </div>
-                            <div class="w-100">
-                                <div class="d-flex justify-content-around">
-                                    ${product.sale ? `
-                                        <del>${product.price}</del>
-                                        <span style="color:#c07d4b; font-weight: bolder">
-                                            ${product.price - (product.sale.salePercent / 100 * product.price)}
-                                        </span>` : `${product.price}`}
+                        <a href="/product?slug_url=${product.slugUrl}" class="stretched-link">
+                        
+                            <div style="position: relative">
+                                <div style="position: absolute; ">
+                                    ${product.sale ? `<span class="badge text-bg-danger">${product.sale.salePercent}%</span>` : ''}
+                                    
+                                </div>
+                                <div style="position: absolute; top: 0px; right: 0px;">
+                                    ${badgeHtml}
+                                </div>
+                                <div class="img-container">
+                                    <img src="../media/${product.pictures.split(',')[0]}" class="img-fluid mt-2 mb-3" alt="">
+                                </div>
+                                <div class="w-100">
+                                    <span class="d-inline-block text-truncate" style="max-width: 90%;">${product.productName}</span>
+                                </div>
+                                <div class="w-100">
+                                    <div class="d-flex justify-content-around">
+                                        ${product.sale ? `
+                                            <del>${product.price}</del>
+                                            <span style="color:#c07d4b; font-weight: bolder">
+                                                ${product.price - (product.sale.salePercent / 100 * product.price)}
+                                            </span>` : `${product.price}`}
+                                    </div>
+                                </div>
+                                <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
+                                    <div class="text-white fw-bolder">Buy now</div>
                                 </div>
                             </div>
-                            <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                <div class="text-white fw-bolder">Mua ngay</div>
-                            </div>
+                            
                         </a>
                     </div>
                 </div>
