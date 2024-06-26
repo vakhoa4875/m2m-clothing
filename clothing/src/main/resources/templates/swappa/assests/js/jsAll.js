@@ -59,22 +59,22 @@ function compareData() {
         }
         var div = document.createElement("a");
             div.innerHTML = `
-             <a href="/thanhtoan" class="btn btn-outline-danger"  id="creategiohang" >Thành toán hóa đơn</a>
+             <a href="/thanhtoan" class="btn btn-outline-danger"  id="creategiohang" >Checkout cart</a>
             `;
         document.getElementById("thanhtoan").appendChild(div);
     }else{
         Swal.fire({
-            title: 'Thông Báo từ hệ thống',
-            text: 'Không còn gì trong giỏ hàng của bạn.',
+            title: 'Notifications from the system',
+            text: 'There nothing in your cart',
             icon: 'info', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-            confirmButtonText: 'Xác nhận',
+            confirmButtonText: 'Confirm',
             allowOutsideClick: false
         })
         var tr = document.createElement("tr");
         tr.innerHTML = `
                     <td colspan="6" class="text-center">
                         <div class="alert alert-info" role="alert">
-                            Giỏ hàng không có gì!
+                            The shopping cart is empty!
                         </div>
                     </td>
                 `;
@@ -82,7 +82,7 @@ function compareData() {
 
         var div = document.createElement("a");
         div.innerHTML = `
-                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
+                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Checkout cart</a>
             `;
         document.getElementById("thanhtoan").appendChild(div);
 
@@ -198,10 +198,10 @@ function xoamSoLuong(int) {
     var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
     if(objArrya.length === 1){
         Swal.fire({
-            title: 'Thông Báo từ hệ thống',
-            text: 'Không còn gì trong giỏ hàng của bạn.',
+            title: 'Notifications from the system',
+            text: 'There nothing in your cart',
             icon: 'info', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-            confirmButtonText: 'Xác nhận',
+            confirmButtonText: 'Confirm',
             allowOutsideClick: false
         }).then((result) => {
             var tr = document.createElement("tr");
@@ -213,7 +213,7 @@ function xoamSoLuong(int) {
             tr.innerHTML = `
                     <td colspan="6" class="text-center">
                         <div class="alert alert-info" role="alert">
-                            Giỏ hàng không có gì!
+                            There's nothing in your cart!
                         </div>
                     </td>
                 `;
@@ -221,7 +221,7 @@ function xoamSoLuong(int) {
 
             var div = document.createElement("a");
             div.innerHTML = `
-                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
+                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Checkout cart</a>
             `;
             document.getElementById("thanhtoan").appendChild(div);
             layTongSoLuong();
@@ -248,10 +248,10 @@ function xoaHetGioHang() {
     localStorage.removeItem(sessionStorage.getItem("tendn"));
     if(localStorage.getItem(sessionStorage.getItem("tendn")) === null){
         Swal.fire({
-            title: 'Thông Báo từ hệ thống',
-            text: 'Không còn gì trong giỏ hàng của bạn.',
+            title: 'Notifications from the system',
+            text: 'There nothing in your cart!',
             icon: 'info', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-            confirmButtonText: 'Xác nhận',
+            confirmButtonText: 'Confirm',
             allowOutsideClick: false
         }).then((result) => {
             var productList = document.getElementById("productList");
@@ -262,7 +262,7 @@ function xoaHetGioHang() {
             tr.innerHTML = `
                     <td colspan="6" class="text-center">
                         <div class="alert alert-info" role="alert">
-                            Giỏ hàng không có gì!
+                            There's nothing in your cart!
                         </div>
                     </td>
                 `;
@@ -270,7 +270,7 @@ function xoaHetGioHang() {
 
             var div = document.createElement("a");
             div.innerHTML = `
-                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
+                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Checkout cart</a>
             `;
             document.getElementById("thanhtoan").appendChild(div);
             layTongSoLuong();
@@ -389,7 +389,7 @@ $(document).ready(function () {
                                             </div>
                                             <div class="">
                                                 <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                                    <div class="text-white fw-bolder ">Mua ngay</div>
+                                                    <div class="text-white fw-bolder ">Buy Now</div>
                                                 </div>
                                             </div>
                                         </div>
@@ -641,7 +641,7 @@ btnBuyNow.addEventListener("click",function (){
                 tensp: tensp.textContent,
                 linkanh: srcAnh,
                 idproductt : idproductstring,
-                soLuong: 1
+                soLuong: 0
             };
 
             var arrayObj = []

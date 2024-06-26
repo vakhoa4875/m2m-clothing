@@ -45,6 +45,7 @@ public class HomeController {
         List<ProductM> list = productService.findAll();
         model.addAttribute("products", list);
         model.addAttribute("iduser", session.getAttribute("iduser"));
+        model.addAttribute("activeLogin",session.getAttribute("email"));
         return "swappa/assests/html/trangchu";
     }
 

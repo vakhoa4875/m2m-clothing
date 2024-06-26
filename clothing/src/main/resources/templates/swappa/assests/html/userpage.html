@@ -506,7 +506,22 @@
                 searchProducts();
             }
         });
+        getSoLuongGioHang();
     });
+
+    function getSoLuongGioHang(){
+        var tongsp = document.getElementById("tongSoLuongSP");
+        var tongSoLuong = 0;
+        if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
+            var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+            for (var int = 0; int < objarray.length; int++) {
+                tongSoLuong = objarray.length;
+            }
+        }else {
+            tongsp.textContent = tongSoLuong;
+        }
+        tongsp.textContent = tongSoLuong;
+    }
 
     function fetchVouchers() {
         $.ajax({
@@ -690,10 +705,12 @@
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
+                sessionStorage.setItem("tendn","")
                 window.location.href = '/account/logout';
             }
         });
     }
+
 </script>
 <script src="/assests/js/FavoriteProduct.js"></script>
 </body>

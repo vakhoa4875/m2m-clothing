@@ -73,7 +73,7 @@
                                         </div>
                                     </div>
                                     <div class="text-center">
-                                        <button type="submit"
+                                        <button id="btnlogin" type="submit"
                                                 class="btn btn-success btn-block px-5 mb-4 rounded-5 ms-3">Login
                                         </button>
                                     </div>
@@ -113,7 +113,7 @@
 <script src="/node_modules/angular/angular.route.min.js"></script>
 <script src="/assests/js/app.js"></script>
 <script src="/assests/js/script.js"></script>
-<script src="/assests/js/jsAll.js"></script>
+<!--<script src="/assests/js/jsAll.js"></script>-->
 <script>
     $(document).ready(function () {
         $('#navbar_search_input').on('keydown', function (e) {
@@ -145,6 +145,11 @@
                 }
             });
         }
+
+    //     cai nay check dang nhap vui long khong xoa
+        $('#btnlogin').click(function () {
+            sessionStorage.setItem("tendn", $('#inputMail').val());
+        })
     });
 </script>
 </html>

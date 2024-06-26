@@ -44,7 +44,7 @@
                     <div class="d-flex gap-3">
                         <ul class="navbar-nav" role="presentation">
                             <li class="nav-item">
-                                <a class="navbar-brand d-block text-center pt-2" href="/trangchu">
+                                <a class="navbar-brand d-block text-center pt-2" href="/">
                                     <img class="img-fluid"
                                          th:src="@{../assests/images/mini-logo-white.png}"
                                          style="height:50px; margin: auto;" alt="Bootstrap">
@@ -103,6 +103,8 @@
                                 </div>
                             </div>
                         </div>
+                        <p id="email" th:text="${activeLogin}" style="display: none"></p>
+                        <p id="iduser" th:text="${iduser}" style="display: none"></p>
                         <ul class="navbar-nav" role="presentation">
                             <li class="d-flex align-items-center justify-content-center">
                                 <a href="/vouchers">
@@ -128,23 +130,12 @@
                                 </a>
                             </li>
                             <li class="ms-3 d-flex align-items-center justify-content-center dropdown">
-                                <a href="" class="border border-0 position-relative" data-toggle="dropdown"
+                                <div class="border border-0 position-relative" data-toggle="dropdown"
                                    style="background-color: rgb(18,17,13) !important;">
                                     <i class="fa-regular fa-bell" style="color: white"></i>
-                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                          id="soluongthongbao">
-                                                  0
-                                          </span>
-                                </a>
-                                <div class="dropdown-menu" style="top: 35px">
-                                    <div id="thongbao"></div>
-                                </div>
-                                <div class="dropdown-item">
-                                    <div class="text-center">
-                                        <a href="" id="xoathongbaooo">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </a>
-                                    </div>
+                                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="soluongthongbao">
+                                              0
+                                      </span>
                                 </div>
                             </li>
                         </ul>
@@ -197,3 +188,62 @@
 </body>
 
 </html>
+<script>
+    $(document).ready(async function(){
+        var tongsp = document.getElementById("tongSoLuongSP");
+        var tongSoLuong = 0;
+        if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
+            var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+            for (var int = 0; int < objarray.length; int++) {
+                tongSoLuong = objarray.length;
+            }
+        }else {
+            tongsp.textContent = tongSoLuong;
+        }
+        tongsp.textContent = tongSoLuong;
+
+        $('#xoathongbaooo').click(function () {
+            var id = $('#iduser').text();
+            xoathongbao(id);
+        });
+
+        var soluong = 0;
+
+        var id = $('#iduser').text();
+        $.ajax({
+            url: '/finduseridwitchNotification?id='+id,
+            type: 'GET',
+            contentType: 'application/json',
+            success: function (data) {
+                soluong = data.length;
+                $('#soluongthongbao').text(soluong)
+                // Hiển thị dữ liệu trong bảng
+                data.forEach(function (order) {
+                    $('#thongbao').append(`
+                        <div class="dropdown-item">
+                           <div>Có mã giảm giá mới!</div>
+                        </div>
+                `);
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.error('Error:', errorThrown);
+            }
+        });
+
+        function xoathongbao(id){
+            $.ajax({
+                url: '/deleteNotification?id='+id,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    console.log("xóa thành công")
+                    window.location.href = "/trangchu";
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        }
+    })
+</script>

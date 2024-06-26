@@ -104,13 +104,13 @@
                                         <th scope="col">
                                             <div class="ms-4">
 <!--                                                <input class="form-check-input" type="checkbox" id="checkboxNoLabel" value="" aria-label="...">-->
-                                                Sản phẩm
+                                                List of products
                                             </div>
                                             
                                         </th>
-                                        <th scope="col">Thành tiền</th>
-                                        <th scope="col">Số lượng</th>
-                                        <th scope="col">Tổng tiền</th>
+                                        <th scope="col">Price</th>
+                                        <th scope="col">Quantity</th>
+                                        <th scope="col">Total payment</th>
                                         <th scope="col"></th>
                                       </tr>
                                     </thead>
@@ -161,7 +161,7 @@
                                         <div class="col-md-7 col-sm-12">
                                         </div>
                                         <div class="col-md-5 col-sm-12">
-                                            <span class="" style="padding-left: 65px;">Tổng số tiền cần thanh toán :
+                                            <span class="" style="padding-left: 65px;">Total payment amount :
                                                 <span class="fw-bolder tienThanhToan"
                                                     style="color: rgb(251, 67, 67);"></span></span>
                                         </div>
@@ -181,7 +181,7 @@
                                 <!-- Button trigger modal voucher -->
                                 <button type="button" id="btnvoucherModal" class="btn btn-primary rounded"
                                     data-bs-toggle="modal" data-bs-target="#voucherModal">
-                                    Mã giảm giá
+                                    Voucher
                                 </button>
 
 
@@ -215,15 +215,15 @@
                             <ul class="list-group ">
                                 <li class="list-group-item">
                                     <div class="text-center fw-bold">
-                                        Thông tin giỏ hàng
+                                        Shopping cart information
                                     </div>
                                 </li>
                                 <li class="list-group-item">
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6">
-                                            <span>Số tiền cần trả : </span> <br>
-                                            <span>Số tiền đã áp dụng mã giảm giá : </span> <br>
-                                            <span>Tổng số tiền cần thành toán là : </span>
+                                            <span>Total cost of goods : </span> <br>
+                                            <span>Discount money : </span> <br>
+                                            <span>Total payment : </span>
                                         </div>
                                         <div class="col-md-6 col-sm-6 d-flex flex-column">
                                             <span class="ms-5 w-25 tienCanTra"></span>
@@ -236,8 +236,7 @@
                                 </li>
                                 <li class="list-group-item">
                                     <div class="d-flex ">
-                                        <a href="#" class="btn btn-outline-primary " onclick="xoaHetGioHang()">Hủy đơn
-                                            hàng</a>
+                                        <a href="#" class="btn btn-outline-primary " onclick="xoaHetGioHang()">Cancel order</a>
                                         <div id="thanhtoan" class="ms-3">
 
                                         </div>

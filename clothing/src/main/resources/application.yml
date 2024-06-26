@@ -5,7 +5,7 @@ spring:
     name: clothing
   datasource:
     driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
-    password: root
+    password: Root123@
     url: jdbc:sqlserver://localhost:1433;databaseName=m2m_clothing;encrypt=false;trustServerCertificate=true;
     username: sa
   mail:
@@ -24,8 +24,8 @@ spring:
       client:
         registration:
           google:
-            client-id:
-            client-secret:
+            client-id: 321877704749-2v71bd2jvjvhg1qs8ntnlokcbv3qb4el.apps.googleusercontent.com
+            client-secret: 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
             scope:
               - email
               - profile

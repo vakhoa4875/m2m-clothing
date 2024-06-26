@@ -1,7 +1,14 @@
-var dangnhap = sessionStorage.getItem("tendn");
-var activeLogin = $('#activeLogin').text();
+
 
 function getIdSanPham (int,name,sale,price,anh,sale_active) {
+
+    console.log(int)
+    console.log(name)
+    console.log(sale)
+    console.log(price)
+    console.log(anh)
+    console.log(sale)
+    console.log(sale_active)
 
     //hiệu ứng add item
     const product = event.target.previousElementSibling;
@@ -21,78 +28,78 @@ function getIdSanPham (int,name,sale,price,anh,sale_active) {
         productClone.style.opacity = '0';
 
     });
-
-    let flag = false;
-    productClone.addEventListener('transitionend', () => {
-        if (!flag) { //dùng để check và cho hàm này được hoạt động 1 lần duy nhất(vì hàm hoạt động 2 lần)
-            addItem();
-            flag = true;
-        }
-    });
-
-    function addItem(){
-        if(dangnhap == "" || activeLogin == ""){
-            alert("Có vẻ như bạn chưa đăng nhập, vui lòng đăng nhập!");
-            window.location.href = "/loginacount";
-        }
-
-        if (sale_active == "1"){
-            var sanPhamMoi = {
-                gia: parseFloat(sale),
-                tensp: name,
-                linkanh: anh,
-                idproductt : int,
-                soLuong: 1
-            };
-        }else {
-            var sanPhamMoi = {
-                gia: parseFloat(price),
-                tensp: name,
-                linkanh: anh,
-                idproductt : int,
-                soLuong: 1
-            };
-        }
-
-        var arrayObj = []
-
-        if(localStorage.getItem(sessionStorage.getItem("tendn")) == null){
-            arrayObj.push(sanPhamMoi);
-            localStorage.setItem(activeLogin, JSON.stringify(arrayObj));
-            window.location.href = "/giohang";
-        }else {
-            var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
-            var found = false;
-            objArrya.forEach(function(obj, index) {
-                if(sanPhamMoi.tensp === obj.tensp){
-                    obj.soLuong++;
-                    localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
-                    found = true;
-                    window.location.href = "/giohang";
-                    return;
-                }
-            });
-            if (!found){
-                objArrya.push(sanPhamMoi);
-                localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
-                window.location.href = "/giohang";
-            }
-            layTongSoLuong();
-        }
-
-        function layTongSoLuong() {
-            var tongsp = document.getElementById("tongSoLuongSP");
-            var tongSoLuong = 0;
-            if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
-                var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
-                for (var int = 0; int < objarray.length; int++) {
-                    tongSoLuong = objarray.length;
-                }
-            }else {
-                tongsp.textContent = tongSoLuong;
-            }
-            tongsp.textContent = tongSoLuong;
-        }
-    }
+    //
+    // let flag = false;
+    // productClone.addEventListener('transitionend', () => {
+    //     if (!flag) { //dùng để check và cho hàm này được hoạt động 1 lần duy nhất(vì hàm hoạt động 2 lần)
+    //         addItem();
+    //         flag = true;
+    //     }
+    // });
+    //
+    // function addItem(){
+    //     if(dangnhap == "" || activeLogin == ""){
+    //         alert("Có vẻ như bạn chưa đăng nhập, vui lòng đăng nhập!");
+    //         window.location.href = "/loginacount";
+    //     }
+    //
+    //     if (sale_active == "1"){
+    //         var sanPhamMoi = {
+    //             gia: parseFloat(sale),
+    //             tensp: name,
+    //             linkanh: anh,
+    //             idproductt : int,
+    //             soLuong: 1
+    //         };
+    //     }else {
+    //         var sanPhamMoi = {
+    //             gia: parseFloat(price),
+    //             tensp: name,
+    //             linkanh: anh,
+    //             idproductt : int,
+    //             soLuong: 1
+    //         };
+    //     }
+    //
+    //     var arrayObj = []
+    //
+    //     if(localStorage.getItem(sessionStorage.getItem("tendn")) == null){
+    //         arrayObj.push(sanPhamMoi);
+    //         localStorage.setItem(activeLogin, JSON.stringify(arrayObj));
+    //         window.location.href = "/giohang";
+    //     }else {
+    //         var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+    //         var found = false;
+    //         objArrya.forEach(function(obj, index) {
+    //             if(sanPhamMoi.tensp === obj.tensp){
+    //                 obj.soLuong++;
+    //                 localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
+    //                 found = true;
+    //                 window.location.href = "/giohang";
+    //                 return;
+    //             }
+    //         });
+    //         if (!found){
+    //             objArrya.push(sanPhamMoi);
+    //             localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
+    //             window.location.href = "/giohang";
+    //         }
+    //         layTongSoLuong();
+    //     }
+    //
+    //     function layTongSoLuong() {
+    //         var tongsp = document.getElementById("tongSoLuongSP");
+    //         var tongSoLuong = 0;
+    //         if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
+    //             var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+    //             for (var int = 0; int < objarray.length; int++) {
+    //                 tongSoLuong = objarray.length;
+    //             }
+    //         }else {
+    //             tongsp.textContent = tongSoLuong;
+    //         }
+    //         tongsp.textContent = tongSoLuong;
+    //     }
+    // }
 
 }
