@@ -1,5 +1,6 @@
 package m2m_phase2.clothing.clothing.api;
 
+import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.constant.AccountEnum;
 import m2m_phase2.clothing.clothing.data.dto.AccountDto;
 import m2m_phase2.clothing.clothing.data.entity.Account;
@@ -35,7 +36,15 @@ public class AccountApi {
         }
         return ResponseEntity.ok(insertStatus);
     }
+    @GetMapping("/api-public/user/checkLoginStatus")
+    @ResponseBody
+    public boolean isLoggedIn(HttpSession session) {
+        // Lấy thông tin người dùng từ session
+        Object loggedInUser = session.getAttribute("loggedInUser");
 
+        // Kiểm tra nếu thông tin người dùng không null và là một chuỗi không rỗng
+        return loggedInUser instanceof String && !((String) loggedInUser).isEmpty();
+    }
 //    @GetMapping("/getUserByUsernameAndEmail")
 //    public ResponseEntity<?> doGetUserByUsernameAndEmail(UserDto userDto) {
 //        UserM user;

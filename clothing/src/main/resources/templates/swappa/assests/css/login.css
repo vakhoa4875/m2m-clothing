@@ -20,3 +20,9 @@ body {
     --bs-btn-disabled-bg: #8B4513; /* Retro brown for the disabled background */
     --bs-btn-disabled-border-color: #8B4513; /* Retro brown for the disabled border */
 }
+.text-bg-success {
+    --bs-bg-opacity: 1;
+    background-color: rgba(139, 69, 19, var(--bs-bg-opacity)) !important;
+    color: #fff !important;
+}
+

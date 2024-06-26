@@ -439,3 +439,11 @@ footer i {
     --bs-btn-disabled-bg: #8B4513; /* Retro brown for the disabled background */
     --bs-btn-disabled-border-color: #8B4513; /* Retro brown for the disabled border */
 }
+
+.circle-image {
+    width: 40px; /* Adjust the width to your desired size */
+    height: 40px; /* Make the height equal to the width to ensure it's a square */
+    border-radius: 50%; /* This makes the image appear circular */
+    object-fit: cover; /* Ensures the image covers the entire circle */
+    overflow: hidden; /* Ensures any overflow is hidden */
+}
