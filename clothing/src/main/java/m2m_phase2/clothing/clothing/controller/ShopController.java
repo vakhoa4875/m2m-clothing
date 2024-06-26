@@ -30,6 +30,10 @@ public class ShopController {
 
     @GetMapping("/admin/shop/otp")
     public String shopOtp() {
+        return "swappa/assests/html/admin_shop_OTP";
+    }
+    @GetMapping("/acc/shop/otp")
+    public String accShopOtp() {
         return "swappa/assests/html/acc_register_shop_OTP";
     }
 

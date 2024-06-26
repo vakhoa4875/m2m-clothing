@@ -387,15 +387,18 @@ public class ShopApi {
     public ResponseEntity<?> getShopByUserEmailAndSendOtp() {
         Map<String, Object> result = new HashMap<>();
         try {
-            String otp = accountService.generateOTP();
-            accountService.sendOTPEmail(sessionEmail, otp, "OTP for Sign Up Shop");
-            session.setAttribute("otp", otp);
-            session.setAttribute("otpCreationTime", System.currentTimeMillis());
-            // Thiết lập thời gian hết hạn cho session (tính bằng giây)
-            session.setMaxInactiveInterval(60); // 1 phút
-            result.put("status", true);
-            result.put("message", "Call Api Success");
-            result.put("data", shopService.findShopByUser(sessionEmail));
+            ShopM shopM = shopService.findShopByUser(sessionEmail);
+            if (shopM != null) {
+                String otp = accountService.generateOTP();
+                accountService.sendOTPEmail(sessionEmail, otp, "OTP for Sign In Shop");
+                session.setAttribute("otp", otp);
+                session.setAttribute("otpCreationTime", System.currentTimeMillis());
+                // Thiết lập thời gian hết hạn cho session (tính bằng giây)
+                session.setMaxInactiveInterval(60); // 1 phút
+                result.put("status", true);
+                result.put("message", "Call Api Success");
+                result.put("data", shopM);
+            }
         } catch (Exception e) {
             result.put("status", false);
             result.put("message", "Call Api Fail");
@@ -414,12 +417,92 @@ public class ShopApi {
                 result.put("status", true);
                 result.put("message", "OTP is correct");
             } else if (System.currentTimeMillis() - otpCreationTime > 60000) {
-                result.put("status", false);
+                result.put("status", true);
                 result.put("message", "OTP is expired");
             } else {
-                result.put("status", false);
+                result.put("status", true);
                 result.put("message", "OTP is incorrect");
             }
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/api/user/resend-otp")
+    public ResponseEntity<?> resendOtp() {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            String otp = accountService.generateOTP();
+            accountService.sendOTPEmail(sessionEmail, otp, "OTP for Sign In Shop");
+            session.setAttribute("otp", otp);
+            session.setAttribute("otpCreationTime", System.currentTimeMillis());
+            // Thiết lập thời gian hết hạn cho session (tính bằng giây)
+            session.setMaxInactiveInterval(60); // 1 phút
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+        }
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/api/user/sendOTPForRegisterShop")
+    public ResponseEntity<?> sendOTPForRegisterShop() {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            String otp = accountService.generateOTP();
+            accountService.sendOTPEmail(sessionEmail, otp, "OTP for Register Shop");
+            session.setAttribute("otpRegisterShop", otp);
+            session.setAttribute("otpCreationTimeRegisterShop", System.currentTimeMillis());
+            // Thiết lập thời gian hết hạn cho session (tính bằng giây)
+            session.setMaxInactiveInterval(60); // 1 phút
+            result.put("status", true);
+            result.put("message", "Call Api Success");
+            result.put("data", null);
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+            result.put("data", null);
+        }
+        return ResponseEntity.ok(result);
+    }
+    @PostMapping("/api/user/shopRegisterOtp")
+    public ResponseEntity<?> shopRegisterOtp(@RequestParam("otp") String otp) {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            String sessionOtp = (String) session.getAttribute("otpRegisterShop");
+            Long otpCreationTime = (Long) session.getAttribute("otpCreationTimeRegisterShop");
+            if (otp.equals(sessionOtp) && System.currentTimeMillis() - otpCreationTime <= 60000) {
+                result.put("status", true);
+                result.put("message", "OTP is correct");
+            } else if (System.currentTimeMillis() - otpCreationTime > 60000) {
+                result.put("status", true);
+                result.put("message", "OTP is expired");
+            } else {
+                result.put("status", true);
+                result.put("message", "OTP is incorrect");
+            }
+        } catch (Exception e) {
+            result.put("status", false);
+            result.put("message", "Call Api Fail");
+        }
+        return ResponseEntity.ok(result);
+    }
+    @PostMapping("/api/user/resendOtpForRegister")
+    public ResponseEntity<?> resendOtpForRegister() {
+        Map<String, Object> result = new HashMap<>();
+        try {
+            String otp = accountService.generateOTP();
+            accountService.sendOTPEmail(sessionEmail, otp, "OTP for Register Shop");
+            session.setAttribute("otpRegisterShop", otp);
+            session.setAttribute("otpCreationTimeRegisterShop", System.currentTimeMillis());
+            // Thiết lập thời gian hết hạn cho session (tính bằng giây)
+            session.setMaxInactiveInterval(60); // 1 phút
+            result.put("status", true);
+            result.put("message", "Call Api Success");
         } catch (Exception e) {
             result.put("status", false);
             result.put("message", "Call Api Fail");
