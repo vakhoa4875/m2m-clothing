@@ -52,9 +52,9 @@ public class ProductController {
 		ProductM product = productServiceImpl.findByslug_url(slug_url);
 		CommentDTO  commentDTO =  new CommentDTO();
 		commentDTO.setProduct(productServiceImpl.findByslug_url(slug_url));
-		List<CommentM>  commentM = commentServiceImpl.findByProductId(commentDTO);
+//		List<CommentM>  commentM = commentServiceImpl.findByProductId(commentDTO);
 		model.addAttribute("listProduct", product);
-		model.addAttribute("commentM", commentM);
+//		model.addAttribute("commentM", commentM);
 		model.addAttribute("checklogin",session.getAttribute("loggedInUser"));
 		return "swappa/assests/html/productDetail";
 	}

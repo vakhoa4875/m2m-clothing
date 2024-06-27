@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
 import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
 import m2m_phase2.clothing.clothing.data.entity.Category;
+import m2m_phase2.clothing.clothing.data.entity.CommentE;
 import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.mgt.ResponseObject;
+import m2m_phase2.clothing.clothing.data.model.CommentM;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
 import m2m_phase2.clothing.clothing.service.ShopService;
@@ -24,6 +26,7 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -136,6 +139,12 @@ public class ProductApi {
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(rowEffected);
+    }
+
+    @GetMapping("/get-comments-by-productId")
+    public ResponseEntity<?> getCommentsByProductId(int productId) {
+        List<Object[]> comments = productRepo.findCommentByProductId(productId);
+        return ResponseEntity.ok(comments);
     }
 
     @PostMapping("/createComment")

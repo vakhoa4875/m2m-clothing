@@ -28,10 +28,10 @@ public class CommentServiceImpl implements CommentService {
     private HttpSession session;
 
 
-    @Override
-    public List<CommentM> findByProductId(CommentDTO comment) throws SQLException {
-        return CommentM.converlistCommentEToListCommentM(commentRepo.findByProductId(comment.getProduct().getProductId()));
-    }
+//    @Override
+//    public List<CommentM> findByProductId(CommentDTO comment) throws SQLException {
+//        return CommentM.converlistCommentEToListCommentM(commentRepo.findByProductId(comment.getProduct().getProductId()));
+//    }
 
     @Override
     public byte saveComment(CommentDTO commentDTO) throws SQLException {
