@@ -35,7 +35,7 @@ CREATE TABLE Userinfo
     user_id     int PRIMARY KEY,
     fullname    nvarchar(127) default 'your fullname here',
     gender      nvarchar(20)  default 'Male',
-    avatar      nvarchar(255) default 'user.jpg',
+    avatar      nvarchar(255) default 'incognito.svg',
     dob         date          default getdate(),
     description nvarchar(300),
     job_title   nvarchar(63),
@@ -60,12 +60,12 @@ create table [user]
 --     hashed_pass varchar(255) null,
     is_admin    bit                   default 0,
     is_disable  bit                   default 0,
-    fullname    nvarchar(63)          default 'fullname_val',
-    gender      nvarchar(10)          default 'Nam',
-    avatar      varchar(63)           default 'user.png',
+    fullname    nvarchar(63)          default 'Anonymous user',
+    gender      nvarchar(10)          default 'Male',
+    avatar      varchar(63)           default 'incognito.svg',
     dob         date                  default getdate(),
-    description nvarchar(300)         default 'description_val',
-    job_title   nvarchar(63)          default 'Unemployed',
+    description nvarchar(300)         default 'Lorem ipsum dolor sit amet, consectetur adipiscing elit...',
+    job_title   nvarchar(63)          default 'Student',
     role_id     int          not null default 3,
     role_name   nvarchar(63) not null default 'User',
     processed   bit                   default 0
@@ -111,16 +111,6 @@ CREATE TABLE AccountGG
 INSERT INTO AccountGG (access_token_gg, sub_gg, username_gg, email_gg)
 VALUES ('abc123xyz', 'sub123', N'ten_nguoi_dung', 'example@email.com');
 
-
-create table [Cart]
-(
-    id           int FOREIGN KEY REFERENCES [user] (id),
-    name_product varchar(255),
-    quatity      int,
-    price        int
-);
-
-
 create table Comment
 (
     comment_id  int IDENTITY (1,1) PRIMARY KEY,
@@ -163,18 +153,6 @@ ALTER TABLE [user]
 ALTER TABLE [user]
     ADD account_id_gg int null foreign key references AccountGG (user_id_gg);
 go
-
-create or alter trigger trigger_after_create_user
-    on [user]
-    after INSERT
-    as
-begin
-    declare @id int;
-    select @id = inserted.id from inserted;
-    insert into Cart (id) values (@id)
-end
-go
-
 create or alter trigger trigger_before_delete_user
     on [user]
     after delete
@@ -183,8 +161,6 @@ begin
     declare @iddelete int;
     select @iddelete = deleted.id from deleted;
     BEGIN TRANSACTION;
-
-    delete from Cart where Cart.id = @iddelete;
 
     delete from [user] where [user].id = @iddelete;
 

@@ -2,14 +2,15 @@ package m2m_phase2.clothing.clothing.service.impl;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import m2m_phase2.clothing.clothing.constant.CommonEnum;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
-import m2m_phase2.clothing.clothing.data.dto.VoucherDto;
 import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.repository.UserRepo;
 import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.service.UserService;
+import m2m_phase2.clothing.clothing.utils.CommonFunction;
 import m2m_phase2.clothing.clothing.utils.DateUtils;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,24 +66,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public byte saveUser(UserDto userDto) throws SQLException {
         if (this.isUserExist(userDto)) {
+            var avatar = userDto.getAvatar().contains(",")
+                    ? CommonFunction.handleBase64Img(userDto.getAvatar(), CommonEnum.imagesUser.getValue())
+                    : userDto.getAvatar();
             userRepo.updateUser(userDto.getUsername(),
                     userDto.getEmail(),
                     userDto.getFullname(),
-//                    userDto.getHashedPassword(),
                     userDto.getGender(),
                     userDto.getRoleId(),
                     userDto.getRoleName(),
                     userDto.getDescription(),
                     userDto.getJobTitle(),
                     DateUtils.toDateFormat(userDto.getDob(), "dd/MM/yyyy", "yyyy-MM-dd"),
-                    userDto.getAvatar());
+                    avatar);
         } else {
-//            var x = userRepo.save(UserE.convertUserDtoToUserE(userDto));
             userRepo.insertNewUser(userDto.getUsername(),
                     userDto.getEmail(),
                     userDto.getFullname(),
                     userDto.getHashedPassword(),
-//                    userDto.getGender(),
                     userDto.getRoleId(),
                     userDto.getRoleName(),
                     userDto.getDescription());
