@@ -111,16 +111,6 @@ CREATE TABLE AccountGG
 INSERT INTO AccountGG (access_token_gg, sub_gg, username_gg, email_gg)
 VALUES ('abc123xyz', 'sub123', N'ten_nguoi_dung', 'example@email.com');
 
-
-create table [Cart]
-(
-    id           int FOREIGN KEY REFERENCES [user] (id),
-    name_product varchar(255),
-    quatity      int,
-    price        int
-);
-
-
 create table Comment
 (
     comment_id  int IDENTITY (1,1) PRIMARY KEY,
@@ -163,18 +153,6 @@ ALTER TABLE [user]
 ALTER TABLE [user]
     ADD account_id_gg int null foreign key references AccountGG (user_id_gg);
 go
-
-create or alter trigger trigger_after_create_user
-    on [user]
-    after INSERT
-    as
-begin
-    declare @id int;
-    select @id = inserted.id from inserted;
-    insert into Cart (id) values (@id)
-end
-go
-
 create or alter trigger trigger_before_delete_user
     on [user]
     after delete
@@ -183,8 +161,6 @@ begin
     declare @iddelete int;
     select @iddelete = deleted.id from deleted;
     BEGIN TRANSACTION;
-
-    delete from Cart where Cart.id = @iddelete;
 
     delete from [user] where [user].id = @iddelete;
 
