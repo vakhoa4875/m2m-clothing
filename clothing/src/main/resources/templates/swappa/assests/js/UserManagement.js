@@ -269,7 +269,7 @@ class UserManagement {
         };
 
         await $.ajax({
-            url: '/api-admin/postCreateAccount',
+            url: '/api/admin/account/create',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(userData),

@@ -29,7 +29,7 @@ public class WebSecurityConfig {
     private final CustomUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final JwtAuthentication jwtAuthentication;
-    private final String[] nonAuthenticatedUrls = {"/p/register", "/api/p/login", "/api-public/**", "/verify/**", "/assests/**", "/bootstrap-5.3.2-dist/**"};
+    private final String[] nonAuthenticatedUrls = {"/p/**", "/api-public/**", "/assests/**", "/bootstrap-5.3.2-dist/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

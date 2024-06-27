@@ -147,7 +147,7 @@
 
                     // Kiểm tra trạng thái đăng nhập của người dùng
                     $.ajax({
-                        url: '/api-public/user/checkLoginStatus',
+                        url: '/api/admin/account/isAuthenticated',
                         type: 'GET',
                         success: function(isLoggedIn) {
                             if (isLoggedIn) {
@@ -184,7 +184,7 @@
 
                         // Kiểm tra trạng thái đăng nhập của người dùng trước khi cho phép nhận voucher
                         $.ajax({
-                            url: '/api-public/user/checkLoginStatus',
+                            url: '/api/admin/account/isAuthenticated',
                             type: 'GET',
                             success: function(isLoggedIn) {
                                 if (isLoggedIn) {

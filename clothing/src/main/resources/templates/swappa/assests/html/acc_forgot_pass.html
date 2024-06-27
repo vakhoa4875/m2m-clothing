@@ -114,7 +114,7 @@
             var username = $('#username').val();
             var email = $('#email').val();
             $.ajax({
-                url: '/getAccountByUsernameAndEmail?username=' + username + '&email=' + email,
+                url: '/api/admin/account/getByUsernameAndEmail?username=' + username + '&email=' + email,
                 type: 'GET',
                 success: function (data) {
                     var mess = $('#errorMess');
