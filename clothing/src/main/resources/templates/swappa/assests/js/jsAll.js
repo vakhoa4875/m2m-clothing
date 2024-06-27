@@ -649,7 +649,7 @@ btnBuyNow.addEventListener("click",function (){
             if(localStorage.getItem(sessionStorage.getItem("tendn")) == null){
                 arrayObj.push(sanPhamMoi);
                 localStorage.setItem(dangnhap.innerText, JSON.stringify(arrayObj));
-                window.location.href = "/giohang";
+                window.location.href = "/cart";
             }else {
                 var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
                 var found = false;
@@ -658,14 +658,14 @@ btnBuyNow.addEventListener("click",function (){
                         obj.soLuong++;
                         localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
                         found = true;
-                        window.location.href = "/giohang";
+                        window.location.href = "/cart";
                         return;
                     }
                 });
                 if (!found){
                     objArrya.push(sanPhamMoi);
                     localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
-                    window.location.href = "/giohang";
+                    window.location.href = "/cart";
                 }
             }
             layTongSoLuong();

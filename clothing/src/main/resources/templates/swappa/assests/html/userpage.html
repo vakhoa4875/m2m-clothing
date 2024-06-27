@@ -167,7 +167,7 @@
                                                          data-callback="xuLyCaptchaThanhCong"></div>
                                                 </div>
                                             </div>
-                                            <p id="iduser" th:text="${userM.getId()}" class="d-none"></p>
+                                            <p id="idUser" th:text="${userM.getId()}" class="d-none"></p>
                                             <div class="mb-3 row alert alert-success" id="updateSuccess"></div>
                                             <div class="mb-3 row my-3 alert alert-danger" id="updateError"></div>
                                         </div>
@@ -499,7 +499,7 @@
     }
 
     function generateQRCode() {
-        const data = $('#iduser').text();
+        const data = $('#idUser').text();
         const qrCodeElement = document.getElementById('qrcode');
 
         if (data) {

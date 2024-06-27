@@ -2,7 +2,6 @@ package m2m_phase2.clothing.clothing.controller;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
-import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,15 +17,12 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/admin")
 public class UserController {
-
-    @Autowired
-    private AccountService accountService;
     @Autowired
     private UserService userService;
     @Autowired
     private HttpSession httpSession;
 
-    @GetMapping(path = {"/login"})
+    @GetMapping("/login")
     public String doGetAdminLogin(Model model) {
         if (Objects.nonNull(httpSession.getAttribute("adminToken")))
             return "redirect:/admin/home";

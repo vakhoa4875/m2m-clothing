@@ -3,7 +3,6 @@ package m2m_phase2.clothing.clothing.controller;
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.entity.Account;
-import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.service.AccountService;

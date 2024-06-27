@@ -295,7 +295,7 @@
                 <!-- more-info -->
                 <div class="mt-4">
                     <h2 class="text-center mb-1">Why M2M clothing?
-                        <p id="iduser" th:text="${iduser}" style="display: none"></p>
+                        <p id="idUser" th:text="${idUser}" style="display: none"></p>
                         <p id="email" th:text="${email}" style="display: none"></p>
                     </h2>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center gy-3">
@@ -411,11 +411,11 @@
         var email = $('#email').text();
         sessionStorage.setItem("tendn",email)
         $('#xoathongbaooo').click(function () {
-            var id = $('#iduser').text();
+            var id = $('#idUser').text();
             xoathongbao(id);
         });
         var soluong = 0;
-        var id = $('#iduser').text();
+        var id = $('#idUser').text();
         $.ajax({
             url: '/finduseridwitchNotification?id=' + id,
             type: 'GET',
@@ -442,7 +442,7 @@
                 type: 'GET',
                 contentType: 'application/json',
                 success: function (data) {
-                    window.location.href = "/trangchu";
+                    window.location.href = "/home";
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.error('Error:', errorThrown);

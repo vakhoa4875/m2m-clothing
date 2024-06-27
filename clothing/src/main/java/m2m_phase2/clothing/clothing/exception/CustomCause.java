@@ -6,7 +6,8 @@ import lombok.Setter;
 @Getter
 public enum CustomCause {
     ERROR(1001, "Error occurred while processing"),
-    INVALID_QUANTITY(1004, "Invalid product quantity, only 1 left stocks");
+    INVALID_QUANTITY(1004, "Invalid product quantity, only 1 left stocks"),
+    NO_MATCHED_ACCOUNT(1002, "No matched account found"),;
     private int code;
     @Setter
     private String message;

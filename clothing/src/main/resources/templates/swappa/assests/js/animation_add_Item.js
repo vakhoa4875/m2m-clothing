@@ -59,7 +59,7 @@ function getIdSanPham (int,name,sale,price,anh,sale_active) {
         if(localStorage.getItem(sessionStorage.getItem("tendn")) == null){
             arrayObj.push(sanPhamMoi);
             localStorage.setItem(activeLogin, JSON.stringify(arrayObj));
-            window.location.href = "/giohang";
+            window.location.href = "/cart";
         }else {
             var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
             var found = false;
@@ -68,14 +68,14 @@ function getIdSanPham (int,name,sale,price,anh,sale_active) {
                     obj.soLuong++;
                     localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
                     found = true;
-                    window.location.href = "/giohang";
+                    window.location.href = "/cart";
                     return;
                 }
             });
             if (!found){
                 objArrya.push(sanPhamMoi);
                 localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
-                window.location.href = "/giohang";
+                window.location.href = "/cart";
             }
             layTongSoLuong();
         }

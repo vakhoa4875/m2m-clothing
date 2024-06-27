@@ -7,6 +7,8 @@ import m2m_phase2.clothing.clothing.constant.AccountEnum;
 import m2m_phase2.clothing.clothing.data.dto.AccountDto;
 import m2m_phase2.clothing.clothing.data.entity.Account;
 import m2m_phase2.clothing.clothing.data.variable.StaticVariable;
+import m2m_phase2.clothing.clothing.exception.CustomCause;
+import m2m_phase2.clothing.clothing.exception.CustomException;
 import m2m_phase2.clothing.clothing.repository.AccountGGRepo;
 import m2m_phase2.clothing.clothing.repository.AccountRepo;
 import m2m_phase2.clothing.clothing.service.AccountService;
@@ -50,6 +52,15 @@ public class AccountServiceImpl implements AccountService {
     public Account findByusername(String username) {
         // TODO Auto-generated method stub
         return repo.findByusername(username);
+    }
+
+    @Override
+    public Account findByUsername(String username) throws CustomException {
+        var account =  repo.findByUsernameOrEmail(username, username);
+        if (account == null) {
+            throw new CustomException(CustomCause.NO_MATCHED_ACCOUNT);
+        }
+        return repo.findByUsernameOrEmail(username, username);
     }
 
     @Override
@@ -101,41 +112,6 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public boolean checkEmail(Account account, Model model) {
-        if (findByemail(account.getEmail()) != null) {
-            String messError = "Email already exists";
-            model.addAttribute("messError", messError);
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public boolean checkFillRegister(Model model, String... args) {
-        for (String string : args) {
-            if (string.equals("")) {
-                String messError = "Please fill in complete information";
-                model.addAttribute("messError", messError);
-                return false;
-            }
-        }
-        return true;
-
-    }
-
-    @Override
-    public boolean checkFillOtp(Model model, String... args) {
-        for (String string : args) {
-            if (string.equals("")) {
-                String messError = "Please fill in complete otp";
-                model.addAttribute("messError", messError);
-                return false;
-            }
-        }
-        return true;
-    }
-
-    @Override
     public String concatOtp(String... args) {
         String otpConcatSuccess = "";
         for (int i = 0; i < args.length; i++) {
@@ -143,23 +119,6 @@ public class AccountServiceImpl implements AccountService {
         }
         return otpConcatSuccess;
     }
-
-    @Override
-    public Account findByuserId(Integer id) {
-        return repo.findByuserId(id);
-    }
-
-    @Override
-    public boolean isDisable(Account account) {
-        // TODO Auto-generated method stub
-        return account != null && account.isDisable();
-    }
-
-//	@Override
-//	public List<UserM> findAll() throws SQLException {
-//		List<Account> listAccount = repo.findAll();
-//		return UserM.convertListAccountToListUserM(listAccount);
-//	}
 
     @Override
     public void sendLinkEmail(String toEmail, String resetPasswordUrl) {
@@ -209,9 +168,9 @@ public class AccountServiceImpl implements AccountService {
         // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
         session.setAttribute("loggedInUser", accountRequest.getEmail());
         StaticVariable.sessionEmail = accountRequest.getEmail();
-        model.addAttribute("iduser", existingAccount.getUserId());
+        model.addAttribute("idUser", existingAccount.getUserId());
         model.addAttribute("email", existingAccount.getEmail());
-        session.setAttribute("iduser", existingAccount.getUserId());
+        session.setAttribute("idUser", existingAccount.getUserId());
         session.setAttribute("email", existingAccount.getEmail());
         PasswordEncoderUtil.email = accountRequest.getEmail();
         return "redirect:/";
