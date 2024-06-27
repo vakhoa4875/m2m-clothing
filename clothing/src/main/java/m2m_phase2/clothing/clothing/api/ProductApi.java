@@ -1,6 +1,7 @@
 package m2m_phase2.clothing.clothing.api;
 
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
 import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
@@ -148,15 +149,24 @@ public class ProductApi {
     }
 
     @PostMapping("/createComment")
-    public ResponseEntity<?> doPostCreateComment(@RequestBody CommentDTO commentDTO) {
-        byte rowEffected;
+    public ResponseEntity<?> doPostCreateComment(@RequestBody CommentDTO commentDTO, HttpSession session) {
+        // Kiểm tra xem người dùng đã đăng nhập hay chưa
+        if (sessionEmail == null) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "User not logged in");
+            return ResponseEntity.ok(response);
+        }
+        // Người dùng đã đăng nhập, tiến hành tạo nhận xét
         try {
-            rowEffected = commentService.createComment(commentDTO);
+            byte rowEffected = commentService.createComment(commentDTO);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Comment created successfully");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.out.println("Call API Failed: /createComment");
+            System.out.println("Error calling API: /createComment");
             throw new RuntimeException(e);
         }
-        return ResponseEntity.ok(rowEffected);
+
     }
 
     @Autowired
