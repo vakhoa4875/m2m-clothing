@@ -1,26 +1,32 @@
 $(document).ready(function () {
     // code bên giao diện userpage
-    const getShopByUserEmail = async () => {
-        $('#shopContainer').empty();
-        await axios.get('/get-shop-by-user-email-and-send-otp')
+    const checkShop = async () => {
+        await axios.get('/get-shop-by-user-email')
             .then(response => {
                 if (response.data.data != null) {
-                    Swal.fire({
-                        icon: "success",
-                        title: `OTP has been sent to your email <br>` +
-                            `<span style="color: #bb2025">OTP time limit is 1 minute</span>`,
-                        showConfirmButton: true,
-                        timer: 5000
-                    }).then((result) => {
-                        /* Read more about handling dismissals below */
-                        if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed) {
-                            $('#v-pills-home-tab').click();
-                            window.open('/admin/shop/otp');
-                        }
-                    });
+                    $('#shopContainer').html(`
+                        <div class="card-body p-0 mx-3 pb-2">
+                            <div class="table-responsive p-0">
+                                <div class="header mt-1 mb-1">
+                                    <ul class="list-group list-group-flush">
+                                        <li class="list-group-item bg-body-secondary rounded-3">
+                                            <h3 class="m-0">Sign In Shop</h3>
+                                            <!--                                            <span>Manage profile information for account security</span>-->
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="container" >
+                                    <div class="row text-center justify-content-center">
+                                        <h3>Welcome to M2M Clothing</h3>
+                                        <h5>Click sign in if you want to go to the shop</h5>
+                                        <button id="btnSignInShop" class="btn btn-primary w-25">Sign In Shop</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `);
                 } else {
-                    $('#shopContainer').append(
-                        `
+                    $('#shopContainer').html(`
                         <div class="card-body p-0 mx-3 pb-2">
                             <div class="table-responsive p-0">
                                 <div class="header mt-1 mb-1">
@@ -31,29 +37,96 @@ $(document).ready(function () {
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="container">
+                                <div class="container" >
                                     <div class="row text-center justify-content-center">
                                         <h3>Welcome to M2M Clothing</h3>
-                                        <h5>Click submit if you want to become a seller</h5>
-                                        <button id="submitShop" class="btn btn-primary w-25">Submit</button>
+                                        <h5>Click Register Shop if you want to become a seller</h5>
+                                        <button id="btnRegisterShop" class="btn btn-primary w-25 me-1">Register Shop</button>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        `
-                    )
+                    `);
                 }
             })
             .catch(error => {
                 alert(error);
             })
     }
-    $('#v-pills-home-shop').click(function () {
+    checkShop();
+
+    const getShopByUserEmail = async () => {
+        let timerInterval;
+        Swal.fire({
+            title: "Please wait a moment !",
+            html: "I will close in <b></b> milliseconds.",
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                timerInterval = setInterval(() => {
+                    timer.textContent = `${Swal.getTimerLeft()}`;
+                }, 100);
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+            }
+        });
+        await axios.get('/get-shop-by-user-email-and-send-otp')
+            .then(response => {
+                if (response.data.data != null) {
+                    Swal.fire({
+                        icon: "success",
+                        title: `OTP has been sent to your email <br>` +
+                            `<span style="color: #bb2025">OTP time limit is 1 minute</span>`,
+                        showConfirmButton: true,
+                        timer: 5000
+                    }).then((result) => {
+                        if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed) {
+                            $('#v-pills-home-tab').click();
+                            window.open('/admin/shop/otp');
+                        }
+                    });
+                }
+            })
+            .catch(error => {
+                alert(error);
+            })
+    }
+    $(document).on('click', '#btnSignInShop', function () {
         getShopByUserEmail();
     })
 
     //nếu user chưa tạo shop
     const sendOTPForRegisterShop = async () => {
+        let timerInterval;
+        Swal.fire({
+            title: "Please wait a moment !",
+            html: "I will close in <b></b> milliseconds.",
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+                const timer = Swal.getPopup().querySelector("b");
+                timerInterval = setInterval(() => {
+                    timer.textContent = `${Swal.getTimerLeft()}`;
+                }, 100);
+            },
+            willClose: () => {
+                clearInterval(timerInterval);
+            }
+        }).then((result) => {
+            /* Read more about handling dismissals below */
+            if (result.dismiss === Swal.DismissReason.timer) {
+                console.log("I was closed by the timer");
+            }
+        });
         await axios.get('/api/user/sendOTPForRegisterShop')
             .then(response => {
                 if (response.data.message === 'Call Api Success') {
@@ -77,7 +150,7 @@ $(document).ready(function () {
             })
     }
 
-    $(document).on('click', '#submitShop', function () {
+    $(document).on('click', '#btnRegisterShop', function () {
         Swal.fire({
             title: "Are you sure?",
             text: "You want to become a seller!",
