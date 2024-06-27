@@ -1,5 +1,26 @@
 $(document).ready(async function(){
     await loadAllProduct()
+    layTongSoLuong();
+
+        $('#updateError').hide();
+        $('#updateSuccess').hide();
+        fetchVouchers();
+        fetchOrders();
+
+        $('#submitBtn').click(function () {
+            updateUser();
+            generateQRCode();
+        });
+
+        $('#fileInput').change(handleFileInputChange);
+        $('#navbar_search_input').keydown(function (e) {
+            if (e.which === 13) {
+                searchProducts();
+            }
+        });
+        getSoLuongGioHang();
+
+
 })
 let productsByCategory = [];
 let products = [];
@@ -8,6 +29,8 @@ let perPage = 12; // item number in page
 let totalPage = 0;
 let perProducts = [];
 let pageTam=[];
+var dangnhap = sessionStorage.getItem("tendn");
+var activeLogin = $('#activeLogin').text();
 let url = new URL(window.location.href);
 let keyword = url.searchParams.get("key_search");
 let type = url.searchParams.get("type_search");
@@ -129,7 +152,7 @@ function displayProducts(products) {
         let productHtml = `
                 <div class="col-lg-2 col-md-3 col-sm-4">
                     <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                        <a href="/product?slug_url=${product.slug}" class="stretched-link">
+                        <a href="/product?slug_url=${product.slug}" class="product">
                             <div style="position: absolute">
                                 ${product.sale ? `<span class="badge text-bg-danger">${product.sale.salePercent}%</span>` : ''}
                             </div>
@@ -142,19 +165,112 @@ function displayProducts(products) {
                             <div class="w-100">
                                 <div class="d-flex justify-content-around">
                                     ${product.sale ? `
-                                        <del>${product.price}</del>
+                                        <del>$${product.price}</del>
                                         <span style="color:#c07d4b; font-weight: bolder">
-                                            ${product.price - (product.sale.salePercent / 100 * product.price)}
-                                        </span>` : `${product.price}`}
+                                           $${(product.price - (product.sale.salePercent / 100 * product.price)).toFixed(2)}
+                                        </span>` : `$${product.price}`}
                                 </div>
                             </div>
-                            <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">
-                                <div class="text-white fw-bolder">Buy now</div>
-                            </div>
                         </a>
+                <button class="rounded-bottom-3 w-100 fw-bolder text-white" onclick="getIdSanPham(${product.productId}, '${product.name}', '${product.sale ? (product.price - (product.sale.salePercent / 100 * product.price)).toFixed(2) : (product.price)} ', '${product.price}','../media/${product.pictures.split(',')[0]}', '${product.sale ? "1" : "0"}')" style="background-color: rgb(224, 150, 150); border-color: rgba(0,0,0,0)" >Buy Now</button>
                     </div>
                 </div>
             `;
         resultsContainer.append(productHtml);
     });
+}
+
+function getIdSanPham (int,name,sale,price,anh,sale_active) {
+    //hiệu ứng add item
+    const product = event.target.previousElementSibling;
+    const productClone = product.cloneNode(true);
+    const cart = document.getElementById('cart');
+    const productRect = product.getBoundingClientRect();
+    const cartRect = cart.getBoundingClientRect();
+
+
+    productClone.classList.add('fly-to-cart');
+    productClone.style.left = `${productRect.left}px`;
+    productClone.style.top = `${productRect.top}px`;
+    document.body.appendChild(productClone);
+
+    requestAnimationFrame(() => {
+        productClone.style.transform = `translate(${(cartRect.left - productRect.left) -170}px, ${(cartRect.top - productRect.top)-100}px) scale(0.1)`;
+        productClone.style.opacity = '0';
+
+    });
+
+    let flag = false;
+    productClone.addEventListener('transitionend', () => {
+        if (!flag) { //dùng để check và cho hàm này được hoạt động 1 lần duy nhất(vì hàm hoạt động 2 lần)
+            addItem();
+            flag = true;
+        }
+    });
+
+    function addItem(){
+        if(dangnhap == ""){
+            alert("Có vẻ như bạn chưa đăng nhập, vui lòng đăng nhập!");
+            window.location.href = "/loginacount";
+            return;
+        }
+
+        if (sale_active == "1"){
+            var sanPhamMoi = {
+                gia: parseFloat(sale),
+                tensp: name,
+                linkanh: anh,
+                idproductt : int,
+                soLuong: 1
+            };
+        }else {
+            var sanPhamMoi = {
+                gia: parseFloat(price),
+                tensp: name,
+                linkanh: anh,
+                idproductt : int,
+                soLuong: 1
+            };
+        }
+
+        var arrayObj = []
+
+        if(localStorage.getItem(sessionStorage.getItem("tendn")) == null){
+            arrayObj.push(sanPhamMoi);
+            localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(arrayObj));
+            window.location.href = "/giohang";
+        }else {
+            var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+            var found = false;
+            objArrya.forEach(function(obj, index) {
+                if(sanPhamMoi.tensp === obj.tensp){
+                    obj.soLuong++;
+                    localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
+                    found = true;
+                    window.location.href = "/giohang";
+                    return;
+                }
+            });
+            if (!found){
+                objArrya.push(sanPhamMoi);
+                localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
+                window.location.href = "/giohang";
+            }
+        }
+
+
+    }
+}
+function layTongSoLuong() {
+    var tongsp = document.getElementById("tongSoLuongSP");
+    var tongSoLuong = 0;
+    if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
+        var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+        for (var int = 0; int < objarray.length; int++) {
+            tongSoLuong = objarray.length;
+        }
+    }else {
+        tongsp.textContent = tongSoLuong;
+    }
+    tongsp.textContent = tongSoLuong;
 }

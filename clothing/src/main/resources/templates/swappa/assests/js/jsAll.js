@@ -11,8 +11,38 @@ function compareData() {
     div.innerHTML ='';
     // Kiểm tra xem local storage có dữ liệu không
     if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
-
         var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+
+        if (objarray.length == 0){
+            var tr = document.createElement("tr");
+            var productList = document.getElementById("productList");
+            productList.innerHTML = '';
+            var div = document.getElementById("thanhtoan");
+            div.innerHTML ='';
+            var tr = document.createElement("tr");
+            tr.innerHTML = `
+                    <td colspan="6" class="text-center">
+                        <div class="alert alert-info" role="alert">
+                            There's nothing in your cart!
+                        </div>
+                    </td>
+                `;
+            document.getElementById("productList").appendChild(tr);
+
+            $('#tiengiamgia').text("$0");
+            $('.tienCanTra').text("$0");
+            $('.tienThanhToan').text("$0");
+
+            var thanhtoan = $('#thanhtoan');
+            var div = `<a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Checkout cart</a>`;
+            thanhtoan.append(div);
+            if (thanhtoan.length == 1){
+                thanhtoan.removeChild(1);
+            }
+
+
+        }
+
         // Duyệt qua tất cả các phần tử trong local storage
         for (var int = 0; int < objarray.length; int++) {
             var object = objarray[int];
@@ -59,22 +89,22 @@ function compareData() {
         }
         var div = document.createElement("a");
             div.innerHTML = `
-             <a href="/thanhtoan" class="btn btn-outline-danger"  id="creategiohang" >Thành toán hóa đơn</a>
+             <a href="/thanhtoan" class="btn btn-outline-danger"  id="creategiohang" >Checkout cart</a>
             `;
         document.getElementById("thanhtoan").appendChild(div);
     }else{
         Swal.fire({
-            title: 'Thông Báo từ hệ thống',
-            text: 'Không còn gì trong giỏ hàng của bạn.',
+            title: 'Notifications from the system',
+            text: 'There nothing in your cart',
             icon: 'info', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-            confirmButtonText: 'Xác nhận',
+            confirmButtonText: 'Confirm',
             allowOutsideClick: false
         })
         var tr = document.createElement("tr");
         tr.innerHTML = `
                     <td colspan="6" class="text-center">
                         <div class="alert alert-info" role="alert">
-                            Giỏ hàng không có gì!
+                            The shopping cart is empty!
                         </div>
                     </td>
                 `;
@@ -82,7 +112,7 @@ function compareData() {
 
         var div = document.createElement("a");
         div.innerHTML = `
-                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
+                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Checkout cart</a>
             `;
         document.getElementById("thanhtoan").appendChild(div);
 
@@ -198,10 +228,10 @@ function xoamSoLuong(int) {
     var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
     if(objArrya.length === 1){
         Swal.fire({
-            title: 'Thông Báo từ hệ thống',
-            text: 'Không còn gì trong giỏ hàng của bạn.',
+            title: 'Notifications from the system',
+            text: 'There nothing in your cart',
             icon: 'info', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-            confirmButtonText: 'Xác nhận',
+            confirmButtonText: 'Confirm',
             allowOutsideClick: false
         }).then((result) => {
             var tr = document.createElement("tr");
@@ -213,7 +243,7 @@ function xoamSoLuong(int) {
             tr.innerHTML = `
                     <td colspan="6" class="text-center">
                         <div class="alert alert-info" role="alert">
-                            Giỏ hàng không có gì!
+                            There's nothing in your cart!
                         </div>
                     </td>
                 `;
@@ -221,7 +251,7 @@ function xoamSoLuong(int) {
 
             var div = document.createElement("a");
             div.innerHTML = `
-                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
+                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Checkout cart</a>
             `;
             document.getElementById("thanhtoan").appendChild(div);
             layTongSoLuong();
@@ -248,10 +278,10 @@ function xoaHetGioHang() {
     localStorage.removeItem(sessionStorage.getItem("tendn"));
     if(localStorage.getItem(sessionStorage.getItem("tendn")) === null){
         Swal.fire({
-            title: 'Thông Báo từ hệ thống',
-            text: 'Không còn gì trong giỏ hàng của bạn.',
+            title: 'Notifications from the system',
+            text: 'There nothing in your cart!',
             icon: 'info', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-            confirmButtonText: 'Xác nhận',
+            confirmButtonText: 'Confirm',
             allowOutsideClick: false
         }).then((result) => {
             var productList = document.getElementById("productList");
@@ -262,7 +292,7 @@ function xoaHetGioHang() {
             tr.innerHTML = `
                     <td colspan="6" class="text-center">
                         <div class="alert alert-info" role="alert">
-                            Giỏ hàng không có gì!
+                            There's nothing in your cart!
                         </div>
                     </td>
                 `;
@@ -270,7 +300,7 @@ function xoaHetGioHang() {
 
             var div = document.createElement("a");
             div.innerHTML = `
-                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
+                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Checkout cart</a>
             `;
             document.getElementById("thanhtoan").appendChild(div);
             layTongSoLuong();
@@ -550,7 +580,7 @@ btnCart.addEventListener("click", function() {
     productClone.addEventListener('transitionend', () => {
         if (!flag) { //dùng để check và cho hàm này được hoạt động 1 lần duy nhất(vì hàm hoạt động 2 lần)
             if(dangnhap.innerHTML === ""){
-                alert("Có vẻ như bạn chưa đăng nhập, vui lòng đăng nhập!");
+                alert("You are not logged in, please log in.!");
                 const currentUrl = window.location.href;
                 const url = new URL(currentUrl);
                 const pathAndQuery = url.pathname + url.search;
@@ -598,7 +628,7 @@ btnCart.addEventListener("click", function() {
 });
 
 
-let btnBuyNow = document.getElementById("buynow");
+let btnBuyNow = document.getElementById("mualien");
 btnBuyNow.addEventListener("click",function (){
 
     const productImage = document.querySelector(`.product img[data-id="${1}"]`);
@@ -624,7 +654,7 @@ btnBuyNow.addEventListener("click",function (){
     productClone.addEventListener('transitionend', () => {
         if (!flag) { //dùng để check và cho hàm này được hoạt động 1 lần duy nhất(vì hàm hoạt động 2 lần)
             if(dangnhap.innerHTML === ""){
-                alert("Có vẻ như bạn chưa đăng nhập, vui lòng đăng nhập!");
+                alert("You are not logged in, please log in.!");
                 const currentUrl = window.location.href;
                 const url = new URL(currentUrl);
                 const pathAndQuery = url.pathname + url.search;
@@ -641,7 +671,7 @@ btnBuyNow.addEventListener("click",function (){
                 tensp: tensp.textContent,
                 linkanh: srcAnh,
                 idproductt : idproductstring,
-                soLuong: 1
+                soLuong: 0
             };
 
             var arrayObj = []
@@ -650,11 +680,12 @@ btnBuyNow.addEventListener("click",function (){
                 arrayObj.push(sanPhamMoi);
                 localStorage.setItem(dangnhap.innerText, JSON.stringify(arrayObj));
                 window.location.href = "/giohang";
+                return;
             }else {
                 var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
                 var found = false;
                 objArrya.forEach(function(obj, index) {
-                    if(sanPhamMoi.tensp === obj.tensp){
+                    if(sanPhamMoi.tensp == obj.tensp){
                         obj.soLuong++;
                         localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
                         found = true;
@@ -665,10 +696,13 @@ btnBuyNow.addEventListener("click",function (){
                 if (!found){
                     objArrya.push(sanPhamMoi);
                     localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
+                    console.log(sanPhamMoi.soLuong + "san phan chu co")
                     window.location.href = "/giohang";
+                    return;
                 }
             }
             layTongSoLuong();
+            flag = true;
         }
     })
 })

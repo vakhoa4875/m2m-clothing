@@ -20,10 +20,10 @@
             $('#submitBtn').click(function () {
                 if (!$('input[type="radio"][name="flexRadioDefault"]').is(':checked')) {
                     Swal.fire({
-                        title: 'Thông Báo từ hệ thống',
-                        text: 'Vui lòng chọn phương thức thanh toán',
+                        title: 'Notifications from the system',
+                        text: 'Please select payment method!',
                         icon: 'error', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-                        confirmButtonText: 'Xác nhận',
+                        confirmButtonText: 'Confirm',
                         allowOutsideClick: false,
                     })
                     return false;
@@ -36,6 +36,80 @@
                 // Gọi lại hàm Finalpayment() để cập nhật lại giá trị của biến thanhtoan
                 Finalpayment(ptthanhtoan);
             });
+
+            var id;
+            if (sessionStorage.getItem("idnguoidung") == ""){
+
+            }else {
+                $.ajax({
+                    url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        soluong = data.length;
+                        $('#soluongthongbao').text(soluong)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                    }
+                });
+            }
+
+            $('#btnthongobao').click(function () {
+                id = (sessionStorage.getItem("idnguoidung") == "" ? "false" : sessionStorage.getItem("idnguoidung"));
+                if (id == "false"){
+                    Swal.fire({
+                        title: 'Notifications from the system',
+                        text: 'You are not logged in, please log in.',
+                        icon: 'warning', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                        confirmButtonText: 'Confirm',
+                        allowOutsideClick: false
+                    }).then((result) => {
+                        if (result){
+                            window.location.href = "/loginacount";
+                        }
+                    })
+                }else {
+                    $("#notification-dropdown").toggleClass("d-none");
+                    $('#thogbao').empty();
+                    $.ajax({
+                        url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                        type: 'GET',
+                        contentType: 'application/json',
+                        success: function (data) {
+                            var soluong = data.length;
+                            if (soluong == 0){
+                                $('#thogbao').append(`
+                        <div class="text-dark fw-bolder" style="color: #edd678">No new announcements.</div>`);
+                            }
+                            $('#soluongthongbao').text(soluong)
+                            // Hiển thị dữ liệu trong bảng
+                            data.forEach(function (order) {
+                                $('#thogbao').append(`
+                    <div class="text-dark fw-bolder" style="text-decoration: underline; cursor : pointer">You have a new voucher in your account.</div>
+                    `);
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.error('Error:', errorThrown);
+                        }
+                    });
+                }
+            });
+
+            $('#xoathongbao').click(function () {
+                $.ajax({
+                    url: '/deleteNotification?id='+id,
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        location.reload();
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                    }
+                });
+            })
         });
 
         function Finalpayment(ptthanhtoan) {
@@ -102,14 +176,29 @@
                     //kiem tra sdt co rong
                     if (sdt === "") {
                         Swal.fire({
-                            title: 'Thông Báo từ hệ thống',
-                            text: 'Số điện thoại không được để trống!',
+                            title: 'Notifications from the system',
+                            text: 'Opss!, Your account does not have a phone number, please update it.',
                             icon: 'error', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-                            confirmButtonText: 'Xác nhận',
+                            confirmButtonText: 'Confirm',
                             allowOutsideClick: false,
-
                         }).then((result) => {
-                            window.location.href = "/userprofile";
+                            if (result.isConfirmed) {
+                                window.location.href = "/userprofile";
+                            }
+                        })
+                    }
+
+                    if (diachi == ""){
+                        Swal.fire({
+                            title: 'Notifications from the system',
+                            text: 'Opss!, Your account does not have an address, please update it.',
+                            icon: 'error', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                            confirmButtonText: 'Confirm',
+                            allowOutsideClick: false,
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                window.location.href = "/userprofile";
+                            }
                         })
                     }
                 }
@@ -176,10 +265,10 @@
         function thanhtoan() {
 
             Swal.fire({
-                title: 'Thông Báo từ hệ thống',
-                text: 'Cảm ơn bạn đã thanh toán hóa đơn!, Vui lòng chờ đơn hàng được xác nhận!',
+                title: 'Notifications from the system',
+                text: 'Thank you for paying your invoice!, Please wait for your order to be confirmed!',
                 icon: 'success', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
-                confirmButtonText: 'Xác nhận',
+                confirmButtonText: 'Confirm',
                 allowOutsideClick: false,
 
             }).then((result) => {
@@ -273,9 +362,8 @@
         <main class="flex-shrink-0">
             <div class="container-fluid text-bg-light p-2 pb-1 mb-2" style="background-color: white !important;">
                 <div class="row">
-                    <div class="col-12">
-                        <i class="fa-solid fa-location-dot fa-beat-fade ms-5 me-2" style="color: #fb7b04;"></i>
-                        <span><strong>Delivery Address</strong></span>
+                    <div class="col-12 d-flex justify-content-center">
+                        <h4 class="fw-bolder mb-2">Customer information</h4>
                         <span id="id" style="color: white" th:text="${user.getId()}"></span>
                     </div>
                     <div class="col-12">
@@ -327,7 +415,7 @@
                                 </th>
                                 <th class="align-middle text-center">Price</th>
                                 <th class="align-middle text-center">Quantity</th>
-                                <th class="align-middle text-center">total payment</th>
+                                <th class="align-middle text-center">Total payment</th>
                             </tr>
                             </thead>
                             <tbody id="thanhtoan">
@@ -369,26 +457,51 @@
                     </div>
                     <div class="col-12">
                         <div class="row">
-                            <div class="col-5 border-end">
-                                <div class="inpu d-flex">
-                                    <span class="text mt-3 mx-3">Message</span>
-                                    <div class="input-group me-3">
-                                        <textarea class="form-control" aria-label="With textarea"></textarea>
+                            <div class="col-4 border-end">
+                                <div class="row">
+                                    <div class="col-4 d-flex justify-content-center align-items-center">
+                                        <div>
+                                            <span>Payment methods</span>
+                                        </div>
                                     </div>
+                                    <div class="col-8">
+                                        <div style="margin-top: 28px">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" value="PayPal"
+                                                       name="flexRadioDefault">
+                                                <label class="form-check-label">
+                                                    PayPal (payment by bank)
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="radio" value="Cod"
+                                                       name="flexRadioDefault">
+                                                <label class="form-check-label">
+                                                    Cod (Payment in cash)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+<!--                                        <div class="p-2 w-50">-->
+<!--                                            -->
+<!--                                        </div>-->
+
+<!--                                        <div class="w-50 ms-auto p-2">-->
+<!--                                            -->
+<!--                                        </div>-->
                                 </div>
                             </div>
-                            <div class="col-7">
+                            <div class="col-8">
                                 <ul class="list-group list-group-flush">
                                     <li class="list-group-item d-flex">
                                         <div class="p-2 flex-fill"><strong>Shipping Unit</strong></div>
                                         <div class="p-2 me-5 flex-fill align-middle text-center">Fast</div>
-                                        <div class="p-2 me-4 flex-fill align-middle text-center">
-                                            <a href="" class="text-danger pointeredit">Edit</a>
-                                        </div>
+                                        <div class="p-2 me-4 flex-fill align-middle text-center">=</div>
                                         <div class="p-2 me-4 flex-fill align-middle text-center">$2</div>
                                     </li>
                                     <li class=" list-group-item text-success"><i class="fa-solid fa-truck-moving"></i>
-                                        Orders will be received on April 30
+                                        Your order will arrive to you within 3 days (from the date the invoice is confirmed)
                                     </li>
                                     <li class="list-group-item"></li>
                                 </ul>
@@ -434,34 +547,6 @@
                             <!--                                    </div>-->
                             <!--                                </div>-->
                             <!--                            </li>-->
-                            <li class="list-group-item">
-                                <div class="container">
-                                    <div class="d-flex">
-                                        <div class="p-2 w-50">
-                                            <span>Payment methods</span>
-                                        </div>
-
-                                        <div class="w-50 ms-auto p-2">
-                                            <div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" value="PayPal"
-                                                           name="flexRadioDefault">
-                                                    <label class="form-check-label">
-                                                        PayPal (thanh toán bằng ngân hàng)
-                                                    </label>
-                                                </div>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="radio" value="Cod"
-                                                           name="flexRadioDefault">
-                                                    <label class="form-check-label">
-                                                        Cod (thanh toán bằng tiền mặt)
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
                         </ul>
                     </div>
                 </div>
@@ -478,16 +563,16 @@
                             <div class="col-4 ms-auto">
                                 <div class="row">
                                     <div class="col-6">
-                                        <div>Tổng tiền hàng</div>
-                                        <div>Phí vận chuyển</div>
-                                        <div>Tổng cộng Voucher</div>
-                                        <div>Tổng thanh toán</div>
+                                        <div>Total cost of goods</div>
+                                        <div>Transport fee</div>
+                                        <div>Voucher</div>
+                                        <div>Total payment</div>
                                     </div>
                                     <div class="col-6">
                                         <div class="tienThanhToan"></div>
                                         <div>$2</div>
                                         <div id="discount">$0</div>
-                                        <div id="TongThanhToan"></div>
+                                        <div id="TongThanhToan" class="text-danger fw-bolder"></div>
                                     </div>
                                 </div>
                             </div>
@@ -520,6 +605,20 @@
 <script th:src="@{/assests/js/searchRcmd.js}"></script>
 <!--    <script src="/assests/js/jsAll.js"></script>-->
 <script>
+    $(document).ready(async function(){
+        var tongsp = document.getElementById("tongSoLuongSP");
+        var tongSoLuong = 0;
+        if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
+            var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+            for (var int = 0; int < objarray.length; int++) {
+                tongSoLuong = objarray.length;
+            }
+        }else {
+            tongsp.textContent = tongSoLuong;
+        }
+        tongsp.textContent = tongSoLuong;
+    })
+
     function editAddress() {
 
         var input = document.getElementById("diachi");

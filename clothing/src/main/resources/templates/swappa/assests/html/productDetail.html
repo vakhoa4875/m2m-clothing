@@ -98,7 +98,7 @@
 
                             </div>
                             <div class="d-flex justify-content-center gap-3 m-0 mt-1 mb-3 p-0">
-                                <button class="btn border btn-outline-success fw-bolder" id="buynow" type="button"
+                                <button class="btn border btn-outline-success fw-bolder" id="mualien" type="button"
                                         style="width: 10rem;">
                                     BuyNow
                                 </button>
@@ -493,11 +493,101 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script th:src="@{/assests/js/searchRcmd.js}"></script>
-<script th:inline="javascript">
-    /* Định nghĩa hàm formatNumber để format số thành chuỗi với số lượng chữ số thập phân cho trước */
-    function formatNumber(number) {
-        return number.toFixed(2);
-    }
+<script>
+    $(document).ready(function () {
+        $('#updateError').hide();
+        $('#updateSuccess').hide();
+        fetchVouchers();
+        fetchOrders();
+
+        $('#submitBtn').click(function () {
+            updateUser();
+            generateQRCode();
+        });
+
+        $('#fileInput').change(handleFileInputChange);
+        $('#navbar_search_input').keydown(function (e) {
+            if (e.which === 13) {
+                searchProducts();
+            }
+        });
+        getSoLuongGioHang();
+
+        //dung co xoa cai nay vi khong tim duoc cach nao load va xoa thong bao
+        var id;
+        if (sessionStorage.getItem("idnguoidung") == ""){
+
+        }else {
+            $.ajax({
+                url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    soluong = data.length;
+                    $('#soluongthongbao').text(soluong)
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        }
+
+        $('#btnthongobao').click(function () {
+            id = (sessionStorage.getItem("idnguoidung") == "" ? "false" : sessionStorage.getItem("idnguoidung"));
+            if (id == "false"){
+                Swal.fire({
+                    title: 'Notifications from the system',
+                    text: 'You are not logged in, please log in.',
+                    icon: 'warning', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                    confirmButtonText: 'Confirm',
+                    allowOutsideClick: false
+                }).then((result) => {
+                    if (result){
+                        window.location.href = "/loginacount";
+                    }
+                })
+            }else {
+                $("#notification-dropdown").toggleClass("d-none");
+                $('#thogbao').empty();
+                $.ajax({
+                    url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        var soluong = data.length;
+                        if (soluong == 0){
+                            $('#thogbao').append(`
+                            <div class="text-dark fw-bolder" style="color: #edd678">No new announcements.</div>`);
+                        }
+                        $('#soluongthongbao').text(soluong)
+                        // Hiển thị dữ liệu trong bảng
+                        data.forEach(function (order) {
+                            $('#thogbao').append(`
+                        <div class="text-dark fw-bolder" style="text-decoration: underline; cursor : pointer">You have a new voucher in your account.</div>
+                        `);
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                    }
+                });
+            }
+        });
+
+        $('#xoathongbao').click(function () {
+            $.ajax({
+                url: '/deleteNotification?id='+id,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        })
+    });
 </script>
 <script th:src="@{/assests/js/searchRcmd.js}"></script>
 

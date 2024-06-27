@@ -9,6 +9,7 @@
     <link rel="stylesheet" th:href="@{/assests/css/style.css}">
     <link rel="shortcut icon" th:href="@{/assests/srcPic/x.png}" type="image/x-icon">
     <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         .img-container {
             height: 200px;
@@ -296,7 +297,7 @@
                 <div class="mt-4">
                     <h2 class="text-center mb-1">Why M2M clothing?
                         <p id="iduser" th:text="${iduser}" style="display: none"></p>
-                        <p id="email" th:text="${email}" style="display: none"></p>
+                        <p id="emailtrangchu" th:text="${email}" style="display: none"></p>
                     </h2>
                     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 justify-content-center gy-3">
                         <div class="col text-center">
@@ -406,53 +407,22 @@
 <script th:src="@{https://kit.fontawesome.com/c22bed0de0.js}" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios@1.6.7/dist/axios.min.js"></script>
 <script th:src="@{/assests/js/jsAll.js}"></script>
-<script>
-    $(document).ready(function () {
-        var email = $('#email').text();
-        sessionStorage.setItem("tendn",email)
-        $('#xoathongbaooo').click(function () {
-            var id = $('#iduser').text();
-            xoathongbao(id);
-        });
-        var soluong = 0;
-        var id = $('#iduser').text();
-        $.ajax({
-            url: '/finduseridwitchNotification?id=' + id,
-            type: 'GET',
-            contentType: 'application/json',
-            success: function (data) {
-                soluong = data.length;
-                $('#soluongthongbao').text(soluong)
-                // Hiển thị dữ liệu trong bảng
-                data.forEach(function (order) {
-                    $('#thongbao').append(`
-                        <div class="dropdown-item">
-                           <div>Có mã giảm giá mới!</div>
-                        </div>`);
-                });
-            },
-            error: function (jqXHR, textStatus, errorThrown) {
-                console.error('Error:', errorThrown);
-            }
-        });
-
-        function xoathongbao(id) {
-            $.ajax({
-                url: '/deleteNotification?id=' + id,
-                type: 'GET',
-                contentType: 'application/json',
-                success: function (data) {
-                    window.location.href = "/trangchu";
-                },
-                error: function (jqXHR, textStatus, errorThrown) {
-                    console.error('Error:', errorThrown);
-                }
-            });
-        }
-    });
-</script>
 <script th:src="@{/assests/js/searchRcmd.js}"></script>
 <script>
+    $(document).ready(async function(){
+        var tennguoidung = sessionStorage.getItem("tendn");
+        var idnguoidung = sessionStorage.getItem("idnguoidung");
+
+        if(idnguoidung == null){
+            sessionStorage.setItem("idnguoidung","");
+        }else if(idnguoidung == ""){
+            sessionStorage.setItem("idnguoidung",$('#iduser').text())
+            sessionStorage.setItem("tendn",$('#emailtrangchu').text())
+        }else {
+            sessionStorage.setItem("tendn",$('#emailtrangchu').text())
+            sessionStorage.setItem("idnguoidung",$('#iduser').text())
+        }
+    })
     var duongdan  = sessionStorage.getItem("duongdan");
     if(duongdan != null){
         window.location.href = sessionStorage.getItem("duongdan");
@@ -462,5 +432,82 @@
 </script>
 <script th:src="@{/assests/js/SearchProduct.js}"></script>
 <script th:src="@{/assests/js/Home.js}"></script>
+<script>
+    $(document).ready(function () {
+        var id;
+        if (sessionStorage.getItem("idnguoidung") == ""){
+
+        }else {
+            $.ajax({
+                url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    soluong = data.length;
+                    $('#soluongthongbao').text(soluong)
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        }
+
+        $('#btnthongobao').click(function () {
+            id = (sessionStorage.getItem("idnguoidung") == "" ? "false" : sessionStorage.getItem("idnguoidung"));
+            if (id == "false"){
+                Swal.fire({
+                    title: 'Notifications from the system',
+                    text: 'You are not logged in, please log in.',
+                    icon: 'warning', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                    confirmButtonText: 'Confirm',
+                    allowOutsideClick: false
+                }).then((result) => {
+                    if (result){
+                        window.location.href = "/loginacount";
+                    }
+                })
+            }else {
+                $("#notification-dropdown").toggleClass("d-none");
+                $('#thogbao').empty();
+                $.ajax({
+                    url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        var soluong = data.length;
+                        if (soluong == 0){
+                            $('#thogbao').append(`
+                            <div class="text-dark fw-bolder" style="color: #edd678">No new announcements.</div>`);
+                        }
+                        $('#soluongthongbao').text(soluong)
+                        // Hiển thị dữ liệu trong bảng
+                        data.forEach(function (order) {
+                            $('#thogbao').append(`
+                        <div class="text-dark fw-bolder" style="text-decoration: underline; cursor : pointer">You have a new voucher in your account.</div>
+                        `);
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                    }
+                });
+            }
+        });
+
+        $('#xoathongbao').click(function () {
+            $.ajax({
+                url: '/deleteNotification?id='+id,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        })
+    })
+</script>
 </body>
 </html>
