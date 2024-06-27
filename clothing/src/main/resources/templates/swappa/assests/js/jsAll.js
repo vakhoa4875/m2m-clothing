@@ -29,6 +29,10 @@ function compareData() {
                 `;
             document.getElementById("productList").appendChild(tr);
 
+            $('#tiengiamgia').text("$0");
+            $('.tienCanTra').text("$0");
+            $('.tienThanhToan').text("$0");
+
             var thanhtoan = $('#thanhtoan');
             var div = `<a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Checkout cart</a>`;
             thanhtoan.append(div);
@@ -36,9 +40,7 @@ function compareData() {
                 thanhtoan.removeChild(1);
             }
 
-            $('#tiengiamgia').text("$0");
-            $('.tienCanTra').text("$0");
-            $('.tienThanhToan').text("$0");
+
         }
 
         // Duyệt qua tất cả các phần tử trong local storage
@@ -578,7 +580,7 @@ btnCart.addEventListener("click", function() {
     productClone.addEventListener('transitionend', () => {
         if (!flag) { //dùng để check và cho hàm này được hoạt động 1 lần duy nhất(vì hàm hoạt động 2 lần)
             if(dangnhap.innerHTML === ""){
-                alert("Có vẻ như bạn chưa đăng nhập, vui lòng đăng nhập!");
+                alert("You are not logged in, please log in.!");
                 const currentUrl = window.location.href;
                 const url = new URL(currentUrl);
                 const pathAndQuery = url.pathname + url.search;
@@ -652,7 +654,7 @@ btnBuyNow.addEventListener("click",function (){
     productClone.addEventListener('transitionend', () => {
         if (!flag) { //dùng để check và cho hàm này được hoạt động 1 lần duy nhất(vì hàm hoạt động 2 lần)
             if(dangnhap.innerHTML === ""){
-                alert("Có vẻ như bạn chưa đăng nhập, vui lòng đăng nhập!");
+                alert("You are not logged in, please log in.!");
                 const currentUrl = window.location.href;
                 const url = new URL(currentUrl);
                 const pathAndQuery = url.pathname + url.search;

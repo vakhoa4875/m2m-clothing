@@ -5,6 +5,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <title>Layout</title>
 
 </head>
@@ -129,7 +130,7 @@
                                             </span>
                                 </a>
                             </li>
-                            <li class="ms-3 d-flex align-items-center justify-content-center dropdown">
+                            <li class="ms-3 d-flex align-items-center justify-content-center dropdown" id="btnthongobao">
                                 <div class="border border-0 position-relative" data-toggle="dropdown"
                                    style="background-color: rgb(18,17,13) !important;">
                                     <i class="fa-regular fa-bell" style="color: white"></i>
@@ -138,6 +139,15 @@
                                       </span>
                                 </div>
                             </li>
+                            <div id="notification-dropdown" style="position: relative" class="d-none">
+                                <div class="d-flex flex-column rounded-2" style="width: 370px; background-color: #bbbbbb; position: absolute; top: 58px; left: -190px">
+                                    <div id="thogbao" style="padding: 10px" class="d-flex justify-content-center flex-column">
+<!--                                        <div class="text-dark">You have a new voucher in your account.</div>-->
+                                    </div>
+                                    <hr class="border border-dark border-1 opacity-50 m-0">
+                                    <a id="xoathongbao" style="font-size: 20px; cursor : pointer"><i class="fa-regular fa-trash-can"></i></a>
+                                </div>
+                            </div>
                         </ul>
                     </div>
                     <div class="d-flex justify-content-around pb-1" id="userListCategory">
@@ -188,63 +198,3 @@
 </body>
 
 </html>
-<script>
-    $(document).ready(async function(){
-        console.log("bac")
-        var tongsp = document.getElementById("tongSoLuongSP");
-        var tongSoLuong = 0;
-        if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
-            var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
-            for (var int = 0; int < objarray.length; int++) {
-                tongSoLuong = objarray.length;
-            }
-        }else {
-            tongsp.textContent = tongSoLuong;
-        }
-        tongsp.textContent = tongSoLuong;
-
-        // $('#xoathongbaooo').click(function () {
-        //     var id = $('#iduser').text();
-        //     xoathongbao(id);
-        // });
-        //
-        // var soluong = 0;
-        //
-        // var id = $('#iduser').text();
-        // $.ajax({
-        //     url: '/finduseridwitchNotification?id='+id,
-        //     type: 'GET',
-        //     contentType: 'application/json',
-        //     success: function (data) {
-        //         soluong = data.length;
-        //         $('#soluongthongbao').text(soluong)
-        //         // Hiển thị dữ liệu trong bảng
-        //         data.forEach(function (order) {
-        //             $('#thongbao').append(`
-        //                 <div class="dropdown-item">
-        //                    <div>Có mã giảm giá mới!</div>
-        //                 </div>
-        //         `);
-        //         });
-        //     },
-        //     error: function (jqXHR, textStatus, errorThrown) {
-        //         console.error('Error:', errorThrown);
-        //     }
-        // });
-        //
-        // function xoathongbao(id){
-        //     $.ajax({
-        //         url: '/deleteNotification?id='+id,
-        //         type: 'GET',
-        //         contentType: 'application/json',
-        //         success: function (data) {
-        //             console.log("xóa thành công")
-        //             window.location.href = "/trangchu";
-        //         },
-        //         error: function (jqXHR, textStatus, errorThrown) {
-        //             console.error('Error:', errorThrown);
-        //         }
-        //     });
-        // }
-    })
-</script>

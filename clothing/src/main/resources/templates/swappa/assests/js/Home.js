@@ -63,10 +63,10 @@ function renderHtmlHome(products,idElementRender){
                         <div class="w-100">
                             <div class="d-flex justify-content-around">
                                 ${product.sale ? `
-                                    <del>${product.price}</del>
+                                    <del>$${product.price}</del>
                                     <span style="color:#c07d4b; font-weight: bolder">
-                                        ${product.price - (product.sale.salePercent / 100 * product.price)}
-                                    </span>` : `${product.price}`}
+                                        $${product.price - (product.sale.salePercent / 100 * product.price)}
+                                    </span>` : `$${product.price}`}
                             </div>
                         </div>
                         <div class="rounded-bottom-3" style="background-color: rgb(224, 150, 150);">

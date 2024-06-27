@@ -1,6 +1,26 @@
 $(document).ready(async function(){
     await loadAllProduct()
     layTongSoLuong();
+
+        $('#updateError').hide();
+        $('#updateSuccess').hide();
+        fetchVouchers();
+        fetchOrders();
+
+        $('#submitBtn').click(function () {
+            updateUser();
+            generateQRCode();
+        });
+
+        $('#fileInput').change(handleFileInputChange);
+        $('#navbar_search_input').keydown(function (e) {
+            if (e.which === 13) {
+                searchProducts();
+            }
+        });
+        getSoLuongGioHang();
+
+
 })
 let productsByCategory = [];
 let products = [];
