@@ -53,15 +53,24 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public void sendOTPEmail(String toEmail, String otp) {
+    public void sendOTPEmail(String toEmail, String otp,String subject) {
         try {
             MimeMessage message = emailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setFrom("kaisamaslain+Nerdyers@gmail.com");
             helper.setTo(toEmail);
-            helper.setSubject("Mã OTP cho đăng ký tài khoản");
-            helper.setText("Mã OTP của bạn là: " + otp);
+            helper.setSubject(subject);
+            String htmlMsg = "<div style='font-family: Arial, sans-serif;'>" +
+                    "<h2 style='color: #f44336;'>Hello,</h2>" +
+                    "<p>Your OTP code is: <b style='color: #4CAF50;'>" + otp + "</b></p>" +
+                    "<p>Please do not share this code with anyone.</p>" +
+                    "<hr>" +
+                    "<p style='color: #555;'>Best regards,</p>" +
+                    "<p style='color: #555;'>Our Support Team</p>" +
+                    "</div>";
+
+            helper.setText(htmlMsg, true);
             emailSender.send(message);
             session.setAttribute("otp", otp);
             session.setAttribute("email", toEmail);
