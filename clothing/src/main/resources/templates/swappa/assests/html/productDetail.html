@@ -20,40 +20,6 @@
 
         }
     </style>
-    <script>
-        $(document).ready(function () {
-            $("#submitButtonNhanXet").click(function () {
-                var commentText = $("#commentText").val();
-                var urlString = window.location.href;
-                var urlParts = urlString.split('?');
-                var queryString = urlParts[1];
-                var queryParams = queryString.split('=');
-                var slugUrl = queryParams[1];
-                var currentDate = new Date();
-                // Tạo một đối tượng CommentDTO
-                var commentDTO = {
-                    comment: commentText,
-                    slugUrl: slugUrl, // Sửa từ slug_url thành slugUrl để trùng với tên trường trong DTO
-                    createDate: currentDate
-                };
-                // Thực hiện AJAX request để tạo nhận xét
-                $.ajax({
-                    url: "/createComment",
-                    type: "POST",
-                    contentType: "application/json",
-                    data: JSON.stringify(commentDTO),
-                    success: function (response) {
-                        $("#commentText").val("");
-                        location.reload();
-                    },
-                    error: function (xhr, status, error) {
-                        console.error("Lỗi khi tạo nhận xét:", error);
-                        // Tùy chọn, bạn có thể hiển thị thông báo lỗi cho người dùng
-                    }
-                });
-            });
-        });
-    </script>
     <style>
         .link-body-emphasis:hover{
             color: rgba(178, 169, 169, 0.96) !important;
@@ -209,7 +175,12 @@
                                             <div class="flex-shrink-0 my-3">
                                                 <img src="../shopImg/" id="logoShop" alt="..." style="width: 113px; height: 113px; border-radius: 100%; border: gray solid 1px">
                                             </div>
-                                            <div class="flex-grow-1 ms-3" id="NameShop"></div>
+                                            <div class="d-flex justify-content-center">
+                                                <div class="flex-grow-1 ms-3" id="NameShop"></div>
+                                                <button class="btn btn-custom" id="viewShopButton">
+                                                    <i class="fa-solid fa-store"></i> View shop
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-3 d-flex" style="font-size: 13px">
@@ -218,8 +189,8 @@
                                             <div class="flex-grow-1">Orders sold within 1 month</div>
                                         </div>
                                         <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
-                                            <div class="flex-grow-1" id="total-product">0 Product</div>
-                                            <div class="flex-grow-1" id="orders-sold">0 Order</div>
+                                            <div class="flex-grow-1" id="total-product">0</div>
+                                            <div class="flex-grow-1" id="orders-sold">0</div>
                                         </div>
                                     </div>
                                     <div class="col-3 d-flex" style="font-size: 13px">
@@ -228,8 +199,8 @@
                                             <div class="flex-grow-1">Total comments</div>
                                         </div>
                                         <div class="d-flex text-danger flex-column ms-2 w-50 my-4">
-                                            <div class="flex-grow-1" id="joined">0 Date</div>
-                                            <div class="flex-grow-1" id="total-comments">0 Comment</div>
+                                            <div class="flex-grow-1" id="joined">0</div>
+                                            <div class="flex-grow-1" id="total-comments">0</div>
                                         </div>
                                     </div>
                                     <div class="col-3 d-flex" style="font-size: 13px">
@@ -245,78 +216,35 @@
                                 </div>
                             </div>
                             <div class="mt-2">
-
                                 <div class="row d-flex justify-content-center">
                                     <div class="col-md-8 col-lg-6 w-100">
                                         <div class="card shadow-0 border" style="background-color: #f0f2f5;">
                                             <div class="card-body p-2">
                                                 <div class="form-outline mb-4">
                                                     <div class="input-group mb-3">
-                                                    <textarea placeholder="Nhập nhận xét của bạn về sản phẩm"
+                                                    <textarea placeholder="Enter your comment about the product"
                                                               class="form-control" id="commentText" rows="1"></textarea>
                                                         <button class="btn btn-outline-secondary" type="button"
-                                                                id="submitButtonNhanXet">Nhận xét
+                                                                id="submitButtonNhanXet">Comment
                                                         </button>
                                                     </div>
                                                     <div id="commentMessage" class="text-danger"></div>
                                                     <!-- Placeholder for error/success message -->
                                                 </div>
-
-
-                                                <div class="card mb-4" th:each="comment : ${commentM}">
-                                                    <div class="card-body">
-                                                        <h5 th:text="${comment.getComment()}"></h5>
-
-                                                        <div class="d-flex justify-content-between">
-                                                            <div class="d-flex flex-row align-items-center">
-                                                                <img th:src="@{'/assests/imagesUser/' + ${comment.getUser().getAvatar()}}"
-                                                                     alt="avatar" width="50"
-                                                                     height="50"/>
-                                                                <p class="small mb-0 ms-2"
-                                                                   th:text="${comment.getUser().getFullname()}"></p>
-                                                            </div>
-                                                            <div class="d-flex flex-row align-items-center">
-                                                                <p class="small text-muted mb-0">Upvote?</p>
-                                                                <i class="far fa-thumbs-up mx-2 fa-xs text-black"
-                                                                   style="margin-top: -0.16rem;"></i>
-                                                                <p class="small text-muted mb-0"
-                                                                   th:text="${#dates.format(comment.getCreateDate(), 'dd-MM-yyyy')}"></p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div id="commentsContainer" class="card mb-4">
+                                                    <!-- Dữ liệu comment sẽ được thêm vào đây bằng JavaScript -->
                                                 </div>
-
-
-                                                <div class="d-flex justify-content-center ">
+                                                <div class="d-flex justify-content-center">
                                                     <nav aria-label="Page navigation example">
-                                                        <ul class="pagination">
-                                                            <li class="page-item">
-                                                                <a class="page-link text-dark" href="#"
-                                                                   aria-label="Previous">
-                                                                    <span aria-hidden="true">&laquo;</span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="page-item "><a class="page-link text-dark"
-                                                                                      href="#">1</a></li>
-                                                            <li class="page-item"><a class="page-link text-dark"
-                                                                                     href="#">2</a></li>
-                                                            <li class="page-item"><a class="page-link text-dark"
-                                                                                     href="#">3</a></li>
-                                                            <li class="page-item">
-                                                                <a class="page-link text-dark" href="#"
-                                                                   aria-label="Next">
-                                                                    <span aria-hidden="true">&raquo;</span>
-                                                                </a>
-                                                            </li>
+                                                        <ul class="pagination" id="pagination">
+                                                            <!-- Các nút phân trang sẽ được thêm bằng JavaScript -->
                                                         </ul>
                                                     </nav>
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <div class="card text-start mt-4">
                                 <div class="card-header d-flex align-items-center border-bottom mx-3">
@@ -367,23 +295,6 @@
                                     </table>
                                 </div>
                             </div>
-                            <!-- <div class="card text-start mt-4">
-                                <div class="card-header d-flex align-items-center gap-2 flex-wrap border-bottom mx-3">
-                                    <span class="h4">Return & Refund</span>
-                                    <a href="#!/404page" class="text-success">Return Policies</a>
-                                </div>
-                                <div>
-                                    <ul class="text-secondary">
-                                        <li><i class="fa-solid fa-shield-virus" style="color: #e66f00;"></i> Eligible for <a
-                                                href="#!/404page" class="text-success">PayPal Purchase Protection</a> , so
-                                            you
-                                            get
-                                            what you paid for</li>
-                                        <li><i class="fa-solid fa-shield-virus" style="color: #e66f00;"></i> Items received
-                                            not as described shall be returned to the seller for a prompt refund</li>
-                                    </ul>
-                                </div>
-                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -394,61 +305,142 @@
 
     </main>
 
-    <!-- <div>
-        <textarea name="" id="" ng-model="firstname" cols="30" rows="10"></textarea>
-        <button type="button" ng-click="test()">asd</button>
-    </div> -->
 </div>
 
 <footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
 <script>
     $(document).ready(function() {
-        // Hàm lấy tham số từ URL
         function getQueryParam(name) {
             let url = new URL(window.location.href);
             return url.searchParams.get(name);
         }
 
-        // Lấy slug_url từ URL hiện tại
         var slugUrl = getQueryParam('slug_url');
-        console.log('Slug URL:', slugUrl);
-
         if (slugUrl) {
-            // Gọi AJAX đầu tiên để lấy product_id dựa trên slug_url
             $.ajax({
                 url: '/findbyproductidapi',
                 type: 'GET',
                 data: { slug_url: slugUrl },
                 success: function(productResponse) {
-                    console.log('Product Response:', productResponse);
                     if (productResponse && productResponse.productId) {
                         var productId = productResponse.productId;
-                        // Gọi AJAX thứ hai để lấy shop_id dựa trên product_id
+                        $.ajax({
+                            url: '/get-comments-by-productId',
+                            type: 'GET',
+                            data: { productId: productId },
+                            success: function(commentResponse) {
+                                // Tính số lượng trang
+                                var totalComments = commentResponse.length;
+                                var totalPages = Math.ceil(totalComments / 5);
+
+                                // Hiển thị phân trang
+                                var paginationContainer = $('#pagination');
+                                for (var i = 1; i <= totalPages; i++) {
+                                    var pageHtml = `
+                                    <li class="page-item"><a class="page-link text-dark" href="#" data-page="${i}">${i}</a></li>
+                                `;
+                                    paginationContainer.append(pageHtml);
+                                }
+
+                                // Hiển thị comment theo trang
+                                function displayComments(page) {
+                                    var startIndex = (page - 1) * 5;
+                                    var endIndex = startIndex + 5;
+                                    var commentsContainer = $('#commentsContainer');
+                                    commentsContainer.empty(); // Xóa nội dung cũ trước khi hiển thị trang mới
+
+                                    commentResponse.slice(startIndex, endIndex).forEach(function(commentArray) {
+                                        if (commentArray.length >= 6) {
+                                            var commentHtml = `
+                                            <div class="card mb-4">
+                                                <div class="card-body">
+                                                    <h5>${commentArray[2]}</h5>
+                                                    <div class="d-flex justify-content-between">
+                                                        <div class="d-flex flex-row align-items-center">
+                                                            <img src="/assests/imagesUser/${commentArray[4]}" alt="avatar" width="50" style="border-radius: 30%" height="50"/>
+                                                            <p class="small mb-0 ms-2">${commentArray[5]}</p>
+                                                        </div>
+                                                        <div class="d-flex flex-row align-items-center">
+                                                            <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
+                                                            <p class="small text-muted mb-0">${commentArray[3]}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        `;
+                                            commentsContainer.append(commentHtml);
+                                        } else {
+                                            console.warn('Mảng con không có đủ thông tin cần thiết.');
+                                        }
+                                    });
+                                }
+
+                                // Mặc định hiển thị trang đầu tiên
+                                displayComments(1);
+
+                                // Xử lý sự kiện khi click vào nút phân trang
+                                paginationContainer.on('click', 'a.page-link', function(e) {
+                                    e.preventDefault();
+                                    var page = $(this).data('page');
+                                    displayComments(page);
+                                });
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Lỗi khi lấy danh sách comment:', error);
+                            }
+                        });
+                    } else {
+                        console.error('Không tìm thấy product_id.');
+                    }
+                },
+                error: function(error) {
+                    console.error('Lỗi khi lấy product_id:', error);
+                }
+            });
+        } else {
+            console.error('Tham số slug_url bị thiếu trong URL');
+        }
+    });
+
+</script>
+<script>
+    $(document).ready(function() {
+        function getQueryParam(name) {
+            let url = new URL(window.location.href);
+            return url.searchParams.get(name);
+        }
+        var slugUrl = getQueryParam('slug_url');
+        if (slugUrl) {
+            $.ajax({
+                url: '/findbyproductidapi',
+                type: 'GET',
+                data: { slug_url: slugUrl },
+                success: function(productResponse) {
+                    if (productResponse && productResponse.productId) {
+                        var productId = productResponse.productId;
                         $.ajax({
                             url: '/product-shop',
                             type: 'GET',
                             data: { productId: productId },
                             success: function(shopResponse) {
-                                console.log('Shop Response:', shopResponse);
                                 if (shopResponse && shopResponse.shop_id) {
                                     var shopId = shopResponse.shop_id;
-                                    // Gọi AJAX thứ ba để lấy thông tin shop dựa trên shop_id
                                     $.ajax({
                                         url: '/shop',
                                         type: 'GET',
                                         data: { shop_id: shopId },
                                         success: function(shopDetailsResponse) {
-                                            console.log('Shop Details Response:', shopDetailsResponse);
                                             if (shopDetailsResponse && shopDetailsResponse.length > 0) {
                                                 var shopDetails = shopDetailsResponse[0];
-                                                $('#logoShop').attr('src', '/assests/shopImg/' + shopDetails[0]);
+                                                $('#logoShop').attr('src', '/assets/shopImg/' + shopDetails[0]);
                                                 $('#NameShop').text(shopDetails[1]);
-                                                $('#total-product').text(shopDetails[2] + ' Product');
-                                                $('#orders-sold').text(shopDetails[3] + ' Order');
-                                                $('#joined').text(shopDetails[4] + ' Date');
-                                                $('#total-comments').text(shopDetails[5] + ' Comment');
-                                                $('#total-categories').text(shopDetails[6] + ' Category');
+                                                $('#total-product').text(shopDetails[2]);
+                                                $('#orders-sold').text(shopDetails[3]);
+                                                $('#joined').text(shopDetails[4]);
+                                                $('#total-comments').text(shopDetails[5]);
+                                                $('#total-categories').text(shopDetails[6]);
                                                 $('#total-likes').text(shopDetails[7] + ' ').append('<i class="fa-solid fa-heart" style="color: #ff0000;"></i>');
+                                                $('#viewShopButton').attr('onclick', `viewShop(${shopId})`);
                                             }
                                         },
                                         error: function(shopDetailsError) {
@@ -476,7 +468,22 @@
         }
     });
 
+    function viewShop(shopId) {
+        fetch(`/view-shop?shopId=${shopId}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    console.log('Shop Details:', data.data);
+                    localStorage.setItem('shopId', shopId);
+                    window.location.href = '/user/shop';
+                } else {
+                    console.error('Error fetching shop details:', data.message);
+                }
+            })
+            .catch(error => console.error('Fetch error:', error));
+    }
 </script>
+
 <script src="/bootstrap-5.3.2-dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://kit.fontawesome.com/c22bed0de0.js" crossorigin="anonymous"></script>
 <script src="/assests/js/app.js"></script>
@@ -485,6 +492,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script th:src="@{/assests/js/searchRcmd.js}"></script>
 <script th:inline="javascript">
     /* Định nghĩa hàm formatNumber để format số thành chuỗi với số lượng chữ số thập phân cho trước */
@@ -493,6 +501,97 @@
     }
 </script>
 <script th:src="@{/assests/js/searchRcmd.js}"></script>
+
+<script>
+    $(document).ready(function () {
+        $('#navbar_search_input').on('keydown', function (e) {
+            if (e.which == 13) {
+                searchProducts();
+            }
+        });
+        function searchProducts() {
+            var keyword = $('#navbar_search_input').val();
+            var type = $('#select_loai').val();
+            $.ajax({
+                url: '/api/search',
+                type: 'POST',
+                data: {
+                    keyword: keyword,
+                    type: type
+                },
+                success: function (response) {
+                    if (response.success) {
+                        console.log('Gọi API thành công:', response.data);
+                        sessionStorage.setItem('searchResults', JSON.stringify(response.data));
+                        window.location.href = '/search-Product';
+                    } else {
+                        console.log('Gọi API thất bại:', response.message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.log('Lỗi:', error);
+                }
+            });
+        }
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        $("#submitButtonNhanXet").click(function () {
+            var commentText = $("#commentText").val();
+            var urlString = window.location.href;
+            var urlParts = urlString.split('?');
+            var queryString = urlParts[1];
+            var queryParams = queryString.split('=');
+            var slugUrl = queryParams[1];
+            var currentDate = new Date();
+
+            // Kiểm tra trạng thái đăng nhập ở đây (ví dụ: dùng biến isLoggedIn)
+            var isLoggedIn = false; // Thay đổi thành cơ chế xác định đăng nhập của bạn
+
+            if (!isLoggedIn) {
+                // Hiển thị thông báo lỗi nếu chưa đăng nhập bằng SweetAlert
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Bạn chưa đăng nhập',
+                    text: 'Vui lòng đăng nhập để đăng nhận xét.',
+                    confirmButtonColor: '#3085d6',
+                    confirmButtonText: 'Đăng nhập'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Điều hướng người dùng đến trang đăng nhập
+                        window.location.href = '/loginacount'; // Thay đổi thành URL đăng nhập của bạn
+                    }
+                });
+                return; // Dừng việc gửi nhận xét nếu chưa đăng nhập
+            }
+
+            // Tạo một đối tượng CommentDTO
+            var commentDTO = {
+                comment: commentText,
+                slugUrl: slugUrl,
+                createDate: currentDate
+            };
+
+            // Thực hiện AJAX request để tạo nhận xét
+            $.ajax({
+                url: "/createComment",
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(commentDTO),
+                success: function (response) {
+                    $("#commentText").val("");
+                    location.reload(); // Tải lại trang sau khi tạo nhận xét thành công
+                },
+                error: function (xhr, status, error) {
+                    console.error("Lỗi khi tạo nhận xét:", error);
+                    // Tùy chọn, bạn có thể hiển thị thông báo lỗi cho người dùng
+                }
+            });
+        });
+    });
+</script>
+
 <script th:src="@{/assests/js/Favorite.js}"></script>
 <script th:src="@{/assests/js/SearchProduct.js}"></script>
 </body>

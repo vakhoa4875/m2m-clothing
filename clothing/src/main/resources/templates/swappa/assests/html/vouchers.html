@@ -114,13 +114,13 @@
                     data.forEach(function(voucher) {
                         var voucherEndDate = new Date(voucher.endDay);
                         if (voucherEndDate >= currentDate) {
-                            var buttonState = `<button class="btn btn-coffee claim-btn" data-voucher-id="${voucher.voucherID}">Nhận ngay!</button>`;
+                            var buttonState = `<button class="btn btn-coffee claim-btn" data-voucher-id="${voucher.voucherID}">Receive immediately!</button>`;
 
                             var voucherCard = `
                                 <div class="col-md-4">
                                     <div class="card voucher-card">
-                                        <div class="text-right p-2 voucher-provider">
-                                            <img src="/assests/images/logoVoucher.jpg" width="120">
+                                        <div class="text-right p-2 voucher-provider" >
+                                            <img src="/assests/images/logoVoucher.jpg" style="border-radius: 10%" width="200">
                                         </div>
                                         <div class="text-center">
                                             <small class="text-uppercase flat">${voucher.voucherName}</small>
@@ -135,7 +135,7 @@
                                             <hr>
                                         </div>
                                         <div class="text-center mb-2">
-                                            <p class="text-uppercase">Hạn sử dụng đến ${voucher.endDay}</p>
+                                            <p class="text-uppercase">EXPIRATION EXPIRATION TO ${voucher.endDay}</p>
                                             ${buttonState}
                                         </div>
                                     </div>
@@ -163,18 +163,18 @@
                                         $('.claim-btn').each(function() {
                                             var voucherID = $(this).data('voucher-id');
                                             if (userVoucherIds.includes(voucherID)) {
-                                                $(this).removeClass('claim-btn').addClass('claimed').text('Voucher đã được nhận').prop('disabled', true);
+                                                $(this).removeClass('claim-btn').addClass('claimed').text('The voucher has been claimed').prop('disabled', true);
                                             }
                                         });
                                     },
                                     error: function() {
-                                        console.error('Không thể lấy danh sách voucher của người dùng');
+                                        console.error('Unable to retrieve the user is voucher list');
                                     }
                                 });
                             }
                         },
                         error: function() {
-                            console.error('Không thể kiểm tra trạng thái đăng nhập của người dùng');
+                            console.error('Unable to check the user is login status');
                         }
                     });
 
@@ -206,10 +206,10 @@
                                 }
                             },
                             error: function() {
-                                console.error('Không thể kiểm tra trạng thái đăng nhập của người dùng');
+                                console.error('Unable to check the user is login status.');
                                 Swal.fire({
-                                    title: 'Lỗi!',
-                                    text: 'Không thể kiểm tra trạng thái đăng nhập của bạn.',
+                                    title: 'Error!',
+                                    text: 'Unable to check your login status',
                                     icon: 'error',
                                     confirmButtonText: 'OK'
                                 });
@@ -217,12 +217,12 @@
                         });
                     });
                 } else {
-                    $('#voucherContainer').append('<p>Không có voucher nào có sẵn</p>');
+                    $('#voucherContainer').append('<p>There are no vouchers available.</p>');
                 }
             },
             error: function() {
-                console.error('Không thể lấy danh sách voucher');
-                $('#voucherContainer').append('<p>Không thể tải danh sách voucher</p>');
+                console.error('Unable to retrieve the voucher list.');
+                $('#voucherContainer').append('<p>Unable to load the voucher list</p>');
             }
         });
     }
@@ -236,17 +236,17 @@
             success: function(response) {
                 if (response === 1) {
                     // Thay đổi trạng thái của nút khi nhận voucher thành công
-                    btn.removeClass('claim-btn').addClass('claimed').text('Voucher đã được nhận').prop('disabled', true);
+                    btn.removeClass('claim-btn').addClass('claimed').text('The voucher has been claimed').prop('disabled', true);
                     Swal.fire({
-                        title: 'Thành công!',
-                        text: 'Đã nhận voucher thành công!',
+                        title: 'Success!',
+                        text: 'Voucher successfully claimed!',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });
                 } else {
                     Swal.fire({
-                        title: 'Thất bại!',
-                        text: 'Không thể nhận voucher.',
+                        title: 'Error!',
+                        text: 'Unable to claim the voucher.',
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
@@ -254,8 +254,8 @@
             },
             error: function() {
                 Swal.fire({
-                    title: 'Lỗi!',
-                    text: 'Đã xảy ra lỗi khi nhận voucher.',
+                    title: 'Error!',
+                    text: 'An error occurred while claiming the voucher.',
                     icon: 'error',
                     confirmButtonText: 'OK'
                 });
