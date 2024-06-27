@@ -41,7 +41,11 @@ class Statistic {
     }
     renderTop10MostSoldProducts = async () => {
         let productsContainer = $('#top-10-sold-product-container');
-        let selectedValue = $('#select-period').val().split('/');
+        let val = $('#select-period').val();
+        if (!val) {
+            return;
+        }
+        let selectedValue = val.val().split('/');
         let month = selectedValue[0];
         let year = selectedValue[1];
         await axios
@@ -71,7 +75,11 @@ class Statistic {
             })
     }
     renderTopMostVoucherUsed = async () => {
-        let voucherSelect = $('#select-voucher-period').val().split('/');
+        let val = $('#select-voucher-period').val();
+        if (!val) {
+            return;
+        }
+        let voucherSelect = val.val().split('/');
         let chartData = {
             labels: [],
             data: []

@@ -2,32 +2,29 @@ class UserManagement {
     listUser = [];
     user = undefined;
     userIdentifier = undefined;
+    uploadedImg = {
+        base64: undefined,
+        name: undefined
+    }
 
     constructor() {
         this.self = this;
     }
 
     imageDealer = (event) => {
-        var input = event.target;
-        var file = input.files[0];
+        let input = event.target;
+        let file = input.files[0];
+        this.uploadedImg.name = file.name;
         if (file) {
-            var reader = new FileReader();
+            let reader = new FileReader();
+            let previewImage = document.getElementById('previewImage');
+
             reader.onload = function (e) {
-                var previewImage = document.getElementById('previewImage');
                 previewImage.src = e.target.result;
                 previewImage.style.display = 'block';
             }
             reader.readAsDataURL(file);
         }
-        // var file = input.files[0];
-        // if (file) {
-        //     var reader = new FileReader();
-        //     reader.onload = function (event) {
-        //         document.getElementById('previewImage').setAttribute('src', event.target.result);
-        //         document.getElementById('previewImage').style.display = 'block';
-        //     }
-        //     reader.readAsDataURL(file);
-        // }
     }
 // Load all users to table
     loadInit = async () => {
@@ -48,44 +45,44 @@ class UserManagement {
         })
     }
     createTableUsers = () => {
-        let tableHeader = `<table class="table align-items-center mb-0">
-                                <thead>
-                                <tr class="text-center">
-                                    <th scope="col" class="max-width-column"></th>
-                                    <th scope="col">Full Name</th>
-                                    <th scope="col">Gender</th>
-                                    <th scope="col">Date of Birth</th>
-                                    <th scope="col">Role</th>
-                                    <th scope="col"></th>
-                                </tr>
-                                </thead>
+        let tableHeader = `<table class="table mb-0 perfect-container">
+                                    <thead>
+                                        <tr class="text-center align-middle">
+                                            <th></th>
+                                            <th scope="col">User's name</th>
+                                            <th scope="col">Role</th>
+                                            <th scope="col">Gender</th>
+                                            <th scope="col">Date of birth</th>
+                                            <th scope="col"></th>
+                                        </tr>
+                                    </thead>
                                 <tbody>`;
         let tableBody = '';
         this.listUser.forEach(e => {
-            tableBody += `<tr>
-                            <td class="max-width-column">
-                                <div class="d-flex py-1 justify-content-center">
-                                    <div>
-                                        <img src="${e.avatar}" class="avatar avatar-sm border-radius-lg" alt="">
-                                    </div>
+            tableBody += `<tr class="text-center align-middle">
+                            <td>
+                                <div class="d-flex flex-row justify-content-start align-items-center gap-3 px-lg-4">                                    
+                                <img src="/assests/imagesUser/${e.avatar}"
+                                     alt="${e.fullname}" class="circle-image">
+                                    <h6 class="mb-0 text-sm"">${e.username}</h6>
                                 </div>
                             </td>
-                            <td class="align-middle text-center text-sm">
-                                <div class="d-flex w-100 flex-column justify-content-center">
-                                    <h6 class="mb-0 text-sm"">${e.fullname}</h6>
-                                </div>
+                            <td>
+                                <h6 class="mb-0 text-sm"">${e.fullname}</h6>
                             </td>
-                            <td class="align-middle text-center text-sm">
-                                <span class="text-secondary text-xs font-weight-bold">${e.gender}</span>
-                            </td>
-                            <td class="align-middle text-center">
-                                <span class="text-secondary text-xs font-weight-bold">${e.dob}</span>
-                            </td>
-                            <td class="align-middle text-center text-sm">
+                            <td>
                                 <span class="badge text-bg-${e.roleId === 1 ? 'primary' : (e.roleId === 3 ? 'secondary' : 'warning')}" style="font-size: 14px;">${e.roleName}</span>
 <!--						label class="form-check-label" for="inlineCheckbox1">1</label> -->
                             </td>
-                            <td class="align-middle text-center">
+                            <td>
+                                <span class="text-secondary text-xs font-weight-bold">
+                                    ${e.gender === 'Nam' || e.gender === 'Male' ? 'Male' : 'Female'}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="text-secondary text-xs font-weight-bold">${e.dob}</span>
+                            </td>
+                            <td class="d-flex flex-row align-items-center justify-content-end gap-3">
                                 <button class="btn border-0 rounded btn-outline-info" onclick="services.self.updateModal('${e.username}', '${e.email}')"
                                     data-bs-toggle="modal" data-bs-target="#exampleModalSua1"><i class="fa-solid fa-pen-to-square"></i></button>
                                 <button class="border border-0 rounded btn-outline-danger"
@@ -136,26 +133,16 @@ class UserManagement {
                             <label for="upEmail" class="form-label">Email</label>
                             <p class="form-control" id="upEmail">${services.self.user.email}</p>
                         </div>
-<!--
-                        <div class="mb-2 ">
-                            <label for="upPass" class="form-label">Password</label>
-                            <input type="text" class="form-control ps-3" id="upPass" aria-describedby=""
-                                   style="border: 1px solid #d2d6da;" value="${services.self.user.hashedPassword}" disabled>
-                        </div>
--->
                         <div class="mb-2 ">
                             <label for="upFullname" class="form-label">Fullname</label>
                             <input type="text" class="form-control ps-3" id="upFullname" value="${services.self.user.fullname}"
                                    aria-describedby="basic-addon3 basic-addon4" style="border: 1px solid #d2d6da;">
                         </div>
-
                         <div class="mb-2 ">
                             <label for="upBirth" class="form-label">Date of birth</label>
                             <input id="upBirth" class="form-control ps-3 pe-3" type="text"
                                    style="border: 1px solid #d2d6da;" value="${services.self.user.dob}">
-
                         </div>
-
                         <div class="mb-2 ">
                             <label for="upGender" class="form-label me-3 m-0">Gender</label>
                             <input id="upgenderMale" class="" type="radio" name="gender" ${(services.self.user.gender === 'Male' || services.self.user.gender === 'Nam') ? 'checked' : ''}
@@ -184,7 +171,7 @@ class UserManagement {
                     <div class="col-4">
                         <div class="container " style="margin-top: 150px;">
                             <div class="d-flex justify-content-center">
-                                <img src="${services.self.user.avatar}" class="avatar me-3 border-radius-lg"
+                                <img src="/assests/imagesUser/${services.self.user.avatar}" class="avatar me-3 border-radius-lg"
                                      id="previewImage" alt="Ảnh đã chọn">
                             </div>
                             <div class="text-center my-3" style="margin-right: 10px;">
@@ -195,6 +182,10 @@ class UserManagement {
                     </div>
                 </div>`;
         $('#updateUserModalBody').html(modelBody);
+    }
+    extractImgName = (path) => {
+        let arr = path.split('/');
+        return arr[arr.length - 1];
     }
 // Update specific user with data from Update modal
     updateUser = async () => {
@@ -207,12 +198,17 @@ class UserManagement {
         let roleName = $('#upRole option:selected').text();
         let jobTitle = $('#upJobTitle').val();
         let description = $('#upDescription').text();
-        let avatar = $('#previewImage').attr('src');
+        this.uploadedImg.base64 = $('#previewImage').attr('src');
+        let avatar = (this.uploadedImg.name)
+            ? `${this.uploadedImg.name},${this.uploadedImg.base64}`
+            : this.extractImgName(this.uploadedImg.base64);
+        console.dir(this.uploadedImg);
 
         let userData = {
             username: username,
             email: email, // password: password,
             fullname: fullname,
+            avatar: avatar,
             dob: dob,
             gender: gender,
             roleId: roleId,
@@ -228,14 +224,21 @@ class UserManagement {
             data: JSON.stringify(userData),
             contentType: 'application/json',
             success: function (updateStatus) {
+                let icon =
+                    updateStatus.includes('success') ? 'success'
+                        : updateStatus.includes('error') ? 'error'
+                            : 'info';
                 Swal.fire({
                     title: 'System Announcement',
-                    text: 'Update user information successfully!',
-                    icon: 'success',
-                    confirmButtonText: 'Confirm',
-                    allowOutsideClick: true
+                    text: updateStatus,
+                    icon: icon,
+                    confirmButtonText: 'Confirm & Reload'
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
                 });
-            }.bind(this),
+            },
             error: (error) => {
                 console.error("Error:", error);
             }
@@ -271,7 +274,7 @@ class UserManagement {
             contentType: 'application/json',
             data: JSON.stringify(userData),
             success: (insertStatus) => {
-                var icon =
+                let icon =
                     insertStatus.includes('success') ? 'success'
                         : insertStatus.includes('error') ? 'error'
                             : 'info';
@@ -279,8 +282,11 @@ class UserManagement {
                     title: 'System Announcement',
                     text: insertStatus,
                     icon: icon,
-                    confirmButtonText: 'Confirm',
-                    allowOutsideClick: true
+                    confirmButtonText: 'Confirm & Reload'
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
                 });
             },
             error: (error) => {
@@ -305,8 +311,13 @@ class UserManagement {
             success: (deleteStatus) => {
                 Swal.fire({
                     title: 'Disable user successfully!',
-                    icon: 'success'
-                })
+                    icon: 'success',
+                    confirmButtonText: 'Confirm & Reload'
+                }).then(result => {
+                    if (result.isConfirmed) {
+                        location.reload();
+                    }
+                });
             },
             error: (error) => {
                 Swal.fire({

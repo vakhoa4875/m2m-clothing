@@ -7,142 +7,8 @@
     <title>User Page</title>
     <link rel="stylesheet" href="/bootstrap-5.3.2-dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="/assests/css/style.css">
+    <link rel="stylesheet" href="/assests/css/userPage.css">
     <link rel="shortcut icon" href="/assests/srcPic/x.png" type="image/x-icon">
-    <style>
-        #orderstatus {
-            max-height: 640px; /* Giới hạn chiều cao tối đa của bảng */
-            overflow-y: auto; /* Hiển thị thanh cuộn dọc */
-        }
-
-        #orderstatus tbody {
-            overflow-y: auto; /* Hiển thị thanh cuộn dọc */
-        }
-
-        #orderstatus tbody tr {
-            width: 100%; /* Đặt chiều rộng của từng dòng bằng 100% */
-        }
-
-        #orderstatus thead th:nth-child(1) {
-            width: 5%;
-        }
-
-        #orderstatus thead th:nth-child(2) {
-            width: 15%;
-        }
-
-        #orderstatus thead th:nth-child(3) {
-            width: 8%;
-        }
-
-        #orderstatus thead th:nth-child(4) {
-            width: 35%;
-        }
-
-        #orderstatus thead th:nth-child(5) {
-            width: 8%;
-        }
-
-        #orderstatus thead th:nth-child(6) {
-            width: 5%;
-        }
-
-        #orderstatus thead th:nth-child(7) {
-            width: 12%;
-        }
-
-        #orderstatus thead th:nth-child(8) {
-            width: 20%;
-        }
-
-        #fileInput {
-            display: none;
-        }
-
-        .custom-file-label {
-            cursor: pointer;
-            padding: 10px 20px;
-            background-color: #909498;
-            color: #fff;
-        }
-
-        .custom-file-label:hover {
-            background-color: #9a9fa4;
-        }
-
-        #previewImage {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            margin-top: 20px;
-        }
-
-        #fileInput {
-            border: 2px solid #909498;
-            border-radius: 5px;
-            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-        }
-
-        #fileInput:hover {
-            border-color: #9a9fa4;
-        }
-
-        #fileInput:focus {
-            border-color: #9a9fa4;
-            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5);
-        }
-
-        .custom-file-label {
-            cursor: pointer;
-            padding: 10px 20px;
-            background-color: #909498;
-            color: #fff;
-            border: 2px solid #909498;
-            border-radius: 5px;
-        }
-
-        .custom-file-label:hover {
-            background-color: #9a9fa4;
-        }
-
-        #previewImage {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            margin-top: 20px;
-            border: 2px solid #909498; /* Màu và độ dày của đường viền */
-            border-radius: 5px; /* Độ cong của các góc */
-        }
-
-        #previewImage {
-            width: 200px;
-            height: 200px;
-            object-fit: cover;
-            margin-top: 20px;
-            border: 2px solid #909498; /* Màu và độ dày của đường viền */
-            border-radius: 5px; /* Độ cong của các góc */
-            box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.5); /* Hiệu ứng đổ bóng */
-        }
-
-        #previewImage:hover {
-            border-color: #9a9fa4; /* Thay đổi màu sắc của đường viền khi di chuột qua */
-            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7); /* Hiệu ứng đổ bóng khi di chuột qua */
-        }
-
-        .img-300 {
-            width: 300px;
-            height: auto;
-            margin: auto;
-        }
-
-        .dropdown-item:hover {
-            background-color: #b7b6b6; /* Màu nền khi hover */
-            color: white;
-            cursor: pointer;
-        }
-        #v-pills-favorite {
-            font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
-        }
-    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
@@ -150,14 +16,14 @@
 <!-- header -->
 <div th:replace="~{swappa/assests/html/layout/_layout::header}"></div>
 <!-- main -->
-<div class="container-fluid bg-body-secondary main-container" style="height: 800px;">
+<div class="container-fluid" style="height: 81vh; background-color: white;">
     <div class="row">
-        <div class="col-xl-3 col-lg-12 mt-1 p-0 border border-0">
-            <div class="card">
+        <div class="col-xl-3 col-md-12 mt-1 p-0 border border-0">
+            <div class="card mx-lg-3">
                 <div class="card-header bg-black text-center">
                     <a class="text-white bg-gradient-primary">
                         <h5 class="m-0">
-                            <strong th:object="${userM}">
+                            <strong th:object="${userM}" class="d-flex justify-content-center align-items-center gap-2">
                                 <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i> <span
                                     class="d-inline-block text-truncate" style="max-width: 110px;"
                                     th:text="*{username}"></span>
@@ -165,7 +31,7 @@
                         </h5>
                     </a>
                 </div>
-                <div class="card-body p-1">
+                <div class="card-body bg-body-secondary p-1">
                     <div class="align-items-start">
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                              aria-orientation="vertical">
@@ -175,7 +41,7 @@
                             </button>
                             <button class="nav-link mt-1 text-black" id="v-pills-home-status"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-status" type="button" role="tab"
-                                    aria-controls="v-pills-status" aria-selected="false">Order status
+                                    aria-controls="v-pills-status" aria-selected="false">Order history
                             </button>
                             <button class="nav-link mt-1 text-black" id="v-pills-home-AllVoucher"
                                     data-bs-toggle="pill" data-bs-target="#v-pills-AllVoucher" type="button" role="tab"
@@ -201,7 +67,7 @@
                      aria-labelledby="v-pills-home-tab" tabindex="0">
                     <div class="card ">
                         <div class="card-body p-0 mx-3 pb-2">
-                            <div class="table-responsive p-0" id="tableUserContainer">
+                            <div class="container p-0" id="tableUserContainer">
                                 <div class="header mt-1 mb-1">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item bg-body-secondary rounded-3">
@@ -248,7 +114,6 @@
                                                                 confirmButtonText: 'OK'
                                                             });
                                                         }
-
                                                     </script>
                                                     <!--M2M-026 TanLoc End -->
                                                 </div>
@@ -256,8 +121,8 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="row" th:object="${userM}">
-                                    <div class="col-8">
+                                <div class="row perfect-container" th:object="${userM}">
+                                    <div class="col-8 ps-3">
                                         <div class="container">
                                             <div class="mb-3 row">
                                                 <label for="staticName"
@@ -302,30 +167,28 @@
                                                          data-callback="xuLyCaptchaThanhCong"></div>
                                                 </div>
                                             </div>
-                                            <p id="iduser" th:text="${userM.getId()}"
-                                               style="position: absolute; top: 95px; left: 11px; color: white"></p>
+                                            <p id="iduser" th:text="${userM.getId()}" class="d-none"></p>
                                             <div class="mb-3 row alert alert-success" id="updateSuccess"></div>
                                             <div class="mb-3 row my-3 alert alert-danger" id="updateError"></div>
                                         </div>
+                                        <div class="d-flex justify-content-center align-items-center">
+                                            <button type="button" id="submitBtn" class="btn btn-brown px-5">
+                                                Submit changes
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="col-4 text-center">
+                                    <div class="col-4 p-0 text-center">
                                         <div class="d-flex justify-content-center">
                                             <img th:src="@{'/assests/imagesUser/' + ${userM.avatar}}"
                                                  class="avatar me-3 border-radius-lg"
                                                  id="previewImage" alt="Ảnh đã chọn">
                                         </div>
-
-                                        <div class="text-center my-3" style="margin-right: 10px;">
+                                        <div class="text-center my-3">
                                             <input type="file" class="form-control" id="fileInput" accept="image/*">
                                             <label class="custom-file-label" for="fileInput">Select photos from
                                                 local</label>
                                         </div>
-
                                     </div>
-
-                                    <button type="button" id="submitBtn" class=" col-5 btn btn-secondary ms-5 mb-5">
-                                        Submit
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -345,7 +208,7 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div class="table-responsive p-0" id=orderstatus>
+                                <div class="table-responsive p-0 perfect-container">
                                     <table class="table align-items-center mb-0">
                                         <thead>
                                         <tr class="text-center">
@@ -395,27 +258,9 @@
                 </div>
                 <div class="tab-pane" id="v-pills-shop" role="tabpanel"
                      aria-labelledby="v-pills-home-status" tabindex="0">
-                    <div class="card ">
+                    <div class="card" id="shopContainer">
 
-                        <div class="card-body p-0 mx-3 pb-2">
-                            <div class="table-responsive p-0">
-                                <div class="header mt-1 mb-1">
-                                    <ul class="list-group list-group-flush">
-                                        <li class="list-group-item bg-body-secondary rounded-3">
-                                            <h3 class="m-0">Register to become a Seller</h3>
-                                            <!--                                            <span>Manage profile information for account security</span>-->
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="container">
-                                    <div class="row text-center justify-content-center">
-                                        <h3>Welcome to M2M Clothing</h3>
-                                        <h5>Click submit if you want to become a seller</h5>
-                                        <button id="submitShop" class="btn btn-primary w-25">Submit</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div class="tab-pane" id="v-pills-favorite" role="tabpanel"
@@ -427,12 +272,11 @@
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item bg-body-secondary rounded-3">
                                             <h3 class="m-0">Favorite</h3>
-                                            <!--                                            <span>Manage profile information for account security</span>-->
+                                            <span>My favorite products</span>
                                         </li>
                                     </ul>
                                 </div>
-
-                                <div class="container-fluid">
+                                <div class="container-fluid perfect-container">
                                     <div class="row justify-content-center">
                                         <div class="col-md-10">
                                             <table class="table table-hover">
@@ -468,7 +312,7 @@
     </div>
 </div>
 <!-- footer -->
-<footer th:replace="~{swappa/assests/html/layout/_layout::footer}"></footer>
+<footer class="fixed-bottom" th:insert="~{swappa/assests/html/layout/_layout::footer}"></footer>
 
 <!-- External Scripts -->
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

@@ -8,6 +8,18 @@
     <link rel="stylesheet" href="/assests/css/style.css">
 </head>
 <style>
+    .img-container {
+        height: 200px; /* Điều chỉnh chiều cao tùy theo nhu cầu */
+        display: flex; /* Sử dụng flexbox để căn chỉnh hình ảnh */
+        align-items: center; /* Căn chỉnh hình ảnh theo trục dọc */
+        justify-content: center; /* Căn chỉnh hình ảnh theo trục ngang */
+        overflow: hidden; /* Đảm bảo ảnh không bị tràn ra ngoài */
+    }
+
+    .img-container img {
+        max-height: 100%; /* Đảm bảo chiều cao của ảnh không vượt quá container */
+        width: auto; /* Chiều rộng tự động điều chỉnh để duy trì tỷ lệ khung hình */
+    }
     .active-category a {
         color: black;
         font-weight: 500;
@@ -50,7 +62,7 @@
                         <i class="fa-solid fa-list-ul"></i>
                     </div>
                     <div style="margin-left: 10px">
-                        Danh mục
+                        Product catalog
                     </div>
                 </div>
                 <hr style="margin: 10px">
@@ -60,26 +72,36 @@
             </div>
             <div class="col-10">
                 <div class="row pb-3">
-                    <div  class="col-2 p-0">
-                        <p>Sắp xếp theo</p>
-                    </div >
-                    <div class="col-2 p-0">
-                        <button class="btn btn-danger" id="phobien">Phổ biến</button>
+                    <div class="col-9">
+                        <div class="row">
+                            <div class="col-2 p-0">
+                                <p>Sort by</p>
+                            </div >
+                            <div class="col-2 p-0">
+                                <button class="btn btn-danger button" id="phobien">Relevance</button>
+                            </div>
+                            <div class="col-2 p-0">
+                                <button class="btn button" id="moinhat">Latest</button>
+                            </div>
+                            <div class="col-2 p-0">
+                                <button class="btn button" id="banchay">Top Sales</button>
+                            </div>
+                            <div class="col-3 p-0">
+                                <select class="form-select " aria-label="Sort Product" id="selectSort">
+                                    <option selected style="display: none">Price</option>
+                                    <option value="lowToHigh">Low To High</option>
+                                    <option value="highToLow">High To Low</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-2 p-0">
-                        <button class="btn btn-danger " id="moinhat">Mới nhất</button>
-                    </div>
-                    <div class="col-2 p-0">
-                        <button class="btn btn-danger " id="banchay">Bán Chạy</button>
-                    </div>
-                    <div class="col-3 p-0">
-                        <select class="form-select " id="selectSort">
-                            <option value="lowToHigh" >Từ thấp đến cao</option>
-                            <option value="highToLow">Từ cao đến thấp</option>
-                        </select>
+                    <div class="col-3 text-end">
+                        <span id="page-info-shop"></span>
+                        <button class="btn" id="handlerPageNumberNext"> <span aria-hidden="true">&laquo;</span> </button>
+                        <button class="btn" id="handlerPageNumberPrev"> <span aria-hidden="true">&raquo;</span> </button>
                     </div>
                 </div>
-                <div class="row" id="getProductByCategoryAndShopIdContainer">
+                <div style="min-height: 646px" class="row" id="getProductByCategoryAndShopIdContainer">
 
 
                 </div>
@@ -153,30 +175,6 @@
                 searchProducts();
             }
         });
-        function searchProducts() {
-            var keyword = $('#navbar_search_input').val();
-            var type = $('#select_loai').val();
-            $.ajax({
-                url: '/api/search',
-                type: 'POST',
-                data: {
-                    keyword: keyword,
-                    type: type
-                },
-                success: function (response) {
-                    if (response.success) {
-                        console.log('Gọi API thành công:', response.data);
-                        sessionStorage.setItem('searchResults', JSON.stringify(response.data));
-                        window.location.href = '/search-Product';
-                    } else {
-                        console.log('Gọi API thất bại:', response.message);
-                    }
-                },
-                error: function (xhr, status, error) {
-                    console.log('Lỗi:', error);
-                }
-            });
-        }
         var shopId = localStorage.getItem('shopId');
 
         if (shopId) {
@@ -224,5 +222,5 @@
     });
 
 </script>
-
+<script th:src="@{/assests/js/SearchProduct.js}"></script>
 </html>
