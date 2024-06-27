@@ -361,7 +361,6 @@
                                                             <p class="small mb-0 ms-2">${commentArray[5]}</p>
                                                         </div>
                                                         <div class="d-flex flex-row align-items-center">
-                                                            <i class="far fa-thumbs-up mx-2 fa-xs text-black" style="margin-top: -0.16rem;"></i>
                                                             <p class="small text-muted mb-0">${commentArray[3]}</p>
                                                         </div>
                                                     </div>
@@ -636,26 +635,6 @@
             var slugUrl = queryParams[1];
             var currentDate = new Date();
 
-            // Kiểm tra trạng thái đăng nhập ở đây (ví dụ: dùng biến isLoggedIn)
-            var isLoggedIn = false; // Thay đổi thành cơ chế xác định đăng nhập của bạn
-
-            if (!isLoggedIn) {
-                // Hiển thị thông báo lỗi nếu chưa đăng nhập bằng SweetAlert
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Bạn chưa đăng nhập',
-                    text: 'Vui lòng đăng nhập để đăng nhận xét.',
-                    confirmButtonColor: '#3085d6',
-                    confirmButtonText: 'Đăng nhập'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        // Điều hướng người dùng đến trang đăng nhập
-                        window.location.href = '/loginacount'; // Thay đổi thành URL đăng nhập của bạn
-                    }
-                });
-                return; // Dừng việc gửi nhận xét nếu chưa đăng nhập
-            }
-
             // Tạo một đối tượng CommentDTO
             var commentDTO = {
                 comment: commentText,
@@ -663,21 +642,43 @@
                 createDate: currentDate
             };
 
-            // Thực hiện AJAX request để tạo nhận xét
-            $.ajax({
-                url: "/createComment",
-                type: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(commentDTO),
-                success: function (response) {
-                    $("#commentText").val("");
-                    location.reload(); // Tải lại trang sau khi tạo nhận xét thành công
-                },
-                error: function (xhr, status, error) {
+            // Thực hiện AJAX request để tạo nhận xét bằng Axios
+            axios.post('/createComment', commentDTO)
+                .then(function (response) {
+                    let responseData = response.data;
+                    if (responseData.message === 'User not logged in') {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Please log in!!!",
+                            timer: 2000,
+                        }).then((result) => {
+                            window.location.href = '/loginacount';
+                        });
+                    } else if (commentText === '') {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Please enter a comment!!!",
+                            timer: 2000,
+                        });
+                        return; // Exit the function if comment text is empty
+                    }else if (responseData.message === 'Comment created successfully') {
+                        Swal.fire({
+                            icon: "success",
+                            title: "Success",
+                            text: "Comment created successfully",
+                            timer: 2000,
+                        }).then((result) => {
+                            $("#commentText").val("");
+                            location.reload();
+                        });
+                    }
+                })
+                .catch(function (error) {
                     console.error("Lỗi khi tạo nhận xét:", error);
                     // Tùy chọn, bạn có thể hiển thị thông báo lỗi cho người dùng
-                }
-            });
+                });
         });
     });
 </script>
