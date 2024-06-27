@@ -59,7 +59,7 @@ function compareData() {
         }
         var div = document.createElement("a");
             div.innerHTML = `
-             <a href="/thanhtoan" class="btn btn-outline-danger"  id="creategiohang" >Thành toán hóa đơn</a>
+             <a href="/a/payment" class="btn btn-outline-danger"  id="creategiohang" >Thành toán hóa đơn</a>
             `;
         document.getElementById("thanhtoan").appendChild(div);
     }else{
@@ -82,7 +82,7 @@ function compareData() {
 
         var div = document.createElement("a");
         div.innerHTML = `
-                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
+                 <a href="/a/payment" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
             `;
         document.getElementById("thanhtoan").appendChild(div);
 
@@ -221,7 +221,7 @@ function xoamSoLuong(int) {
 
             var div = document.createElement("a");
             div.innerHTML = `
-                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
+                 <a href="/a/payment" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
             `;
             document.getElementById("thanhtoan").appendChild(div);
             layTongSoLuong();
@@ -270,7 +270,7 @@ function xoaHetGioHang() {
 
             var div = document.createElement("a");
             div.innerHTML = `
-                 <a href="/thanhtoan" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
+                 <a href="/a/payment" class="btn btn-outline-danger disabled"  id="creategiohang" >Thành toán hóa đơn</a>
             `;
             document.getElementById("thanhtoan").appendChild(div);
             layTongSoLuong();
@@ -344,7 +344,7 @@ $(document).ready(function () {
                 .text(category)
                 .click(function() {
                     console.log(index);
-                    window.location.href = "/AllcategoryType/"+(category);
+                    window.location.href = "/p/AllcategoryType/"+(category);
                 });
             ;
             let div = $("<div>").append(link);
@@ -366,7 +366,7 @@ $(document).ready(function () {
             var html = `
                             <div class="col-lg-2 col-md-3 col-sm-4">
                                 <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                                    <a href="/product?slug_url=${item.slugUrl}" class="stretched-link">
+                                    <a href="/p/product?slug_url=${item.slugUrl}" class="stretched-link">
                                             ${item.sale ? `
                                                 <div style="position: absolute">       
                                                     <span class="badge text-bg-danger">${item.sale.salePercent}%</span>
@@ -649,7 +649,7 @@ btnBuyNow.addEventListener("click",function (){
             if(localStorage.getItem(sessionStorage.getItem("tendn")) == null){
                 arrayObj.push(sanPhamMoi);
                 localStorage.setItem(dangnhap.innerText, JSON.stringify(arrayObj));
-                window.location.href = "/cart";
+                window.location.href = "/a/cart";
             }else {
                 var objArrya = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
                 var found = false;
@@ -658,14 +658,14 @@ btnBuyNow.addEventListener("click",function (){
                         obj.soLuong++;
                         localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
                         found = true;
-                        window.location.href = "/cart";
+                        window.location.href = "/a/cart";
                         return;
                     }
                 });
                 if (!found){
                     objArrya.push(sanPhamMoi);
                     localStorage.setItem(sessionStorage.getItem("tendn"), JSON.stringify(objArrya));
-                    window.location.href = "/cart";
+                    window.location.href = "/a/cart";
                 }
             }
             layTongSoLuong();

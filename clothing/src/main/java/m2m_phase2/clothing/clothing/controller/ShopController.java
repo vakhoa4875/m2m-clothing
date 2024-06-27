@@ -23,7 +23,7 @@ public class ShopController {
         }
         ShopM shopM = shopService.findShopByUser(sessionEmail);
         if(shopM == null) {
-            return "redirect:/userprofile";
+            return "redirect:/myProfile";
         }
         return "swappa/assests/html/admin_shop";
     }

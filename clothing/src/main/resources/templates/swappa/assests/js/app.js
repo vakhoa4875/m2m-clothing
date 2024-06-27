@@ -47,7 +47,7 @@ angular.module("myApp", ["ngRoute"])
     //             templateUrl: 'assests/html/searchResult.html',
     //             controller: 'searchResultCtrl'
     //         })
-    //         .when('/cart', {
+    //         .when('/a/cart', {
     //             templateUrl: 'assests/html/cart.html',
     //             controller: 'cartCtrl'
     //         })
@@ -55,7 +55,7 @@ angular.module("myApp", ["ngRoute"])
     //             templateUrl: 'assests/html/account_login.html',
     //             controller: 'accountCtrl'
     //         })
-    //         .when('/account/register',{
+    //         .when('/account/p/register',{
     //             templateUrl: 'assests/html/account_register.html',
     //             controller : 'accountregister_Ctrl'
     //         })
@@ -622,7 +622,7 @@ angular.module("myApp", ["ngRoute"])
                 }
 
                 if (check) {
-                    $rootScope.currentPath = '/cart';
+                    $rootScope.currentPath = '/a/cart';
                     $location.path('/account');
                 }
                 return;

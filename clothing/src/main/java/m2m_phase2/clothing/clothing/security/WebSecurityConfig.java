@@ -29,7 +29,7 @@ public class WebSecurityConfig {
     private final CustomUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final JwtAuthentication jwtAuthentication;
-    private final String[] nonAuthenticatedUrls = {"/register", "/api/auth/login", "/api-public/**", "/verify/**", "/assests/**", "/bootstrap-5.3.2-dist/**"};
+    private final String[] nonAuthenticatedUrls = {"/p/register", "/api/p/login", "/api-public/**", "/verify/**", "/assests/**", "/bootstrap-5.3.2-dist/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -41,7 +41,7 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtAuthentication, UsernamePasswordAuthenticationFilter.class)
                 .formLogin(form -> form
-                        .loginPage("/auth/login")
+                        .loginPage("/p/login")
                         .failureUrl("/login?error=true")
                         .successHandler(authenticationSuccessHandler())
                         .permitAll())
@@ -68,7 +68,7 @@ public class WebSecurityConfig {
         return new AuthenticationSuccessHandler() {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                response.sendRedirect("/");
+                response.sendRedirect("/p/");
             }
         };
     }

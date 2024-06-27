@@ -50,7 +50,7 @@ function renderHtmlHome(products,idElementRender){
         let productHtml = `
             <div class="col-lg-2 col-md-3 col-sm-4 me-3">
                 <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                    <a href="/product?slug_url=${product.slug}" class="stretched-link">
+                    <a href="/p/product?slug_url=${product.slug}" class="stretched-link">
                         <div style="position: absolute">
                             ${product.sale ? `<span class="badge text-bg-danger">${product.sale.salePercent}%</span>` : ''}
                         </div>

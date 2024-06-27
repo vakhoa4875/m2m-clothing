@@ -37,7 +37,7 @@
                         <i class="fa-solid fa-bars"></i>
                     </button>
 
-                    <a href="/home" class="navbar-brand" title="Swappa">
+                    <a href="/p/home" class="navbar-brand" title="Swappa">
                         <img class="img-fluid"
                              src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
                              alt="Swappa Logo">
@@ -61,7 +61,7 @@
                     <div class="d-flex gap-3">
                         <ul class="navbar-nav" role="presentation">
                             <li class="nav-item">
-                                <a class="navbar-brand d-block text-center pt-2" href="/home">
+                                <a class="navbar-brand d-block text-center pt-2" href="/p/home">
                                     <img class="img-fluid"
                                          src="https://static.swappa.com/static/images/logos/swappa_wordmark_ffffff_drop_e4611b.svg"
                                          width="167px" height="35px" alt="Bootstrap">
@@ -88,13 +88,13 @@
                         <ul class="navbar-nav" role="presentation">
                             <li class="d-flex align-items-center justify-content-center">
                                 <div class="">
-                                    <a href="/userprofile">
+                                    <a href="/a/myProfile">
                                         <i class="fs-4 fa-solid fa-circle-user text-white" aria-hidden="true"></i>
                                     </a>
                                 </div>
                             </li>
                             <li class="ms-3 d-flex align-items-center justify-content-center">
-                                <a href="/cart" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
+                                <a href="/a/cart" class="border border-0 position-relative" style="background-color: rgb(18,17,13) !important;">
                                     <i class="fa-solid fa-fw fa-shopping-cart" style="color: white;" aria-hidden="true"></i>
                                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="tongSoLuongSP">
                                       0
@@ -174,28 +174,28 @@
                 <nav aria-label="breadcrumb">
                     <ul class="breadcrumb mb-2" th:switch="${active}">
                                     <span th:case="1" class="d-flex">
-                                      <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                                      <li class="breadcrumb-item"><a href="/categoryType?categoryId=1">Outerwear</a></li>
+                                      <li class="breadcrumb-item"><a href="/p/home">Home</a></li>
+                                      <li class="breadcrumb-item"><a href="/p/categoryType?categoryId=1">Outerwear</a></li>
                                     </span>
                         <div th:case="2" class="d-flex">
-                            <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                            <li class="breadcrumb-item"><a href="/categoryType?categoryId=2">Tops</a></li>
+                            <li class="breadcrumb-item"><a href="/p/home">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/p/categoryType?categoryId=2">Tops</a></li>
                         </div>
                         <div th:case="3" class="d-flex">
-                            <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                            <li class="breadcrumb-item"><a href="/categoryType?categoryId=3" >Bottoms</a></li>
+                            <li class="breadcrumb-item"><a href="/p/home">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/p/categoryType?categoryId=3" >Bottoms</a></li>
                         </div>
                         <div th:case="4" class="d-flex">
-                            <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                            <li class="breadcrumb-item"><a href="/categoryType?categoryId=4" >Jewels & Accessories</a></li>
+                            <li class="breadcrumb-item"><a href="/p/home">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/p/categoryType?categoryId=4" >Jewels & Accessories</a></li>
                         </div>
                         <div th:case="5" class="d-flex">
-                            <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                            <li class="breadcrumb-item"><a href="/categoryType?categoryId=5" >Headwear</a></li>
+                            <li class="breadcrumb-item"><a href="/p/home">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/p/categoryType?categoryId=5" >Headwear</a></li>
                         </div>
                         <div th:case="6" class="d-flex">
-                            <li class="breadcrumb-item"><a href="/home">Home</a></li>
-                            <li class="breadcrumb-item"><a href="/categoryType?categoryId=6" >Footwear</a></li>
+                            <li class="breadcrumb-item"><a href="/p/home">Home</a></li>
+                            <li class="breadcrumb-item"><a href="/p/categoryType?categoryId=6" >Footwear</a></li>
                         </div>
                     </ul>
                 </nav>
@@ -314,7 +314,7 @@
                     var productHTML = `
                         <div class="col-lg-2 col-md-3 col-sm-4">
                             <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                                <a href="/product?slug_url=${product.slug}" class="stretched-link">
+                                <a href="/p/product?slug_url=${product.slug}" class="stretched-link">
                                     <div style="position: absolute">
                                         ${saleBadge}
                                     </div>

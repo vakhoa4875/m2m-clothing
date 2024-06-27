@@ -37,7 +37,7 @@
                                             <span class="text-white fw-bolder">Please enter all information below</span>
                                         </div>
                                         <form name="formForgot" class="text-white"
-                                            th:action="@{/submit-forgot-password}" method="post">
+                                            th:action="@{/p/submit-forgot-password}" method="post">
                                             <!-- lỗi thì thông báo ở đay nè -->
                                             <div ng-hide="status == null" class="alert text-bg-dark"
                                                 ng-class="{'text-danger invalid-input':(status !== 1), 'text-success valid-input': (status === 1)}">
@@ -84,7 +84,7 @@
                                             </button>
 
                                             <!-- Sumit register -->
-                                            <!-- <a href="#!/account/register" class="btn btn-success btn-block px-5 mb-4 rounded-5 ms-3">
+                                            <!-- <a href="#!/account/p/register" class="btn btn-success btn-block px-5 mb-4 rounded-5 ms-3">
                                             Register
                                         </a> -->
 

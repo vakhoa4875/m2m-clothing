@@ -51,7 +51,7 @@ loadSearchRecommendation = () => {
                         </a>`
         );
         matchedSearch.forEach((e, index) => {
-            $('#tenSp').append(`<a href="${'/product?slug_url=' + e[1]}" class="ms-2 p-1 pb-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">
+            $('#tenSp').append(`<a href="${'/p/product?slug_url=' + e[1]}" class="ms-2 p-1 pb-2 text-white text-start link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover">
                                     ${e[0]}
                                 </a>`
             );
@@ -68,7 +68,7 @@ searchShop = async (nameShop) => {
             data: response.data.data
         };
         localStorage.setItem('shopData', JSON.stringify(shopData));
-        window.location.href = '/viewSearchShop';
+        window.location.href = '"/p/viewSearchShop"';
     } catch (error) {
         console.error(error);
     }

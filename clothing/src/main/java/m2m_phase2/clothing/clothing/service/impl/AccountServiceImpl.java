@@ -141,7 +141,7 @@ public class AccountServiceImpl implements AccountService {
     @Override
     public String sendUrl() {
 
-        String resetPasswordUrl = "/ConfirmPassword-Forgot-mk";
+        String resetPasswordUrl = "/p/ConfirmPassword-Forgot-mk";
         return resetPasswordUrl;
     }
 

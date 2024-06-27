@@ -109,7 +109,7 @@
                             allowOutsideClick: false,
 
                         }).then((result) => {
-                            window.location.href = "/userprofile";
+                            window.location.href = "/a/myProfile";
                         })
                     }
                 }
@@ -192,7 +192,7 @@
                         success: (redirectURL) => {
                             localStorage.removeItem(sessionStorage.getItem("tendn"))
                             setTimeout(function () {
-                                window.location.href = "/userprofile";
+                                window.location.href = "/a/myProfile";
                             }, 1000);
                         },
                         error: (xhr, status, error) => {

@@ -152,7 +152,7 @@
                 if (data.success) {
                     console.log('Shop Details:', data.data);
                     localStorage.setItem('shopId', shopId);
-                    window.location.href = '/user/shop';
+                    window.location.href = '/p/shop';
                 } else {
                     console.error('Error fetching shop details:', data.message);
                 }

@@ -255,7 +255,7 @@ $(document).ready(async function () {
             let productHtml = `
                 <div class="col-lg-2 col-md-3 col-sm-4">
                     <div class="card rounded-3 shadow border-0 text-center d-product justify-content-center mb-3" style="overflow: hidden;">
-                        <a href="/product?slug_url=${product.slugUrl}" class="stretched-link">
+                        <a href="/p/product?slug_url=${product.slugUrl}" class="stretched-link">
                         
                             <div style="position: relative">
                                 <div style="position: absolute; ">

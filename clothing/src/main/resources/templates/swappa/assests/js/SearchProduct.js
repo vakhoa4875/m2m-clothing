@@ -3,7 +3,7 @@ $(document).ready(function(){
         if (e.which == 13) {
             let keyword = $('#navbar_search_input').val();
             let type = $('#select_loai').val();
-            window.location.href= "/search_Product?key_search="+keyword+"&type_search="+type;
+            window.location.href= "/p/search_Product?key_search="+keyword+"&type_search="+type;
         }
     });
 })

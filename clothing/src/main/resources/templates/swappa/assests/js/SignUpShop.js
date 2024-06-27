@@ -15,7 +15,7 @@ $(document).ready(function () {
                         /* Read more about handling dismissals below */
                         if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed) {
                             $('#v-pills-home-tab').click();
-                            window.open('/admin/shop/otp');
+                            window.open('/a/myShop/otp');
                         }
                     });
                 } else {
@@ -67,7 +67,7 @@ $(document).ready(function () {
                         /* Read more about handling dismissals below */
                         if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed) {
                             $('#v-pills-home-tab').click();
-                            window.open('/acc/shop/otp');
+                            window.open('/a/acc/shop/otp');
                         }
                     });
                 }
@@ -135,7 +135,7 @@ $(document).ready(function () {
                         timer: 2000
                     }).then((result) => {
                         if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed) {
-                            window.location.href = '/admin/shop';
+                            window.location.href = '/a/myShop';
                         }
                     })
                     return;
@@ -237,7 +237,7 @@ $(document).ready(function () {
                         timer: 2000
                     }).then((result) => {
                         if (result.dismiss === Swal.DismissReason.timer || result.isConfirmed) {
-                            window.location.href = '/admin/shop';
+                            window.location.href = '/a/myShop';
                         }
                     })
                     return;
@@ -303,8 +303,8 @@ $(document).ready(function () {
         const currentInput = $(this);
         if (event.key === 'Enter') {
             event.preventDefault();
-            if (window.location.pathname === '/admin/shop/otp') verifyOTP();
-            if (window.location.pathname === '/acc/shop/otp') shopRegisterOtp();
+            if (window.location.pathname === '/a/myShop/otp') verifyOTP();
+            if (window.location.pathname === '/a/acc/shop/otp') shopRegisterOtp();
         }
         if (event.key === 'Backspace' && currentInput.val().length === 0) {
             const prevInput = currentInput.prev('.otp-input');

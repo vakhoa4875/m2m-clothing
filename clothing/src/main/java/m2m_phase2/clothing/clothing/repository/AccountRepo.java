@@ -2,6 +2,7 @@ package m2m_phase2.clothing.clothing.repository;
 
 import m2m_phase2.clothing.clothing.data.entity.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,6 +24,7 @@ public interface AccountRepo extends JpaRepository<Account, Integer> {
 
 	Account findByUsernameAndEmail(String username, String email);
 
-	Account findByUsernameOrEmail(String username, String email);
+	Account findByUsernameOrEmail(@Param("username") String username,
+								  @Param("email") String email);
 
 }

@@ -16,12 +16,12 @@
 //    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 //        return http.csrf(csrf -> csrf.disable())
 //                .authorizeHttpRequests(auth -> {
-////                    auth.requestMatchers("/cart").authenticated();
+////                    auth.requestMatchers("/a/cart").authenticated();
 //                    auth.anyRequest().permitAll();
 //                })
 //                .formLogin(formlogin -> formlogin
-//                        .loginPage("/userprofile")
-//                        .defaultSuccessUrl("/home")
+//                        .loginPage("/a/myProfile")
+//                        .defaultSuccessUrl("/p/home")
 //                        .permitAll()
 //                ).logout(logout -> logout
 //                        .logoutUrl("/logout")

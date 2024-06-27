@@ -639,7 +639,7 @@
     });
 
     function loadProductData(productId) {
-        axios.get(`/product/${productId}`)
+        axios.get(`/p/product/${productId}`)
             .then(response => {
                 const product = response.data;
                 document.getElementById('updateNameProduct').value = product.productName;

@@ -61,8 +61,8 @@ class Statistic {
                     let thumbnail = (e.pictures.split(','))[0];
                     let html = `<tr class="text-center">
                                                 <th class="align-middle" scope="row">${index + 1}</th>
-                                                <td class="align-middle"><a href="/product?slug_url=${e.slugUrl}"><img src="../media/${thumbnail}" class="table-img"/></a></td>
-                                                <td class="text-start align-middle"><a href="/product?slug_url=${e.slugUrl}" class="text-reset">${e.productName}</a></td>
+                                                <td class="align-middle"><a href="/p/product?slug_url=${e.slugUrl}"><img src="../media/${thumbnail}" class="table-img"/></a></td>
+                                                <td class="text-start align-middle"><a href="/p/product?slug_url=${e.slugUrl}" class="text-reset">${e.productName}</a></td>
                                                 <td class="align-middle">$${e.price.toFixed(2)}</td>
                                                 <td class="align-middle">${e.sold}</td>
                                                 <td class="align-middle text-end">${e.quantity}</td>
