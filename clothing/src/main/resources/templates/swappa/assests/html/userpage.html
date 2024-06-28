@@ -243,10 +243,9 @@
                 <div class="tab-pane" id="v-pills-AllVoucher" role="tabpanel"
                      aria-labelledby="v-pills-home-status" tabindex="0">
                     <div class="card ">
-
-                        <div class="card-body p-0 mx-3 pb-2">
+                        <div class="card-body p-0 mx-3 pb-2" style="max-height: 600px">
                             <!--viết body vào đây Cao Trọng Lễ-->
-                            <div class="table-responsive p-0" id="TableAllVoucher">
+                            <div class="table-responsive p-0" id="TableAllVoucher" style="max-height: 600px">
                                 <div class="header mt-1 mb-1">
                                     <ul class="list-group list-group-flush">
                                         <li class="list-group-item bg-body-secondary rounded-3">
@@ -348,7 +347,97 @@
                 searchProducts();
             }
         });
+        getSoLuongGioHang();
+
+        //dung co xoa cai nay vi khong tim duoc cach nao load va xoa thong bao
+        var id;
+        if (sessionStorage.getItem("idnguoidung") == ""){
+
+        }else {
+            $.ajax({
+                url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    soluong = data.length;
+                    $('#soluongthongbao').text(soluong)
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        }
+
+        $('#btnthongobao').click(function () {
+            id = (sessionStorage.getItem("idnguoidung") == "" ? "false" : sessionStorage.getItem("idnguoidung"));
+            if (id == "false"){
+                Swal.fire({
+                    title: 'Notifications from the system',
+                    text: 'You are not logged in, please log in.',
+                    icon: 'warning', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                    confirmButtonText: 'Confirm',
+                    allowOutsideClick: false
+                }).then((result) => {
+                    if (result){
+                        window.location.href = "/loginacount";
+                    }
+                })
+            }else {
+                $("#notification-dropdown").toggleClass("d-none");
+                $('#thogbao').empty();
+                $.ajax({
+                    url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        var soluong = data.length;
+                        if (soluong == 0){
+                            $('#thogbao').append(`
+                            <div class="text-dark fw-bolder" style="color: #edd678">No new announcements.</div>`);
+                        }
+                        $('#soluongthongbao').text(soluong)
+                        // Hiển thị dữ liệu trong bảng
+                        data.forEach(function (order) {
+                            $('#thogbao').append(`
+                        <div class="text-dark fw-bolder" style="text-decoration: underline; cursor : pointer">You have a new voucher in your account.</div>
+                        `);
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                    }
+                });
+            }
+        });
+
+        $('#xoathongbao').click(function () {
+            $.ajax({
+                url: '/deleteNotification?id='+id,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        })
     });
+
+    function getSoLuongGioHang(){
+        var tongsp = document.getElementById("tongSoLuongSP");
+        var tongSoLuong = 0;
+        if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
+            var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+            for (var int = 0; int < objarray.length; int++) {
+                tongSoLuong = objarray.length;
+            }
+        }else {
+            tongsp.textContent = tongSoLuong;
+        }
+        tongsp.textContent = tongSoLuong;
+    }
 
     function fetchVouchers() {
         $.ajax({
@@ -532,10 +621,12 @@
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
+                sessionStorage.setItem("tendn","")
                 window.location.href = '/account/logout';
             }
         });
     }
+
 </script>
 <script src="/assests/js/FavoriteProduct.js"></script>
 </body>

@@ -2,6 +2,7 @@ package m2m_phase2.clothing.clothing.repository;
 
 import jakarta.transaction.Transactional;
 import m2m_phase2.clothing.clothing.data.entity.Category;
+import m2m_phase2.clothing.clothing.data.entity.CommentE;
 import m2m_phase2.clothing.clothing.data.entity.Product;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -82,4 +83,14 @@ public interface ProductRepo extends JpaRepository<Product, Integer> {
     @Query("SELECT p FROM Product p WHERE p.category.category_id = :categoryId and p.shopE.shopId = :shopId")
     List<Product> findProductByShopCategoryShopId(@Param("categoryId") Integer categoryId,
                                             @Param("shopId") int shopId);
+
+    @Query(value = "SELECT p.product_id, c.comment_id, c.comment, c.create_date, u.avatar, u.fullname " +
+            "FROM Product p " +
+            "JOIN Comment c ON p.product_id = c.product_id " +
+            "join [user] u on u.id = c.user_id " +
+            "WHERE p.product_id = :product_id " +
+            "order by c.create_date desc, c.comment_id desc", nativeQuery = true)
+    List<Object[]> findCommentByProductId(@Param("product_id") int product_id);
+
+
 }

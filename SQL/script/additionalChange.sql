@@ -109,7 +109,6 @@ begin
     group by v.voucher_id
 end
 go
-drop table if exists Cart;
 
 create table Favorite
 (

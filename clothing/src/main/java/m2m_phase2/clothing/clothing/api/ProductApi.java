@@ -1,12 +1,15 @@
 package m2m_phase2.clothing.clothing.api;
 
 
+import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
 import m2m_phase2.clothing.clothing.data.dto.ProductDTO;
 import m2m_phase2.clothing.clothing.data.entity.Category;
+import m2m_phase2.clothing.clothing.data.entity.CommentE;
 import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.mgt.ResponseObject;
+import m2m_phase2.clothing.clothing.data.model.CommentM;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
 import m2m_phase2.clothing.clothing.service.ShopService;
@@ -24,6 +27,7 @@ import org.springframework.security.oauth2.core.OAuth2AccessToken;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -138,16 +142,31 @@ public class ProductApi {
         return ResponseEntity.ok(rowEffected);
     }
 
+    @GetMapping("/get-comments-by-productId")
+    public ResponseEntity<?> getCommentsByProductId(int productId) {
+        List<Object[]> comments = productRepo.findCommentByProductId(productId);
+        return ResponseEntity.ok(comments);
+    }
+
     @PostMapping("/createComment")
-    public ResponseEntity<?> doPostCreateComment(@RequestBody CommentDTO commentDTO) {
-        byte rowEffected;
+    public ResponseEntity<?> doPostCreateComment(@RequestBody CommentDTO commentDTO, HttpSession session) {
+        // Kiểm tra xem người dùng đã đăng nhập hay chưa
+        if (sessionEmail == null) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "User not logged in");
+            return ResponseEntity.ok(response);
+        }
+        // Người dùng đã đăng nhập, tiến hành tạo nhận xét
         try {
-            rowEffected = commentService.createComment(commentDTO);
+            byte rowEffected = commentService.createComment(commentDTO);
+            Map<String, Object> response = new HashMap<>();
+            response.put("message", "Comment created successfully");
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
-            System.out.println("Call API Failed: /createComment");
+            System.out.println("Error calling API: /createComment");
             throw new RuntimeException(e);
         }
-        return ResponseEntity.ok(rowEffected);
+
     }
 
     @Autowired

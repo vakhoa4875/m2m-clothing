@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface CommentService {
 
-    List<CommentM> findByProductId(CommentDTO comment) throws SQLException;
+//    List<CommentM> findByProductId(CommentDTO comment) throws SQLException;
 
     byte saveComment(CommentDTO commentDTO) throws SQLException;
 

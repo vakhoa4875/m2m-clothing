@@ -209,7 +209,7 @@ OFFICIAL LICENSED PRODUCT: Amazon Essentials offers one-of-a-kind products featu
         'amazon-essentials-mens-v-neck-sweater-available-in-big-tall', 2),
 
 
-       (28, 'Hanes Mens Originals Tri-Blend Tank Top', 9, 2634, '"BASICS THAT ARE FAR FROM BASIC - A stylish collection of cool, modern essentials designed for comfort, made for every body. Be yourself in Hanes Originals.
+       (28, 'Hanes Mens Originals Tri-Blend Tank Top', 10, 2634, '"BASICS THAT ARE FAR FROM BASIC - A stylish collection of cool, modern essentials designed for comfort, made for every body. Be yourself in Hanes Originals.
 SOFT & COMFY FEEL - Our best cotton, polyester and rayon come together to make this soft and comfy men-s muscle tee.
 RECYCLED MATERIALS - Made with recycled polyester for a soft, and lightweight feel.
 HANES QUALITY - Banded collar, armholes, and double-needle stitching on the hem.
