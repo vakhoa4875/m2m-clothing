@@ -90,6 +90,7 @@ public class UserE {
     private Account account;
 
     @OneToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "account_id_gg", referencedColumnName = "user_id_gg")
     private AccountGGE accountgge;
 }

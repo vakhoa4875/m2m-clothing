@@ -258,7 +258,7 @@
 
                                             }else {
                                                 $.ajax({
-                                                    url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                                                    url: '/api/notification/findByUserID?id='+sessionStorage.getItem("idnguoidung"),
                                                     type: 'GET',
                                                     contentType: 'application/json',
                                                     success: function (data) {
@@ -289,7 +289,7 @@
                                                     $("#notification-dropdown").toggleClass("d-none");
                                                     $('#thogbao').empty();
                                                     $.ajax({
-                                                        url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                                                        url: '/api/notification/findByUserID?id='+sessionStorage.getItem("idnguoidung"),
                                                         type: 'GET',
                                                         contentType: 'application/json',
                                                         success: function (data) {
@@ -315,7 +315,7 @@
 
                                             $('#xoathongbao').click(function () {
                                                 $.ajax({
-                                                    url: '/deleteNotification?id='+id,
+                                                    url: '/api/notification/deleteOne?id='+id,
                                                     type: 'GET',
                                                     contentType: 'application/json',
                                                     success: function (data) {

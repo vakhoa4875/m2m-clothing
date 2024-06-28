@@ -2,18 +2,15 @@ package m2m_phase2.clothing.clothing.service.impl;
 
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
-import m2m_phase2.clothing.clothing.data.model.CommentM;
 import m2m_phase2.clothing.clothing.repository.CommentRepo;
 import m2m_phase2.clothing.clothing.repository.ProductRepo;
 import m2m_phase2.clothing.clothing.repository.UserRepo;
+import m2m_phase2.clothing.clothing.security.service.AuthService;
 import m2m_phase2.clothing.clothing.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
-import java.util.List;
-
-import static m2m_phase2.clothing.clothing.data.variable.StaticVariable.sessionEmail;
 
 
 @Service
@@ -26,6 +23,8 @@ public class CommentServiceImpl implements CommentService {
     UserRepo userRepo;
     @Autowired
     private HttpSession session;
+    @Autowired
+    private AuthService authService;
 
 
 //    @Override
@@ -45,23 +44,19 @@ public class CommentServiceImpl implements CommentService {
         if (product == null) {
             return -1;
         }
-        if (sessionEmail == null) {
+        if (authService.getCurrentUserEmail() == null) {
             // Xử lý khi người dùng chưa đăng nhập
             return -1;
         }
         // Kiểm tra nếu chuỗi loggedInUser không rỗng
-        if (sessionEmail != null) {
+        if (authService.getCurrentUserEmail() != null) {
             // Tìm người dùng bằng email
-            var user = userRepo.findByEmail(sessionEmail);
+            var user = userRepo.findByEmail(authService.getCurrentUserEmail());
             if (user != null) {
                 commentRepo.insertComment(commentDTO.getComment(), product.getProductId(), user.getId(), commentDTO.getCreateDate());
                 return 1;
             }
         }
-
-        // Xử lý khi không tìm thấy người dùng hoặc có lỗi xảy ra
         return -1;
     }
-
-
 }

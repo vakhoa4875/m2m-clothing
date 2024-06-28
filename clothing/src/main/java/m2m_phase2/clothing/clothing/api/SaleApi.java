@@ -1,10 +1,10 @@
 package m2m_phase2.clothing.clothing.api;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.SaleDTO;
 import m2m_phase2.clothing.clothing.data.model.SaleM;
 import m2m_phase2.clothing.clothing.service.SaleService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,12 +14,12 @@ import java.util.List;
 
 @RestController
 @Slf4j
-    @RequestMapping("/admin/api/sales")
+@RequestMapping("/api/sale")
+@RequiredArgsConstructor
 public class SaleApi {
-    @Autowired
-    private SaleService saleService;
+    private final SaleService saleService;
 
-    @GetMapping("/getAllSale")
+    @GetMapping("/getAll")
     public ResponseEntity<?> getAllSales() {
         try {
             List<SaleM> sales = saleService.getAllSales();
@@ -45,7 +45,7 @@ public class SaleApi {
         }
     }
 
-    @PostMapping("/createSale")
+    @PostMapping("/create")
     public ResponseEntity<?> createSale(@RequestBody SaleDTO saleDTO) {
         try {
             SaleM createdSale = saleService.createSale(saleDTO);
@@ -59,7 +59,7 @@ public class SaleApi {
     @PutMapping("/{saleId}")
     public ResponseEntity<?> updateSale(@PathVariable int saleId, @RequestBody SaleDTO saleDTO) {
         try {
-            SaleM updatedSale = saleService.UpdateSale(saleId,saleDTO);
+            SaleM updatedSale = saleService.UpdateSale(saleId, saleDTO);
             if (updatedSale != null) {
                 return ResponseEntity.ok(updatedSale);
             } else {
@@ -82,8 +82,8 @@ public class SaleApi {
         }
     }
 
-    @PostMapping("/updateProducctFromSale")
-    public ResponseEntity<?> updateProductSale(@RequestParam int sale_ID, @RequestParam int product_id) {
+    @PostMapping("/updateSaleOnProduct")
+    public ResponseEntity<?> updateSaleOnProduct(@RequestParam int sale_ID, @RequestParam int product_id) {
         try {
             saleService.updateProductSaleFromSale(sale_ID, product_id);
         } catch (Exception e) {

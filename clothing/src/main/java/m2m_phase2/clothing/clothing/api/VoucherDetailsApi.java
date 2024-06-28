@@ -1,11 +1,9 @@
 package m2m_phase2.clothing.clothing.api;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
-import m2m_phase2.clothing.clothing.service.NotificationService;
 import m2m_phase2.clothing.clothing.service.impl.VoucherDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,13 +15,10 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api-public/vouchers-details")
+@RequestMapping("/api/voucherDetails")
+@RequiredArgsConstructor
 public class VoucherDetailsApi {
-    @Autowired
-    private VoucherDetailsServiceImpl voucherDetailsService;
-
-    @Autowired
-    private NotificationService notificationService;
+    private final VoucherDetailsServiceImpl voucherDetailsService;
 
     @PostMapping("/saveVoucherDetailsList")
     public ResponseEntity<?> doPostSaveVoucherDetailsList(@RequestBody List<VoucherDetailsDto> voucherDetailsDtoList) {
@@ -38,7 +33,7 @@ public class VoucherDetailsApi {
                 }
             }
         } catch (Exception e) {
-            System.out.println("Gọi API thất bại: /api-public/vouchers-details/saveVoucherDetailsList");
+            System.out.println("Gọi API thất bại: /api/voucherDetails/saveVoucherDetailsList");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(totalRowsEffected);

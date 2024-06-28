@@ -566,7 +566,7 @@
         const form = document.getElementById('productForm');
         const formData = new FormData(form);
 
-        fetch('/saveShopAdmin', {
+        fetch('/api/shop/save', {
             method: 'POST',
             body: formData
         })
@@ -597,7 +597,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        axios.get('/products')
+        axios.get('/api/shop/getProductsByShopID')
             .then(response => {
                 const products = response.data;
                 const productTableBody = document.getElementById('ProductTableBody');
@@ -728,7 +728,7 @@
             formData.append('video', videoInput.files[0]);
         }
 
-        fetch('/editProductShop', {
+        fetch('/api/shop/editProductShop', {
             method: 'POST',
             body: formData
         })

@@ -1,7 +1,7 @@
 $(document).ready(function () {
     function loadAllSale(){
         $.ajax({
-            url: '/admin/api/sales/getAllSale',
+            url: '/api/sale/getAll',
             type: 'GET',
             success: function (data) {
                 $('#SaleProductTableBody').empty();
@@ -53,7 +53,7 @@ $(document).ready(function () {
 
 function loadAllProduct(){
     $.ajax({
-        url: '/allproductapi',
+        url: '/api/product/getAll',
         type: 'GET',
         success: function (data) {
             $('#ProductTableBody').empty();
@@ -112,7 +112,7 @@ $('#product-tab').click(function () {
 
 function getSaleFromID(id){
     $.ajax({
-        url: '/admin/api/sales/'+id,
+        url: '/api/sale/'+id,
         type: 'GET',
         success: function (data) {
             $("#upid").val(data.saleId);
@@ -142,7 +142,7 @@ function saveSaleProduct(id){
     var selectedSaleId = $('#productSale').val();
 
     $.ajax({
-        url: "/admin/api/sales/updateProducctFromSale?sale_ID=" + selectedSaleId + "&product_id=" + id,
+        url: "/api/sale/updateSaleOnProduct?sale_ID=" + selectedSaleId + "&product_id=" + id,
         type: 'POST',
         success: function (data) {
             Swal.fire({
@@ -167,7 +167,7 @@ function saveSaleProduct(id){
 //get sale cho bảng product
 function getSaleProduct(id){
     $.ajax({
-        url: "/admin/api/sales/getAllSale",
+        url: "/api/sale/getAll",
         type: 'GET',
         success: function (data) {
             $('#productSale').empty();
@@ -203,7 +203,7 @@ function deleteSale(id){
     }).then((result) => {
         if (result.isConfirmed) {
             $.ajax({
-                url: '/admin/api/sales/'+id,
+                url: '/api/sale/'+id,
                 type: 'DELETE',
                 success: function (data) {
                     Swal.fire({
@@ -235,7 +235,7 @@ function UpdateSale(){
     var saleEnd = $("#upEndDate").val();
 
     $.ajax({
-        url: '/admin/api/sales/'+id,
+        url: '/api/sale/'+id,
         type: 'PUT',
         contentType: 'application/json',
         data: JSON.stringify({
@@ -271,7 +271,7 @@ function insertSale(){
     var saleEnd = $("#EndDate").val();
 
     $.ajax({
-        url: '/admin/api/sales/createSale',
+        url: '/api/sale/create',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({

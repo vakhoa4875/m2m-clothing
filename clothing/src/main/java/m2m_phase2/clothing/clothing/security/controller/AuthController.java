@@ -15,10 +15,10 @@ public class AuthController {
 
     @GetMapping("/secured")
     public String secured() {
-        var userDetails = authService.getCurrentUser();
+        var email = authService.getCurrentUserEmail();
         System.out.println("/secured");
         return "If you see this, then you are logged in as user: "
-                + userDetails.getUsername();
+                + email;
     }
 
     @PostMapping("/login")
@@ -30,6 +30,7 @@ public class AuthController {
     public String doDelete() {
         return "deleted";
     }
+
     @PostMapping("/post")
     public Integer doPost() {
         return 1;

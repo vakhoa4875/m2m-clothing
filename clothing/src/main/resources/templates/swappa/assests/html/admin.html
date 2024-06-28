@@ -990,11 +990,11 @@
             // Gửi yêu cầu AJAX để nhận dữ liệu từ endpoint API và vẽ biểu đồ sau khi nhận được dữ liệu
             $.when(
                 $.ajax({
-                    url: '/api/postAccountDK',
+                    url: '/api/statistic/postAccountDK',
                     method: 'POST'
                 }),
                 $.ajax({
-                    url: '/api/postAccountGG',
+                    url: '/api/statistic/postAccountGG',
                     method: 'POST'
                 })
             ).done(function (responseDK, responseGG) {
@@ -1021,7 +1021,7 @@
 
         function drawChart() {
             // Gọi API để lấy dữ liệu số lượng sản phẩm cho mỗi loại sản phẩm
-            fetch('/api/getProductCountPerCategory')
+            fetch('/api/statistic/getProductCountPerCategory')
                 .then(response => response.json())
                 .then(data => {
                     // Chuyển dữ liệu sang định dạng array để sử dụng trong biểu đồ
@@ -1049,7 +1049,7 @@
 
         // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
         function updateTotalAccounts() {
-            fetch('/api/getAccountData')
+            fetch('/api/statistic/getAccountData')
                 .then(response => response.json())
                 .then(data => {
                     const totalAccounts = data; // Biến chứa tổng số tài khoản nhận được từ API
@@ -1065,7 +1065,7 @@
         window.addEventListener('DOMContentLoaded', updateTotalAccounts);
         // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
         function updateTotalProducts() {
-            fetch('/api/getProduct')
+            fetch('/api/statistic/getProduct')
                 .then(response => response.json())
                 .then(data => {
                     const totalProduct = data; // Biến chứa tổng số tài khoản nhận được từ API
@@ -1081,7 +1081,7 @@
         window.addEventListener('DOMContentLoaded', updateTotalProducts);
         // Hàm để gọi API và cập nhật tổng số tài khoản vào phần tử HTML
         function updateTotalCategories() {
-            fetch('/api/getCategory')
+            fetch('/api/statistic/getCategory')
                 .then(response => response.json())
                 .then(data => {
                     const getCategory = data; // Biến chứa tổng số tài khoản nhận được từ API

@@ -1,6 +1,6 @@
 $(document).ready(function () {
     const getShopByUserEmail = async () => {
-        await axios.get('/get-shop-by-user-email')
+        await axios.get('/api/shop/getShopByUser')
             .then(response => {
                 let shopInfo = response.data.data;
                 let email = response.data.data2;
@@ -36,7 +36,7 @@ $(document).ready(function () {
         }
 
 
-        await axios.post('/api/public/updateShopInfo', formData)
+        await axios.post('/api/shop/update', formData)
             .then(response => {
             })
             .catch(error => {

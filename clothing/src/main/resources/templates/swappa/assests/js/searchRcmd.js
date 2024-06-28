@@ -62,7 +62,7 @@ loadSearchRecommendation = () => {
 }
 searchShop = async (nameShop) => {
     try {
-        const response = await axios.get(`/search-shop?nameShop=${nameShop}`);
+        const response = await axios.get(`/api/search/shop/q?nameShop=${nameShop}`);
         const shopData = {
             keyword: nameShop,
             data: response.data.data

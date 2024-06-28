@@ -9,7 +9,7 @@ class productManagement{
     }
     callAllUsers = async () =>{
         await $.ajax({
-            url: '/allproductapi',
+            url: '/api/product/getAll',
             get: 'GET',
             success: function (data) {
                 const list = $('#listproduct');
@@ -66,7 +66,7 @@ class productManagement{
     }
     getProductById = (slug_url_product) => {
         $.ajax({
-            url: '/findbyproductidapi',
+            url: '/api/product/getByProductID',
             method: 'GET',
             data: {
                 "slug_url": slug_url_product
@@ -277,7 +277,7 @@ class productManagement{
         await $.ajax({
             type: 'POST',
             contentType: 'application/json',
-            url: '/insertProduct',
+            url: '/api/product/create',
             data: JSON.stringify(product),
             dataType: 'text',
             processData: false,
@@ -342,7 +342,7 @@ class productManagement{
         await $.ajax({
             type: 'POST',
             contentType: 'application/json',
-            url: '/updateProduct',
+            url: '/api/product/update',
             data: JSON.stringify(productUpdate),
             success: function (data) {
                 alert("update product success");
@@ -355,7 +355,7 @@ class productManagement{
 
     deleteProduct(productId) {
         $.ajax({
-            url: '/products/' + productId,
+            url: '/api/product/deleteByProductID' + productId,
             type: 'DELETE',
             success: function(response) {
             },

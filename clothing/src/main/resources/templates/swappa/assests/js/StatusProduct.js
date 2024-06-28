@@ -10,7 +10,7 @@ $('#updateStatusProduct').click(function () {
 function loadStatusProduct(){
 
     $.ajax({
-        url: '/api-product/ordersAllProctStatus',
+        url: '/api/order/getAllProductsStatus',
         type: 'GET',
         success: function(data) {
             $('#TableStatusUser').empty(); // xóa các phần tử cũ đi để gọi lại phần tử mới
@@ -81,7 +81,7 @@ function getIdProduct(id, paymentMethod){
 
 function updateStatus(){
     $.ajax({
-        url: "/api-product/updateOrderUser",
+        url: "/api/order/updateOrderStatusByProductID",
         type: 'Get',
         data: this.updatedOrderPayload,
         contentType: 'application/json',

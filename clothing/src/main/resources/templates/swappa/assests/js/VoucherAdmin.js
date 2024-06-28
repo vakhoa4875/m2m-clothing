@@ -1,7 +1,7 @@
 $(document).ready(function () {
     function getAllVoucher() {
         $.ajax({
-            url: '/api-public/vouchers/getAllVouchers',
+            url: '/api/public/getAllVouchers',
             type: 'GET',
             success: function (data) {
                 $('#voucherTableBody').empty();
@@ -100,7 +100,7 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: '/api-public/vouchers/saveVoucher',
+            url: '/api/voucher/saveVoucher',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(voucherData),
@@ -131,7 +131,7 @@ $(document).ready(function () {
     });
     function getVoucherByID(voucherID) {
         $.ajax({
-            url: '/api-public/vouchers/getVoucherByID2',
+            url: '/api/voucher/getVoucherByID2',
             method: 'GET',
             data: {
                 "voucherID": voucherID
@@ -204,7 +204,7 @@ $(document).ready(function () {
         };
 
         $.ajax({
-            url: '/api-public/vouchers/updateVoucher',
+            url: '/api/voucher/updateVoucher',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(voucherData),
@@ -232,7 +232,7 @@ $(document).ready(function () {
     var selectedUserIDs = [];
     function getAllUser() {
         $.ajax({
-            url: '/api-public/users/getAllUsers',
+            url: '/api/user/getAllUsers',
             type: 'GET',
             success: function (data) {
                 allUser = [];
@@ -299,7 +299,7 @@ $(document).ready(function () {
     }
     function getListUserNotInVoucher(voucherID) {
         $.ajax({
-            url: '/api-public/users/getListUserByVoucherID',
+            url: '/api/user/getListUserByVoucherID',
             type: 'GET',
             data: {
                 "voucherID": voucherID
@@ -362,7 +362,7 @@ $(document).ready(function () {
         });
 
         $.ajax({
-            url: '/api-public/vouchers-details/saveVoucherDetailsList',
+            url: '/api/voucherDetails/saveVoucherDetailsList',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(voucherDetailsData),

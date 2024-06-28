@@ -1,35 +1,18 @@
 package m2m_phase2.clothing.clothing.security;
 
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.AccountGGDTO;
-import m2m_phase2.clothing.clothing.data.dto.UserDto;
-import m2m_phase2.clothing.clothing.data.entity.AccountGGE;
-import m2m_phase2.clothing.clothing.data.entity.UserE;
 import m2m_phase2.clothing.clothing.service.AccountGGService;
 import m2m_phase2.clothing.clothing.service.UserService;
 import m2m_phase2.clothing.clothing.service.impl.AccountGGServiceImpl;
-import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
-import m2m_phase2.clothing.clothing.utils.PasswordUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
-import org.springframework.security.oauth2.client.OAuth2AuthorizedClientService;
-import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationToken;
-import org.springframework.security.oauth2.client.registration.ClientRegistrationRepository;
 import org.springframework.security.oauth2.core.OAuth2AccessToken;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;

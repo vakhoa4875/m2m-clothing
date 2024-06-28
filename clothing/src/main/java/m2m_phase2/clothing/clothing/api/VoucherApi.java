@@ -1,11 +1,11 @@
 package m2m_phase2.clothing.clothing.api;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDto;
 import m2m_phase2.clothing.clothing.data.model.VoucherM;
 import m2m_phase2.clothing.clothing.service.impl.VoucherServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,24 +15,11 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api-public/vouchers")
+@RequestMapping("/api/voucher")
+@RequiredArgsConstructor
 public class VoucherApi {
-    @Autowired
-    private VoucherServiceImpl voucherService;
-    @Autowired
-    private HttpSession session;
-
-    @GetMapping("/getAllVouchers")
-    public ResponseEntity<?> doGetAllVouchers() {
-        List<?> listVoucher;
-        try {
-            listVoucher = voucherService.findAll();
-        } catch (Exception e) {
-            System.out.println("Call API Failed: /api-public/vouchers/getAllVouchers");
-            throw new RuntimeException(e);
-        }
-        return ResponseEntity.ok(listVoucher);
-    }
+    private final VoucherServiceImpl voucherService;
+    private final HttpSession session;
 
     @GetMapping("/getVoucherByID")
     public ResponseEntity<?> doGetVoucherByID(@RequestParam("voucherID") Integer voucherID) {
@@ -42,7 +29,7 @@ public class VoucherApi {
             voucherDto.setVoucherID(voucherID);
             voucherM = voucherService.findVoucherByID(voucherDto);
         } catch (Exception e) {
-            System.out.println("Gọi API thất bại: /api-public/vouchers/getVoucherByID");
+            System.out.println("Gọi API thất bại: /api/voucher/getVoucherByID");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(voucherM);
@@ -54,7 +41,7 @@ public class VoucherApi {
         try {
             voucherM = voucherService.findVoucherByID(voucherDto);
         } catch (Exception e) {
-            System.out.println("Gọi API thất bại: /api-public/vouchers/getVoucherByID");
+            System.out.println("Gọi API thất bại: /api/voucher/getVoucherByID");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(voucherM);
@@ -67,7 +54,7 @@ public class VoucherApi {
         try {
             rowEffected = voucherService.saveVoucher(voucherDto);
         } catch (Exception e) {
-            System.out.println("Call API Failed: /api-public/vouchers/saveVoucher");
+            System.out.println("Call API Failed: /api/voucher/saveVoucher");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(rowEffected);
@@ -79,7 +66,7 @@ public class VoucherApi {
         try {
             rowEffected = voucherService.updateVoucher(voucherDto);
         } catch (Exception e) {
-            System.out.println("Call API Failed: /api-public/vouchers/updateVoucher");
+            System.out.println("Call API Failed: /api/voucher/updateVoucher");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(rowEffected);
@@ -99,7 +86,7 @@ public class VoucherApi {
             // Gọi service để lấy danh sách voucher dựa trên email
             voucherMList = voucherService.findVouchersInfoByEmail(email);
         } catch (SQLException e) {
-            System.out.println("Call API Failed: /api-public/vouchers/getVouchersByUserId");
+            System.out.println("Call API Failed: /api/voucher/getVouchersByUserId");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(voucherMList);
@@ -117,7 +104,7 @@ public class VoucherApi {
             // Gọi service để lấy danh sách voucher dựa trên email
             voucherMList = voucherService.findVouchersInfoByEmail(email);
         } catch (SQLException e) {
-            System.out.println("Call API Failed: /api-public/vouchers/getVouchersByUserId");
+            System.out.println("Call API Failed: /api/voucher/getVouchersByUserId");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(voucherMList);

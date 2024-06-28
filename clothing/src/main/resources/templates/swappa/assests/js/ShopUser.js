@@ -12,7 +12,7 @@ $(document).ready(async function () {
             return;
         }
 
-        await axios.get(`/get-shop-by-user-id?shopId=${shopId}`)
+        await axios.get(`/api/shop/getShopByUserId?shopId=${shopId}`)
             .then(response => {
                 shopInfoContainer.html('');
                 let responseData = response.data.data;
@@ -87,7 +87,7 @@ $(document).ready(async function () {
             return;
         }
 
-        await axios.get(`/get-category-by-shop-user-shopId?shopId=${shopId}`)
+        await axios.get(`/api/public/getCategoryByShopUserShopID?shopId=${shopId}`)
             .then(response => {
                 categoryShopContainer.html('');
                 let responseData = response.data.data;
@@ -138,7 +138,7 @@ $(document).ready(async function () {
         }
 
         await axios
-            .get('/api-public-getListProductByCategoryAndShopId', {
+            .get('/api/public/getListProductByCategoryAndShopId', {
                 params: {
                     categoryId: categoryId,
                     shopId: shopId

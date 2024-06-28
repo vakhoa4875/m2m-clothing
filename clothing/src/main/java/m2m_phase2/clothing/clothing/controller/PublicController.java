@@ -3,6 +3,7 @@ package m2m_phase2.clothing.clothing.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
 import m2m_phase2.clothing.clothing.data.entity.Account;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
@@ -35,11 +36,12 @@ public class PublicController {
     private final CommentService commentService;
 
     @GetMapping({"/", "/home"})
+    @SneakyThrows
     public String doGetHome(Model model) {
-        var currentUser = authService.getCurrentUser();
+        var currentUser = userService.getCurrentUser();
         var list = productService.findAll();
         model.addAttribute("products", list);
-        model.addAttribute("idUser", currentUser == null ? null : currentUser.getUserId());
+        model.addAttribute("idUser", currentUser == null ? null : currentUser.getId());
         return "swappa/assests/html/trangchu";
     }
 
@@ -103,7 +105,7 @@ public class PublicController {
     public String doGetForgotPasswordCheck(HttpServletRequest request, Model model) {
         String newPassword = request.getParameter("newPassword");
         String confirmPassword = request.getParameter("confirmPassword");
-        String email = authService.getCurrentUser().getEmail();// Lấy email từ session
+        String email = authService.getCurrentUserEmail();// Lấy email từ session
         Account account = accountService.findByemail(email);
         String hashedPassword = PasswordEncoderUtil.encodePassword(confirmPassword);
         account.setHashedPassword(hashedPassword);
@@ -117,7 +119,7 @@ public class PublicController {
         List<ProductM> products = productService.findBycategory(categoryId);
         model.addAttribute("listProduct", products);
         model.addAttribute("active", categoryId);
-        model.addAttribute("activeLogin", authService.getCurrentUser().getEmail());
+        model.addAttribute("activeLogin", authService.getCurrentUserEmail());
         return "swappa/assests/html/productAll";
     }
 
@@ -126,7 +128,7 @@ public class PublicController {
         List<ProductM> products = productService.findAll();
         model.addAttribute("listProduct", products);
         model.addAttribute("active", 7); // hiện bản cateory ở trạng thái trọn All
-        model.addAttribute("activeLogin", authService.getCurrentUser().getEmail());
+        model.addAttribute("activeLogin", authService.getCurrentUserEmail());
         return "swappa/assests/html/productAll";
     }
 
@@ -138,7 +140,7 @@ public class PublicController {
 //        List<CommentM> commentM = commentService.findByProductId(commentDTO);
         model.addAttribute("listProduct", product);
 //        model.addAttribute("commentM", commentM);
-        model.addAttribute("checklogin", authService.getCurrentUser().getEmail());
+        model.addAttribute("checklogin", authService.getCurrentUserEmail());
         return "swappa/assests/html/productDetail";
     }
 

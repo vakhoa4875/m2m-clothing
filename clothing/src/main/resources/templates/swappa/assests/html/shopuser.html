@@ -119,7 +119,7 @@
         var shopId = localStorage.getItem('shopId');
         if (shopId) {
             $.ajax({
-                url: '/get-shop-by-user-id',
+                url: '/api/shop/getShopByUserId',
                 type: 'GET',
                 data: { shopId: shopId }, // Thêm tham số shopId vào yêu cầu
                 success: function(response) {
@@ -129,7 +129,7 @@
 
                         // Sau đó, lấy chi tiết cửa hàng bằng shop ID vừa lấy được
                         $.ajax({
-                            url: '/shop',
+                            url: '/api/public/getShop',
                             type: 'GET',
                             data: { shop_id: shopId },
                             success: function(shopDetailsResponse) {
@@ -180,7 +180,7 @@
         if (shopId) {
             // Gửi yêu cầu AJAX để lấy chi tiết cửa hàng bằng shop ID
             $.ajax({
-                url: '/get-shop-by-user-id',
+                url: '/api/shop/getShopByUserId',
                 type: 'GET',
                 data: { shopId: localStorage.getItem('shopId') },
                 success: function(response) {
@@ -191,7 +191,7 @@
                         console.log(localStorage.getItem('shopId'));
 
                         $.ajax({
-                            url: '/shop',
+                            url: '/api/public/getShop',
                             type: 'GET',
                             data: { shop_id: shopId },
                             success: function(shopDetailsResponse) {

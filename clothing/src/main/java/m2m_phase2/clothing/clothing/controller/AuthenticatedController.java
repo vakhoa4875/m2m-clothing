@@ -78,7 +78,7 @@ public class AuthenticatedController {
 
     @GetMapping("/myShop")
     public String shop() throws SQLException {
-        ShopM shopM = shopService.findShopByUser(sessionEmail);
+        ShopM shopM = shopService.findShopByUser(authService.getCurrentUserEmail());
         if(shopM == null) {
             return "redirect:/a/myProfile";
         }

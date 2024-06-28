@@ -106,7 +106,7 @@
     function getAllVouchers() {
         // Lấy danh sách tất cả các voucher
         $.ajax({
-            url: '/api-public/vouchers/getAllVouchers',
+            url: '/api/public/getAllVouchers',
             type: 'GET',
             success: function(data) {
                 if (data && data.length > 0) {
@@ -147,13 +147,13 @@
 
                     // Kiểm tra trạng thái đăng nhập của người dùng
                     $.ajax({
-                        url: '/api/admin/account/isAuthenticated',
+                        url: '/api/public/isAuthenticated',
                         type: 'GET',
                         success: function(isLoggedIn) {
                             if (isLoggedIn) {
                                 // Lấy danh sách voucher mà người dùng đã nhận
                                 $.ajax({
-                                    url: '/api-public/vouchers/getCartVouchersByEmail',
+                                    url: '/api/voucher/getCartVouchersByEmail',
                                     type: 'GET',
                                     success: function(userVoucherData) {
                                         const userVouchers = userVoucherData || [];
@@ -184,7 +184,7 @@
 
                         // Kiểm tra trạng thái đăng nhập của người dùng trước khi cho phép nhận voucher
                         $.ajax({
-                            url: '/api/admin/account/isAuthenticated',
+                            url: '/api/public/isAuthenticated',
                             type: 'GET',
                             success: function(isLoggedIn) {
                                 if (isLoggedIn) {
@@ -229,7 +229,7 @@
 
     function createVoucher(voucherDetails, btn) {
         $.ajax({
-            url: '/api-public/vouchers-details/createVoucher',
+            url: '/api/voucherDetails/createVoucher',
             type: 'POST',
             contentType: 'application/json',
             data: JSON.stringify(voucherDetails),
@@ -273,7 +273,7 @@
 
         }else {
             $.ajax({
-                url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                url: '/api/notification/findByUserID?id='+sessionStorage.getItem("idnguoidung"),
                 type: 'GET',
                 contentType: 'application/json',
                 success: function (data) {
@@ -304,7 +304,7 @@
                 $("#notification-dropdown").toggleClass("d-none");
                 $('#thogbao').empty();
                 $.ajax({
-                    url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                    url: '/api/notification/findByUserID?id='+sessionStorage.getItem("idnguoidung"),
                     type: 'GET',
                     contentType: 'application/json',
                     success: function (data) {
@@ -330,7 +330,7 @@
 
         $('#xoathongbao').click(function () {
             $.ajax({
-                url: '/deleteNotification?id='+id,
+                url: '/api/notification/deleteOne?id='+id,
                 type: 'GET',
                 contentType: 'application/json',
                 success: function (data) {

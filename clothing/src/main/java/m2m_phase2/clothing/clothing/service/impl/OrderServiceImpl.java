@@ -6,6 +6,7 @@ import m2m_phase2.clothing.clothing.data.dto.OrderDetailDto;
 import m2m_phase2.clothing.clothing.data.dto.OrderDto;
 import m2m_phase2.clothing.clothing.data.entity.Order;
 import m2m_phase2.clothing.clothing.repository.*;
+import m2m_phase2.clothing.clothing.security.service.AuthService;
 import m2m_phase2.clothing.clothing.service.OrderService;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepo orderRepo;
     private final ProductRepo productRepo;
     private final OrderDetailRepo orderDetailRepo;
+    private final AuthService authService;
 
     @Override
     public List<Order> findAllOrders() {
@@ -45,7 +47,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order saveOrder(OrderDto orderDto) {
         orderDto.setOrderCode();
-        var order = OrderDto.convertOrderDtoToOrder(orderDto, userRepo, voucherRepo);
+        var order = OrderDto.convertOrderDtoToOrder(orderDto, userRepo, voucherRepo, authService);
         orderDto.getOrderDetails().forEach(e -> e.setOrderCode(orderDto.getOrderCode()));
         var savedOrder = orderRepo.save(order);
         var listOrderDetailE = OrderDetailDto.convertListOrderDetailDtoToListOrderDetailE(

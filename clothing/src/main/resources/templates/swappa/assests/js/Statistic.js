@@ -24,7 +24,7 @@ class Statistic {
     renderDataToSelect = async () => {
         let selectPeriod = $('#select-period');
         let voucherSelect = $('#select-voucher-period');
-        await axios.get('/api-admin/getActiveMonths')
+        await axios.get('/api/statistic/getActiveMonths')
             .then((response) => {
                 response.data.forEach((e, index) => {
                     var split = e.split('/');
@@ -49,7 +49,7 @@ class Statistic {
         let month = selectedValue[0];
         let year = selectedValue[1];
         await axios
-            .get('/api-admin/getTop10SoldProduct', {
+            .get('/api/statistic/getTop10SoldProduct', {
                 params: {
                     month: month,
                     year: year
@@ -85,7 +85,7 @@ class Statistic {
             data: []
         }
         await axios
-            .get('/api-admin/getTopUsedVoucher', {
+            .get('/api/statistic/getTopUsedVoucher', {
                 params: {
                     month: voucherSelect[0],
                     year: voucherSelect[1]
@@ -137,7 +137,7 @@ class Statistic {
             data: []
         }
         await axios
-            .get('/api-admin/getVoucherUsedInMonth')
+            .get('/api/statistic/getVoucherUsedInMonth')
             .then(response => {
                 response.data.forEach((e, index) => {
                     var split = e[0].split('/');

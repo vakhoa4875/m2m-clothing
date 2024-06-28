@@ -1,15 +1,14 @@
 package m2m_phase2.clothing.clothing.api;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
+import m2m_phase2.clothing.clothing.data.model.SearchShopM;
+import m2m_phase2.clothing.clothing.data.model.ShowShopSearchM;
 import m2m_phase2.clothing.clothing.service.SearchService;
-import org.springframework.beans.factory.annotation.Autowired;
+import m2m_phase2.clothing.clothing.service.SearchShopService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -17,11 +16,13 @@ import java.util.Map;
 
 @RestController
 @Slf4j
+@RequestMapping("/api/search")
+@RequiredArgsConstructor
 public class SearchApi {
-    @Autowired
-    private SearchService searchService;
+    private final SearchService searchService;
+    private final SearchShopService searchShopService;
 
-    @PostMapping("/api/search")
+    @PostMapping
     public ResponseEntity<Map<String, Object>> searchProducts(@RequestParam String keyword, @RequestParam(required = false) String type) {
         Map<String, Object> response = new HashMap<>();
         try {
@@ -41,6 +42,40 @@ public class SearchApi {
             response.put("message", "Call failed");
             response.put("data", null);
             return ResponseEntity.status(500).body(response);
+        }
+    }
+
+    @GetMapping("/shop/q")
+    public ResponseEntity<?> searchShop(@RequestParam String nameShop) {
+        List<SearchShopM> searchShopMList = searchShopService.searchShop(nameShop);
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("success", true);
+            result.put("message", "Call API success !");
+            result.put("data", searchShopMList);
+            return ResponseEntity.ok(result);
+        }catch(Exception e) {
+            result.put("success", false);
+            result.put("message", "Call API false !");
+            result.put("data", null);
+            return ResponseEntity.status(500).body(result);
+        }
+    }
+
+    @GetMapping("/shop")
+    public ResponseEntity<?> viewShop(@RequestParam int shopId) {
+        ShowShopSearchM showShopSearchM = searchShopService.showShopSearch(shopId);
+        Map<String, Object> result = new HashMap<>();
+        try {
+            result.put("success", true);
+            result.put("message", "Call API success !");
+            result.put("data", showShopSearchM);
+            return ResponseEntity.ok(result);
+        }catch(Exception e) {
+            result.put("success", false);
+            result.put("message", "Call API false !");
+            result.put("data", null);
+            return ResponseEntity.status(500).body(result);
         }
     }
 }

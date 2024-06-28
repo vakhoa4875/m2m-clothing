@@ -120,7 +120,7 @@
 
     function getShopDetails(shopId) {
         $.ajax({
-            url: '/shop',
+            url: '/api/public/getShop',
             type: 'GET',
             data: { shop_id: shopId },
             success: function(shopDetailsResponse) {
@@ -146,7 +146,7 @@
 
     // khi bấm vô view shop thì nó lưu id shop lên local đem qua trang bên kia
     function viewShop(shopId) {
-        fetch(`/view-shop?shopId=${shopId}`)
+        fetch(`/api/search/shop?shopId=${shopId}`)
             .then(response => response.json())
             .then(data => {
                 if (data.success) {

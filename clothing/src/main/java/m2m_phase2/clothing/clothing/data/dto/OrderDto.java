@@ -7,6 +7,7 @@ import lombok.Setter;
 import m2m_phase2.clothing.clothing.data.entity.Order;
 import m2m_phase2.clothing.clothing.repository.UserRepo;
 import m2m_phase2.clothing.clothing.repository.VoucherRepo;
+import m2m_phase2.clothing.clothing.security.service.AuthService;
 import m2m_phase2.clothing.clothing.utils.PasswordEncoderUtil;
 
 import java.util.Date;
@@ -35,10 +36,11 @@ public class OrderDto {
     public static Order convertOrderDtoToOrder(
             OrderDto orderDto,
             UserRepo userRepo,
-            VoucherRepo voucherRepo
+            VoucherRepo voucherRepo,
+            AuthService authService
     ) {
         return Order.builder()
-                .customer(userRepo.getUserByEmail(PasswordEncoderUtil.email))
+                .customer(userRepo.getUserByEmail(authService.getCurrentUserEmail()))
                 .orderDate(new Date())
                 .phoneNumber(orderDto.phoneNumber)
                 .deliveryAddress(orderDto.deliveryAddress)

@@ -1,7 +1,7 @@
 $(document).ready(function () {
     // code bên giao diện userpage
     const checkShop = async () => {
-        await axios.get('/get-shop-by-user-email')
+        await axios.get('/api/shop/getShopByUser')
             .then(response => {
                 if (response.data.data != null) {
                     $('#shopContainer').html(`
@@ -78,7 +78,7 @@ $(document).ready(function () {
                 console.log("I was closed by the timer");
             }
         });
-        await axios.get('/get-shop-by-user-email-and-send-otp')
+        await axios.get('/api/shop/getShopByUserEmailAndSendOTP')
             .then(response => {
                 if (response.data.data != null) {
                     Swal.fire({
@@ -127,7 +127,7 @@ $(document).ready(function () {
                 console.log("I was closed by the timer");
             }
         });
-        await axios.get('/api/user/sendOTPForRegisterShop')
+        await axios.get('/api/shop/sendOTPForRegisterShop')
             .then(response => {
                 if (response.data.message === 'Call Api Success') {
                     Swal.fire({
@@ -191,7 +191,7 @@ $(document).ready(function () {
             return;
         }
         await axios
-            .post('/api/user/verify-otp', null, {
+            .post('/api/shop/verifyOTP', null, {
                 params: {
                     otp: otp
                 }
@@ -242,7 +242,7 @@ $(document).ready(function () {
     })
 
     const resendOtp = async () => {
-        await axios.post('/api/user/resend-otp')
+        await axios.post('/api/shop/resendOTP')
             .then(response => {
                 let responseData = response.data;
                 if (responseData.message === 'Call Api Success') {
@@ -262,7 +262,7 @@ $(document).ready(function () {
     // code bên giao diện acc_register_shop_OTP
     const saveShop = async () => {
         await axios
-            .post('/api/public/shopSignUp')
+            .post('/api/shop/shopRegistration')
             .then(response => {
             })
             .catch(error => {
@@ -292,7 +292,7 @@ $(document).ready(function () {
             return;
         }
         await axios
-            .post('/api/user/shopRegisterOtp', null, {
+            .post('/api/shop/shopRegisterOtp', null, {
                 params: {
                     otp: otp
                 }
@@ -343,7 +343,7 @@ $(document).ready(function () {
         shopRegisterOtp();
     })
     const resendRegisterShopOtp = async () => {
-        await axios.post('/api/user/resendOtpForRegister')
+        await axios.post('/api/shop/resendOtpForRegister')
             .then(response => {
                 let responseData = response.data;
                 if (responseData.message === 'Call Api Success') {

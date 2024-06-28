@@ -34,7 +34,7 @@ class UserManagement {
     getListUser = async () => {
         await $.ajax({
             type: 'GET',
-            url: '/api-public/users/getAllUsers',
+            url: '/api/user/getAllUsers',
             contentType: 'application/json',
             success: function (data) {
                 this.listUser = data;
@@ -104,7 +104,7 @@ class UserManagement {
     }
     doGetUserByUsernameAndEmail = async (username, email) => {
         await $.ajax({
-            url: '/api-public/users/getUserByUsernameAndEmail',
+            url: '/api/user/getUserByUsernameAndEmail',
             method: 'GET',
             data: {
                 "username": username,
@@ -219,7 +219,7 @@ class UserManagement {
 
 
         await $.ajax({
-            url: '/api-public/users/saveUser',
+            url: '/api/user/saveUser',
             method: 'POST',
             data: JSON.stringify(userData),
             contentType: 'application/json',
@@ -304,7 +304,7 @@ class UserManagement {
 // Disable user
     disableUser = async () => {
         await $.ajax({
-            url: '/api-public/users/disableUser',
+            url: '/api/user/disableUser',
             method: 'POST',
             data: JSON.stringify(this.userIdentifier),
             contentType: 'application/json',

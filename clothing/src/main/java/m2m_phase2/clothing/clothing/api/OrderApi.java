@@ -1,11 +1,12 @@
 package m2m_phase2.clothing.clothing.api;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.data.dto.OrderDto;
 import m2m_phase2.clothing.clothing.data.mgt.ResponseObject;
+import m2m_phase2.clothing.clothing.security.service.AuthService;
 import m2m_phase2.clothing.clothing.service.OrderDetailService;
 import m2m_phase2.clothing.clothing.service.OrderService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,26 +16,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api-product")
+@RequestMapping("/api/order")
+@RequiredArgsConstructor
 public class OrderApi {
-    @Autowired
-    private OrderService orderService;
-    @Autowired
-    private OrderDetailService orderDetailService;
-    @Autowired
-    private HttpSession session;
-//    @GetMapping
-//    public ResponseEntity<List<Order>> getAllOrders() {
-//        List<Order> orders = orderService.findAllOrders();
-//        if (orders.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//        }
-//        return new ResponseEntity<>(orders, HttpStatus.OK);
-//    }
+    private final OrderService orderService;
+    private final OrderDetailService orderDetailService;
+    private final HttpSession session;
+    private final AuthService authService;
 
-    @GetMapping("/orders")
+    @GetMapping("/getAll")
     public ResponseEntity<List<OrderDto>> getOrdersWithUsernameByCustomerEmail(HttpSession session) {
-        String userEmail = (String) session.getAttribute("loggedInUser");
+        String userEmail = authService.getCurrentUserEmail();
         if (userEmail == null) {
             return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
         }
@@ -56,14 +48,11 @@ public class OrderApi {
             dto.setOrderStatus((String) obj[7]);
             dtos.add(dto);
         }
-
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
 
-    ;
-
-    @GetMapping("/ordersAllProctStatus")
-    public ResponseEntity<?> getAllProctStatus() {
+    @GetMapping("/getAllProductsStatus")
+    public ResponseEntity<?> doGetAllProductsStatus() {
         List<Object[]> ordersWithUsername = orderService.findAllUser();
         // Chuyển đổi dữ liệu từ Object[] sang OrderDto
         List<OrderDto> dtos = new ArrayList<>();
@@ -83,9 +72,7 @@ public class OrderApi {
         return ResponseEntity.ok(dtos);
     }
 
-    ;
-
-    @PostMapping("/saveOder")
+    @PostMapping("/v1/save")
     public ResponseEntity<?> saveOderUser(@RequestBody OrderDto orderDto) {
         try {
             orderService.inserOder(orderDto);
@@ -96,30 +83,18 @@ public class OrderApi {
         return ResponseEntity.ok(orderDto);
     }
 
-//    @PostMapping("/insertOderdetail")
-//    public ResponseEntity<?> insertOder(@RequestBody OrderDto orderDto) {
-//        orderDto.setOrderId(orderDetailService.getLastInsertedOrderId());
-//        try {
-//            orderDetailService.UpdateOderDetail(orderDto);
-//        } catch (Exception e) {
-//            System.out.println("Call API Failed: /api/orders/saveOder");
-//            throw new RuntimeException(e);
-//        }
-//        return ResponseEntity.ok(orderDto);
-//    }
-
-    @GetMapping("/updateOrderUser")
-    public ResponseEntity<?> updateOdeUserfromAdmin(@Param("idProduct") Integer idProduct, @Param("OrderStatus") String OrderStatus) {
+    @GetMapping("/updateOrderStatusByProductID")
+    public ResponseEntity<?> doPostUpdateOrder(@Param("idProduct") Integer idProduct, @Param("OrderStatus") String OrderStatus) {
         try {
             orderService.updateOrderStatusByOrderId(idProduct, OrderStatus);
-            return ResponseEntity.ok("Cập nhật thành id đơn hàng " + idProduct + " thành công");
+            return ResponseEntity.ok("Update order with id: " + idProduct + " successfully");
         } catch (Exception e) {
             System.out.println("Call API Failed: /api/orders/saveOder");
             throw new RuntimeException(e);
         }
     }
 
-    @PostMapping("/createOrder")
+    @PostMapping("/create")
     public ResponseObject<?> doPostCreateOrder(@RequestBody OrderDto orderDto) {
         var response = new ResponseObject<>();
         try {
@@ -130,9 +105,7 @@ public class OrderApi {
         } catch (Exception e) {
             response.setStatus("Failed");
             response.setMessage("An error occurred during progress!");
-            e.printStackTrace();
         }
-        System.out.println(response.getData());
         return response;
     }
 

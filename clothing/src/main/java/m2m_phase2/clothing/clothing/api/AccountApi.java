@@ -35,8 +35,7 @@ public class AccountApi {
     }
 
     @GetMapping("/isAuthenticated")
-    @ResponseBody
     public boolean isLoggedIn() {
-        return authService.getCurrentUser() != null;
+        return authService.getCurrentUserEmail() != null;
     }
 }

@@ -37,7 +37,7 @@ let type = url.searchParams.get("type_search");
 let pathComponent = window.location.pathname.split('/')[2];
 let categoryType = pathComponent === undefined ? '' : decodeURIComponent(pathComponent);
 function loadAllProduct () {
-    return axios.get("/allproductapi")
+    return axios.get("/api/product/getAll")
         .then(response => {
             products = response.data;
             let categoryId = window.location.pathname.split('/')[2];

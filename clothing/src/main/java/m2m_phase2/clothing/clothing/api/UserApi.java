@@ -1,5 +1,6 @@
 package m2m_phase2.clothing.clothing.api;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
@@ -7,7 +8,6 @@ import m2m_phase2.clothing.clothing.data.entity.VoucherE;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.service.UserService;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,10 +18,10 @@ import java.util.List;
 
 @RestController
 @Slf4j
-@RequestMapping("/api-public/users")
+@RequestMapping("/api/user")
+@RequiredArgsConstructor
 public class UserApi {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping("/getAllUsers")
     public ResponseEntity<?> doGetAllUsers() {
@@ -29,7 +29,7 @@ public class UserApi {
         try {
             listUser = userService.getAllUser();
         } catch (SQLException e) {
-            System.out.println("Call API Failed: /api-public/users/getAllUsers");
+            System.out.println("Call API Failed: /api/user/getAllUsers");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(listUser);
@@ -41,7 +41,7 @@ public class UserApi {
         try {
             user = userService.getUserByUsernameAndEmail(userDto);
         } catch (SQLException e) {
-            System.out.println("Call API Failed: /api-public/users/getUserByUsernameAndEmail");
+            System.out.println("Call API Failed: /api/user/getUserByUsernameAndEmail");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(user);
@@ -57,7 +57,7 @@ public class UserApi {
             voucherDetailsDto.setVoucher(voucherE);
             user = userService.findUserNotInVoucher(voucherDetailsDto);
         } catch (SQLException e) {
-            System.out.println("Call API Failed: /api-public/users/getListUserByVoucherID");
+            System.out.println("Call API Failed: /api/user/getListUserByVoucherID");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(user);
@@ -69,7 +69,7 @@ public class UserApi {
         try {
             rowEffected = userService.saveUser(userDto);
         } catch (Exception e) {
-            System.out.println("Call API Failed: /api-public/users/saveUser");
+            System.out.println("Call API Failed: /api/user/saveUser");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(rowEffected);
@@ -80,23 +80,12 @@ public class UserApi {
         try {
             rowEffected = userService.disableUser(userDto);
         } catch (SQLException e) {
-            System.out.println("Call API Failed: /api-public/users/saveUser");
+            System.out.println("Call API Failed: /api/user/saveUser");
             rowEffected = 0;
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(rowEffected);
     }
-//    @GetMapping("/getUserByDto")
-//    public ResponseEntity<?> doGetUserByDto(UserDto userDto) {
-//        List<?> listUser;
-//        try {
-//            listUser = userService.getUserByDto(userDto);
-//        } catch (SQLException e) {
-//            System.out.println("Call API Failed: /api-public/users/getUserByUsernameAndEmail");
-//            throw new RuntimeException(e);
-//        }
-//        return ResponseEntity.ok(listUser);
-//    }
 
     @PostMapping("/updateUserInfo")
     public ResponseEntity<?> doPostUpdateUserInfo(@RequestBody UserDto userDto) {
@@ -122,13 +111,9 @@ public class UserApi {
             }
             rowEffected = userService.updateUserInfo(userDto);
         } catch (Exception e) {
-            System.out.println("Gọi API thất bại: /api-public/users/saveUser");
+            System.out.println("Gọi API thất bại: /api/user/saveUser");
             throw new RuntimeException(e);
         }
         return ResponseEntity.ok(rowEffected);
     }
-
-
-
-
 }

@@ -8,6 +8,7 @@ import m2m_phase2.clothing.clothing.security.jwt.JwtTokenProvider;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -29,8 +30,27 @@ public class AuthService {
     public Account getCurrentUser() {
         var authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null) {
-            var userDetails = (CustomUserDetails) authentication.getPrincipal();
-            return userDetails.getAccount();
+            if (authentication.getPrincipal() instanceof OAuth2User oAuth2User) {
+                var sub = oAuth2User.getAttribute("sub");
+                System.out.println(sub);
+                System.out.println(oAuth2User);
+            } else if (authentication.getPrincipal() instanceof CustomUserDetails customUserDetails) {
+                System.out.println(customUserDetails);
+                return customUserDetails.getAccount();
+            }
+        }
+        return null;
+    }
+
+    public String getCurrentUserEmail() {
+        var authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null) {
+            if (authentication.getPrincipal() instanceof OAuth2User oAuth2User) {
+                return oAuth2User.getAttribute("email");
+            } else if (authentication.getPrincipal() instanceof CustomUserDetails customUserDetails) {
+                var account = customUserDetails.getAccount();
+                return account.getEmail();
+            }
         }
         return null;
     }

@@ -8,7 +8,7 @@ import m2m_phase2.clothing.clothing.service.PaymentService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api-user/payment")
+@RequestMapping("/api/payment")
 @RequiredArgsConstructor
 public class PaymentAPI {
     private final PaymentService paymentService;

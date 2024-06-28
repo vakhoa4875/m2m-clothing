@@ -2,6 +2,7 @@ package m2m_phase2.clothing.clothing.service.impl;
 
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import m2m_phase2.clothing.clothing.constant.CommonEnum;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.dto.VoucherDetailsDto;
@@ -137,8 +138,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserM getCurrentUser() throws SQLException {
-        var currentUser = authService.getCurrentUser();
-        var userE = userRepo.findByEmailOrUsername(currentUser.getEmail(), currentUser.getUsername());
+        var currentUserEmail = authService.getCurrentUserEmail();
+        var userE = userRepo.findByEmail(currentUserEmail);
         return userE != null ? UserM.convertUserEToUserM(userE) : null;
     }
 }

@@ -3,7 +3,7 @@ const itemsPerPage = 5;
 const maxVisiblePages = 3;
 let totalPages = 0;
 document.addEventListener('DOMContentLoaded', () => {
-    fetch('/api/favorite/show-favorite')
+    fetch('/api/favorite/api/public/showFavorite')
         .then(response => response.json())
         .then(data => {
             if (data.status === true) {
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                 reverseButtons: true
                             }).then((result) => {
                                 if (result.isConfirmed) {
-                                    fetch('/api/favorite/delete-favorite', {
+                                    fetch('/api/favorite/removeProduct', {
                                         method: 'POST',
                                         headers: {
                                             'Content-Type': 'application/x-www-form-urlencoded',
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                                     text: "Product removed from favorites successfully.",
                                                     icon: "success"
                                                 }).then(() => {
-                                                    fetch('/api/favorite/show-favorite')
+                                                    fetch('/api/favorite/api/public/showFavorite')
                                                         .then(response => response.json())
                                                         .then(newData => {
                                                             if (newData.status === true) {

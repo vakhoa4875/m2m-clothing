@@ -45,7 +45,7 @@ initPayment = (paymentID, orderID, totalAmount) => {
             'Content-Type': 'application/json'
         }
     }
-    axios.post('/api-user/payment/save', payload, config)
+    axios.post('/api/payment/save', payload, config)
         .then(response => {
         })
         .catch(error => {
@@ -71,7 +71,7 @@ succeedPayment = (details, data, orderID) => {
             'Content-Type': 'application/json'
         }
     }
-    axios.post('/api-user/payment/save', payload, config)
+    axios.post('/api/payment/save', payload, config)
         .then(response => {
             $('.swal2-container').remove();
             Swal.fire({
@@ -97,7 +97,7 @@ cancelledPayment = (data) => {
             'Content-Type': 'application/json'
         }
     }
-    axios.patch('/api-user/payment/cancel', {paymentId: data.orderID}, config)
+    axios.patch('/api/payment/cancel', {paymentId: data.orderID}, config)
         .then(response => {
             $('.swal2-container').remove();
             Swal.fire({

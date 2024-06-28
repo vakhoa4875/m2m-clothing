@@ -5,7 +5,7 @@ let products = [];
 let voucherCount = 0;
 
 function loadAllProduct(){
-     axios.get("/allproductapi")
+     axios.get("/api/product/getAll")
         .then(response => {
             products = response.data;
             renderHtmlHome(products,'type_product_outerwear')
@@ -17,7 +17,7 @@ function loadAllProduct(){
 }
 
 function loadAllVoucher(){
-    return axios.get("/api-public/vouchers/getAllVouchers")
+    return axios.get("/api/public/getAllVouchers")
         .then(response =>{
             voucherCount = response.data.length;
             handleQuantityProductAndVouncher()

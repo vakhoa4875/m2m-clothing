@@ -320,7 +320,7 @@ $(document).ready(function () {
     //Trang chủ
     $.ajax({
         type: "get",
-        url: "/allcategoryapi",
+        url: "/api/public/getAllCategories",
         data: "data",
         dataType: "json",
         success: function (response) {
@@ -342,7 +342,7 @@ $(document).ready(function () {
 
     $.ajax({
         type: "get",
-        url: "/findTop6ByOrderByGiaBanDesc",
+        url: "/api/public/findTop6ByOrderByGiaBanDesc",
         data: "data",
         dataType: "json",
         success: function (response) {
@@ -437,7 +437,7 @@ $(document).ready(function () {
 // Hàm gọi API để lấy danh sách voucher
     function getAllVoucherByUserEmail() {
         $.ajax({
-            url: '/api-public/vouchers/getCartVouchersByEmail',
+            url: '/api/voucher/getCartVouchersByEmail',
             type: 'GET',
             success: function (data) {
                 sessionStorage.setItem("tienvoucher",0);

@@ -9,6 +9,7 @@ import m2m_phase2.clothing.clothing.security.service.CustomUserDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -28,7 +29,7 @@ public class WebSecurityConfig {
     private final CustomUserDetailsService userDetailsService;
     private final PasswordEncoder passwordEncoder;
     private final JwtAuthentication jwtAuthentication;
-    private final String[] nonAuthenticatedUrls = {"/p/**", "/api-public/**", "/assests/**", "/bootstrap-5.3.2-dist/**"};
+    private final String[] nonAuthenticatedUrls = {"/p/**", "/api/public/**", "/assests/**", "/bootstrap-5.3.2-dist/**", "/upload/**"};
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) throws Exception {
@@ -50,7 +51,7 @@ public class WebSecurityConfig {
                         .invalidateHttpSession(true)
                         .clearAuthentication(true)
                         .permitAll())
-//                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(Customizer.withDefaults())
                 .exceptionHandling(exceptionHandling ->
                         exceptionHandling
                                 .authenticationEntryPoint(customAuthenticationEntryPoint)
@@ -71,10 +72,10 @@ public class WebSecurityConfig {
         return new AuthenticationSuccessHandler() {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-                var reqPath = request.getServletPath();
+                var reqPath = request.getRequestURI();
                 System.out.println(reqPath);
                 var respPath = reqPath.contains("admin") ? "/a/" : "/p/home";
-                response.sendRedirect("/p/");
+                response.sendRedirect(respPath);
             }
         };
     }

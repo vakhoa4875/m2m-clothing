@@ -1,78 +1,72 @@
 package m2m_phase2.clothing.clothing.api;
 
 
+import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.repository.StatisticRepo;
 import m2m_phase2.clothing.clothing.service.AccountService;
 import m2m_phase2.clothing.clothing.service.CategoryService;
 import m2m_phase2.clothing.clothing.service.ProductService;
 import m2m_phase2.clothing.clothing.service.StatisticService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/statistic")
 public class StatisticalAPI {
-    @Autowired
-    AccountService accountService;
-    @Autowired
-    ProductService productService;
-    @Autowired
-    CategoryService categoryService;
-    @Autowired
-    private StatisticService statisticService;
-    @Autowired
-    private StatisticRepo statisticRepo;
+    private final AccountService accountService;
+    private final ProductService productService;
+    private final CategoryService categoryService;
+    private final StatisticService statisticService;
+    private final StatisticRepo statisticRepo;
 
-    @GetMapping("/api/getAccountData")
+    @GetMapping("/getAccountData")
     public Long AllAccount() {
         return accountService.getTotalAccounts();
     }
 
-    @PostMapping("/api/postAccountDK")
+    @PostMapping("/postAccountDK")
     public Long accountDK() {
         return accountService.getDKAccount();
     }
 
-    @PostMapping("/api/postAccountGG")
+    @PostMapping("/postAccountGG")
     public Long accountGG() {
         return accountService.getGGAccount();
     }
 
-    @GetMapping("/api/getProduct")
+    @GetMapping("/getProduct")
     public Long AllProduct() {
         return productService.getAllProducts();
     }
 
-    @GetMapping("/api/getCategory")
+    @GetMapping("/getCategory")
     public Long AllCategory() {
         return categoryService.Category();
     }
 
-    @GetMapping("/api/getProductCountPerCategory")
+    @GetMapping("/getProductCountPerCategory")
     public Map<String, Long> doGetProductCountPerCategory() {
         return categoryService.getProductCountPerCategory();
     }
 
     // 028_Khoa
-    @GetMapping("/api-admin/getTop10SoldProduct")
+    @GetMapping("/getTop10SoldProduct")
     public ResponseEntity<?> doGetTop10SoldProduct(@RequestParam("year") Integer year, @RequestParam("month") Integer month) {
         var top10 = statisticService.getTop10SoldProductByMonthAndYear(month, year);
         return ResponseEntity.ok(top10);
     }
-    @GetMapping("/api-admin/getActiveMonths")
+    @GetMapping("/getActiveMonths")
     public ResponseEntity<?> doGetActiveMonths() {
         return ResponseEntity.ok(statisticService.getActiveMonths());
     }
-    @GetMapping("/api-admin/getVoucherUsedInMonth")
+    @GetMapping("/getVoucherUsedInMonth")
     public ResponseEntity<?> doGetVoucherUsedInMonth() {
         return ResponseEntity.ok(statisticRepo.getVoucherUsedInMonth());
     }
-    @GetMapping("/api-admin/getTopUsedVoucher")
+    @GetMapping("/getTopUsedVoucher")
     public ResponseEntity<?> doGetTopUsedVoucher(@RequestParam("year") Integer year, @RequestParam("month") Integer month) {
         var top10 = statisticService.getTopUsedVoucher(month, year);
         return ResponseEntity.ok(top10);
