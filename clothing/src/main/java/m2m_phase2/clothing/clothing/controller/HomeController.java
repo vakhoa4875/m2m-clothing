@@ -3,7 +3,6 @@ package m2m_phase2.clothing.clothing.controller;
 import jakarta.servlet.http.HttpSession;
 import m2m_phase2.clothing.clothing.data.dto.UserDto;
 import m2m_phase2.clothing.clothing.data.entity.Account;
-import m2m_phase2.clothing.clothing.data.entity.Product;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
 import m2m_phase2.clothing.clothing.data.model.UserM;
 import m2m_phase2.clothing.clothing.service.AccountService;
@@ -58,17 +57,17 @@ public class HomeController {
     }
 
 
-    @GetMapping("/giohang")
-    public String getGioHang(Model model) {
-        if (accountService.isLoggedIn(session)) {
-            List<ProductM> list = productService.findAll();
-            model.addAttribute("listSp", list);
-            return "swappa/assests/html/card";
-        } else {
-            return "redirect:/loginacount";
-        }
-
-    }
+//    @GetMapping("/a/cart")
+//    public String getGioHang(Model model) {
+//        if (accountService.isLoggedIn(session)) {
+//            List<ProductM> list = productService.findAll();
+//            model.addAttribute("listSp", list);
+//            return "swappa/assests/html/card";
+//        } else {
+//            return "redirect:/p/login";
+//        }
+//
+//    }
 
     @GetMapping("/thanhtoan")
     public String getThanhToan(HttpSession session, Model model) throws SQLException {
@@ -83,12 +82,12 @@ public class HomeController {
         }
     }
 
-    @GetMapping("/loginacount")
-    public String getLog(Model model) {
-        Account accountlog = new Account();
-        model.addAttribute("accountlog", accountlog);
-        return "swappa/assests/html/acc_login";
-    }
+//    @GetMapping("/p/login")
+//    public String getLog(Model model) {
+//        Account accountlog = new Account();
+//        model.addAttribute("accountlog", accountlog);
+//        return "swappa/assests/html/acc_login";
+//    }
 
     @PostMapping("/submitLogin")
     public String submitLogin(@ModelAttribute("accountlog") Account accountRequest, Model model) throws SQLException {
@@ -109,7 +108,7 @@ public class HomeController {
             return "swappa/assests/html/userpage";
         } else {
             // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
-            return "redirect:/loginacount";
+            return "redirect:/p/login";
         }
     }
 

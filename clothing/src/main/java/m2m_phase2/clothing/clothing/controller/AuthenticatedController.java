@@ -47,8 +47,8 @@ public class AuthenticatedController {
 
     @GetMapping("/myProfile")
     public String userProfileGet(Model model) throws SQLException {
-//        var currentUser = userService.getCurrentUser();
-//        model.addAttribute("user", currentUser);
+        var currentUser = userService.getCurrentUser();
+        model.addAttribute("userM", currentUser);
         return "swappa/assests/html/userpage";
     }
 

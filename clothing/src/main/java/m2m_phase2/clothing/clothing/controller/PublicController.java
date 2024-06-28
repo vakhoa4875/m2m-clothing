@@ -5,7 +5,6 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import m2m_phase2.clothing.clothing.data.dto.CommentDTO;
 import m2m_phase2.clothing.clothing.data.entity.Account;
-import m2m_phase2.clothing.clothing.data.model.CommentM;
 import m2m_phase2.clothing.clothing.data.model.ProductM;
 import m2m_phase2.clothing.clothing.security.service.AuthService;
 import m2m_phase2.clothing.clothing.service.AccountService;
@@ -136,9 +135,9 @@ public class PublicController {
         ProductM product = productService.findByslug_url(slug_url);
         CommentDTO commentDTO = new CommentDTO();
         commentDTO.setProduct(productService.findByslug_url(slug_url));
-        List<CommentM> commentM = commentService.findByProductId(commentDTO);
+//        List<CommentM> commentM = commentService.findByProductId(commentDTO);
         model.addAttribute("listProduct", product);
-        model.addAttribute("commentM", commentM);
+//        model.addAttribute("commentM", commentM);
         model.addAttribute("checklogin", authService.getCurrentUser().getEmail());
         return "swappa/assests/html/productDetail";
     }

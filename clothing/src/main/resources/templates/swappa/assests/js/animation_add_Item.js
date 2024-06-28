@@ -33,7 +33,7 @@ function getIdSanPham (int,name,sale,price,anh,sale_active) {
     function addItem(){
         if(dangnhap == "" || activeLogin == ""){
             alert("Có vẻ như bạn chưa đăng nhập, vui lòng đăng nhập!");
-            window.location.href = "/loginacount";
+            window.location.href = "/p/login";
         }
 
         if (sale_active == "1"){

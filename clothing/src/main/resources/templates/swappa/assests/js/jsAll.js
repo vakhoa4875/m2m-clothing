@@ -585,7 +585,7 @@ btnCart.addEventListener("click", function() {
                 const url = new URL(currentUrl);
                 const pathAndQuery = url.pathname + url.search;
                 sessionStorage.setItem("duongdan", pathAndQuery);
-                window.location.href = "/loginacount";
+                window.location.href = "/p/login";
                 return;
             }else {
                 sessionStorage.removeItem("duongdan");
@@ -659,7 +659,7 @@ btnBuyNow.addEventListener("click",function (){
                 const url = new URL(currentUrl);
                 const pathAndQuery = url.pathname + url.search;
                 sessionStorage.setItem("duongdan", pathAndQuery);
-                window.location.href = "/loginacount";
+                window.location.href = "/p/login";
                 return;
             }else {
                 sessionStorage.removeItem("duongdan")

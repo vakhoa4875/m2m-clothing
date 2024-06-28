@@ -42,7 +42,7 @@ $(document).ready(function () {
                         timer: 2000,
                     }).then((result) => {
                         if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-                            window.location.href = '/loginacount';
+                            window.location.href = '/p/login';
                         }
                     });
                 } else if (responseData.message === 'Favorite deleted successfully') {
