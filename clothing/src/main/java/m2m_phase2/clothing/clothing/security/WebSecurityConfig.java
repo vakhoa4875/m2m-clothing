@@ -32,7 +32,7 @@ public class WebSecurityConfig {
     private final String[] nonAuthenticatedUrls = {"/p/**", "/api-public/**", "/assests/**", "/bootstrap-5.3.2-dist/**"};
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http, CustomAuthenticationEntryPoint customAuthenticationEntryPoint) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
@@ -52,6 +52,10 @@ public class WebSecurityConfig {
                         .clearAuthentication(true)
                         .permitAll())
                 .oauth2Login(Customizer.withDefaults())
+                .exceptionHandling(exceptionHandling ->
+                        exceptionHandling
+                                .authenticationEntryPoint(customAuthenticationEntryPoint)
+                )
         ;
         return http.build();
     }
@@ -68,6 +72,9 @@ public class WebSecurityConfig {
         return new AuthenticationSuccessHandler() {
             @Override
             public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+                var reqPath = request.getServletPath();
+                System.out.println(reqPath);
+                var respPath = reqPath.contains("admin") ? "/a/" : "/p/home";
                 response.sendRedirect("/p/");
             }
         };

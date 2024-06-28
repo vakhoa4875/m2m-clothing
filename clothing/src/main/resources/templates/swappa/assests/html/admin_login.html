@@ -11,7 +11,6 @@
     <title>Login Admin</title>
 </head>
 <body>
-    <div ng-app="myApp" ng-Controller="accountCtrl">
             <!-- body -->
             <main class="container">
                 <!-- Section: Design Block -->
@@ -24,7 +23,7 @@
                                 <div class="justify-content-center">
                                     <div class="">
                                         <h2 class="fw-bold mb-5 text-white">LOGIN</h2>
-                                        <form name="formLogIn" method="post" action="/admin/loginSucceed" th:object="${loginInfo}" class="text-white">
+                                        <form name="formLogIn" method="post" action="/p/login?role=admin" th:object="${loginInfo}" class="text-white">
                                             <div ng-hide="status == null" class="alert text-bg-dark"
                                                 ng-class="{'text-danger invalid-input':(status !== 1), 'text-success valid-input': (status === 1)}">
                                                 {{textStatus}}</div>

@@ -118,7 +118,7 @@ create table Favorite
     product_id int foreign key references Product (product_id),
     date_created datetime default getdate()
 )
-go
+go  
 CREATE PROCEDURE GetShopDetails
     @shop_id int
 AS
