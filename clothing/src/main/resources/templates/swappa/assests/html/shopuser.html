@@ -53,7 +53,7 @@
 
     <div class="container" style="margin-top: 50px">
         <div class="text-uppercase " style="font-weight: bolder; color: #808080FF; font-size: 15px">
-            Sản phẩm của shop
+            Products of Shop
         </div>
         <div class="row">
             <div class="col-2">
@@ -72,38 +72,41 @@
             </div>
             <div class="col-10">
                 <div class="row pb-3">
-                    <div class="col-9">
-                        <div class="row">
-                            <div class="col-2 p-0">
-                                <p>Sort by</p>
-                            </div >
-                            <div class="col-2 p-0">
+                    <div class="row " style="display: flex; justify-content: space-between">
+                        <div class="col-8 d-flex ">
+                            <div class="d-flex align-items-center">
+                                Sord By
+                            </div>
+                            <div class="ms-3">
                                 <button class="btn btn-danger button" id="phobien">Relevance</button>
                             </div>
-                            <div class="col-2 p-0">
+                            <div class="ms-3">
                                 <button class="btn button" id="moinhat">Latest</button>
                             </div>
-                            <div class="col-2 p-0">
+                            <div class="ms-3">
                                 <button class="btn button" id="banchay">Top Sales</button>
                             </div>
-                            <div class="col-3 p-0">
-                                <select class="form-select " aria-label="Sort Product" id="selectSort">
+                            <div class="ms-3">
+                                <select style="padding-right: 130px;" class="form-select " aria-label="Sort Product" id="selectSort">
                                     <option selected style="display: none">Price</option>
                                     <option value="lowToHigh">Low To High</option>
                                     <option value="highToLow">High To Low</option>
                                 </select>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-3 text-end">
-                        <span id="page-info-shop"></span>
-                        <button class="btn" id="handlerPageNumberNext"> <span aria-hidden="true">&laquo;</span> </button>
-                        <button class="btn" id="handlerPageNumberPrev"> <span aria-hidden="true">&raquo;</span> </button>
+                        <div class="col-4 ">
+                            <div class="float-end">
+                                <span id="page-info-shop"></span>
+                                <button class="btn" id="handlerPageNumberPrev" style="padding-bottom:12px"> <span aria-hidden="true">&laquo;</span> </button>
+                                <button class="btn" id="handlerPageNumberNext" style="padding-bottom:12px"> <span aria-hidden="true">&raquo;</span> </button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
                 <div style="min-height: 646px" class="row" id="getProductByCategoryAndShopIdContainer">
 
-
+<!---->
                 </div>
             </div>
         </div>
@@ -219,6 +222,93 @@
         } else {
             console.error("Không tìm thấy shopId trong local storage");
         }
+
+        //dung co xoa cai nay vi khong tim duoc cach nao load va xoa thong bao
+        var id;
+        if (sessionStorage.getItem("idnguoidung") == ""){
+
+        }else {
+            $.ajax({
+                url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    soluong = data.length;
+                    $('#soluongthongbao').text(soluong)
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        }
+
+        $('#btnthongobao').click(function () {
+            id = (sessionStorage.getItem("idnguoidung") == "" ? "false" : sessionStorage.getItem("idnguoidung"));
+            if (id == "false"){
+                Swal.fire({
+                    title: 'Notifications from the system',
+                    text: 'You are not logged in, please log in.',
+                    icon: 'warning', // Có thể thay đổi icon thành 'error', 'warning', 'info', hoặc 'question'
+                    confirmButtonText: 'Confirm',
+                    allowOutsideClick: false
+                }).then((result) => {
+                    if (result){
+                        window.location.href = "/loginacount";
+                    }
+                })
+            }else {
+                $("#notification-dropdown").toggleClass("d-none");
+                $('#thogbao').empty();
+                $.ajax({
+                    url: '/finduseridwitchNotification?id='+sessionStorage.getItem("idnguoidung"),
+                    type: 'GET',
+                    contentType: 'application/json',
+                    success: function (data) {
+                        var soluong = data.length;
+                        if (soluong == 0){
+                            $('#thogbao').append(`
+                                                                <div class="text-dark fw-bolder" style="color: #edd678">No new announcements.</div>`);
+                        }
+                        $('#soluongthongbao').text(soluong)
+                        // Hiển thị dữ liệu trong bảng
+                        data.forEach(function (order) {
+                            $('#thogbao').append(`
+                                                            <div class="text-dark fw-bolder" style="text-decoration: underline; cursor : pointer">You have a new voucher in your account.</div>
+                                                            `);
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.error('Error:', errorThrown);
+                    }
+                });
+            }
+        });
+
+        $('#xoathongbao').click(function () {
+            $.ajax({
+                url: '/deleteNotification?id='+id,
+                type: 'GET',
+                contentType: 'application/json',
+                success: function (data) {
+                    location.reload();
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.error('Error:', errorThrown);
+                }
+            });
+        })
+
+        var tongsp = document.getElementById("tongSoLuongSP");
+        var tongSoLuong = 0;
+        if (localStorage.getItem(sessionStorage.getItem("tendn"))) {
+            var objarray = JSON.parse(localStorage.getItem(sessionStorage.getItem("tendn")));
+            for (var int = 0; int < objarray.length; int++) {
+                tongSoLuong = objarray.length;
+            }
+        }else {
+            tongsp.textContent = tongSoLuong;
+        }
+        tongsp.textContent = tongSoLuong;
     });
 
 </script>

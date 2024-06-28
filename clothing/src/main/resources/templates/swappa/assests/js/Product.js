@@ -25,7 +25,7 @@ $(document).ready(async function(){
 let productsByCategory = [];
 let products = [];
 let currentPage = 1; // page hiện tại
-let perPage = 12; // item number in page
+let perPage = 18; // item number in page
 let totalPage = 0;
 let perProducts = [];
 let pageTam=[];

@@ -164,8 +164,10 @@
                     var id = $('#id').text();
                     document.getElementById("thanhtoan").appendChild(tr);
                     capNhatTienTong();
-                    var tongThanhToanID = $('#TongThanhToan').text();
-                    var tongThanhToan = parseFloat(tongThanhToanID.substring(1)).toFixed(2) //tiền tổng thanh toán
+                    var tongThanhToanID = $('#TongThanhToan').text().substring(1);
+                    var tongThanhToanNumber = parseFloat(tongThanhToanID);
+                    var tongThanhToanFromat = tongThanhToanNumber.toFixed(2);
+                    var tongThanhToan = parseFloat(tongThanhToanFromat) //tiền tổng thanh toán
                     soluongton += object.soLuong;
                     const extractedData = objarray.map(item => ({
                         price: item.gia,
@@ -228,7 +230,9 @@
 
                 var tongthanhtoan = document.getElementById("TongThanhToan");
 
-                tongthanhtoan.textContent = "$" + ((parseFloat(tongTien.toFixed(2)) + parseFloat(2) - discount));
+                var gg = parseFloat(discount);
+                var ttt = parseFloat(parseFloat(tongTien).toFixed(2))
+                tongthanhtoan.textContent = "$" + (ttt - gg).toFixed(2);
 
             }
         }

@@ -510,8 +510,8 @@ $(document).ready(function () {
 
                         sessionStorage.setItem("voucherdetill",objvoucher);
 
-                        $('#addVoucherText').text('Bạn đã thêm ' + voucherName + ' vào giỏ hàng.');
-                        $('#addVoucherText').removeClass('d-none').addClass('d-block');
+                        $('#addVoucherText').text('You have added ' + voucherName + ' to your cart');
+                        $('#addVoucherText').removeClass('d-none').addClass('d-block p-2 ms-2 rounded');
                         capNhatTienTong();
                         let tiengiam = $('#tiengiamgia').text();
                         sessionStorage.setItem("tienvoucher",tiengiam.slice(1));
