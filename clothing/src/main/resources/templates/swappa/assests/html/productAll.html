@@ -206,19 +206,34 @@
 
                     <div class="col-lg-9 col-md-7">
                         <div class="row pb-3">
-                            <div class="col-9">
-                                <div class="row">
-                                    <div class="col-2 p-0">
-                                        <p>Sort by</p>
-                                    </div >
-                                    <div class="col-2 p-0">
-                                        <button class="btn btn-danger button" onclick="filterMostPurchasedProducts()">Relevance</button>
+                                <div class="row" style="display: flex; justify-content: space-between">
+                                    <div class="col-8 d-flex ">
+                                        <div class="d-flex align-items-center">
+                                            Sord By
+                                        </div>
+                                        <div class="ms-3">
+                                            <button class="btn btn-danger button" onclick="filterMostPurchasedProducts()">Relevance</button>
+                                        </div>
+                                        <div class="ms-3">
+                                            <button class="btn button" onclick="fiterSanPhamPhoBienNhat()">Latest</button>
+                                        </div>
+                                        <div class="ms-3">
+                                            <button class="btn button" onclick="filterBestSellingProducts()">Top Sales</button>
+                                        </div>
+                                        <div class="ms-3">
+                                            <select style="padding-right: 130px;" class="form-select " aria-label="Sort Product" onchange="handleSelectChange(this)">
+                                                <option selected style="display: none">Price</option>
+                                                <option value="lowToHigh">Low To High</option>
+                                                <option value="highToLow">High To Low</option>
+                                            </select>
+                                        </div>
                                     </div>
-                                    <div class="col-2 p-0">
-                                        <button class="btn button" onclick="fiterSanPhamPhoBienNhat()">Latest</button>
-                                    </div>
-                                    <div class="col-2 p-0">
-                                        <button class="btn button" onclick="filterBestSellingProducts()">Top Sales</button>
+                                    <div class="col-4">
+                                        <div class="float-end">
+                                            <span id="page-info"></span>
+                                            <button class="btn" onclick="handlerPageNumberPrev()" style="padding-bottom:12px"> <span aria-hidden="true">&laquo;</span> </button>
+                                            <button class="btn" onclick="handlerPageNumberNext()" style="padding-bottom:12px"> <span aria-hidden="true">&raquo;</span> </button>
+                                        </div>
                                     </div>
                                     <script>
                                         $(document).ready(function(){
@@ -328,20 +343,12 @@
                                             })
                                         })
                                     </script>
-                                    <div class="col-3 p-0">
-                                        <select class="form-select " aria-label="Sort Product" onchange="handleSelectChange(this)">
-                                            <option selected style="display: none">Price</option>
-                                            <option value="lowToHigh">Low To High</option>
-                                            <option value="highToLow">High To Low</option>
-                                        </select>
-                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-3 text-end">
-                                <span id="page-info"></span>
-                                <button class="btn" onclick="handlerPageNumberPrev()"> <span aria-hidden="true">&laquo;</span> </button>
-                                <button class="btn" onclick="handlerPageNumberNext()"> <span aria-hidden="true">&raquo;</span> </button>
-                            </div>
+<!--                            <div class="col-3 text-end">-->
+<!--                                <span id="page-info"></span>-->
+<!--                                <button class="btn" onclick="handlerPageNumberPrev()"> <span aria-hidden="true">&laquo;</span> </button>-->
+<!--                                <button class="btn" onclick="handlerPageNumberNext()"> <span aria-hidden="true">&raquo;</span> </button>-->
+<!--                            </div>-->
                         </div>
 
                         <div class="row" id="search-results">
@@ -408,5 +415,6 @@
 <script th:src="@{/assests/js/searchRcmd.js}"></script>
 <script th:src="@{/assests/js/Product.js}"></script>
 <script th:src="@{/assests/js/SearchProduct.js}"></script>
+<script src="/assests/js/script.js"></script>
 </body>
 </html>
