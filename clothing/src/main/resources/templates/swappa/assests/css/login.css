@@ -33,7 +33,8 @@ body {
     width: 550px;
     border: none;
     border-radius: 10px;
-    background-color: #ffffffe3;
+    background: hsla(0,0%,100%,0.1);
+    backdrop-filter: blur(50px);
 }
 .text-brown {
     color: #7e5a4c;
