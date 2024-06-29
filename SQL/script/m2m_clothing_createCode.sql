@@ -30,18 +30,6 @@ CREATE TABLE Category
     description   nvarchar(300)
 );
 
-CREATE TABLE Userinfo
-(
-    user_id     int PRIMARY KEY,
-    fullname    nvarchar(127) default 'your fullname here',
-    gender      nvarchar(20)  default 'Male',
-    avatar      nvarchar(255) default 'incognito.svg',
-    dob         date          default getdate(),
-    description nvarchar(300),
-    job_title   nvarchar(63),
-    FOREIGN KEY (user_id) REFERENCES Account (user_id)
-);
-
 CREATE TABLE Sale
 (
     sale_ID      int IDENTITY (1,1) PRIMARY key,
@@ -108,8 +96,6 @@ CREATE TABLE AccountGG
     is_disable_gg   bit default 0,
     is_admin_gg     bit default 0
 )
-INSERT INTO AccountGG (access_token_gg, sub_gg, username_gg, email_gg)
-VALUES ('abc123xyz', 'sub123', N'ten_nguoi_dung', 'example@email.com');
 
 create table Comment
 (
