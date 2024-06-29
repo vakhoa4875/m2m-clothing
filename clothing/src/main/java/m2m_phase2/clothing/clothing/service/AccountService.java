@@ -34,9 +34,9 @@ public interface AccountService {
 
 //	List<UserM> findAll() throws SQLException;
 
-    void sendLinkEmail(String toEmail, String resetPasswordUrl);
+    void sendLinkEmail(String toEmail);
 
-    String sendUrl();
+    String sendUrl(String token);
 
     Account findByUsernameAndEmail(String username, String email);
 

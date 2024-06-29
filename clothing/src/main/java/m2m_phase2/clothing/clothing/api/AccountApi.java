@@ -118,7 +118,7 @@ public class AccountApi {
     public ResponseEntity<?> submitLogin(@RequestBody AccountDto accountDto) {
         Map<String, Object> response = new HashMap<>();
         try {
-            if(accountImpl.findByemail(accountDto.getEmail()) == null) {
+            if (accountImpl.findByemail(accountDto.getEmail()) == null) {
                 response.put("data", null);
                 response.put("message", "Email does not exists");
                 response.put("status", true);
@@ -142,6 +142,49 @@ public class AccountApi {
                 response.put("status", true);
             }
 
+        } catch (Exception e) {
+            response.put("data", null);
+            response.put("message", "Call API Failed");
+            response.put("status", false);
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/api/account/forgotPassword")
+    public ResponseEntity<?> forgotPassword(@RequestBody AccountDto accountDto) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            Account account = accountImpl.findByemail(accountDto.getEmail());
+            if (account == null) {
+                response.put("data", null);
+                response.put("message", "Email does not exists");
+                response.put("status", true);
+                return ResponseEntity.ok(response);
+            }
+            accountImpl.sendLinkEmail(accountDto.getEmail());
+            session.setAttribute("email", accountDto.getEmail());
+            response.put("data", null);
+            response.put("message", "Call API Successfully");
+            response.put("status", true);
+        } catch (Exception e) {
+            response.put("data", null);
+            response.put("message", "Call API Failed");
+            response.put("status", false);
+        }
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/api/account/confirmPasswordForgot")
+    public ResponseEntity<?> confirmPasswordForgot(@RequestBody AccountDto accountDto) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            String email = (String) session.getAttribute("email");
+            Account account = accountImpl.findByemail(email);
+            account.setHashedPassword(PasswordEncoderUtil.encodePassword(accountDto.getPassword()));
+            accountImpl.saveAccount(account);
+            response.put("data", null);
+            response.put("message", "Password changed successfully");
+            response.put("status", true);
         } catch (Exception e) {
             response.put("data", null);
             response.put("message", "Call API Failed");
