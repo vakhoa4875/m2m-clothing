@@ -38,8 +38,6 @@ public interface AccountService {
 
     String sendUrl();
 
-    String submitLogin(Account accountRequest, Model model) throws SQLException;
-
     Account findByUsernameAndEmail(String username, String email);
 
     // create new account from admin
