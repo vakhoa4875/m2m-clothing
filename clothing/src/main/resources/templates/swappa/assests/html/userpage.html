@@ -492,7 +492,7 @@
                             <td class="text-center">${formattedDate}</td>
                             <td class="text-center">${order.phoneNumber}</td>
                             <td class="text-center">
-                                <button onclick="showShippingAddressDetail(${order.deliveryAddress})">
+                                <button class="btn btn-primary" onclick="showShippingAddressDetail('${order.deliveryAddress}')">
                                     Show detail
                                 </button>
                             </td>
@@ -516,22 +516,26 @@
         Swal.fire({
             title: 'Shipping Address',
             text: deliveryAddress
-        })
+        });
     }
 
     function htmlForButton(order) {
         return (order.paymentMethod === 'Cod' || order.orderStatus === 'Delivering')
             ? ` <td class="text-center">
-                    <button class="btn btn-warning" onclick="receivedOrder(${order.orderCode})">Received</button>
+                    <button class="btn btn-warning" onclick="receivedOrder(${order.orderId})">Received</button>
                 </td>`
-            : ` <td class="text-center">
+            : (order.paymentMethod === 'Received')
+            ? ` <td class="text-center">
+                    <button class="btn btn-success" disabled>Finished</button>
+                </td>`
+            :` <td class="text-center">
                     <button class="btn btn-warning" ${order.orderStatus === 'Need approved' ? 'disabled' : ''} onclick="loadSwalForPaypalContainer(${order.orderId}, ${order.totalAmount})">
                         Pay now
                     </button>
                 </td>`;
     }
 
-    function receivedOrder(orderCode) {
+    function receivedOrder(orderId) {
         Swal.fire({
             title: 'Confirm Order Received',
             text: 'Are you sure you want to confirm that the order has been received?',
@@ -543,9 +547,20 @@
             cancelButtonText: 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Handle confirmed action (e.g., send confirmation to server)
-                Swal.fire('Confirmed!', 'The order has been marked as received.', 'success');
-                // Here you can add AJAX call or any other logic to handle confirmation
+                let payload = {
+                    idProduct: orderId,
+                    OrderStatus: 'Received'
+                }
+                axios.get("/api-product/updateOrderUser", payload)
+                    .then(response => {
+                        Swal.fire('Confirmed!', 'The order has been marked as received.', 'success')
+                            .then(result => {
+                                location.reload();
+                            });
+                    })
+                    .catch(error => {
+                        console.error(error);
+                    })
             }
         });
     }
