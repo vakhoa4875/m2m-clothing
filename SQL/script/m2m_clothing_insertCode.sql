@@ -1,7 +1,7 @@
 use m2m_clothing
 go
-INSERT INTO Account (username, email, hashed_password, is_admin)
-VALUES ('m2mClothing', 'kaisamaslain@gmail.com', '$2a$12$en5ZfBVuv44iqK6IktThDOUw3QYoKnbPpRymLs1o1Duc.cy4G7Hy.', 1);
+-- INSERT INTO Account (username, email, hashed_password, is_admin)
+-- VALUES ('m2mClothing', 'kaisamaslain@gmail.com', '$2a$12$en5ZfBVuv44iqK6IktThDOUw3QYoKnbPpRymLs1o1Duc.cy4G7Hy.', 1);
 INSERT INTO Account (username, email, hashed_password, is_admin)
 VALUES ('khoa', 'vakhoa4875@gmail.com', '$2a$12$en5ZfBVuv44iqK6IktThDOUw3QYoKnbPpRymLs1o1Duc.cy4G7Hy.', 1);
 INSERT INTO Account (username, email, hashed_password, is_admin)
