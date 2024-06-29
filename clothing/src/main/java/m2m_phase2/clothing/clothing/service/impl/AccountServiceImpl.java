@@ -169,8 +169,8 @@ public class AccountServiceImpl implements AccountService {
 
             helper.setFrom("kaisamaslain+Nerdyers@gmail.com");
             helper.setTo(toEmail);
-            helper.setSubject("Đường link để lấy lại mật khẩu !!!");
-            helper.setText("Vui lòng nhấp vào đường link sau để đặt lại mật khẩu: " + resetPasswordUrl);
+            helper.setSubject("Link to reset password");
+            helper.setText("Please click the link to change your password: " + resetPasswordUrl);
             emailSender.send(message);
             session.setAttribute("resetPasswordUrl", resetPasswordUrl); // Lưu đường dẫn vào session
             session.setAttribute("email", toEmail);
@@ -184,37 +184,6 @@ public class AccountServiceImpl implements AccountService {
 
         String resetPasswordUrl = "/ConfirmPassword-Forgot-mk";
         return resetPasswordUrl;
-    }
-
-    @Override
-    public String submitLogin(Account accountRequest, Model model) throws SQLException {
-        String email = accountRequest.getEmail();
-        String password = accountRequest.getHashedPassword();
-
-        Account existingAccount = repo.findByemail(email);
-        if (existingAccount == null) {
-            model.addAttribute("error", "Tài khoản không tồn tại");
-            return "swappa/assests/html/acc_login";
-        }
-        boolean passwordMatch = PasswordEncoderUtil.verifyPassword(password, existingAccount.getHashedPassword());
-        if (!passwordMatch) {
-            model.addAttribute("error", "Mật khẩu không đúng");
-            return "swappa/assests/html/acc_login";
-        }
-        // Kiểm tra xem tài khoản có bị vô hiệu hóa không
-        if (existingAccount.isDisable()) {
-            model.addAttribute("error", "Tài khoản của bạn tạm thời bị vô hiệu hóa");
-            return "swappa/assests/html/acc_login";
-        }
-        // Lưu thông tin đăng nhập vào session hoặc làm bất kỳ xử lý nào khác cần thiết
-        session.setAttribute("loggedInUser", accountRequest.getEmail());
-        StaticVariable.sessionEmail = accountRequest.getEmail();
-        model.addAttribute("iduser", existingAccount.getUserId());
-        model.addAttribute("email", existingAccount.getEmail());
-        session.setAttribute("iduser", existingAccount.getUserId());
-        session.setAttribute("email", existingAccount.getEmail());
-        PasswordEncoderUtil.email = accountRequest.getEmail();
-        return "redirect:/";
     }
 
     @Override
