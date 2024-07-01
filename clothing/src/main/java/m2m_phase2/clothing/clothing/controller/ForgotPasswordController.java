@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -31,7 +32,10 @@ public class ForgotPasswordController {
     }
 
     @GetMapping("/confirmPasswordForgot/{token}")
-    public String ForgotLink() {
+    public String ForgotLink(@PathVariable("token") String token, Model model) {
+        if (token == null || token.equals("") || !token.equals(AccountServiceImpl.token)) {
+            return "swappa/assests/html/acc_forgot_pass2";
+        }
         return "swappa/assests/html/acc_forgot_pass_xacnhan2";
     }
 }
