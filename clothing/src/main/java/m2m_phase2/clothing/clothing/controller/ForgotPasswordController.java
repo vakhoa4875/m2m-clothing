@@ -34,6 +34,7 @@ public class ForgotPasswordController {
     @GetMapping("/confirmPasswordForgot/{token}")
     public String ForgotLink(@PathVariable("token") String token, Model model) {
         if (token == null || token.equals("") || !token.equals(AccountServiceImpl.token)) {
+            System.out.println("Token is not valid");
             return "swappa/assests/html/acc_forgot_pass2";
         }
         return "swappa/assests/html/acc_forgot_pass_xacnhan2";
